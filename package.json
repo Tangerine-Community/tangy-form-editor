@@ -1,6 +1,7 @@
 {
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
+  "version": "0.0.0",
   "dependencies": {
     "@polymer/polymer": "^3.0.0",
     "@polymer/sortable-list": "git://github.com/DrNiels/sortable-list.git#polymer-3",
