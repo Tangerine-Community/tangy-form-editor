@@ -1,0 +1,14 @@
+{
+  "name": "tangy-form-editor",
+  "main": "tangy-form-editor.js",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0",
+    "redux": "^4.0.0",
+    "tangy-form": "^1.0.4"
+  },
+  "devDependencies": {
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "wct-browser-legacy": "^1.0.0"
+  }
+}
