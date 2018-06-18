@@ -19,8 +19,8 @@ class TangyFormItemEditor extends PolymerElement {
         font-size: medium;
       }
       paper-icon-button.small {
-      width: 30px;
-      height: 30px;
+        width: 30px;
+        height: 30px;
       }
       paper-button {
         font-family: 'Roboto', 'Noto', sans-serif;
@@ -45,9 +45,6 @@ class TangyFormItemEditor extends PolymerElement {
       }
       paper-button.green[active] {
         background-color: var(--paper-red-500);
-      }
-      juicy-ace-editor {
-        height: 100vh;
       }
     </style>
     <div id="container"></div> 
@@ -97,11 +94,16 @@ class TangyFormItemEditor extends PolymerElement {
       </paper-card>
       </div>
     `
+    let juicyAceEditorEl = document.createElement('juicy-ace-editor')
+    juicyAceEditorEl.value = this.item.fileContents
+    juicyAceEditorEl.style.height = `${window.innerHeight*.6}px`
+    this.appendChild(juicyAceEditorEl)
+    /* @TODO: Implement tangy-ckeditor
     this.innerHTML = `
       <tangy-ckeditor>
         ${this.item.fileContents}
-      </tangy-ckeditor>
-    `
+      </tangy-ckeitor>
+    */
     this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
     this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
   }

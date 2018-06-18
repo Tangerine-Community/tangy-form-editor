@@ -3,6 +3,8 @@
   "main": "tangy-form-editor.js",
   "dependencies": {
     "@polymer/polymer": "^3.0.0",
+    "@polymer/sortable-list": "git://github.com/DrNiels/sortable-list.git#polymer-3",
+    "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
     "tangy-form": "^1.0.4"
   },

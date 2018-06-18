@@ -1,4 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import '@polymer/sortable-list/sortable-list.js'
+import 'juicy-ace-editor/juicy-ace-editor-module.js'
 import {tangyFormEditorReducer} from './tangy-form-editor-reducer.js'
 import './tangy-form-item-editor.js'
 import 'tangy-form/tangy-form.js'
@@ -19,10 +21,6 @@ class TangyFormEditor extends PolymerElement {
         display: block;
         color: var(--primary-text-color);
         font-size: medium;
-      }
-      
-      juicy-ace-editor {
-        height: 100vh;
       }
     </style>
     <!-- FORM ITEM LISTING -->
