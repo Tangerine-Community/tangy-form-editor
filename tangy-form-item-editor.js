@@ -115,7 +115,7 @@ class TangyFormItemEditor extends PolymerElement {
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         title: this.$.container.querySelector('#itemTitle').value,
-        fileContents: this.querySelector('tangy-ckeditor').value 
+        fileContents: this.querySelector('juicy-ace-editor').value 
     })}))
   }
 }
