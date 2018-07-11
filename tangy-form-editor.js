@@ -148,6 +148,9 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelector('.item-create')
         .addEventListener('click', this.onItemCreateClick.bind(this))
+      this.$.container
+        .querySelector('paper-input')
+        .addEventListener('value-changed', this.onFormTitleChange.bind(this))
     } else {
       this.$.container.innerHTML = ''
       this.innerHTML = `
@@ -158,6 +161,14 @@ class TangyFormEditor extends PolymerElement {
       this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
     }
+  }
+
+  onFormTitleChange(event) {
+    let value = event.target.value
+    clearTimeout(this.debouncedFormTitleInput)
+    this.debouncedFormTitleInput = setTimeout(_ => {
+      this.store.dispatch({type: 'FORM_TITLE_UPDATE', payload: value})
+    }, 2000)
   }
 
   onItemEditorSave(event) {
