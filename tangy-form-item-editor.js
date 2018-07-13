@@ -96,19 +96,19 @@ class TangyFormItemEditor extends PolymerElement {
       <h2 style="text-align: left">Item Preview</h2>
       <paper-card style="text-align: left; margin: 0 auto; width:100%; max-width: 650px;">
         <div class="card-content">
-          ${this.item.fileContents}
+          ${this.item.template}
         </div>
       </paper-card>
       </div>
     `
     let juicyAceEditorEl = document.createElement('juicy-ace-editor')
-    juicyAceEditorEl.value = this.item.fileContents
+    juicyAceEditorEl.value = this.item.template
     juicyAceEditorEl.style.height = `${window.innerHeight*.6}px`
     this.appendChild(juicyAceEditorEl)
     /* @TODO: Implement tangy-ckeditor
     this.innerHTML = `
       <tangy-ckeditor>
-        ${this.item.fileContents}
+        ${this.item.template}
       </tangy-ckeitor>
     */
     this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
@@ -122,7 +122,7 @@ class TangyFormItemEditor extends PolymerElement {
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         title: this.$.container.querySelector('#itemTitle').value,
-        fileContents: this.querySelector('juicy-ace-editor').value 
+        template: this.querySelector('juicy-ace-editor').value 
     })}))
   }
 }

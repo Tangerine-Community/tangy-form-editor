@@ -63,7 +63,7 @@ class TangyFormEditor extends PolymerElement {
     template.innerHTML = templateHtml
     // Load from innerHTML
     let items = []
-    template.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {fileContents: el.template})))
+    template.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {template: el.template})))
     this.formJson = Object.assign({}, this.formJson, {
       form: Object.assign({}, template.querySelector('tangy-form').getProps(), {title: template.querySelector('tangy-form').getAttribute('title')}),
       items
@@ -179,7 +179,7 @@ class TangyFormEditor extends PolymerElement {
         ${state.items.map(item => `
           <tangy-form-item id="${item.id}" title="${item.title}"${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}>
             <template>
-              ${item.fileContents}
+              ${item.template}
             </template>
           </tangy-form-item>
         `).join('')}

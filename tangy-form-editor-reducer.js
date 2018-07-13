@@ -13,7 +13,7 @@ const itemModel = {
   summary: false,
   hideNextButton: false,
   hideBackButton: false,
-  fileContents: `<form on-change="" on-open="">...</form>`
+  template: `<form on-change="" on-open="">...</form>`
 }
 
 const tangyFormEditorReducer = function (state = initialState, action) {
