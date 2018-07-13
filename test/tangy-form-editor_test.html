@@ -14,16 +14,10 @@
   </head>
   <body>
 
-    <test-fixture id="BasicTestFixture">
-      <template>
-        <tangy-form-editor></tangy-form-editor>
-      </template>
-    </test-fixture>
-
     <test-fixture id="InlineFormHtmlTestFixture">
       <template>
         <tangy-form-editor>
-          <tangy-form id="field-demo">
+          <tangy-form id="field-demo" title="Field Demo">
             <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
               <form>
                 <tangy-input name="text_input_1" label="This is an input for text." type="text"></tangy-input>
@@ -39,102 +33,26 @@
       </template>
     </test-fixture>
 
-    <test-fixture id="InlineFormJsonTestFixture">
-      <template>
-        <tangy-form-editor form-json='
-            {
-              "editMode": "ckeditor", 
-              "openItem": "",
-              "form": {
-                "id": "form1",
-                "title": "Form 1",
-                "linearMode": true,
-                "hideDisabledItems": true,
-                "hasSummary": true
-              },
-              "items": [
-                {
-                  "id": "item1",
-                  "title": "Item 1",
-                  "summary": false,
-                  "hideNextButton": false,
-                  "hideBackButton": true,
-                  "fileContents": "<tangy-input name=\"input1\" label=\"Input 1\"></tangy-input>"
-                },
-                {
-                  "id": "item2",
-                  "title": "Item 2",
-                  "summary": false,
-                  "hideNextButton": true,
-                  "hideBackButton": false,
-                  "fileContents": "<tangy-input name=\"input2\" label=\"Input 2\"></tangy-input> <br> <tangy-complete-button>submit</tangy-complete-button>"
-                },
-                {
-                  "id": "item3",
-                  "title": "Item 3 - Summarksjdfdjky",
-                  "summary": true,
-                  "hideNextButton": true,
-                  "hideBackButton": true,
-                  "fileContents": "Thanks for filling out our form!"
-                }
-              ]
-            }
-          '></tangy-form-editor>
-      </template>
-    </test-fixture>
-
     <script type="module">
       suite('tangy-form-editor', () => {
-        test('should have 3 items listed after putting formJson inline', () => {
-            const element = fixture('InlineFormJsonTestFixture');
-            assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 3);
-        });
+        
         test('should have 2 items listed after putting formHtml inline', () => {
-            const element = fixture('InlineFormHtmlTestFixture');
-            assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 2);
+          const element = fixture('InlineFormHtmlTestFixture');
+          assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 2);
         });
-        test('should have 3 items listed after programatically assigning formJson', () => {
-            const element = fixture('BasicTestFixture');
-            const exampleFormJson = {
-              editMode: 'ckeditor', 
-              openItem: '',
-              form: {
-                id: 'form1',
-                title: 'Form 1',
-                linearMode: true,
-                hideDisabledItems: true,
-                hasSummary: true,
-              },
-              items: [
-                {
-                  id: 'item1',
-                  title: 'Item 1',
-                  summary: false,
-                  hideNextButton: false,
-                  hideBackButton: true,
-                  fileContents: `<tangy-input name="input1" label="Input 1"></tangy-input>`
-                },
-                {
-                  id: 'item2',
-                  title: 'Item 2',
-                  summary: false,
-                  hideNextButton: true,
-                  hideBackButton: false,
-                  fileContents: `<tangy-input name="input2" label="Input 2"></tangy-input> <br>
-                                  <tangy-complete-button>submit</tangy-complete-button>`
-                },
-                {
-                  id: 'item3',
-                  title: 'Item 3 - Summary',
-                  summary: true,
-                  hideNextButton: true,
-                  hideBackButton: true,
-                  fileContents: `Thanks for filling out our form!`
-                }
-              ]
-            }
-            element.formJson = exampleFormJson
-            assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 3);
+
+        test('after clicking new item button, should have 3 items', () => {
+          const element = fixture('InlineFormHtmlTestFixture');
+          element.$.container.querySelector('.item-create').click()
+          assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 3);
+        });
+
+        test('after clicking new item button, formHtml should have 3 tangy-form-item elements', () => {
+          const element = fixture('InlineFormHtmlTestFixture');
+          element.$.container.querySelector('.item-create').click()
+          const containerEl = document.createElement('div')
+          containerEl.innerHTML = element.formHtml
+          assert.equal(containerEl.querySelectorAll('tangy-form-item').length, 3)
         });
 
       });
