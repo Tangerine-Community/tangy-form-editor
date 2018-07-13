@@ -43,7 +43,7 @@ Encapsulate a `tangy-form` with `tangy-form-editor` then listen for the `tangy-f
 git clone git@github.com:tangerine-community/tangy-form-editor
 cd tangy-form-editor
 npm install
-npm install --save @polymer/cli
+npm install --save polymer-cli
 # Serve up the demo.
 polymer serve
 ```
