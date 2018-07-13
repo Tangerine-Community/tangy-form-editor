@@ -28,13 +28,13 @@ class TangyFormEditor extends PolymerElement {
     <div id="editor-region">
       <slot></slot>
     </div>
-
+ hi
     `;
   }
 
   static get properties() {
     return {
-      state: {
+      formJson: {
         type: Object,
         value: {
           editMode: 'ckeditor', 
@@ -46,34 +46,10 @@ class TangyFormEditor extends PolymerElement {
             hideDisabledItems: true,
             hasSummary: true,
           },
-          items: [
-            {
-              id: 'item1',
-              title: 'Item 1',
-              summary: false,
-              hideNextButton: false,
-              hideBackButton: true,
-              fileContents: `<tangy-input name="input1" label="Input 1"></tangy-input>`
-            },
-            {
-              id: 'item2',
-              title: 'Item 2',
-              summary: false,
-              hideNextButton: true,
-              hideBackButton: false,
-              fileContents: `<tangy-input name="input2" label="Input 2"></tangy-input> <br>
-                              <tangy-complete-button>submit</tangy-complete-button>`
-            },
-            {
-              id: 'item3',
-              title: 'Item 3 - Summary',
-              summary: true,
-              hideNextButton: true,
-              hideBackButton: true,
-              fileContents: `Thanks for filling out our form!`
-            }
-          ]
-        }
+          items: []
+        },
+        /*reflectToAttribute: true,*/
+        observer: 'render'
       }
     };
   }
@@ -84,12 +60,12 @@ class TangyFormEditor extends PolymerElement {
       tangyFormEditorReducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
-    this.unsubscribe = this.store.subscribe(this.render.bind(this))
-    this.store.dispatch({type: 'FORM_OPEN', payload: this.state})
+    this.unsubscribe = this.store.subscribe(state => this.formJson = state)
+    this.render()
   }
 
   render() {
-    const state = this.store.getState()
+    const state = this.formJson 
     if (state.openItem === '') { 
       // Unbind event listeners.
       if (this.$.container.innerHTML !== '') {
