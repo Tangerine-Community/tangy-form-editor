@@ -28,7 +28,6 @@ class TangyFormEditor extends PolymerElement {
     <div id="editor-region">
       <slot></slot>
     </div>
- hi
     `;
   }
 
@@ -49,7 +48,7 @@ class TangyFormEditor extends PolymerElement {
           items: []
         },
         /*reflectToAttribute: true,*/
-        observer: 'render'
+        observer: 'formJsonUpdate'
       }
     };
   }
@@ -60,12 +59,15 @@ class TangyFormEditor extends PolymerElement {
       tangyFormEditorReducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
-    this.unsubscribe = this.store.subscribe(state => this.formJson = state)
-    this.render()
+    this.unsubscribe = this.store.subscribe(_ => this.render(this.store.getState()))
+    this.store.dispatch({type: 'FORM_OPEN', payload: this.formJson})
   }
 
-  render() {
-    const state = this.formJson 
+  formJsonUpdate(formJson) {
+    if (this.store) this.store.dispatch({type: 'FORM_OPEN', payload: formJson})
+  }
+
+  render(state) {
     if (state.openItem === '') { 
       // Unbind event listeners.
       if (this.$.container.innerHTML !== '') {
