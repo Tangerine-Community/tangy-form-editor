@@ -70,6 +70,7 @@ class TangyFormItemEditor extends PolymerElement {
   render() {
     this.$.container.innerHTML = `
       <div style="text-align: center">
+      <h2 style="text-align: left">Item Editor</h2>
       <paper-card style="text-align: left; margin: 0 auto; width:100%; max-width: 650px;">
         <div class="card-content">
           <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
@@ -90,6 +91,12 @@ class TangyFormItemEditor extends PolymerElement {
               icon="icons:save"
               >
           </paper-icon-button>
+        </div>
+      </paper-card>
+      <h2 style="text-align: left">Item Preview</h2>
+      <paper-card style="text-align: left; margin: 0 auto; width:100%; max-width: 650px;">
+        <div class="card-content">
+          ${this.item.fileContents}
         </div>
       </paper-card>
       </div>
