@@ -26,11 +26,9 @@ class TangyFormEditor extends PolymerElement {
     <!-- FORM ITEM LISTING -->
     <div id="container"></div>
     <div id="editor-region">
-    </div>
-    <div id="preview">
-      <h2> Preview </h2>
       <slot></slot>
     </div>
+    <div id="form-preview"></div>
     `;
   }
 
@@ -56,13 +54,22 @@ class TangyFormEditor extends PolymerElement {
     };
   }
 
+  get formHtml() {
+    this.renderFormHtml(this.store.getState())
+  }
+
   connectedCallback() {
     super.connectedCallback();
     this.store = Redux.createStore(
       tangyFormEditorReducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
-    this.unsubscribe = this.store.subscribe(_ => this.render(this.store.getState()))
+    this.unsubscribe = this.store.subscribe(_ => {
+      this.render(this.store.getState())
+      this.dispatchEvent(new CustomEvent('change', {
+        detail: this.renderFormHtml(this.store.getState())
+      }))
+    })
     if (this.innerHTML !== '') {
       // Load from innerHTML
       let items = []
@@ -71,6 +78,8 @@ class TangyFormEditor extends PolymerElement {
         form: Object.assign({}, this.querySelector('tangy-form').getProps(), {title: this.querySelector('tangy-form').getAttribute('title')}),
         items
       })
+      // Clear innerHTML because we need to make way for the item editor which will use CKEditor... and CKEditor will not work in shadowRoot.
+      this.innerHTML = ''
     } else {
       // Load from this.formJson inline.
       this.store.dispatch({type: 'FORM_OPEN', payload: this.formJson})
@@ -95,6 +104,7 @@ class TangyFormEditor extends PolymerElement {
           .removeEventListener('sort-finish', this.onSortFinish.bind(this))
       }
       this.$.container.innerHTML = `
+        <h2>Form Editor</h2>
         <paper-input label="Form Title" value="${state.form.title}"></paper-input>
         <paper-icon-button
             icon="add-circle-outline"
@@ -141,6 +151,10 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelector('paper-input')
         .addEventListener('value-changed', this.onFormTitleChange.bind(this))
+      this.$['form-preview'].innerHTML = `
+        <h2>Form preview</h2>
+        ${this.renderFormHtml(state)}
+      `
     } else {
       this.$.container.innerHTML = `
         <tangy-form-item-editor></tangy-form-item-editor>
@@ -149,10 +163,13 @@ class TangyFormEditor extends PolymerElement {
       this.$.container.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
       this.$.container.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.$.container.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
-      
-    }
-    this.innerHTML = `
-      <tangy-form id="${state.form.id}">
+      this.$['form-preview'].innerHTML = ``
+      }
+  }
+
+  renderFormHtml(state) {
+    return `
+      <tangy-form id="${state.form.id}" title="${state.form.title}">
         ${state.items.map(item => `
           <tangy-form-item id="${item.id}" title="${item.title}"${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}>
               ${item.fileContents}
