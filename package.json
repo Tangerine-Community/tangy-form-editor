@@ -2,12 +2,16 @@
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
   "version": "0.0.1",
+  "scripts": {
+    "start": "polymer serve",
+    "test": "polymer test -p -l chrome"
+  },
   "dependencies": {
     "@polymer/polymer": "^3.0.0",
     "@polymer/sortable-list": "git://github.com/DrNiels/sortable-list.git#polymer-3",
     "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
-    "tangy-form": "^1.0.4"
+    "tangy-form": "^1.4.0"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
