@@ -28,7 +28,7 @@
       <demo-snippet>
         <template>
           <tangy-form-editor>
-            <tangy-form id="field-demo">
+            <tangy-form id="field-demo" title="Field Demo">
               <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
                 <form>
                   <tangy-input name="text_input_1" label="This is an input for text." type="text"></tangy-input>
@@ -39,7 +39,15 @@
                   <tangy-input name="text_input_2" label="This is an input for text that is required." type="text" error-message="This is required." required></tangy-input>
                 </form>
               </tangy-form-item> 
+              <tangy-form-item id="summary" summary title="Summary">
+                <form>
+                  Thank you for taking our survey.
+                </form>
+              </tangy-form-item> 
             </tangy-form>
+            <script>
+              document.querySelector('tangy-form-editor').addEventListener('change', event => console.log(event.detail))
+            </script>
           </tangy-form-editor>
         </template>
       </demo-snippet>
