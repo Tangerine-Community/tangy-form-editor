@@ -184,7 +184,7 @@ class TangyFormEditor extends PolymerElement {
     clearTimeout(this.debouncedFormTitleInput)
     this.debouncedFormTitleInput = setTimeout(_ => {
       this.store.dispatch({type: 'FORM_TITLE_UPDATE', payload: value})
-    }, 2000)
+    }, 500)
   }
 
   onItemEditorSave(event) {
