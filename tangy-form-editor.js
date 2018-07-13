@@ -60,7 +60,18 @@ class TangyFormEditor extends PolymerElement {
       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
     this.unsubscribe = this.store.subscribe(_ => this.render(this.store.getState()))
-    this.store.dispatch({type: 'FORM_OPEN', payload: this.formJson})
+    if (this.innerHTML !== '') {
+      // Load from innerHTML
+      let items = []
+      this.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {fileContents: el._innerHTML})))
+      this.formJson = Object.assign({}, this.formJson, {
+        form: this.querySelector('tangy-form').getProps(),
+        items
+      })
+    } else {
+      // Load from this.formJson inline.
+      this.store.dispatch({type: 'FORM_OPEN', payload: this.formJson})
+    }
   }
 
   formJsonUpdate(formJson) {
