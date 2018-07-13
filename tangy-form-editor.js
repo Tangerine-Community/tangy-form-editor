@@ -55,7 +55,20 @@ class TangyFormEditor extends PolymerElement {
   }
 
   get formHtml() {
-    this.renderFormHtml(this.store.getState())
+    return this.renderFormHtml(this.store.getState())
+  }
+
+  set formHtml(templateHtml) {
+    let template = document.createElement('div')
+    template.innerHTML = templateHtml
+    // Load from innerHTML
+    let items = []
+    template.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {fileContents: el._innerHTML})))
+    this.formJson = Object.assign({}, this.formJson, {
+      form: Object.assign({}, template.querySelector('tangy-form').getProps(), {title: template.querySelector('tangy-form').getAttribute('title')}),
+      items
+    })
+    // Clear innerHTML because we need to make way for the item editor which will use CKEditor... and CKEditor will not work in shadowRoot.
   }
 
   connectedCallback() {
@@ -71,14 +84,7 @@ class TangyFormEditor extends PolymerElement {
       }))
     })
     if (this.innerHTML !== '') {
-      // Load from innerHTML
-      let items = []
-      this.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {fileContents: el._innerHTML})))
-      this.formJson = Object.assign({}, this.formJson, {
-        form: Object.assign({}, this.querySelector('tangy-form').getProps(), {title: this.querySelector('tangy-form').getAttribute('title')}),
-        items
-      })
-      // Clear innerHTML because we need to make way for the item editor which will use CKEditor... and CKEditor will not work in shadowRoot.
+      this.formHtml = this.innerHTML
       this.innerHTML = ''
     } else {
       // Load from this.formJson inline.
