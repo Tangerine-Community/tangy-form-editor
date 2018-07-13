@@ -20,24 +20,57 @@
       </template>
     </test-fixture>
 
-    <test-fixture id="ChangedPropertyTestFixture">
+    <test-fixture id="InlineFormJsonTestFixture">
       <template>
-        <tangy-form-editor prop1="new-prop1"></tangy-form-editor>
+        <tangy-form-editor form-json='
+            {
+              "editMode": "ckeditor", 
+              "openItem": "",
+              "form": {
+                "id": "form1",
+                "title": "Form 1",
+                "linearMode": true,
+                "hideDisabledItems": true,
+                "hasSummary": true
+              },
+              "items": [
+                {
+                  "id": "item1",
+                  "title": "Item 1",
+                  "summary": false,
+                  "hideNextButton": false,
+                  "hideBackButton": true,
+                  "fileContents": "<tangy-input name=\"input1\" label=\"Input 1\"></tangy-input>"
+                },
+                {
+                  "id": "item2",
+                  "title": "Item 2",
+                  "summary": false,
+                  "hideNextButton": true,
+                  "hideBackButton": false,
+                  "fileContents": "<tangy-input name=\"input2\" label=\"Input 2\"></tangy-input> <br> <tangy-complete-button>submit</tangy-complete-button>"
+                },
+                {
+                  "id": "item3",
+                  "title": "Item 3 - Summarksjdfdjky",
+                  "summary": true,
+                  "hideNextButton": true,
+                  "hideBackButton": true,
+                  "fileContents": "Thanks for filling out our form!"
+                }
+              ]
+            }
+          '></tangy-form-editor>
       </template>
     </test-fixture>
 
     <script type="module">
       suite('tangy-form-editor', () => {
-
-        //test('instantiating the element with default properties works', () => {
-        test('should have 3 items listed', () => {
-          /*
-          const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'tangy-form-editor');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello tangy-form-editor!');
-          */
+        test('should have 3 items listed after putting formJson inline', () => {
+            const element = fixture('InlineFormJsonTestFixture');
+            assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 3);
+        });
+        test('should have 3 items listed after programatically assigning formJson', () => {
             const element = fixture('BasicTestFixture');
             const exampleFormJson = {
               editMode: 'ckeditor', 
@@ -80,17 +113,6 @@
             element.formJson = exampleFormJson
             assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 3);
         });
-
-        /*
-        test('setting a property on the element works', () => {
-          // Create a test fixture
-          const element = fixture('ChangedPropertyTestFixture');
-          assert.equal(element.prop1, 'new-prop1');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
-        });
-        */
 
       });
     </script>
