@@ -27,6 +27,10 @@ class TangyFormEditor extends PolymerElement {
     <div id="container"></div>
     <div id="editor-region">
     </div>
+    <div id="preview">
+      <h2> Preview </h2>
+      <slot></slot>
+    </div>
     `;
   }
 
@@ -90,7 +94,6 @@ class TangyFormEditor extends PolymerElement {
           .querySelector('sortable-list')
           .removeEventListener('sort-finish', this.onSortFinish.bind(this))
       }
-      this.innerHTML = ``
       this.$.container.innerHTML = `
         <paper-input label="Form Title" value="${state.form.title}"></paper-input>
         <paper-icon-button
@@ -146,7 +149,17 @@ class TangyFormEditor extends PolymerElement {
       this.$.container.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
       this.$.container.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.$.container.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
+      
     }
+    this.innerHTML = `
+      <tangy-form id="${state.form.id}">
+        ${state.items.map(item => `
+          <tangy-form-item id="${item.id}" title="${item.title}"${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}>
+              ${item.fileContents}
+          </tangy-form-item>
+        `).join('')}
+      </tangy-form>
+    `
   }
 
   onFormTitleChange(event) {
