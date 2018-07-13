@@ -26,7 +26,6 @@ class TangyFormEditor extends PolymerElement {
     <!-- FORM ITEM LISTING -->
     <div id="container"></div>
     <div id="editor-region">
-      <slot></slot>
     </div>
     `;
   }
@@ -65,7 +64,7 @@ class TangyFormEditor extends PolymerElement {
       let items = []
       this.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {fileContents: el._innerHTML})))
       this.formJson = Object.assign({}, this.formJson, {
-        form: this.querySelector('tangy-form').getProps(),
+        form: Object.assign({}, this.querySelector('tangy-form').getProps(), {title: this.querySelector('tangy-form').getAttribute('title')}),
         items
       })
     } else {
@@ -81,16 +80,15 @@ class TangyFormEditor extends PolymerElement {
   render(state) {
     if (state.openItem === '') { 
       // Unbind event listeners.
-      if (this.$.container.innerHTML !== '') {
+      if (this.$.container.querySelector('.item-create')) {
         this.$.container
           .querySelector('.item-create')
           .removeEventListener('click', this.onItemCreateClick.bind(this))
+      }
+      if (this.$.container.querySelector('sortable-list')) {
         this.$.container
           .querySelector('sortable-list')
           .removeEventListener('sort-finish', this.onSortFinish.bind(this))
-        this.$.container
-          .querySelectorAll('.edit-item')
-          .forEach(item => item.addEventListener('click', this.onSortableClick.bind(this)))
       }
       this.innerHTML = ``
       this.$.container.innerHTML = `
@@ -141,14 +139,13 @@ class TangyFormEditor extends PolymerElement {
         .querySelector('paper-input')
         .addEventListener('value-changed', this.onFormTitleChange.bind(this))
     } else {
-      this.$.container.innerHTML = ''
-      this.innerHTML = `
+      this.$.container.innerHTML = `
         <tangy-form-item-editor></tangy-form-item-editor>
       `
       //this.querySelector('tangy-item-editor').addEventListener
-      this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
-      this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
-      this.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
+      this.$.container.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
+      this.$.container.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
+      this.$.container.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
     }
   }
 
