@@ -27,9 +27,23 @@
       <h3>Basic tangy-form-editor demo</h3>
       <demo-snippet>
         <template>
-          <tangy-form-editor></tangy-form-editor>
+          <tangy-form-editor>
+            <tangy-form id="field-demo">
+              <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
+                <form>
+                  <tangy-input name="text_input_1" label="This is an input for text." type="text"></tangy-input>
+                </form>
+              </tangy-form-item>
+              <tangy-form-item id="text_inputs_2" title="Text Inputs 2">
+                <form>
+                  <tangy-input name="text_input_2" label="This is an input for text that is required." type="text" error-message="This is required." required></tangy-input>
+                </form>
+              </tangy-form-item> 
+            </tangy-form>
+          </tangy-form-editor>
         </template>
       </demo-snippet>
+
     </div>
   </body>
 </html>
