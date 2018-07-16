@@ -1,5 +1,7 @@
 # \<tangy-form-editor\>
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Tangerine-Community/tangy-form-editor.svg)](https://greenkeeper.io/)
+
 ## Install
 Global dependencies: redux
 
