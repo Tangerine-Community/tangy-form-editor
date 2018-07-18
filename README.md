@@ -3,7 +3,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/Tangerine-Community/tangy-form-editor.svg)](https://greenkeeper.io/) [![Build Status](https://travis-ci.org/Tangerine-Community/tangy-form-editor.svg?branch=master)](https://travis-ci.org/Tangerine-Community/tangy-form-editor)
 
 ## Install
-Global dependencies: redux
+Global dependencies: redux, js-beautify, ckeditor (special build included in this repo)
 
 ```
 npm install --save tangy-form-editor

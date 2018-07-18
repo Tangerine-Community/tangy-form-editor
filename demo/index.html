@@ -8,6 +8,8 @@
 
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/redux/dist/redux.min.js"></script>
+    <script src="../ckeditor/ckeditor.js"></script>
+    <script src="../node_modules/js-beautify/js/lib/beautify-html.js"></script>
 
 
     <script type="module">
@@ -53,7 +55,7 @@
             </tangy-form>
           </tangy-form-editor>
           <script>
-            document.querySelector('tangy-form-editor').addEventListener('change', event => console.log(event.detail))
+            document.querySelector('tangy-form-editor').addEventListener('change', event => console.info(event.detail))
           </script>
         </template>
       </demo-snippet>
