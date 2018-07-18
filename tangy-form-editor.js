@@ -1,9 +1,11 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import '@polymer/sortable-list/sortable-list.js'
+import '@polymer/paper-toggle-button/paper-toggle-button.js'
 import 'juicy-ace-editor/juicy-ace-editor-module.js'
 import {tangyFormEditorReducer} from './tangy-form-editor-reducer.js'
 import './tangy-form-item-editor.js'
 import './tangy-form-html-editor.js'
+import './tangy-form-item-ckeditor.js'
 import 'tangy-form/tangy-form.js'
 
 /**
@@ -99,6 +101,7 @@ class TangyFormEditor extends PolymerElement {
 
   render(state) {
     if (state.openItem === '') { 
+      this.innerHTML = ''
       // Unbind event listeners.
       if (this.$.container.querySelector('.item-create')) {
         this.$.container
@@ -171,6 +174,7 @@ class TangyFormEditor extends PolymerElement {
         ${this.renderFormHtml(state)}
       `
     } else if (state.openItem === 'form.html') {
+      this.innerHTML = ''
       this.$.container.innerHTML = `
         <tangy-form-html-editor></tangy-form-html-editor>
       `
@@ -181,15 +185,29 @@ class TangyFormEditor extends PolymerElement {
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('save', this.onFormHtmlEditorSave.bind(this))
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('close', this.onFormHtmlEditorClose.bind(this))
       this.$['form-preview'].innerHTML = ``
-    } else {
+    } else if (state.openItem !== '' && state.editMode === 'ace-editor') {
+      this.innerHTML = ''
       this.$.container.innerHTML = `
+        <paper-toggle-button></paper-toggle-button> WYSIWYG
         <tangy-form-item-editor></tangy-form-item-editor>
       `
       this.$.container.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
       this.$.container.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.$.container.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
+      this.$.container.querySelector('paper-toggle-button').addEventListener('click', this.onWysiwygToggle.bind(this))
       this.$['form-preview'].innerHTML = ``
-      }
+    } else if (state.openItem !== '' && state.editMode === 'ckeditor') {
+      this.$.container.innerHTML = ''
+      this.innerHTML = `
+        <paper-toggle-button checked></paper-toggle-button> WYSIWYG
+        <tangy-form-item-ckeditor></tangy-form-item-ckeditor>
+      `
+      this.querySelector('tangy-form-item-ckeditor').item = state.items.find(item => item.id === state.openItem)
+      this.querySelector('tangy-form-item-ckeditor').addEventListener('save', this.onItemEditorSave.bind(this))
+      this.querySelector('tangy-form-item-ckeditor').addEventListener('close', this.onItemEditorClose.bind(this))
+      this.querySelector('paper-toggle-button').addEventListener('click', this.onWysiwygToggle.bind(this))
+      this.$['form-preview'].innerHTML = ``
+    }
   }
 
   renderFormHtml(state) {
@@ -204,6 +222,10 @@ class TangyFormEditor extends PolymerElement {
         `).join('')}
       </tangy-form>
     `
+  }
+
+  onWysiwygToggle(event) {
+    this.store.dispatch({type: 'WYSIWYG_TOGGLE'})
   }
 
   onFormTitleChange(event) {
