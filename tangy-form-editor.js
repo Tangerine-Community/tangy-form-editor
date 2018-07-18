@@ -3,6 +3,7 @@ import '@polymer/sortable-list/sortable-list.js'
 import 'juicy-ace-editor/juicy-ace-editor-module.js'
 import {tangyFormEditorReducer} from './tangy-form-editor-reducer.js'
 import './tangy-form-item-editor.js'
+import './tangy-form-html-editor.js'
 import 'tangy-form/tangy-form.js'
 
 /**
@@ -116,6 +117,11 @@ class TangyFormEditor extends PolymerElement {
             icon="add-circle-outline"
             class="item-create">
         </paper-icon-button>
+        <paper-icon-button
+            icon="editor:mode-edit"
+            class="form-html-edit">
+        </paper-icon-button>
+
 
         <sortable-list>
         ${state.items.map(item => `
@@ -155,17 +161,30 @@ class TangyFormEditor extends PolymerElement {
         .querySelector('.item-create')
         .addEventListener('click', this.onItemCreateClick.bind(this))
       this.$.container
+        .querySelector('.form-html-edit')
+        .addEventListener('click', this.onFormHtmlEditClick.bind(this))
+      this.$.container
         .querySelector('paper-input')
         .addEventListener('value-changed', this.onFormTitleChange.bind(this))
       this.$['form-preview'].innerHTML = `
         <h2>Form preview</h2>
         ${this.renderFormHtml(state)}
       `
+    } else if (state.openItem === 'form.html') {
+      this.$.container.innerHTML = `
+        <tangy-form-html-editor></tangy-form-html-editor>
+      `
+      this.$.container.querySelector('tangy-form-html-editor').form = {
+        title: state.form.title,
+        markup: this.renderFormHtml(state) 
+      }
+      this.$.container.querySelector('tangy-form-html-editor').addEventListener('save', this.onFormHtmlEditorSave.bind(this))
+      this.$.container.querySelector('tangy-form-html-editor').addEventListener('close', this.onFormHtmlEditorClose.bind(this))
+      this.$['form-preview'].innerHTML = ``
     } else {
       this.$.container.innerHTML = `
         <tangy-form-item-editor></tangy-form-item-editor>
       `
-      //this.querySelector('tangy-item-editor').addEventListener
       this.$.container.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
       this.$.container.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.$.container.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
@@ -201,13 +220,29 @@ class TangyFormEditor extends PolymerElement {
 
   onItemEditorClose(event) {
     this.store.dispatch({type: 'ITEM_CLOSE'})
-
   }
+
+  onItemEditorClose(event) {
+    this.store.dispatch({type: 'ITEM_CLOSE'})
+  }
+
 
   onItemCreateClick() {
     this.store.dispatch({type: 'ITEM_CREATE'})
   }
 
+  onFormHtmlEditorSave(event) {
+    this.formHtml = event.detail
+    //this.store.dispatch({type: '_UPDATE', payload: event.detail})
+  }
+
+  onFormHtmlEditorClose(event) {
+    this.store.dispatch({type: 'ITEM_CLOSE'})
+  }
+
+  onFormHtmlEditClick() {
+    this.store.dispatch({type: 'FORM_EDIT'})
+  }
   onSortFinish(event) {
     this.store.dispatch({
       type: 'SORT_ITEMS', 
