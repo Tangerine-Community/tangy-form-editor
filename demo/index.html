@@ -33,7 +33,7 @@
             <tangy-form id="field-demo" title="Field Demo">
               <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
                 <template>
-                  <form>
+                  <form on-open="console.log('on-open called')" on-change="console.log('on-change called')">
                     <tangy-input name="text_input_1" label="What is your first name?" type="text"></tangy-input>
                   </form>
                 </template>
