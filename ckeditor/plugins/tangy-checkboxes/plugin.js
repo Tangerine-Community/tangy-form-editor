@@ -17,7 +17,6 @@ CKEDITOR.plugins.add( 'tangy-checkboxes', {
 			},
 			init: function() {
 				this.setData('label', this.element.$.label)
-				this.setData('type', this.element.$.type)
 				this.setData('name', this.element.$.name)
 				if (this.element.$.required) {
 					this.setData('required', 'required')
@@ -30,7 +29,6 @@ CKEDITOR.plugins.add( 'tangy-checkboxes', {
 				this.setData('options', optionsString)
 			},
 			data: function() {
-				this.element.$.setAttribute('type', this.data.type)
 				this.element.$.setAttribute('label', this.data.label)
 				this.element.$.setAttribute('name', this.data.name)
 				if (this.data.required === 'required') {
