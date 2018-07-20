@@ -9,6 +9,13 @@ Global dependencies: redux, js-beautify, ckeditor (special build included in thi
 npm install --save tangy-form-editor
 ```
 
+If you are using a bundler, you have to copy an ace build to your root directory in order to get syntax highlighting. In an `angular-cli` project (as of Angular 4) you can do this by adding the following `assets` entry to your apps build target.
+```
+  { "glob": "**/*", "input": "../node_modules/ace-builds/src-noconflict/", "output": "./" },
+```
+
+See related issue: https://github.com/Juicy/juicy-ace-editor/issues/39#issuecomment-406710315
+
 ## Usage
 Encapsulate a `tangy-form` with `tangy-form-editor` then listen for the `tangy-form-editor`'s `change` event for updates on the form HTML.
 
