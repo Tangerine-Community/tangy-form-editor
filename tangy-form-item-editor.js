@@ -102,6 +102,7 @@ class TangyFormItemEditor extends PolymerElement {
       </div>
     `
     let juicyAceEditorEl = document.createElement('juicy-ace-editor')
+    juicyAceEditorEl.setAttribute('mode', 'ace/mode/html')
     juicyAceEditorEl.value = this.item.template
     juicyAceEditorEl.style.height = `${window.innerHeight*.6}px`
     this.appendChild(juicyAceEditorEl)
