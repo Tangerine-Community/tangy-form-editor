@@ -26,6 +26,15 @@ class TangyFormEditor extends PolymerElement {
         color: var(--primary-text-color);
         font-size: medium;
       }
+      :host([show-preview]) .show-preview {
+        display: none;
+      }
+      :host(:not([show-preview])) .hide-preview {
+        display: none;
+      }
+      :host(:not([show-preview])) #form-preview {
+        display: none;
+      }
     </style>
     <!-- FORM ITEM LISTING -->
     <div id="container"></div>
@@ -38,6 +47,11 @@ class TangyFormEditor extends PolymerElement {
 
   static get properties() {
     return {
+      showPreview: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
       formJson: {
         type: Object,
         value: {
@@ -117,15 +131,27 @@ class TangyFormEditor extends PolymerElement {
       this.$.container.innerHTML = `
         <h2>Form Editor</h2>
         <paper-input label="Form Title" value="${state.form.title}"></paper-input>
+        <paper-button
+            class="form-html-edit">
+            <iron-icon icon="editor:mode-edit"></iron-icon>
+            Edit HTML
+        </paper-button>
+        <paper-button
+            class="show-preview">
+            <iron-icon icon="av:play-circle-filled"></iron-icon>
+            Preview
+        </paper-button>
+        <paper-button
+            class="hide-preview">
+            <iron-icon icon="av:pause-circle-filled"></iron-icon>
+            Preview
+        </paper-button>
+        <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
+        <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
         <paper-icon-button
             icon="add-circle-outline"
             class="item-create">
         </paper-icon-button>
-        <paper-icon-button
-            icon="editor:mode-edit"
-            class="form-html-edit">
-        </paper-icon-button>
-
 
         <sortable-list>
         ${state.items.map(item => `
@@ -161,6 +187,14 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelectorAll('.edit-item')
         .forEach(item => item.addEventListener('click', this.onSortableClick.bind(this)))
+      this.$.container
+        .querySelector('.show-preview')
+        .addEventListener('click', this.togglePreview.bind(this))
+      this.$.container
+        .querySelector('.hide-preview')
+        .addEventListener('click', this.togglePreview.bind(this))
+
+
       this.$.container
         .querySelector('.item-create')
         .addEventListener('click', this.onItemCreateClick.bind(this))
@@ -223,6 +257,15 @@ class TangyFormEditor extends PolymerElement {
         `).join('')}
       </tangy-form>
     `
+  }
+
+  togglePreview() {
+    if (this.showPreview) {
+      this.showPreview = false 
+    } else {
+      this.showPreview = true
+      setTimeout(_ => this.shadowRoot.querySelector('#form-preview').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+    }
   }
 
   onWysiwygToggle(event) {
