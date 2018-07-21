@@ -26,7 +26,7 @@ const tangyFormEditorReducer = function (state = initialState, action) {
     case 'FORM_EDIT':
       return Object.assign({}, state, {openItem: 'form.html'} )
     case 'FORM_UPDATE':
-      return Object.assign({}, state, { form: action.payload })
+      return Object.assign({}, state, {form: Object.assign({}, state.form, action.payload) })
     case 'FORM_TITLE_UPDATE':
       return Object.assign({}, state, { form: Object.assign({}, state.form, {title: action.payload})})
     case 'WYSIWYG_TOGGLE':

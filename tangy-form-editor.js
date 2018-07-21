@@ -63,6 +63,8 @@ class TangyFormEditor extends PolymerElement {
             linearMode: true,
             hideDisabledItems: true,
             hasSummary: true,
+            onOpen: '',
+            onChange: ''
           },
           items: []
         },
@@ -83,7 +85,15 @@ class TangyFormEditor extends PolymerElement {
     let items = []
     template.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {template: el.template})))
     this.formJson = Object.assign({}, this.formJson, {
-      form: Object.assign({}, template.querySelector('tangy-form').getProps(), {title: template.querySelector('tangy-form').getAttribute('title')}),
+      form: Object.assign(
+         {}, 
+         template.querySelector('tangy-form').getProps(),
+         {
+           title: template.querySelector('tangy-form').getAttribute('title'),
+           onOpen: template.querySelector('tangy-form').getAttribute('on-open'),
+           onChange: template.querySelector('tangy-form').getAttribute('on-change')
+         }
+      ),
       items
     })
     // Clear innerHTML because we need to make way for the item editor which will use CKEditor... and CKEditor will not work in shadowRoot.
@@ -129,30 +139,33 @@ class TangyFormEditor extends PolymerElement {
           .removeEventListener('sort-finish', this.onSortFinish.bind(this))
       }
       this.$.container.innerHTML = `
+        <div style="float: right;">
+          <paper-button
+              class="form-html-edit">
+              <iron-icon icon="editor:mode-edit"></iron-icon>
+              Edit HTML
+          </paper-button>
+          <paper-button
+              class="show-preview">
+              <iron-icon icon="av:play-circle-filled"></iron-icon>
+              Preview
+          </paper-button>
+          <paper-button
+              class="hide-preview">
+              <iron-icon icon="av:pause-circle-filled"></iron-icon>
+              Preview
+          </paper-button>
+          <paper-button
+              class="save-form">
+              <iron-icon icon="icons:save"></iron-icon>
+              Save 
+          </paper-button>
+        </div>
         <h2>Form Editor</h2>
-        <paper-input label="Form Title" value="${state.form.title}"></paper-input>
-        <paper-button
-            class="form-html-edit">
-            <iron-icon icon="editor:mode-edit"></iron-icon>
-            Edit HTML
-        </paper-button>
-        <paper-button
-            class="show-preview">
-            <iron-icon icon="av:play-circle-filled"></iron-icon>
-            Preview
-        </paper-button>
-        <paper-button
-            class="hide-preview">
-            <iron-icon icon="av:pause-circle-filled"></iron-icon>
-            Preview
-        </paper-button>
+        <paper-input label="Form Title" id="form-title" value="${state.form.title}"></paper-input>
         <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
         <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
-        <paper-icon-button
-            icon="add-circle-outline"
-            class="item-create">
-        </paper-icon-button>
-
+        
         <sortable-list>
         ${state.items.map(item => `
           <paper-card
@@ -175,11 +188,25 @@ class TangyFormEditor extends PolymerElement {
           </paper-card>
         `).join('')}
         </sortable-list>
-              </div>
-            </div>
-          </paper-card>
-        </div>
+        <paper-button
+            class="item-create">
+            <iron-icon icon="add-circle-outline"></iron-icon>
+            Add item 
+        </paper-button>
       `
+
+      let onOpenEditorEl = document.createElement('juicy-ace-editor')
+      onOpenEditorEl.setAttribute('mode', 'ace/mode/javascript')
+      //onOpenEditorEl.value = itemFormEl.getAttribute('on-open') 
+      onOpenEditorEl.value = state.form.onOpen 
+      onOpenEditorEl.style.height = `${window.innerHeight*.6}px`
+      this.shadowRoot.querySelector('#on-open-editor').appendChild(onOpenEditorEl)
+      // on-change-editor
+      let onChangeEditorEl = document.createElement('juicy-ace-editor')
+      onChangeEditorEl.setAttribute('mode', 'ace/mode/javascript')
+      onChangeEditorEl.value = state.form.onChange 
+      onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
+      this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
       // Bind event listeners.
       this.$.container
         .querySelector('sortable-list')
@@ -193,6 +220,10 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelector('.hide-preview')
         .addEventListener('click', this.togglePreview.bind(this))
+      this.$.container
+        .querySelector('.save-form')
+        .addEventListener('click', this.onSaveFormClick.bind(this))
+
 
 
       this.$.container
@@ -201,14 +232,12 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelector('.form-html-edit')
         .addEventListener('click', this.onFormHtmlEditClick.bind(this))
-      this.$.container
-        .querySelector('paper-input')
-        .addEventListener('value-changed', this.onFormTitleChange.bind(this))
       this.$['form-preview'].innerHTML = `
         <h2>Form preview</h2>
         ${this.renderFormHtml(state)}
       `
     } else if (state.openItem === 'form.html') {
+      this.$['form-preview'].innerHTML = ``
       this.innerHTML = ''
       this.$.container.innerHTML = `
         <tangy-form-html-editor></tangy-form-html-editor>
@@ -219,7 +248,6 @@ class TangyFormEditor extends PolymerElement {
       }
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('save', this.onFormHtmlEditorSave.bind(this))
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('close', this.onFormHtmlEditorClose.bind(this))
-      this.$['form-preview'].innerHTML = ``
     } else if (state.openItem !== '' && state.editMode === 'ace-editor') {
       this.innerHTML = ''
       this.$.container.innerHTML = `
@@ -247,7 +275,14 @@ class TangyFormEditor extends PolymerElement {
 
   renderFormHtml(state) {
     return `
-      <tangy-form id="${state.form.id}" title="${state.form.title}">
+      <tangy-form id="${state.form.id}" title="${state.form.title}"
+        on-open="
+          ${state.form.onOpen}
+        "
+        on-change="
+          ${state.form.onChange}
+        "
+      >
         ${state.items.map(item => `
           <tangy-form-item id="${item.id}" title="${item.title}"${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}>
             <template>
@@ -272,17 +307,18 @@ class TangyFormEditor extends PolymerElement {
     this.store.dispatch({type: 'WYSIWYG_TOGGLE'})
   }
 
-  onFormTitleChange(event) {
-    let value = event.target.value
-    clearTimeout(this.debouncedFormTitleInput)
-    this.debouncedFormTitleInput = setTimeout(_ => {
-      this.store.dispatch({type: 'FORM_TITLE_UPDATE', payload: value})
-    }, 500)
-  }
-
   onItemEditorSave(event) {
     this.store.dispatch({type: 'ITEM_UPDATE', payload: event.detail})
   }
+
+  onSaveFormClick(event) {
+    this.store.dispatch({type: 'FORM_UPDATE', payload: {
+      title: this.shadowRoot.querySelector('#form-title').value,
+      onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
+      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value
+    }})
+  }
+
 
   onItemEditorClose(event) {
     this.store.dispatch({type: 'ITEM_CLOSE'})
