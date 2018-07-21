@@ -30,7 +30,12 @@
       <demo-snippet>
         <template>
           <tangy-form-editor>
-            <tangy-form id="field-demo" title="Field Demo">
+            <tangy-form 
+              id="field-demo" 
+              title="Field Demo" 
+              on-open="console.log('tangy-form.on-open called')"
+              on-change="console.log('tangy-form.on-change called')"
+            >
               <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
                 <template>
                   <form on-open="console.log('on-open called')" on-change="console.log('on-change called')">
