@@ -165,10 +165,19 @@ class TangyFormEditor extends PolymerElement {
         <paper-input label="Form Title" id="form-title" value="${state.form.title}"></paper-input>
         <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
         <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
-        
-        <sortable-list>
+        <div style="float: right; position:relative;">
+          <i>
+            Drag items to reorder 
+          </i>
+          <iron-icon 
+            icon="icons:subdirectory-arrow-left"
+            style="position: absolute; z-index: 999; bottom: -30px; right: 0px;"
+          ></iron-icon>
+        </div>
+        <sortable-list style="text-align: center">
         ${state.items.map(item => `
           <paper-card
+            style="cursor: move; margin: 15px;"
             class="sortable"
             data-item-id="${item.id}"
             data-item-title="${item.title}">
@@ -176,14 +185,20 @@ class TangyFormEditor extends PolymerElement {
               <h2>${item.title}</h2>
             </div>
             <div class="card-actions">
-              <paper-icon-button
-                icon="editor:drag-handle">
-              </paper-icon-button>
-              <paper-icon-button
-                class="edit-item"
+              <paper-button
+                class="item-edit"
                 data-item-id="${item.id}"
-                icon="editor:mode-edit">
-              </paper-icon-button>
+              >
+                <paper-icon-button icon="editor:mode-edit"></paper-icon-button>
+                edit
+              </paper-button>
+              <paper-button
+                class="item-delete"
+                data-item-id="${item.id}"
+              >
+                <paper-icon-button icon="icons:delete"></paper-icon-button>
+                delete
+              </paper-button>
             </div>
           </paper-card>
         `).join('')}
@@ -212,8 +227,11 @@ class TangyFormEditor extends PolymerElement {
         .querySelector('sortable-list')
         .addEventListener('sort-finish', this.onSortFinish.bind(this))
       this.$.container
-        .querySelectorAll('.edit-item')
-        .forEach(item => item.addEventListener('click', this.onSortableClick.bind(this)))
+        .querySelectorAll('.item-edit')
+        .forEach(item => item.addEventListener('click', this.onItemEditClick.bind(this)))
+      this.$.container
+        .querySelectorAll('.item-delete')
+        .forEach(item => item.addEventListener('click', this.onItemDeleteClick.bind(this)))
       this.$.container
         .querySelector('.show-preview')
         .addEventListener('click', this.togglePreview.bind(this))
@@ -345,6 +363,7 @@ class TangyFormEditor extends PolymerElement {
   onFormHtmlEditClick() {
     this.store.dispatch({type: 'FORM_EDIT'})
   }
+
   onSortFinish(event) {
     this.store.dispatch({
       type: 'SORT_ITEMS', 
@@ -353,13 +372,21 @@ class TangyFormEditor extends PolymerElement {
     })
   }
 
-  onSortableClick(event) {
+  onItemEditClick(event) {
     this.store.dispatch({
       type: 'ITEM_OPEN',
       payload: event.target.dataset.itemId
     })
   }
 
+  onItemDeleteClick(event) {
+    const shouldDelete = confirm('Are you sure you want to delete this item?')
+    if (!shouldDelete) return
+    this.store.dispatch({
+      type: 'ITEM_DELETE',
+      payload: event.target.dataset.itemId
+    })
+  }
 }
 
 window.customElements.define('tangy-form-editor', TangyFormEditor);

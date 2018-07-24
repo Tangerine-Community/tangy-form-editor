@@ -46,8 +46,7 @@ const tangyFormEditorReducer = function (state = initialState, action) {
       return newState
     case 'ITEM_DELETE':
       itemIndex = state.items.findIndex(item => item.id === action.payload.id)
-      newState = Object.assign({}, state)
-      newState.items.split(itemIndex, 1)
+      newState = Object.assign({}, state, { items: [...state.items.filter(item => item.id !== action.payload)]})
       return newState
     case 'SORT_ITEMS':
       return Object.assign({}, state, { 
