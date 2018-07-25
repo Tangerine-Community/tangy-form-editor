@@ -103,28 +103,24 @@ class TangyFormItemCKEditor extends PolymerElement {
       </paper-card>
       </div>
     `
-
-    let itemFormEl = this.shadowRoot.querySelector('.card-content form')
-    if (itemFormEl) {
-      // on-open-editor
-      let onOpenEditorEl = document.createElement('juicy-ace-editor')
-      onOpenEditorEl.setAttribute('mode', 'ace/mode/javascript')
-      onOpenEditorEl.value = itemFormEl.getAttribute('on-open') 
-      onOpenEditorEl.style.height = `${window.innerHeight*.6}px`
-      this.shadowRoot.querySelector('#on-open-editor').appendChild(onOpenEditorEl)
-      // on-change-editor
-      let onChangeEditorEl = document.createElement('juicy-ace-editor')
-      onChangeEditorEl.setAttribute('mode', 'ace/mode/javascript')
-      onChangeEditorEl.value = itemFormEl.getAttribute('on-change') 
-      onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
-      this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
-      // Form contents editor.
-      this.innerHTML = ` 
-        <div id="editor1" contenteditable="true" style="margin-top: 100px; padding-top: 10px">
-          ${itemFormEl.innerHTML}
-        </div>
-      `
-    }
+    // on-open-editor
+    let onOpenEditorEl = document.createElement('juicy-ace-editor')
+    onOpenEditorEl.setAttribute('mode', 'ace/mode/javascript')
+    onOpenEditorEl.value = this.item.onOpen 
+    onOpenEditorEl.style.height = `${window.innerHeight*.6}px`
+    this.shadowRoot.querySelector('#on-open-editor').appendChild(onOpenEditorEl)
+    // on-change-editor
+    let onChangeEditorEl = document.createElement('juicy-ace-editor')
+    onChangeEditorEl.setAttribute('mode', 'ace/mode/javascript')
+    onChangeEditorEl.value = this.item.onChange 
+    onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
+    this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
+    // Form contents editor.
+    this.innerHTML = ` 
+      <div id="editor1" contenteditable="true" style="margin-top: 100px; padding-top: 10px">
+        ${this.item.template}
+      </div>
+    `
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline( 'editor1' );
     this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
@@ -135,22 +131,12 @@ class TangyFormItemCKEditor extends PolymerElement {
     this.dispatchEvent(new CustomEvent('close'))
   }
   onSaveClick(event) {
-    const template = `
-      <form
-        on-open="
-          ${this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value}
-        "
-        on-change="
-          ${this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value}
-        "
-      >
-        ${html_beautify(CKEDITOR.instances.editor1.getData())}
-      </form>
-    `
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
+        onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
+        onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
         title: this.$.container.querySelector('#itemTitle').value,
-        template 
+        template: html_beautify(CKEDITOR.instances.editor1.getData())
     })}))
   }
 }

@@ -51,31 +51,38 @@ class TangyFormEditor extends PolymerElement {
         type: Boolean,
         value: false,
         reflectToAttribute: true
-      },
-      formJson: {
-        type: Object,
-        value: {
-          editMode: 'ckeditor', 
-          openItem: '',
-          form: {
-            id: 'form1',
-            title: 'Form 1',
-            linearMode: true,
-            hideDisabledItems: true,
-            hasSummary: true,
-            onOpen: '',
-            onChange: ''
-          },
-          items: []
-        },
-        /*reflectToAttribute: true,*/
-        observer: 'formJsonUpdate'
       }
-    };
+    }
+      
   }
 
   get formHtml() {
-    return this.renderFormHtml(this.store.getState())
+    const state = this.store.getState()
+    return `
+      <tangy-form id="${state.form.id}" title="${state.form.title}"
+        on-open="
+          ${state.form.onOpen}
+        "
+        on-change="
+          ${state.form.onChange}
+        "
+      >
+        ${state.items.map(item => `
+          <tangy-form-item id="${item.id}" title="${item.title}"${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}
+            on-open="
+              ${item.onOpen}
+            "
+            on-change="
+              ${item.onChange}
+            "
+          >
+            <template>
+              ${item.template}
+            </template>
+          </tangy-form-item>
+        `).join('')}
+      </tangy-form>
+    `
   }
 
   set formHtml(templateHtml) {
@@ -83,10 +90,15 @@ class TangyFormEditor extends PolymerElement {
     template.innerHTML = templateHtml
     // Load from innerHTML
     let items = []
-    template.content.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {
-      template: (el.querySelector('template')) ? el.querySelector('template').innerHTML : el.innerHTML
-    })))
-    this.formJson = Object.assign({}, this.formJson, {
+    template.content.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, 
+      el.getProps(), 
+      {
+        template: (el.querySelector('template')) ? el.querySelector('template').innerHTML : el.innerHTML,
+        onOpen: el.getAttribute('on-open'),
+        onChange: el.getAttribute('on-change')
+      }
+    )))
+    let formJson = Object.assign({}, this.formJson, {
       form: Object.assign(
          {}, 
          template.content.querySelector('tangy-form').getProps(),
@@ -98,7 +110,7 @@ class TangyFormEditor extends PolymerElement {
       ),
       items
     })
-    // Clear innerHTML because we need to make way for the item editor which will use CKEditor... and CKEditor will not work in shadowRoot.
+    this.store.dispatch({type: 'FORM_OPEN', payload: formJson})
   }
 
   connectedCallback() {
@@ -110,7 +122,7 @@ class TangyFormEditor extends PolymerElement {
     this.unsubscribe = this.store.subscribe(_ => {
       this.render(this.store.getState())
       this.dispatchEvent(new CustomEvent('change', {
-        detail: this.renderFormHtml(this.store.getState())
+        detail: this.formHtml
       }))
     })
     if (this.querySelector('template')) {
@@ -120,10 +132,6 @@ class TangyFormEditor extends PolymerElement {
       // Load from this.formJson inline.
       this.store.dispatch({type: 'FORM_OPEN', payload: this.formJson})
     }
-  }
-
-  formJsonUpdate(formJson) {
-    if (this.store) this.store.dispatch({type: 'FORM_OPEN', payload: formJson})
   }
 
   render(state) {
@@ -254,7 +262,7 @@ class TangyFormEditor extends PolymerElement {
         .addEventListener('click', this.onFormHtmlEditClick.bind(this))
       this.$['form-preview'].innerHTML = `
         <h2>Form preview</h2>
-        ${this.renderFormHtml(state)}
+        ${this.formHtml}
       `
     } else if (state.openItem === 'form.html') {
       this.$['form-preview'].innerHTML = ``
@@ -264,7 +272,7 @@ class TangyFormEditor extends PolymerElement {
       `
       this.$.container.querySelector('tangy-form-html-editor').form = {
         title: state.form.title,
-        markup: this.renderFormHtml(state) 
+        markup: this.formHtml 
       }
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('save', this.onFormHtmlEditorSave.bind(this))
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('close', this.onFormHtmlEditorClose.bind(this))
@@ -291,27 +299,6 @@ class TangyFormEditor extends PolymerElement {
       this.querySelector('paper-toggle-button').addEventListener('click', this.onWysiwygToggle.bind(this))
       this.$['form-preview'].innerHTML = ``
     }
-  }
-
-  renderFormHtml(state) {
-    return `
-      <tangy-form id="${state.form.id}" title="${state.form.title}"
-        on-open="
-          ${state.form.onOpen}
-        "
-        on-change="
-          ${state.form.onChange}
-        "
-      >
-        ${state.items.map(item => `
-          <tangy-form-item id="${item.id}" title="${item.title}"${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}>
-            <template>
-              ${item.template}
-            </template>
-          </tangy-form-item>
-        `).join('')}
-      </tangy-form>
-    `
   }
 
   togglePreview() {
