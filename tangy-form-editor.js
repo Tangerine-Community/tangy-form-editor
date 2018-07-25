@@ -79,19 +79,21 @@ class TangyFormEditor extends PolymerElement {
   }
 
   set formHtml(templateHtml) {
-    let template = document.createElement('div')
+    let template = document.createElement('template')
     template.innerHTML = templateHtml
     // Load from innerHTML
     let items = []
-    template.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {template: el.template})))
+    template.content.querySelectorAll('tangy-form-item').forEach(el => items.push(Object.assign({}, el.getProps(), {
+      template: (el.querySelector('template')) ? el.querySelector('template').innerHTML : el.innerHTML
+    })))
     this.formJson = Object.assign({}, this.formJson, {
       form: Object.assign(
          {}, 
-         template.querySelector('tangy-form').getProps(),
+         template.content.querySelector('tangy-form').getProps(),
          {
-           title: template.querySelector('tangy-form').getAttribute('title'),
-           onOpen: template.querySelector('tangy-form').getAttribute('on-open'),
-           onChange: template.querySelector('tangy-form').getAttribute('on-change')
+           title: template.content.querySelector('tangy-form').getAttribute('title'),
+           onOpen: template.content.querySelector('tangy-form').getAttribute('on-open'),
+           onChange: template.content.querySelector('tangy-form').getAttribute('on-change')
          }
       ),
       items
@@ -111,8 +113,8 @@ class TangyFormEditor extends PolymerElement {
         detail: this.renderFormHtml(this.store.getState())
       }))
     })
-    if (this.innerHTML !== '') {
-      this.formHtml = this.innerHTML
+    if (this.querySelector('template')) {
+      this.formHtml = this.querySelector('template').innerHTML 
       this.innerHTML = ''
     } else {
       // Load from this.formJson inline.
