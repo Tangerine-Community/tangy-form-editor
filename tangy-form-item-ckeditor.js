@@ -108,12 +108,14 @@ class TangyFormItemCKEditor extends PolymerElement {
     onOpenEditorEl.setAttribute('mode', 'ace/mode/javascript')
     onOpenEditorEl.value = this.item.onOpen 
     onOpenEditorEl.style.height = `${window.innerHeight*.6}px`
+    onOpenEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.shadowRoot.querySelector('#on-open-editor').appendChild(onOpenEditorEl)
     // on-change-editor
     let onChangeEditorEl = document.createElement('juicy-ace-editor')
     onChangeEditorEl.setAttribute('mode', 'ace/mode/javascript')
     onChangeEditorEl.value = this.item.onChange 
     onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
+    onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
     // Form contents editor.
     this.innerHTML = ` 

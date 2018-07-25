@@ -90,6 +90,7 @@ class TangyFormHtmlEditor extends PolymerElement {
     juicyAceEditorEl.setAttribute('mode', 'ace/mode/html')
     juicyAceEditorEl.value = this.form.markup
     juicyAceEditorEl.style.height = `${window.innerHeight*.6}px`
+    juicyAceEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.appendChild(juicyAceEditorEl)
     this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
     this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
