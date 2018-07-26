@@ -21,23 +21,25 @@ Encapsulate a `tangy-form` with `tangy-form-editor` then listen for the `tangy-f
 
 ```html
 <tangy-form-editor>
-  <tangy-form id="field-demo" title="Field Demo">
-    <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
-      <form>
-        <tangy-input name="text_input_1" label="This is an input for text." type="text"></tangy-input>
-      </form>
-    </tangy-form-item>
-    <tangy-form-item id="text_inputs_2" title="Text Inputs 2">
-      <form>
-        <tangy-input name="text_input_2" label="This is an input for text that is required." type="text" error-message="This is required." required></tangy-input>
-      </form>
-    </tangy-form-item> 
-    <tangy-form-item id="summary" summary title="Summary">
-      <form>
-        Thank you for taking our survey.
-      </form>
-    </tangy-form-item> 
-  </tangy-form>
+  <template>
+    <tangy-form id="field-demo" title="Field Demo">
+      <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
+        <form>
+          <tangy-input name="text_input_1" label="This is an input for text." type="text"></tangy-input>
+        </form>
+      </tangy-form-item>
+      <tangy-form-item id="text_inputs_2" title="Text Inputs 2">
+        <form>
+          <tangy-input name="text_input_2" label="This is an input for text that is required." type="text" error-message="This is required." required></tangy-input>
+        </form>
+      </tangy-form-item> 
+      <tangy-form-item id="summary" summary title="Summary">
+        <form>
+          Thank you for taking our survey.
+        </form>
+      </tangy-form-item> 
+    </tangy-form>
+  </template>
 </tangy-form-editor>
 <script>
   // You can listen for changes.
