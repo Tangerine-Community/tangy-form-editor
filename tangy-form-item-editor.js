@@ -142,9 +142,6 @@ class TangyFormItemEditor extends PolymerElement {
     CKEDITOR.config.autoParagraph = false
     CKEDITOR.config.startupFocus = 'start'
     const instance = CKEDITOR.inline( 'editor1' )
-    instance.on('blur',function( e ){
-      return false;
-   })
     this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
     this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
   }
