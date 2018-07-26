@@ -6,7 +6,6 @@ import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
 import {tangyFormEditorReducer} from './tangy-form-editor-reducer.js'
 import './tangy-form-item-editor.js'
 import './tangy-form-html-editor.js'
-import './tangy-form-item-ckeditor.js'
 import 'tangy-form/tangy-form.js'
 
 /**
@@ -199,14 +198,14 @@ class TangyFormEditor extends PolymerElement {
                 class="item-edit"
                 data-item-id="${item.id}"
               >
-                <paper-icon-button icon="editor:mode-edit"></paper-icon-button>
+                <paper-icon-button data-item-id="${item.id}" icon="editor:mode-edit"></paper-icon-button>
                 edit
               </paper-button>
               <paper-button
                 class="item-delete"
                 data-item-id="${item.id}"
               >
-                <paper-icon-button icon="icons:delete"></paper-icon-button>
+                <paper-icon-button data-item-id="${item.id}" icon="icons:delete"></paper-icon-button>
                 delete
               </paper-button>
             </div>
@@ -278,27 +277,15 @@ class TangyFormEditor extends PolymerElement {
       }
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('save', this.onFormHtmlEditorSave.bind(this))
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('close', this.onFormHtmlEditorClose.bind(this))
-    } else if (state.openItem !== '' && state.editMode === 'ace-editor') {
-      this.innerHTML = ''
-      this.$.container.innerHTML = `
-        <paper-toggle-button></paper-toggle-button> WYSIWYG
-        <tangy-form-item-editor></tangy-form-item-editor>
-      `
-      this.$.container.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
-      this.$.container.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
-      this.$.container.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
-      this.$.container.querySelector('paper-toggle-button').addEventListener('click', this.onWysiwygToggle.bind(this))
-      this.$['form-preview'].innerHTML = ``
-    } else if (state.openItem !== '' && state.editMode === 'ckeditor') {
+    } else if (state.openItem !== '') {
       this.$.container.innerHTML = ''
       this.innerHTML = `
-        <paper-toggle-button checked></paper-toggle-button> WYSIWYG
-        <tangy-form-item-ckeditor></tangy-form-item-ckeditor>
+        <tangy-form-item-editor></tangy-form-item-editor>
       `
-      this.querySelector('tangy-form-item-ckeditor').item = state.items.find(item => item.id === state.openItem)
-      this.querySelector('tangy-form-item-ckeditor').addEventListener('save', this.onItemEditorSave.bind(this))
-      this.querySelector('tangy-form-item-ckeditor').addEventListener('close', this.onItemEditorClose.bind(this))
-      this.querySelector('paper-toggle-button').addEventListener('click', this.onWysiwygToggle.bind(this))
+      this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
+      console.log(state.items)
+      this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
+      this.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
       this.$['form-preview'].innerHTML = ``
     }
   }
@@ -310,10 +297,6 @@ class TangyFormEditor extends PolymerElement {
       this.showPreview = true
       setTimeout(_ => this.shadowRoot.querySelector('#form-preview').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
     }
-  }
-
-  onWysiwygToggle(event) {
-    this.store.dispatch({type: 'WYSIWYG_TOGGLE'})
   }
 
   onItemEditorSave(event) {
@@ -364,6 +347,8 @@ class TangyFormEditor extends PolymerElement {
   }
 
   onItemEditClick(event) {
+    console.log(`yam: ${event.target.getAttribute('data-item-id')}`)
+    console.log(event.target)
     this.store.dispatch({
       type: 'ITEM_OPEN',
       payload: event.target.dataset.itemId
