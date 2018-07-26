@@ -49,7 +49,7 @@ CKEDITOR.plugins.add( 'tangy-timed', {
 				})
 				// Don't force render if not connected to DOM yet on first create.
 				if (this.element.$.shadowRoot) {
-					this.element.$.generateGrid()
+					this.element.$.render()
 				}
 			}
 		} );
