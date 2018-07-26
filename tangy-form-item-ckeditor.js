@@ -76,6 +76,7 @@ class TangyFormItemCKEditor extends PolymerElement {
           <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
+          <paper-toggle-button checked>WYSIWYG</paper-toggle-button> 
           <slot></slot>
         </div>
         <div class="card-actions">
@@ -103,6 +104,15 @@ class TangyFormItemCKEditor extends PolymerElement {
       </paper-card>
       </div>
     `
+    this.shadowRoot
+      .querySelector('paper-toggle-button')
+      .addEventListener('click', event => {
+        if(event.target.hasAttribute('checked')) {
+          this.showWysiwyg(html_beautify(this.querySelector('juicy-ace-editor').value))
+        } else {
+          this.showAce(html_beautify(CKEDITOR.instances.editor1.getData()))
+        }
+      })
     // on-open-editor
     let onOpenEditorEl = document.createElement('juicy-ace-editor')
     onOpenEditorEl.setAttribute('mode', 'ace/mode/javascript')
@@ -118,20 +128,37 @@ class TangyFormItemCKEditor extends PolymerElement {
     onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
     // Form contents editor.
-    this.innerHTML = ` 
+    this.showWysiwyg(this.item.template)
+    this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
+    this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
+  }
+
+  showWysiwyg(template) {
+    this.innerHTML = `
       <div id="editor1" contenteditable="true" style="margin-top: 100px; padding-top: 10px">
-        ${this.item.template}
+        ${template}
       </div>
     `
     CKEDITOR.disableAutoInline = true;
+    CKEDITOR.config.autoParagraph = false;
     CKEDITOR.inline( 'editor1' );
     this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
     this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
   }
 
+  showAce(template) {
+    let juicyAceEditorEl = document.createElement('juicy-ace-editor')
+    juicyAceEditorEl.setAttribute('mode', 'ace/mode/html')
+    juicyAceEditorEl.value = template 
+    juicyAceEditorEl.style.height = `${window.innerHeight*.6}px`
+    this.innerHTML = ''
+    this.appendChild(juicyAceEditorEl)
+  }
+
   onCloseClick(event) {
     this.dispatchEvent(new CustomEvent('close'))
   }
+
   onSaveClick(event) {
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
