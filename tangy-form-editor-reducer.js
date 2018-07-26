@@ -1,7 +1,6 @@
 /* jshint esversion: 6 */
 
 const initialState = {
-  editMode: 'ckeditor', 
   openItem: '',
   form: {},
   items: []
@@ -29,8 +28,6 @@ const tangyFormEditorReducer = function (state = initialState, action) {
       return Object.assign({}, state, {form: Object.assign({}, state.form, action.payload) })
     case 'FORM_TITLE_UPDATE':
       return Object.assign({}, state, { form: Object.assign({}, state.form, {title: action.payload})})
-    case 'WYSIWYG_TOGGLE':
-      return Object.assign({}, state, {editMode: (state.editMode === 'ckeditor') ? 'ace-editor' : 'ckeditor'} )
     case 'ITEM_CREATE':
       return Object.assign({}, state, {
         items: [...state.items, Object.assign({}, itemModel, {id: UUID(), title: '...'})] 
