@@ -96,8 +96,7 @@ class TangyFormItemEditor extends PolymerElement {
           </paper-icon-button>
         </div>
       </paper-card>
-      <h2 style="text-align: left">Item Preview</h2>
-      <paper-card style="text-align: left; margin: 0 auto; width:100%; max-width: 650px;">
+      <paper-card style="display: none; text-align: left; margin: 0 auto; width:100%; max-width: 650px;">
         <div class="card-content">
           ${this.item.template}
         </div>
