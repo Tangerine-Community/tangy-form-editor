@@ -283,7 +283,6 @@ class TangyFormEditor extends PolymerElement {
         <tangy-form-item-editor></tangy-form-item-editor>
       `
       this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
-      console.log(state.items)
       this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
       this.$['form-preview'].innerHTML = ``
@@ -347,8 +346,6 @@ class TangyFormEditor extends PolymerElement {
   }
 
   onItemEditClick(event) {
-    console.log(`yam: ${event.target.getAttribute('data-item-id')}`)
-    console.log(event.target)
     this.store.dispatch({
       type: 'ITEM_OPEN',
       payload: event.target.dataset.itemId
