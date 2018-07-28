@@ -4,35 +4,33 @@ CKEDITOR.plugins.add( 'tangy-input', {
 	init: function( editor ) {
 		CKEDITOR.dialog.add( 'tangy-input', this.path + 'dialogs/tangy-input.js' );
 		editor.widgets.add( 'tangy-input', {
-			allowedContent:
-				'div(!tangy-input,align-left,align-right,align-center){width};' +
-				'div(!tangy-input-content); h2(!tangy-input-title); tangy-section();',
-			requiredContent: 'div(tangy-input)',
 			template:
-				'<tangy-input></tangy-input>',
+				'<div class="tangy-input"><tangy-input></tangy-input></div>',
 			button: 'Create a tangy-input',
 			dialog: 'tangy-input',
 			upcast: function( element ) {
-				return element.name == 'tangy-input' ;
+				return element.name == 'div' && element.hasClass('tangy-input') ;
 			},
 			init: function() {
-				this.setData('label', this.element.$.label)
-				this.setData('type', this.element.$.type)
-				this.setData('name', this.element.$.name)
-				if (this.element.$.required) {
+				let el = this.element.$.querySelector('tangy-input')
+				this.setData('label', el.label)
+				this.setData('type', el.type)
+				this.setData('name', el.name)
+				if (el.required) {
 					this.setData('required', 'required')
 				} else {
 					this.setData('required', 'not-required')
 				}
 			},
 			data: function() {
-				this.element.$.setAttribute('type', this.data.type)
-				this.element.$.setAttribute('label', this.data.label)
-				this.element.$.setAttribute('name', this.data.name)
+				let el = this.element.$.querySelector('tangy-input')
+				el.setAttribute('type', this.data.type)
+				el.setAttribute('label', this.data.label)
+				el.setAttribute('name', this.data.name)
 				if (this.data.required === 'required') {
-					this.element.$.setAttribute('required', true)
+					el.setAttribute('required', true)
 				} else {
-					this.element.$.removeAttribute('required')
+					el.removeAttribute('required')
 				}
 
 			}

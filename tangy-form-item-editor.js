@@ -109,7 +109,7 @@ class TangyFormItemEditor extends PolymerElement {
         if(event.target.hasAttribute('checked')) {
           this.showWysiwyg(html_beautify(this.querySelector('juicy-ace-editor').value))
         } else {
-          this.showAce(html_beautify(CKEDITOR.instances.editor1.getData()))
+          this.showAce(html_beautify(this.getTemplateFromWysiwyg()))
         }
       })
     // on-open-editor
@@ -132,12 +132,46 @@ class TangyFormItemEditor extends PolymerElement {
     this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
   }
 
+  getTemplateFromWysiwyg() {
+    let wysiwygTemplateEl = document.createElement('div') 
+    wysiwygTemplateEl.innerHTML = CKEDITOR.instances.editor1.getData()
+    let tangyWrapperEls = []
+    wysiwygTemplateEl.childNodes.forEach(node => {
+      if (node.tagName && node.getAttribute('class') && node.getAttribute('class').includes('tangy')) {
+        tangyWrapperEls.push(node)
+      }
+    })
+    tangyWrapperEls.forEach(tangyWrapperEl => {
+      // select element to unwrap
+      //var tangyWrapperEl = document.querySelector('div');
+      // get the element's parent node
+      var parent = tangyWrapperEl.parentNode;
+      // move all children out of the element
+      while (tangyWrapperEl.firstChild) parent.insertBefore(tangyWrapperEl.firstChild, tangyWrapperEl);
+      // remove the empty element
+      parent.removeChild(tangyWrapperEl);
+    })
+    return wysiwygTemplateEl.innerHTML
+  }
+
   showWysiwyg(template) {
     this.innerHTML = `
       <div id="editor1" contenteditable="true" style="margin-top: 100px; padding-top: 10px">
         ${template}
       </div>
     `
+    let tangyEls = []
+    this.querySelector('#editor1').childNodes.forEach(node => {
+      if (node.tagName && node.tagName.includes('TANGY')) {
+        tangyEls.push(node)
+      }
+    })
+    tangyEls.forEach(tangyEl => {
+      let wrapperEl = document.createElement('div')
+      wrapperEl.setAttribute('class', tangyEl.localName)
+      tangyEl.parentNode.insertBefore(wrapperEl, tangyEl);
+      wrapperEl.appendChild(tangyEl)
+    })
     CKEDITOR.disableAutoInline = true
     CKEDITOR.config.autoParagraph = false
     CKEDITOR.config.startupFocus = 'start'
@@ -160,12 +194,18 @@ class TangyFormItemEditor extends PolymerElement {
   }
 
   onSaveClick(event) {
+    let template = ''
+    if (this.querySelector('#editor1')) {
+      template = html_beautify(this.getTemplateFromWysiwyg())
+    } else {
+      template = html_beautify(this.querySelector('juicy-ace-editor').value)
+    }
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
         title: this.$.container.querySelector('#itemTitle').value,
-        template: html_beautify(CKEDITOR.instances.editor1.getData())
+        template
     })}))
   }
 }
