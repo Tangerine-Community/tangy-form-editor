@@ -30,7 +30,7 @@ const tangyFormEditorReducer = function (state = initialState, action) {
       return Object.assign({}, state, { form: Object.assign({}, state.form, {title: action.payload})})
     case 'ITEM_CREATE':
       return Object.assign({}, state, {
-        items: [...state.items, Object.assign({}, itemModel, {id: UUID(), title: '...'})] 
+        items: [...state.items, Object.assign({}, itemModel, {id: 'item_'+UUID(), title: '...'})]
       })
     case 'ITEM_OPEN':
       return Object.assign({}, state, { openItem: action.payload })
