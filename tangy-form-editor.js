@@ -121,7 +121,7 @@ class TangyFormEditor extends PolymerElement {
     )
     this.unsubscribe = this.store.subscribe(_ => {
       this.render(this.store.getState())
-      this.dispatchEvent(new CustomEvent('change', {
+      this.dispatchEvent(new CustomEvent('tangy-form-editor-change', {
         detail: this.formHtml
       }))
     })
