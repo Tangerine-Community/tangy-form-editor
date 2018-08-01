@@ -74,6 +74,7 @@ class TangyFormItemEditor extends PolymerElement {
       <paper-card style="text-align: left; margin: 0 auto; width:100%; max-width: 650px;">
         <div class="card-content">
           <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
+          <p>Item id: ${this.item.id}</p>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
           <paper-toggle-button checked>WYSIWYG</paper-toggle-button> 
