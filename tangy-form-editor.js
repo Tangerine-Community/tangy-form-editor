@@ -94,7 +94,8 @@ class TangyFormEditor extends PolymerElement {
       {
         template: (el.querySelector('template')) ? el.querySelector('template').innerHTML : el.innerHTML,
         onOpen: el.getAttribute('on-open'),
-        onChange: el.getAttribute('on-change')
+        onChange: el.getAttribute('on-change'),
+        summary: el.hasAttribute('summary')
       }
     )))
     let formJson = Object.assign({}, this.formJson, {

@@ -75,6 +75,7 @@ class TangyFormItemEditor extends PolymerElement {
         <div class="card-content">
           <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
           <p>Item id: ${this.item.id}</p>
+          <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>Show this item in the summary at the end</paper-checkbox></p>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
           <paper-toggle-button checked>WYSIWYG</paper-toggle-button> 
@@ -82,15 +83,11 @@ class TangyFormItemEditor extends PolymerElement {
         </div>
         <div class="card-actions">
           <paper-icon-button
-            data-item-src="[[itemFilename]]"
-            data-item-id="[[itemId]]"
             id="close"
             icon="icons:arrow-back"/>
             >
           </paper-icon-button>
           <paper-icon-button
-              data-item-src="[[itemFilename]]"
-              data-item-id="[[itemId]]"
               id="save"
               icon="icons:save"
               >
@@ -206,6 +203,7 @@ class TangyFormItemEditor extends PolymerElement {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
         title: this.$.container.querySelector('#itemTitle').value,
+        summary: this.$.container.querySelector('#summary-checkbox').checked,
         template
     })}))
   }
