@@ -201,7 +201,9 @@ class TangyFormItemEditor extends PolymerElement {
       templateEl.innerHTML = html_beautify(this.querySelector('juicy-ace-editor').value)
     }
     // Do not allow defaults selected in the DOM for value. This will confuse.
-    templateEl.content.querySelectorAll('[value]').forEach(el => el.setAttribute('value', ''))
+    templateEl.content.querySelectorAll('[value]').forEach(el => {
+      if (el.hasAttribute('name')) el.setAttribute('value', '')
+    })
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
