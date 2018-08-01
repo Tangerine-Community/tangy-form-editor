@@ -2,6 +2,8 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/Tangerine-Community/tangy-form-editor.svg)](https://greenkeeper.io/) [![Build Status](https://travis-ci.org/Tangerine-Community/tangy-form-editor.svg?branch=master)](https://travis-ci.org/Tangerine-Community/tangy-form-editor)
 
+[Check out the demo on Glitch](https://tangy-form-editor.glitch.me/)
+
 ## Install
 Global dependencies: redux, js-beautify, ckeditor (special build included in this repo)
 
