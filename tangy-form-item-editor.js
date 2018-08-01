@@ -192,19 +192,21 @@ class TangyFormItemEditor extends PolymerElement {
   }
 
   onSaveClick(event) {
-    let template = ''
+    let templateEl = document.createElement('template')
     if (this.querySelector('#editor1')) {
-      template = html_beautify(this.getTemplateFromWysiwyg())
+      templateEl.innerHTML = html_beautify(this.getTemplateFromWysiwyg())
     } else {
-      template = html_beautify(this.querySelector('juicy-ace-editor').value)
+      templateEl.innerHTML = html_beautify(this.querySelector('juicy-ace-editor').value)
     }
+    // Do not allow defaults selected in the DOM for value. This will confuse.
+    templateEl.content.querySelectorAll('[value]').forEach(el => el.setAttribute('value', ''))
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
         title: this.$.container.querySelector('#itemTitle').value,
         summary: this.$.container.querySelector('#summary-checkbox').checked,
-        template
+        template: templateEl.innerHTML
     })}))
   }
 }
