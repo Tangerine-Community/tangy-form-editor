@@ -27,6 +27,8 @@ CKEDITOR.plugins.add( 'tangy-checkboxes', {
 				let optionsString = ''
 				optionEls.forEach(optionEl => optionsString += `${optionEl.innerText}\n`)
 				this.setData('options', optionsString)
+				var tangyIf = this.element.hasAttribute( 'tangy-if' ) ? this.element.getAttribute( 'tangy-if' ) : '';
+				this.setData( 'tangyIf', tangyIf );
 			},
 			data: function() {
 				this.element.$.setAttribute('label', this.data.label)
@@ -45,6 +47,9 @@ CKEDITOR.plugins.add( 'tangy-checkboxes', {
 					optionEl.innerText = option
 					this.element.$.appendChild(optionEl)
 				})
+				if ( this.data.tangyIf !== '' )
+					this.element.setAttribute('tangy-if', this.data.tangyIf);
+
 				// Don't force render if not connected to DOM yet on first create.
 				if (this.element.$.shadowRoot) {
 					this.element.$.render()

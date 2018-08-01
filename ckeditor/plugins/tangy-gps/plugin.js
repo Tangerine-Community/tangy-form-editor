@@ -22,6 +22,9 @@ CKEDITOR.plugins.add( 'tangy-gps', {
 				} else {
 					this.setData('required', 'not-required')
 				}
+				var tangyIf = this.element.hasAttribute( 'tangy-if' ) ? this.element.getAttribute( 'tangy-if' ) : '';
+				this.setData( 'tangyIf', tangyIf );
+
 			},
 			data: function() {
 				this.element.$.setAttribute('name', this.data.name)
@@ -30,6 +33,9 @@ CKEDITOR.plugins.add( 'tangy-gps', {
 				} else {
 					this.element.$.removeAttribute('required')
 				}
+				if ( this.data.tangyIf !== '' )
+					this.element.setAttribute('tangy-if', this.data.tangyIf);
+
 
 			}
 		} );

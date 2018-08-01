@@ -24,6 +24,9 @@ CKEDITOR.plugins.add( 'tangy-location', {
 				} else {
 					this.setData('required', 'not-required')
 				}
+				var tangyIf = this.element.hasAttribute( 'tangy-if' ) ? this.element.getAttribute( 'tangy-if' ) : '';
+				this.setData( 'tangyIf', tangyIf );
+
 			},
 			data: function() {
 				this.element.$.setAttribute('show-levels', this.data.showLevels)
@@ -34,6 +37,8 @@ CKEDITOR.plugins.add( 'tangy-location', {
 				} else {
 					this.element.$.removeAttribute('required')
 				}
+				if ( this.data.tangyIf !== '' )
+					this.element.setAttribute('tangy-if', this.data.tangyIf);
 
 			}
 		} );
