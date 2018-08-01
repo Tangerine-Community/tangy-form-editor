@@ -1,4 +1,6 @@
 
+## v4.1.0
+- Add support for adding `right-to-left` and `hide-back-button` attributes to `<tangy-form-item>`.
 
 ## v4.0.0
 - Breaking Change: Now emits `tangy-form-editor-change` event instead of `change` event.
