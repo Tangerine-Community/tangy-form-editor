@@ -76,6 +76,8 @@ class TangyFormItemEditor extends PolymerElement {
           <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
           <p>Item id: ${this.item.id}</p>
           <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>Show this item in the summary at the end</paper-checkbox></p>
+          <p><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>Hide the back button</paper-checkbox></p>
+          <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
           <paper-toggle-button checked>WYSIWYG</paper-toggle-button> 
@@ -206,6 +208,8 @@ class TangyFormItemEditor extends PolymerElement {
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
         title: this.$.container.querySelector('#itemTitle').value,
         summary: this.$.container.querySelector('#summary-checkbox').checked,
+        hideBackButton: this.$.container.querySelector('#hide-back-button-checkbox').checked,
+        rightToLeft: this.$.container.querySelector('#right-to-left-checkbox').checked,
         template: templateEl.innerHTML
     })}))
   }
