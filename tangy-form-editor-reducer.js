@@ -55,7 +55,7 @@ const tangyFormEditorReducer = function (state = initialState, action) {
   return state
 }
 function UUID(separator) {
-  if (typeof separator !== 'undefined') {
+  if (typeof separator === 'undefined') {
     separator = '';
   }
   var self = {};
