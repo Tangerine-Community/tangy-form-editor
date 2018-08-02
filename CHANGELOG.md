@@ -1,3 +1,7 @@
+
+## v4.2.3
+- Make tangy-select button in ckeditor look like a select button, not a radiobutton.
+
 ## v4.2.0
 - Fix an issue that was causing tangy-timed output to be missing value attributes of option elements.
 - Add tangy-if field to all plugins for skip logic inline not in on-change and on-open.
