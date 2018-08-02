@@ -67,7 +67,9 @@ class TangyFormEditor extends PolymerElement {
         "
       >
         ${state.items.map(item => `
-          <tangy-form-item id="${item.id}" title="${item.title}"${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}
+          <tangy-form-item id="${item.id}" 
+            title="${item.title}"
+            ${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.hideBackButton) ? ` hide-back-button` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}
             on-open="
               ${item.onOpen}
             "
@@ -94,7 +96,10 @@ class TangyFormEditor extends PolymerElement {
       {
         template: (el.querySelector('template')) ? el.querySelector('template').innerHTML : el.innerHTML,
         onOpen: el.getAttribute('on-open'),
-        onChange: el.getAttribute('on-change')
+        onChange: el.getAttribute('on-change'),
+        summary: el.hasAttribute('summary'),
+        rightToLeft: el.hasAttribute('right-to-left'),
+        hideBackButton: el.hasAttribute('hide-back-button')
       }
     )))
     let formJson = Object.assign({}, this.formJson, {
@@ -120,7 +125,7 @@ class TangyFormEditor extends PolymerElement {
     )
     this.unsubscribe = this.store.subscribe(_ => {
       this.render(this.store.getState())
-      this.dispatchEvent(new CustomEvent('change', {
+      this.dispatchEvent(new CustomEvent('tangy-form-editor-change', {
         detail: this.formHtml
       }))
     })

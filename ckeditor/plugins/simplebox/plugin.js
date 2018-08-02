@@ -88,16 +88,9 @@ CKEDITOR.plugins.add( 'simplebox', {
 			// from DOM and set it by using the widget.setData() method.
 			// More code which needs to be executed when DOM is available may go here.
 			init: function() {
-				var tangyIf = this.element.getAttribute( 'tangy-if' );
-				if ( tangyIf )
-					this.setData( 'tangyIf', tangyIf );
+				var tangyIf = this.element.hasAttribute( 'tangy-if' ) ? this.element.getAttribute( 'tangy-if' ) : '';
+				this.setData( 'tangyIf', tangyIf );
 				this.setData('name', this.element.getAttribute('name'))
-				if ( this.element.hasClass( 'align-left' ) )
-					this.setData( 'align', 'left' );
-				if ( this.element.hasClass( 'align-right' ) )
-					this.setData( 'align', 'right' );
-				if ( this.element.hasClass( 'align-center' ) )
-					this.setData( 'align', 'center' );
 			},
 
 			// Listen on the widget#data event which is fired every time the widget data changes
@@ -111,12 +104,6 @@ CKEDITOR.plugins.add( 'simplebox', {
 					this.element.setAttribute('tangy-if', this.data.tangyIf);
 
 				this.element.setAttribute('name', this.data.name);
-				// Brutally remove all align classes and set a new one if "align" widget data is set.
-				this.element.removeClass( 'align-left' );
-				this.element.removeClass( 'align-right' );
-				this.element.removeClass( 'align-center' );
-				if ( this.data.align )
-					this.element.addClass( 'align-' + this.data.align );
 			}
 		} );
 	}

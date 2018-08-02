@@ -28,6 +28,9 @@ CKEDITOR.plugins.add( 'tangy-timed', {
 				let optionsString = ''
 				optionEls.forEach(optionEl => optionsString += `${optionEl.innerText} `)
 				this.setData('options', optionsString)
+				var tangyIf = this.element.hasAttribute( 'tangy-if' ) ? this.element.getAttribute( 'tangy-if' ) : '';
+				this.setData( 'tangyIf', tangyIf );
+
 			},
 			data: function() {
 				this.element.$.setAttribute('columns', this.data.columns)
@@ -51,6 +54,9 @@ CKEDITOR.plugins.add( 'tangy-timed', {
 				if (this.element.$.shadowRoot) {
 					this.element.$.render()
 				}
+				if ( this.data.tangyIf !== '' )
+					this.element.setAttribute('tangy-if', this.data.tangyIf);
+
 			}
 		} );
 	}

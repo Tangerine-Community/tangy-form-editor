@@ -19,6 +19,9 @@ CKEDITOR.plugins.add( 'tangy-checkbox', {
 				} else {
 					this.setData('required', 'not-required')
 				}
+				var tangyIf = this.element.hasAttribute( 'tangy-if' ) ? this.element.getAttribute( 'tangy-if' ) : '';
+				this.setData( 'tangyIf', tangyIf );
+
 			},
 			data: function() {
 				this.element.$.setAttribute('label', this.data.label)
@@ -28,6 +31,9 @@ CKEDITOR.plugins.add( 'tangy-checkbox', {
 				} else {
 					this.element.$.removeAttribute('required')
 				}
+				if ( this.data.tangyIf !== '' )
+					this.element.setAttribute('tangy-if', this.data.tangyIf);
+
 
 			}
 		} );

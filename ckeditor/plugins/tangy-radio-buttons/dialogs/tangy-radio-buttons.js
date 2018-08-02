@@ -8,6 +8,18 @@ CKEDITOR.dialog.add( 'tangy-radio-buttons', function( editor ) {
 				id: 'info',
 				elements: [
 					{
+						id: 'tangyIf',
+						type: 'text',
+						label: 'Show if',
+						width: '300px',
+						setup: function( widget ) {
+							this.setValue( widget.data.tangyIf );
+						},
+						commit: function( widget ) {
+							widget.setData( 'tangyIf', this.getValue() );
+						}
+					},
+					{
 						id: 'required',
 						type: 'select',
 						label: 'Required',

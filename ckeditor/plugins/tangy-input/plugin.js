@@ -21,6 +21,9 @@ CKEDITOR.plugins.add( 'tangy-input', {
 				} else {
 					this.setData('required', 'not-required')
 				}
+				var tangyIf = el.hasAttribute( 'tangy-if' ) ? el.getAttribute( 'tangy-if' ) : '';
+				this.setData( 'tangyIf', tangyIf );
+
 			},
 			data: function() {
 				let el = this.element.$.querySelector('tangy-input')
@@ -32,6 +35,9 @@ CKEDITOR.plugins.add( 'tangy-input', {
 				} else {
 					el.removeAttribute('required')
 				}
+				if ( this.data.tangyIf !== '' )
+					el.setAttribute('tangy-if', this.data.tangyIf);
+
 
 			}
 		} );

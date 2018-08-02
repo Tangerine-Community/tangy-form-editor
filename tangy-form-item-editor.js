@@ -75,6 +75,9 @@ class TangyFormItemEditor extends PolymerElement {
         <div class="card-content">
           <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
           <p>Item id: ${this.item.id}</p>
+          <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>Show this item in the summary at the end</paper-checkbox></p>
+          <p><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>Hide the back button</paper-checkbox></p>
+          <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
           <paper-toggle-button checked>WYSIWYG</paper-toggle-button> 
@@ -82,15 +85,11 @@ class TangyFormItemEditor extends PolymerElement {
         </div>
         <div class="card-actions">
           <paper-icon-button
-            data-item-src="[[itemFilename]]"
-            data-item-id="[[itemId]]"
             id="close"
             icon="icons:arrow-back"/>
             >
           </paper-icon-button>
           <paper-icon-button
-              data-item-src="[[itemFilename]]"
-              data-item-id="[[itemId]]"
               id="save"
               icon="icons:save"
               >
@@ -195,18 +194,25 @@ class TangyFormItemEditor extends PolymerElement {
   }
 
   onSaveClick(event) {
-    let template = ''
+    let templateEl = document.createElement('template')
     if (this.querySelector('#editor1')) {
-      template = html_beautify(this.getTemplateFromWysiwyg())
+      templateEl.innerHTML = html_beautify(this.getTemplateFromWysiwyg())
     } else {
-      template = html_beautify(this.querySelector('juicy-ace-editor').value)
+      templateEl.innerHTML = html_beautify(this.querySelector('juicy-ace-editor').value)
     }
+    // Do not allow defaults selected in the DOM for value. This will confuse.
+    templateEl.content.querySelectorAll('[value]').forEach(el => {
+      if (el.hasAttribute('name')) el.setAttribute('value', '')
+    })
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
         title: this.$.container.querySelector('#itemTitle').value,
-        template
+        summary: this.$.container.querySelector('#summary-checkbox').checked,
+        hideBackButton: this.$.container.querySelector('#hide-back-button-checkbox').checked,
+        rightToLeft: this.$.container.querySelector('#right-to-left-checkbox').checked,
+        template: templateEl.innerHTML
     })}))
   }
 }
