@@ -22,6 +22,9 @@ class TangyFormItemEditor extends PolymerElement {
         width: 30px;
         height: 30px;
       }
+      .card-actions paper-button {
+        float:right;
+      }
       paper-button {
         font-family: 'Roboto', 'Noto', sans-serif;
         font-weight: normal;
@@ -84,16 +87,12 @@ class TangyFormItemEditor extends PolymerElement {
           <slot></slot>
         </div>
         <div class="card-actions">
-          <paper-icon-button
-            id="close"
-            icon="icons:arrow-back"/>
-            >
-          </paper-icon-button>
-          <paper-icon-button
-              id="save"
-              icon="icons:save"
-              >
-          </paper-icon-button>
+          <paper-button id="save">
+            <iron-icon icon="icons:save"/></iron-icon> save 
+          </paper-button>
+          <paper-button id="cancel">
+            <iron-icon icon="icons:cancel"/></iron-icon> cancel 
+          </paper-button>
         </div>
       </paper-card>
       <paper-card style="display: none; text-align: left; margin: 0 auto; width:100%; max-width: 650px;">
@@ -128,7 +127,7 @@ class TangyFormItemEditor extends PolymerElement {
     this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
     // Form contents editor.
     this.showWysiwyg(this.item.template)
-    this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
+    this.$.container.querySelector('#cancel').addEventListener('click', this.onCancelClick.bind(this))
     this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
   }
 
@@ -176,8 +175,6 @@ class TangyFormItemEditor extends PolymerElement {
     CKEDITOR.config.autoParagraph = false
     CKEDITOR.config.startupFocus = 'start'
     const instance = CKEDITOR.inline( 'editor1' )
-    this.$.container.querySelector('#close').addEventListener('click', this.onCloseClick.bind(this))
-    this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
   }
 
   showAce(template) {
@@ -189,8 +186,10 @@ class TangyFormItemEditor extends PolymerElement {
     this.appendChild(juicyAceEditorEl)
   }
 
-  onCloseClick(event) {
-    this.dispatchEvent(new CustomEvent('close'))
+  onCancelClick(event) {
+    const proceed = confirm('Are you sure you want to cancel?')
+    if (!proceed) return
+    this.dispatchEvent(new CustomEvent('cancel'))
   }
 
   onSaveClick(event) {

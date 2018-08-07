@@ -281,7 +281,7 @@ class TangyFormEditor extends PolymerElement {
         markup: this.formHtml 
       }
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('save', this.onFormHtmlEditorSave.bind(this))
-      this.$.container.querySelector('tangy-form-html-editor').addEventListener('close', this.onFormHtmlEditorClose.bind(this))
+      this.$.container.querySelector('tangy-form-html-editor').addEventListener('cancel', this.onFormHtmlEditorCancel.bind(this))
     } else if (state.openItem !== '') {
       this.$.container.innerHTML = ''
       this.innerHTML = `
@@ -289,7 +289,7 @@ class TangyFormEditor extends PolymerElement {
       `
       this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
       this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
-      this.querySelector('tangy-form-item-editor').addEventListener('close', this.onItemEditorClose.bind(this))
+      this.querySelector('tangy-form-item-editor').addEventListener('cancel', this.onItemEditorCancel.bind(this))
       this.$['form-preview'].innerHTML = ``
     }
   }
@@ -305,6 +305,7 @@ class TangyFormEditor extends PolymerElement {
 
   onItemEditorSave(event) {
     this.store.dispatch({type: 'ITEM_UPDATE', payload: event.detail})
+    this.store.dispatch({type: 'ITEM_CLOSE', payload: event.detail})
   }
 
   onSaveFormClick(event) {
@@ -315,12 +316,7 @@ class TangyFormEditor extends PolymerElement {
     }})
   }
 
-
-  onItemEditorClose(event) {
-    this.store.dispatch({type: 'ITEM_CLOSE'})
-  }
-
-  onItemEditorClose(event) {
+  onItemEditorCancel(event) {
     this.store.dispatch({type: 'ITEM_CLOSE'})
   }
 
@@ -334,7 +330,7 @@ class TangyFormEditor extends PolymerElement {
     //this.store.dispatch({type: '_UPDATE', payload: event.detail})
   }
 
-  onFormHtmlEditorClose(event) {
+  onFormHtmlEditorCancel(event) {
     this.store.dispatch({type: 'ITEM_CLOSE'})
   }
 
