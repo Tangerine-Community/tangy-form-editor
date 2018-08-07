@@ -1,4 +1,8 @@
 
+## v4.3.0
+- Item editor now has cancel and save buttons with more logical behavior.
+- tangy-form version bumped to v2.2.7.
+
 ## v4.2.3
 - Make tangy-select button in ckeditor look like a select button, not a radiobutton.
 
