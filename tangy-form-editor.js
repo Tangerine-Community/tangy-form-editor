@@ -34,6 +34,9 @@ class TangyFormEditor extends PolymerElement {
       :host(:not([show-preview])) #form-preview {
         display: none;
       }
+      .rightCategories {
+        margin-left: 2em;
+      }
     </style>
     <!-- FORM ITEM LISTING -->
     <div id="container"></div>
@@ -48,6 +51,10 @@ class TangyFormEditor extends PolymerElement {
     return {
       showPreview: {
         type: Boolean,
+        value: false,
+        reflectToAttribute: true },
+      categories: {
+        type: Array,
         value: false,
         reflectToAttribute: true
       }
@@ -76,6 +83,9 @@ class TangyFormEditor extends PolymerElement {
             on-change="
               ${item.onChange}
             "
+            category="
+              ${item.category}
+            "
           >
             <template>
               ${item.template}
@@ -97,6 +107,7 @@ class TangyFormEditor extends PolymerElement {
         template: (el.querySelector('template')) ? el.querySelector('template').innerHTML : el.innerHTML,
         onOpen: el.getAttribute('on-open'),
         onChange: el.getAttribute('on-change'),
+        category: el.getAttribute('category'),
         summary: el.hasAttribute('summary'),
         rightToLeft: el.hasAttribute('right-to-left'),
         hideBackButton: el.hasAttribute('hide-back-button')
@@ -109,7 +120,8 @@ class TangyFormEditor extends PolymerElement {
          {
            title: template.content.querySelector('tangy-form').getAttribute('title'),
            onOpen: template.content.querySelector('tangy-form').getAttribute('on-open'),
-           onChange: template.content.querySelector('tangy-form').getAttribute('on-change')
+           onChange: template.content.querySelector('tangy-form').getAttribute('on-change'),
+           category: template.content.querySelector('tangy-form').getAttribute('category')
          }
       ),
       items
@@ -179,6 +191,7 @@ class TangyFormEditor extends PolymerElement {
         <paper-input label="Form Title" id="form-title" value="${state.form.title}"></paper-input>
         <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
         <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
+        <paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>
         <div style="float: right; position:relative;">
           <i>
             Drag items to reorder 
@@ -238,6 +251,33 @@ class TangyFormEditor extends PolymerElement {
       onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
       onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
       this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
+
+      // categories
+      if (this.categories.length > 0) {
+        let select_str = "<div class='rightCategories'>Select a category: <select id='category'>\n"
+        select_str += '<option value="">Select one</option>\n';
+        let categoryValue = state.form.category
+        this.categories.forEach(category => {
+          if (typeof categoryValue !== 'undefined' && categoryValue === category) {
+            select_str += '<option value="' + category + '" selected>' + category + '</option>\n';
+          } else {
+            select_str += '<option value="' + category + '">' + category + '</option>\n';
+          }
+        })
+        select_str += "</select></div>\n"
+        let template = document.createElement('template');
+        template.innerHTML = select_str;
+        let selectEl = template.content.childNodes;
+        let categoriesEditor = this.shadowRoot.querySelector('#categories-editor');
+        console.log("selectEl" + selectEl)
+        categoriesEditor.innerHTML = select_str
+      } else {
+        let spanEl = document.createElement("span");
+        spanEl.textContent = "No categories - you must add them to app-config.json";
+        this.shadowRoot.querySelector('#categories-editor').appendChild(spanEl)
+      }
+
+
       // Bind event listeners.
       this.$.container
         .querySelector('sortable-list')
@@ -312,7 +352,8 @@ class TangyFormEditor extends PolymerElement {
     this.store.dispatch({type: 'FORM_UPDATE', payload: {
       title: this.shadowRoot.querySelector('#form-title').value,
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
-      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value
+      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
+      category: this.shadowRoot.querySelector('#category').value
     }})
   }
 

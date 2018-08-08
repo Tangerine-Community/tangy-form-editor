@@ -29,7 +29,7 @@
       <h3>Basic tangy-form-editor demo</h3>
       <demo-snippet>
         <template>
-          <tangy-form-editor>
+          <tangy-form-editor categories='["one","two","three","four"]'>
             <template>
 
               <tangy-form 
@@ -37,6 +37,7 @@
                 title="Field Demo" 
                 on-open="console.log('tangy-form.on-open called')"
                 on-change="console.log('tangy-form.on-change called')"
+                category="three"
               >
                 <tangy-form-item id="checkboxes_item" title="Checkboxes" 
                   on-change="
