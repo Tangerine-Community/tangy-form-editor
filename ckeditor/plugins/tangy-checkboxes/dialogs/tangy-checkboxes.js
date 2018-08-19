@@ -50,13 +50,23 @@ CKEDITOR.dialog.add( 'tangy-checkboxes', function( editor ) {
 					{
 						id: 'options',
 						type: 'textarea',
-						label: 'Options',
+						label: 'Options <br>Place each option on a new line. On each line specify the value of the option first, then a comma, then specify the label.<br><br>For example:<br>apple,I like Apples<br>pear,I like Pears<br>',
 						width: '100%',
 						setup: function( widget ) {
-							this.setValue( widget.data.options );
+							this.setValue( 
+								widget.data.options.map(option => `${option.value},${option.label}`).join('\n')
+							);
 						},
 						commit: function( widget ) {
-							widget.setData( 'options', this.getValue() );
+							widget.setData( 
+								'options',
+								this.getValue().split('\n').map(fragment => {
+									return {
+										value: fragment.substr(0, fragment.indexOf(',')),
+										label: fragment.substr(fragment.indexOf(',')+1, fragment.length)
+									}
+								})
+							)
 						}
 					},
 					{

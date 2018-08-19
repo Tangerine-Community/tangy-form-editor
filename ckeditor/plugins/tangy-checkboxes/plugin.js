@@ -23,10 +23,14 @@ CKEDITOR.plugins.add( 'tangy-checkboxes', {
 				} else {
 					this.setData('required', 'not-required')
 				}
-				let optionEls = this.element.$.querySelectorAll('option')
-				let optionsString = ''
-				optionEls.forEach(optionEl => optionsString += `${optionEl.innerText}\n`)
-				this.setData('options', optionsString)
+				let options = [].slice.call(this.element.$.querySelectorAll('option'))
+					.map(optionEl => {
+						return {
+							value: optionEl.getAttribute('value'),
+							label: optionEl.innerText
+						}
+					})
+				this.setData('options', options)
 				var tangyIf = this.element.hasAttribute( 'tangy-if' ) ? this.element.getAttribute( 'tangy-if' ) : '';
 				this.setData( 'tangyIf', tangyIf );
 			},
@@ -39,12 +43,11 @@ CKEDITOR.plugins.add( 'tangy-checkboxes', {
 					this.element.$.removeAttribute('required')
 				}
 				this.element.$.innerHTML = ''
-				let options = this.data.options.split('\n')
-				options.forEach((option, i) => {
+				this.data.options.forEach((option, i) => {
 					if (option == '') return
 					let optionEl = document.createElement('option')
-					optionEl.value = i
-					optionEl.innerText = option
+					optionEl.value = option.value
+					optionEl.innerText = option.label
 					this.element.$.appendChild(optionEl)
 				})
 				if ( this.data.tangyIf !== '' )
