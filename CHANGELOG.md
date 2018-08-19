@@ -1,4 +1,7 @@
 
+## v4.4.0
+- Add ability to set value and label in options for tangy-checkoxes and tangy-radiobuttons
+
 ## v4.3.0
 - Item editor now has cancel and save buttons with more logical behavior.
 - tangy-form version bumped to v2.2.7.
