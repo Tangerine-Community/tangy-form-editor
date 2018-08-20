@@ -1,4 +1,8 @@
 
+## v4.4.2
+- Improvements for categories feature.
+- Dispatch change event only when user clicks save button.
+
 ## v4.4.0
 - Add ability to set value and label in options for tangy-checkoxes and tangy-radiobuttons
 
