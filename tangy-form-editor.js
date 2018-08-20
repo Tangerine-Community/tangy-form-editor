@@ -65,7 +65,7 @@ class TangyFormEditor extends PolymerElement {
   get formHtml() {
     const state = this.store.getState()
     return `
-      <tangy-form id="${state.form.id}" title="${state.form.title}"
+      <tangy-form id="${state.form.id}" title="${state.form.title}" category="${state.form.category}"
         on-open="
           ${state.form.onOpen}
         "
@@ -266,7 +266,7 @@ class TangyFormEditor extends PolymerElement {
         template.innerHTML = select_str;
         let selectEl = template.content.childNodes;
         let categoriesEditor = this.shadowRoot.querySelector('#categories-editor');
-        console.log("selectEl" + selectEl)
+        // console.log("selectEl" + selectEl)
         categoriesEditor.innerHTML = select_str
       } else {
         let spanEl = document.createElement("span");

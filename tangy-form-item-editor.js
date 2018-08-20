@@ -1,4 +1,5 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
+import {html_beautify} from 'js-beautify/js/lib/beautify-html.js'
 
 /**
  * `tangy-form-item-editor`
