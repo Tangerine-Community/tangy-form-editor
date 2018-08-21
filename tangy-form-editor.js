@@ -353,7 +353,6 @@ class TangyFormEditor extends PolymerElement {
       title: this.shadowRoot.querySelector('#form-title').value,
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
-      category: this.shadowRoot.querySelector('#category').value
     }})
   }
 
