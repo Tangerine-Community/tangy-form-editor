@@ -138,7 +138,7 @@ class TangyFormItemEditor extends PolymerElement {
     onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
     // categories
-    if (this.categories.length > 0) {
+    if (this.categories !== null && this.categories.length > 0) {
       let select_str = "<div class='rightCategories'>Select a category: <select id='category'>\n"
       select_str += '<option value="">Select one</option>\n';
       let categoryValue = this.item.category;
@@ -239,10 +239,16 @@ class TangyFormItemEditor extends PolymerElement {
     templateEl.content.querySelectorAll('[value]').forEach(el => {
       if (el.hasAttribute('name')) el.setAttribute('value', '')
     })
+    let categoryEl = this.shadowRoot.querySelector('#category');
+    let categoryValue = null;
+    if (typeof categoryEl !== 'undefined') {
+      categoryValue = categoryEl.value
+    }
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
+        category: categoryValue,
         title: this.$.container.querySelector('#itemTitle').value,
         summary: this.$.container.querySelector('#summary-checkbox').checked,
         hideBackButton: this.$.container.querySelector('#hide-back-button-checkbox').checked,
