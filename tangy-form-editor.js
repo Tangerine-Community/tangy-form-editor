@@ -137,9 +137,6 @@ class TangyFormEditor extends PolymerElement {
     )
     this.unsubscribe = this.store.subscribe(_ => {
       this.render(this.store.getState())
-      this.dispatchEvent(new CustomEvent('tangy-form-editor-change', {
-        detail: this.formHtml
-      }))
     })
     if (this.querySelector('template')) {
       this.formHtml = this.querySelector('template').innerHTML 
@@ -343,9 +340,16 @@ class TangyFormEditor extends PolymerElement {
     }
   }
 
+  dispatchChangeEvent() {
+    this.dispatchEvent(new CustomEvent('tangy-form-editor-change', {
+      detail: this.formHtml
+    }))
+  }
+
   onItemEditorSave(event) {
     this.store.dispatch({type: 'ITEM_UPDATE', payload: event.detail})
     this.store.dispatch({type: 'ITEM_CLOSE', payload: event.detail})
+    this.dispatchChangeEvent()
   }
 
   onSaveFormClick(event) {
@@ -354,6 +358,7 @@ class TangyFormEditor extends PolymerElement {
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
     }})
+    this.dispatchChangeEvent()
   }
 
   onItemEditorCancel(event) {
