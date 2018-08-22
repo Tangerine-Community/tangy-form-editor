@@ -188,7 +188,6 @@ class TangyFormEditor extends PolymerElement {
         <paper-input label="Form Title" id="form-title" value="${state.form.title}"></paper-input>
         <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
         <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
-        <paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>
         <div style="float: right; position:relative;">
           <i>
             Drag items to reorder 
@@ -249,32 +248,6 @@ class TangyFormEditor extends PolymerElement {
       onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
       this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
 
-      // categories
-      if (this.categories.length > 0) {
-        let select_str = "<div class='rightCategories'>Select a category: <select id='category'>\n"
-        select_str += '<option value="">Select one</option>\n';
-        let categoryValue = state.form.category
-        this.categories.forEach(category => {
-          if (typeof categoryValue !== 'undefined' && categoryValue === category) {
-            select_str += '<option value="' + category + '" selected>' + category + '</option>\n';
-          } else {
-            select_str += '<option value="' + category + '">' + category + '</option>\n';
-          }
-        })
-        select_str += "</select></div>\n"
-        let template = document.createElement('template');
-        template.innerHTML = select_str;
-        let selectEl = template.content.childNodes;
-        let categoriesEditor = this.shadowRoot.querySelector('#categories-editor');
-        // console.log("selectEl" + selectEl)
-        categoriesEditor.innerHTML = select_str
-      } else {
-        let spanEl = document.createElement("span");
-        spanEl.textContent = "No categories - you must add them to app-config.json";
-        this.shadowRoot.querySelector('#categories-editor').appendChild(spanEl)
-      }
-
-
       // Bind event listeners.
       this.$.container
         .querySelector('sortable-list')
@@ -324,6 +297,7 @@ class TangyFormEditor extends PolymerElement {
       this.innerHTML = `
         <tangy-form-item-editor></tangy-form-item-editor>
       `
+      this.querySelector('tangy-form-item-editor').categories = this.categories
       this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
       this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.querySelector('tangy-form-item-editor').addEventListener('cancel', this.onItemEditorCancel.bind(this))
@@ -353,10 +327,16 @@ class TangyFormEditor extends PolymerElement {
   }
 
   onSaveFormClick(event) {
+    let categoryEl = this.shadowRoot.querySelector('#category');
+    let categoryValue = null;
+    if (typeof categoryEl !== 'undefined') {
+      categoryValue = categoryEl.value
+    }
     this.store.dispatch({type: 'FORM_UPDATE', payload: {
       title: this.shadowRoot.querySelector('#form-title').value,
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
+      category: categoryValue
     }})
     this.dispatchChangeEvent()
   }

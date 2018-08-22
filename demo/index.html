@@ -29,7 +29,8 @@
       <h3>Basic tangy-form-editor demo</h3>
       <demo-snippet>
         <template>
-          <tangy-form-editor categories='["one","two","three","four"]'>
+          <!--<tangy-form-editor categories='["one","two","three","four"]'>-->
+          <tangy-form-editor>
             <template>
 
               <tangy-form 
@@ -39,7 +40,7 @@
                 on-change="console.log('tangy-form.on-change called')"
                 category="three"
               >
-                <tangy-form-item id="checkboxes_item" title="Checkboxes" 
+                <tangy-form-item id="checkboxes_item" title="Checkboxes"  category="two"
                   on-change="
                     // Disable/enable checkbox_3 given checkbox_4's value.
                     if (getValue('checkbox_4')) inputEnable('checkbox_3')

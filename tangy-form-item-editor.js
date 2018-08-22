@@ -49,6 +49,12 @@ class TangyFormItemEditor extends PolymerElement {
       paper-button.green[active] {
         background-color: var(--paper-red-500);
       }
+      .rightCategories {
+        margin-left: 2em;
+      }
+      paper-toggle-button {
+        padding-top: 10px;
+      }
     </style>
     <div id="container"></div> 
     <slot></slot>
@@ -62,6 +68,11 @@ class TangyFormItemEditor extends PolymerElement {
         type: Object,
         value: undefined,
         observer: 'render'
+      },
+      categories: {
+        type: Array,
+        value: false,
+        reflectToAttribute: true
       }
     }
   }
@@ -83,6 +94,7 @@ class TangyFormItemEditor extends PolymerElement {
           <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
+          <paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>
           <paper-toggle-button checked>WYSIWYG</paper-toggle-button> 
           <slot></slot>
         </div>
@@ -125,6 +137,30 @@ class TangyFormItemEditor extends PolymerElement {
     onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
     onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
+    // categories
+    if (this.categories !== null && this.categories.length > 0) {
+      let select_str = "<div class='rightCategories'>Select a category: <select id='category'>\n"
+      select_str += '<option value="">Select one</option>\n';
+      let categoryValue = this.item.category;
+      this.categories.forEach(category => {
+        if (typeof categoryValue !== 'undefined' && categoryValue === category) {
+          select_str += '<option value="' + category + '" selected>' + category + '</option>\n';
+        } else {
+          select_str += '<option value="' + category + '">' + category + '</option>\n';
+        }
+      })
+      select_str += "</select></div>\n"
+      let template = document.createElement('template');
+      template.innerHTML = select_str;
+      let selectEl = template.content.childNodes;
+      let categoriesEditor = this.shadowRoot.querySelector('#categories-editor');
+      categoriesEditor.innerHTML = select_str
+    } else {
+      let spanEl = document.createElement("span");
+      spanEl.textContent = "No categories - you must add them to app-config.json";
+      this.shadowRoot.querySelector('#categories-editor').appendChild(spanEl)
+    }
+
     // Form contents editor.
     this.showWysiwyg(this.item.template)
     this.$.container.querySelector('#cancel').addEventListener('click', this.onCancelClick.bind(this))
@@ -203,10 +239,16 @@ class TangyFormItemEditor extends PolymerElement {
     templateEl.content.querySelectorAll('[value]').forEach(el => {
       if (el.hasAttribute('name')) el.removeAttribute('value')
     })
+    let categoryEl = this.shadowRoot.querySelector('#category');
+    let categoryValue = null;
+    if (categoryEl !== null) {
+      categoryValue = categoryEl.value
+    }
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
+        category: categoryValue,
         title: this.$.container.querySelector('#itemTitle').value,
         summary: this.$.container.querySelector('#summary-checkbox').checked,
         hideBackButton: this.$.container.querySelector('#hide-back-button-checkbox').checked,
