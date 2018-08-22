@@ -1,3 +1,5 @@
+## v4.4.7
+- Bug fix: Grids are not rendered in assessments #1039 https://github.com/Tangerine-Community/Tangerine/issues/1039
 
 ## v4.4.2
 - Improvements for categories feature.
