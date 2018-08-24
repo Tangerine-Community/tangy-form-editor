@@ -78,6 +78,30 @@ CKEDITOR.dialog.add( 'tangy-input', function( editor ) {
 						commit: function( widget ) {
 							widget.setData( 'label', this.getValue() );
 						}
+					},
+					{
+						id: 'min',
+						type: 'text',
+						label: 'min <br><br>Note you must set type to "number" for this to work.',
+						width: '100%',
+						setup: function( widget ) {
+							this.setValue( widget.data.min );
+						},
+						commit: function( widget ) {
+							widget.setData( 'min', this.getValue() );
+						}
+					},
+					{
+						id: 'max',
+						type: 'text',
+						label: 'max <br><br>Note you must set type to "number" for this to work.',
+						width: '100%',
+						setup: function( widget ) {
+							this.setValue( widget.data.max );
+						},
+						commit: function( widget ) {
+							widget.setData( 'max', this.getValue() );
+						}
 					}
 				]
 			}

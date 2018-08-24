@@ -16,6 +16,8 @@ CKEDITOR.plugins.add( 'tangy-input', {
 				this.setData('label', el.label)
 				this.setData('type', el.type)
 				this.setData('name', el.name)
+				this.setData('min', el.min)
+				this.setData('max', el.max)
 				if (el.required) {
 					this.setData('required', 'required')
 				} else {
@@ -30,6 +32,8 @@ CKEDITOR.plugins.add( 'tangy-input', {
 				el.setAttribute('type', this.data.type)
 				el.setAttribute('label', this.data.label)
 				el.setAttribute('name', this.data.name)
+				el.setAttribute('min', this.data.min)
+				el.setAttribute('max', this.data.max)
 				if (this.data.required === 'required') {
 					el.setAttribute('required', true)
 				} else {
