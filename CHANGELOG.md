@@ -1,3 +1,6 @@
+## v4.5.0
+- Feature: Add support for editing min and max of tangy-input
+
 ## v4.4.7
 - Bug fix: Grids are not rendered in assessments #1039 https://github.com/Tangerine-Community/Tangerine/issues/1039
 
