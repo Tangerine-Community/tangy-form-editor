@@ -1,3 +1,6 @@
+## v4.6.0
+- Update tangy-form.
+
 ## v4.5.0
 - Feature: Add support for editing min and max of tangy-input
 
