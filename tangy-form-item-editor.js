@@ -240,7 +240,7 @@ class TangyFormItemEditor extends PolymerElement {
     }
     // Do not allow defaults selected in the DOM for value. This will confuse.
     templateEl.content.querySelectorAll('[value]').forEach(el => {
-      if (el.hasAttribute('name')) el.setAttribute('value', '')
+      if (el.hasAttribute('name')) el.removeAttribute('value')
     })
     let categoryEl = this.shadowRoot.querySelector('#category');
     let categoryValue = null;
