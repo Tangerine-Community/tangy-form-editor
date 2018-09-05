@@ -329,7 +329,7 @@ class TangyFormEditor extends PolymerElement {
   onSaveFormClick(event) {
     let categoryEl = this.shadowRoot.querySelector('#category');
     let categoryValue = null;
-    if (typeof categoryEl !== 'undefined') {
+    if (typeof categoryEl !== 'undefined' && categoryEl !== null) {
       categoryValue = categoryEl.value
     }
     this.store.dispatch({type: 'FORM_UPDATE', payload: {

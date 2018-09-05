@@ -142,6 +142,9 @@ class TangyFormItemEditor extends PolymerElement {
       let select_str = "<div class='rightCategories'>Select a category: <select id='category'>\n"
       select_str += '<option value="">Select one</option>\n';
       let categoryValue = this.item.category;
+      if (typeof categoryValue !== 'undefined' && categoryValue !== null) {
+        categoryValue = categoryValue.replace(/\s+/g, '');
+      }
       this.categories.forEach(category => {
         if (typeof categoryValue !== 'undefined' && categoryValue === category) {
           select_str += '<option value="' + category + '" selected>' + category + '</option>\n';
