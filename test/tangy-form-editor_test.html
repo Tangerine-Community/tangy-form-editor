@@ -65,6 +65,15 @@
           assert.equal(containerEl.querySelectorAll('tangy-form-item').length, 4)
         });
 
+        test('after clicking save, should dispatch tangy-form-editor-change event', (done) => {
+          const element = fixture('TestFixture');
+          element.addEventListener('tangy-form-editor-change', _ => {
+            assert.notEqual(element.formHtml, null)
+            done()
+          })
+          element.$.container.querySelector('.save-form').click()
+        });
+
       });
     </script>
 
