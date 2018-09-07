@@ -17,6 +17,12 @@
   </head>
   <body>
 
+    <test-fixture id="TangyFormItemEditorFixture">
+      <template>
+        <tangy-form-item-editor></tangy-form-item-editor>
+      </template>
+    </test-fixture>
+        
     <test-fixture id="TestFixture">
       <template>
         <tangy-form-editor>
@@ -81,6 +87,50 @@
         });
 
       });
+
+      suite('tangy-form-item-editor', () => {
+       
+        test('should start with no problem', () => {
+          const element = fixture('TangyFormItemEditorFixture');
+          element.categories = false;
+          element.item = {
+            "id": "text_inputs_1",
+            "title": "Text Inputs 1",
+            "tagName": "TANGY-FORM-ITEM",
+            "constructorName": "HTMLElement",
+            "template": "\n                  <tangy-input name=\"text_input_1\" label=\"What is your first name?\" type=\"text\"></tangy-input>\n                ",
+            "onOpen": null,
+            "onChange": null,
+            "category": null,
+            "summary": false,
+            "rightToLeft": false,
+            "hideBackButton": false
+          }
+        })
+ 
+        test('should dispatch save event', () => {
+          const element = fixture('TangyFormItemEditorFixture');
+          element.categories = false;
+          element.item = {
+            "id": "text_inputs_1",
+            "title": "Text Inputs 1",
+            "tagName": "TANGY-FORM-ITEM",
+            "constructorName": "HTMLElement",
+            "template": "\n                  <tangy-input name=\"text_input_1\" label=\"What is your first name?\" type=\"text\"></tangy-input>\n                ",
+            "onOpen": null,
+            "onChange": null,
+            "category": null,
+            "summary": false,
+            "rightToLeft": false,
+            "hideBackButton": false
+          }
+          let hasTriggered = false
+          element.addEventListener('save', _ => hasTriggered = true );
+          element.shadowRoot.querySelector('#save').click()
+          assert.equal(hasTriggered, true)
+        })
+      })
+
     </script>
 
   </body>
