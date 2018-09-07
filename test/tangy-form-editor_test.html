@@ -74,6 +74,12 @@
           element.$.container.querySelector('.save-form').click()
         });
 
+        test('opens item editor', () => {
+          const element = fixture('TestFixture');
+          element.$.container.querySelector('.item-edit').click()
+          assert.equal(element.querySelector('tangy-form-item-editor').item.id, 'text_inputs_1')
+        });
+
       });
     </script>
 
