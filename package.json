@@ -4,7 +4,7 @@
   "version": "4.6.1",
   "scripts": {
     "start": "polymer serve",
-    "test": "polymer test"
+    "test": "polymer test -l chrome"
   },
   "dependencies": {
     "@polymer/paper-toggle-button": "^3.0.0-pre.21",
