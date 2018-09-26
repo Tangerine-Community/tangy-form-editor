@@ -1,7 +1,7 @@
 {
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
-  "version": "4.6.5",
+  "version": "4.6.6",
   "scripts": {
     "start": "polymer serve",
     "test": "polymer test -l chrome"

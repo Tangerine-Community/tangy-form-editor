@@ -1,3 +1,6 @@
+## v4.6.6
+- CKEDITOR dialogs allowed variable name to be characters that would break tangy-form. Now there is validation for allowed characters. 
+
 ## v4.6.5
 - Minor update to tangy-form that fixes editing of tangy-timed
 
