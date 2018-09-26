@@ -43,6 +43,11 @@ CKEDITOR.dialog.add( 'tangy-checkboxes', function( editor ) {
 						setup: function( widget ) {
 							this.setValue( widget.data.name );
 						},
+						validate: function() {
+							if (this.getValue().match(/^[A-Za-z0-9_]+$/) === null) {
+								return 'Variable Name may only contain a-z, A-Z, 0-9, and _ characters'
+							}
+						},
 						commit: function( widget ) {
 							widget.setData( 'name', this.getValue() );
 						}
