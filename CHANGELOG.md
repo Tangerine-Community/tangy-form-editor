@@ -1,3 +1,6 @@
+## v4.6.5
+- Minor update to tangy-form that fixes editing of tangy-timed
+
 ## v4.6.0
 - Update tangy-form.
 

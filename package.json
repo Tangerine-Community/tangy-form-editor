@@ -1,7 +1,7 @@
 {
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
-  "version": "4.6.4",
+  "version": "4.6.5",
   "scripts": {
     "start": "polymer serve",
     "test": "polymer test -l chrome"
@@ -14,7 +14,7 @@
     "js-beautify": "^1.7.5",
     "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
-    "tangy-form": "2.4.2"
+    "tangy-form": "2.5.0"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
