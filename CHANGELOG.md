@@ -1,3 +1,6 @@
+## v4.7.0
+- Bumped to tangy-form v2.6.0 which makes which space more compact in forms.
+
 ## v4.6.6
 - CKEDITOR dialogs allowed variable name to be characters that would break tangy-form. Now there is validation for allowed characters. 
 
