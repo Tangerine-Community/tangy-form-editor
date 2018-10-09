@@ -1,3 +1,6 @@
+## v4.8.0
+- Bumped to tangy-form v2.9.0 which adds more elements that we'll make plugins for later.
+
 ## v4.7.0
 - Bumped to tangy-form v2.6.0 which makes which space more compact in forms.
 
