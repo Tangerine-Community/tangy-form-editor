@@ -29,7 +29,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Dialog windows are also simplified.
 	config.removeDialogTabs = 'link:advanced';
-	config.extraPlugins = 'tangy-checkbox,tangy-checkboxes,tangy-radio-buttons,tangy-select,tangy-input,tangy-location,tangy-gps,tangy-timed,tangy-acasi,simplebox,magicline'
+	config.extraPlugins = 'tangy-input-groups,tangy-checkbox,tangy-checkboxes,tangy-radio-buttons,tangy-select,tangy-input,tangy-location,tangy-gps,tangy-timed,tangy-acasi,simplebox,magicline'
 	config.allowedContent = true;
 
 };
