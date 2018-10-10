@@ -1,3 +1,6 @@
+## v4.9.0
+- Add support for filterByGlobal in the tangy-location plugin
+
 ## v4.8.0
 - Bumped to tangy-form v2.9.0 which adds more elements that we'll make plugins for later.
 
