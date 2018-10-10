@@ -24,6 +24,11 @@ CKEDITOR.plugins.add( 'tangy-location', {
 				} else {
 					this.setData('required', 'not-required')
 				}
+				if (this.element.$.hasAttribute('filter-by-global')) {
+					this.setData('filterByGlobal', 'yes')
+				} else {
+					this.setData('filterByGlobal', 'no')
+				}
 				var tangyIf = this.element.hasAttribute( 'tangy-if' ) ? this.element.getAttribute( 'tangy-if' ) : '';
 				this.setData( 'tangyIf', tangyIf );
 
@@ -36,6 +41,11 @@ CKEDITOR.plugins.add( 'tangy-location', {
 					this.element.$.setAttribute('required', true)
 				} else {
 					this.element.$.removeAttribute('required')
+				}
+				if (this.data.filterByGlobal === 'yes') {
+					this.element.$.setAttribute('filter-by-global', true)
+				} else {
+					this.element.$.removeAttribute('filter-by-global')
 				}
 				if ( this.data.tangyIf !== '' )
 					this.element.setAttribute('tangy-if', this.data.tangyIf);

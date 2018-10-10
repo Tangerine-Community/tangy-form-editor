@@ -36,6 +36,22 @@ CKEDITOR.dialog.add( 'tangy-location', function( editor ) {
 						}
 					},
 					{
+						id: 'filterByGlobal',
+						type: 'select',
+						label: 'Filter by locations in the user profile?',
+						width: '100%',
+						items: [
+							[ 'no', 'no' ],
+							[ 'yes', 'yes' ]
+						],
+						setup: function( widget ) {
+							this.setValue( widget.data.filterByGlobal );
+						},
+						commit: function( widget ) {
+							widget.setData( 'filterByGlobal', this.getValue() );
+						}
+					},
+					{
 						id: 'showLevels',
 						type: 'text',
 						label: 'Show levels (ex. county,subcounty)',
