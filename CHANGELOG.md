@@ -1,3 +1,6 @@
+## v4.9.1
+- added score fields and created Advanced tab for them in the tangy-timed plugin.
+
 ## v4.9.0
 - Add support for filterByGlobal in the tangy-location plugin
 
