@@ -39,9 +39,9 @@ CKEDITOR.plugins.add( 'tangy-timed', {
 				this.element.$.setAttribute('columns', this.data.columns)
 				this.element.$.setAttribute('duration', this.data.duration)
 				this.element.$.setAttribute('name', this.data.name)
-				this.element.$.setAttribute('scoreTarget', this.data.scoreTarget)
-				this.element.$.setAttribute('scoreBaseline', this.data.scoreBaseline)
-				this.element.$.setAttribute('scoreSpread', this.data.scoreSpread)
+        this.element.$.setAttribute('score-target', this.data.scoreTarget)
+        this.element.$.setAttribute('score-baseline', this.data.scoreBaseline)
+        this.element.$.setAttribute('score-spread', this.data.scoreSpread)
 				if (this.data.required === 'required') {
 					this.element.$.setAttribute('required', true)
 				} else {
