@@ -1,11 +1,12 @@
 CKEDITOR.dialog.add( 'tangy-timed', function( editor ) {
 	return {
 		title: 'Edit a Grid Test',
-		minWidth: 200,
+		minWidth: 300,
 		minHeight: 100,
 		contents: [
-			{
-				id: 'info',
+      {
+        id: 'tab-basic',
+        label: 'Basic Settings',
 				elements: [
 					{
 						id: 'tangyIf',
@@ -88,8 +89,50 @@ CKEDITOR.dialog.add( 'tangy-timed', function( editor ) {
 							widget.setData( 'columns', this.getValue() );
 						}
 					}
-				]
-			}
-		]
+        ]
+      },
+      {
+        id: 'tab-adv',
+        label: 'Advanced Settings',
+        elements: [
+          {
+            id: 'scoreBaseline',
+            type: 'text',
+            label: 'Baseline score',
+            width: '100%',
+            setup: function( widget ) {
+              this.setValue( widget.data.scoreBaseline );
+            },
+            commit: function( widget ) {
+              widget.setData( 'scoreBaseline', this.getValue() );
+            }
+          },
+          {
+            id: 'scoreTarget',
+            type: 'text',
+            label: 'Target score',
+            width: '100%',
+            setup: function( widget ) {
+              this.setValue( widget.data.scoreTarget );
+            },
+            commit: function( widget ) {
+              widget.setData( 'scoreTarget', this.getValue() );
+            }
+          },
+          {
+            id: 'scoreSpread',
+            type: 'text',
+            label: 'Spread score',
+            width: '100%',
+            setup: function( widget ) {
+              this.setValue( widget.data.scoreSpread );
+            },
+            commit: function( widget ) {
+              widget.setData( 'scoreSpread', this.getValue() );
+            }
+          }
+        ]
+      }
+    ]
 	};
 } );
