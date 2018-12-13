@@ -19,6 +19,9 @@ CKEDITOR.plugins.add( 'tangy-timed', {
 				this.setData('columns', this.element.$.columns)
 				this.setData('duration', this.element.$.duration)
 				this.setData('name', this.element.$.name)
+				this.setData('scoreTarget', this.element.$.scoreTarget)
+				this.setData('scoreBaseline', this.element.$.scoreBaseline)
+				this.setData('scoreSpread', this.element.$.scoreSpread)
 				if (this.element.$.required) {
 					this.setData('required', 'required')
 				} else {
@@ -36,6 +39,9 @@ CKEDITOR.plugins.add( 'tangy-timed', {
 				this.element.$.setAttribute('columns', this.data.columns)
 				this.element.$.setAttribute('duration', this.data.duration)
 				this.element.$.setAttribute('name', this.data.name)
+        this.element.$.setAttribute('score-target', this.data.scoreTarget)
+        this.element.$.setAttribute('score-baseline', this.data.scoreBaseline)
+        this.element.$.setAttribute('score-spread', this.data.scoreSpread)
 				if (this.data.required === 'required') {
 					this.element.$.setAttribute('required', true)
 				} else {
