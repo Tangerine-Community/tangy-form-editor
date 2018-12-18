@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/sortable-list/sortable-list.js'
+import './tangy-form-editor-add-input.js'
 
 /**
  * `tangy-form-item-editor`
@@ -53,10 +54,15 @@ class TangyFormCondensedEditor extends PolymerElement {
         wrap(el, wrapperEl)
       })
     this.shadowRoot.innerHTML = `<sortable-list>${template.innerHTML}</sortable-list>`
+    this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
   }
 
   downcast() {
     return [...this.shadowRoot.querySelectorAll('[wrapper]')].map(el => el.downcast()).join('')
+  }
+
+  addInput(event) {
+    event.target.after(document.createElement('tangy-form-editor-add-input'))
   }
 
 }

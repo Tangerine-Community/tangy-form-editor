@@ -23,6 +23,7 @@ class TangyInputEditor extends PolymerElement {
 				<div class="card-actions">
 					<paper-button id="remove-button" on-click="onRemoveClick">remove</paper-button>
 					<paper-button id="edit-button" on-click="onEditClick">edit</paper-button>
+					<paper-button id="add-button" on-click="onAddClick">add</paper-button>
 				</div>	
 			</paper-card>
     `;
@@ -43,7 +44,14 @@ class TangyInputEditor extends PolymerElement {
 	}
 
 	upcast() {
-		this.config = this.querySelector('tangy-input').getProps()
+		if (this.querySelector('tangy-input')) {
+			this.config = this.querySelector('tangy-input').getProps()
+		} else {
+			this.config = {
+				name: '...',
+				label: '...'
+			}
+		}
 		this.mode = 'info'
 		this.render()
 	}
@@ -94,6 +102,10 @@ class TangyInputEditor extends PolymerElement {
 		this.mode = 'edit'
 		this.render()
 
+	}
+
+	onAddClick() {
+		this.dispatchEvent(new CustomEvent('add-input', {bubbles: true}))
 	}
 
 }

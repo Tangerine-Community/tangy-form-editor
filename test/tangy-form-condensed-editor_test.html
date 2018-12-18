@@ -59,6 +59,13 @@
           template.innerHTML = element.markup
           assert.equal(!!template.content.querySelector('[name=foo]'), true)
         })
+        test('should add an input and see reflected', () => {
+          const element = fixture('ContainerFixture')
+          element.shadowRoot.querySelector('tangy-input-editor').shadowRoot.querySelector('#add-button').click()
+          element.shadowRoot.querySelector('tangy-form-editor-add-input').shadowRoot.querySelector('#tangy-input').click()
+          debugger
+
+        })
       })
 
     </script>
