@@ -3,8 +3,8 @@
   "main": "tangy-form-editor.js",
   "version": "4.11.0",
   "scripts": {
-    "start": "polymer serve",
-    "test": "polymer test -l chrome"
+    "start": "./node_modules/.bin/polymer serve",
+    "test": "./node_modules/.bin/polymer test -l chrome"
   },
   "dependencies": {
     "@polymer/paper-toggle-button": "^3.0.0-pre.21",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0",
+    "polymer-cli": "^1.9.2",
     "wct-browser-legacy": "^1.0.0"
   }
 }
