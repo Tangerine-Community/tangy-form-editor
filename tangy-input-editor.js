@@ -17,6 +17,10 @@ class TangyInputEditor extends PolymerElement {
 
   static get properties() {
     return {
+			name: {
+				type: String,
+				value: ''
+			},
       config: {
 				type: Object,
 				value: {},

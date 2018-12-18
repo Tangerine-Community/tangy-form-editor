@@ -25,11 +25,11 @@ class TangyFormCondensedEditor extends PolymerElement {
   }
 
   set markup(value) {
-    this.shadowRoot.querySelector('#container').innerHTML = this.markupToCondensed(value)
+    this.markupToCondensed(value)
   }
 
   get markup() {
-    return this.condensedToMarkup(this.shadowRoot.querySelector('container').innerHTML)
+    return this.condensedToMarkup()
   }
 
   static get properties() {
@@ -45,18 +45,43 @@ class TangyFormCondensedEditor extends PolymerElement {
     const template = document.createElement('template')
     template.innerHTML = markup
     const config = [...template.content.querySelectorAll('[name]')].map(el => el.getProps())
-    return `
+    debugger
+    this.shadowRoot.querySelector('#container').innerHTML = `
       ${config.map(elConfig => `
-        <${elConfig.tagName.toLowerCase()}-editor name="${elConfig.name}" config="${JSON.stringify(elConfig)}></${elConfig.tagName.toLowerCase()}-editor>
+        <${elConfig.tagName.toLowerCase()}-editor name="${elConfig.name}"></${elConfig.tagName.toLowerCase()}-editor>
       `).join('')}
     ` 
+    this.shadowRoot.querySelector('#container')
+      .querySelectorAll('[name]')
+      .forEach(editorInputEl => {
+        editorInputEl.config = config.find(configEl => configEl.name === editorInputEl.name)
+      })
+
   }
 
   condensedToMarkup() {
-    return this.shadowRoot.querySelector('#container').innerHTML
+    const config = [...this.shadowRoot.querySelectorAll('[name]')].map(el => el.getProps())
+    const template = document.createElement('div')
+    template.innerHTML = `
+      ${config.map(elConfig => `
+        <${elConfig.tagName.toLowerCase().replace('-editor', '')} name="${elConfig.name}"></${elConfig.tagName.toLowerCase().replace('-editor','')}>
+      `).join('')}
+    `
+    template
+      .querySelectorAll('[name]')
+      .forEach(templateEl => {
+        templateEl.setProps(config.find(configEl => configEl.name === templateEl.getAttribute('name')).config)
+      })
+    return template.innerHTML
+
 
   }
 
+}
+
+function wrap(el, wrapper) {
+  el.parentNode.insertBefore(wrapper, el);
+  wrapper.appendChild(el);
 }
 
 window.customElements.define('tangy-form-condensed-editor', TangyFormCondensedEditor);
