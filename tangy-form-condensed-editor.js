@@ -1,4 +1,5 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
+import '@polymer/sortable-list/sortable-list.js'
 
 /**
  * `tangy-form-item-editor`
@@ -51,7 +52,7 @@ class TangyFormCondensedEditor extends PolymerElement {
         wrapperEl.setAttribute('wrapper', 'true')
         wrap(el, wrapperEl)
       })
-    this.shadowRoot.innerHTML = template.innerHTML
+    this.shadowRoot.innerHTML = `<sortable-list>${template.innerHTML}</sortable-list>`
   }
 
   downcast() {
