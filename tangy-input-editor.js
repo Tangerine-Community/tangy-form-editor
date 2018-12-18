@@ -1,17 +1,30 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
+import '@polymer/paper-card/paper-card.js'
+import '@polymer/paper-button/paper-button.js'
 
 class TangyInputEditor extends PolymerElement {
 
   static get template() {
-    return html`
-      <style>
-        :host {
-          display: block;
-          color: var(--primary-text-color);
-          font-size: medium;
-        }
-      </style>
-      <div id="container"></div>
+		return html`
+			<style>
+				:host {
+					display: block;
+					width: 100%;
+				}
+				paper-card {
+					display: block;
+					margin: 15px;
+					padding: 15px;
+					width: 100%;
+				}
+			</style>
+			<paper-card>
+				<div class="card-content" id="container"></div>
+				<div class="card-actions">
+					<paper-button id="remove-button" on-click="onRemoveClick">remove</paper-button>
+					<paper-button id="edit-button" on-click="onEditClick">edit</paper-button>
+				</div>	
+			</paper-card>
     `;
   }
 
@@ -31,6 +44,7 @@ class TangyInputEditor extends PolymerElement {
 
 	upcast() {
 		this.config = this.querySelector('tangy-input').getProps()
+		this.mode = 'info'
 		this.render()
 	}
 
@@ -42,36 +56,44 @@ class TangyInputEditor extends PolymerElement {
 	}
 	
 	render() {
-		this.shadowRoot.innerHTML = `
-			<style>
-				:host {
-					display: block;
-					margin: 15px;
-					padding: 15px;
-					width: 100%;
-					-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-					-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-					-ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-					-o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-					-webkit-transition: all 0.25s ease-in-out;
-					-moz-transition: all 0.25s ease-in-out;
-					-ms-transition: all 0.25s ease-in-out;
-					-o-transition: all 0.25s ease-in-out;
-					transition: all 0.25s ease-in-out;
-				}
-				:host:hover {
-					-webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-					-moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-					-ms-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-					-o-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-					box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-				}
-			</style>
-			type: Text Input<br>
-			variable name: ${this.config.name}<br>
-			label: ${this.config.label}
+		this.shadowRoot.querySelector('#container').innerHTML = `
+			${this.mode === 'info' ? `
+				type: Text Input<br>
+				variable name: ${this.config.name}<br>
+				label: ${this.config.label}
+			`:``}
+			${this.mode === 'edit' ? `
+				<form>
+					<p>
+						Variable name:
+						<paper-input name="name" value="${this.config.name}"></paper-input>
+					</p>
+					<p>
+						Label:
+						<paper-input name="label" value="${this.config.label}"></paper-input>
+					</p>
+					<paper-button type="submit" id="submit">submit</paper-button>
+				</form>
+			`:``}
 		` 
+		if (this.mode === 'edit') {
+			this.shadowRoot.querySelector('#submit').addEventListener('click', (event) => {
+				this.config.name = this.shadowRoot.querySelector('[name=name]').value
+				this.config.label = this.shadowRoot.querySelector('[name=label]').value
+				this.mode = 'info'
+				this.render()
+			})
+		}
+	}
+
+	onRemoveClick() {
+		this.remove()
+	}
+
+	onEditClick() {
+		this.mode = 'edit'
+		this.render()
+
 	}
 
 }
