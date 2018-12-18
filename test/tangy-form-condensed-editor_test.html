@@ -18,7 +18,12 @@
 
     <test-fixture id="ContainerFixture">
       <template>
-        <tangy-form-condensed-editor></tangy-form-condensed-editor>
+        <tangy-form-condensed-editor>
+          <template>
+            <tangy-input name="input1" label="Input 1"></tangy-input>
+            <tangy-input name="input2" label="Input 2"></tangy-input>
+          </template>
+        </tangy-form-condensed-editor>
       </template>
     </test-fixture>
 
@@ -29,20 +34,14 @@
       suite('tangy-form-condensed-editor', () => {
         test('should open with 2 input editors', () => {
           const element = fixture('ContainerFixture')
-          element.markup = `
-            <tangy-input name="input1" label="Input 1"></tangy-input>
-            <tangy-input name="input2" label="Input 2"></tangy-input>
-          `
-          assert.equal(element.shadowRoot.querySelector('#container').querySelectorAll('[name]').length, 2)
+          assert.equal(element.shadowRoot.querySelectorAll('[name]').length, 2)
         })
         test('should get markup back', () => {
           const element = fixture('ContainerFixture')
-          element.markup = `
-            <tangy-input name="input1" label="Input 1"></tangy-input>
-            <tangy-input name="input2" label="Input 2"></tangy-input>
-          `
-          const markupBack = element.markup
-          debugger
+          const template = document.createElement('template')
+          template.innerHTML = element.markup
+          assert.equal(template.content.querySelectorAll('[name]').length, 2)
+          assert.equal(template.content.querySelectorAll('[label]').length, 2)
         })       
       })
 

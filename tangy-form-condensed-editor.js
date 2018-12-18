@@ -25,11 +25,11 @@ class TangyFormCondensedEditor extends PolymerElement {
   }
 
   set markup(value) {
-    this.markupToCondensed(value)
+    this.upcast(value)
   }
 
   get markup() {
-    return this.condensedToMarkup()
+    return this.downcast()
   }
 
   static get properties() {
@@ -39,42 +39,23 @@ class TangyFormCondensedEditor extends PolymerElement {
 
   connectedCallback() {
     super.connectedCallback()
+    this.upcast(this.querySelector('template').innerHTML)
   }
 
-  markupToCondensed(markup) {
+  upcast(markup) {
     const template = document.createElement('template')
     template.innerHTML = markup
-    const config = [...template.content.querySelectorAll('[name]')].map(el => el.getProps())
-    debugger
-    this.shadowRoot.querySelector('#container').innerHTML = `
-      ${config.map(elConfig => `
-        <${elConfig.tagName.toLowerCase()}-editor name="${elConfig.name}"></${elConfig.tagName.toLowerCase()}-editor>
-      `).join('')}
-    ` 
-    this.shadowRoot.querySelector('#container')
-      .querySelectorAll('[name]')
-      .forEach(editorInputEl => {
-        editorInputEl.config = config.find(configEl => configEl.name === editorInputEl.name)
+    template.content.querySelectorAll('[name]')
+      .forEach(el => {
+        const wrapperEl = document.createElement(`${el.tagName.toLowerCase()}-editor`)
+        wrapperEl.setAttribute('wrapper', 'true')
+        wrap(el, wrapperEl)
       })
-
+    this.shadowRoot.innerHTML = template.innerHTML
   }
 
-  condensedToMarkup() {
-    const config = [...this.shadowRoot.querySelectorAll('[name]')].map(el => el.getProps())
-    const template = document.createElement('div')
-    template.innerHTML = `
-      ${config.map(elConfig => `
-        <${elConfig.tagName.toLowerCase().replace('-editor', '')} name="${elConfig.name}"></${elConfig.tagName.toLowerCase().replace('-editor','')}>
-      `).join('')}
-    `
-    template
-      .querySelectorAll('[name]')
-      .forEach(templateEl => {
-        templateEl.setProps(config.find(configEl => configEl.name === templateEl.getAttribute('name')).config)
-      })
-    return template.innerHTML
-
-
+  downcast() {
+    return [...this.shadowRoot.querySelectorAll('[wrapper]')].map(el => el.downcast()).join('')
   }
 
 }
