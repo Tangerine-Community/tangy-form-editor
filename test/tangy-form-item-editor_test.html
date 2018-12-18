@@ -9,11 +9,8 @@
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/wct-browser-legacy/browser.js"></script>
     <script src="../node_modules/redux/dist/redux.min.js"></script>
-    <script src="../ckeditor/ckeditor.js"></script>
-    <script src="../node_modules/js-beautify/js/lib/beautify-html.js"></script>
 
 
-    <script type="module" src="../tangy-form-editor.js"></script>
   </head>
   <body>
 
@@ -22,34 +19,10 @@
         <tangy-form-item-editor></tangy-form-item-editor>
       </template>
     </test-fixture>
-        
-    <test-fixture id="TestFixture">
-      <template>
-        <tangy-form-editor>
-          <template>
-            <tangy-form id="field-demo" title="Field Demo">
-              <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
-                <template>
-                  <tangy-input name="text_input_1" label="What is your first name?" type="text"></tangy-input>
-                </template>
-              </tangy-form-item>
-              <tangy-form-item id="text_inputs_2" title="Text Inputs 2">
-                <template>
-                  <tangy-input name="text_input_2" label="What is your last name?" type="text" error-message="This is required." required></tangy-input>
-                </template>
-              </tangy-form-item> 
-              <tangy-form-item id="summary" summary title="Summary">
-                <template>
-                  Thank you for taking our survey.
-                </template>
-              </tangy-form-item> 
-            </tangy-form>
-          </template>
-        </tangy-form-editor>
-      </template>
-    </test-fixture>
 
     <script type="module">
+      import '../tangy-form-item-editor.js'
+      import 'tangy-form/input/tangy-input.js'
 
       suite('tangy-form-item-editor', () => {
        
@@ -92,7 +65,8 @@
           element.shadowRoot.querySelector('#save').click()
           assert.equal(hasTriggered, true)
         })
-      })
+ 
+    })
 
     </script>
 

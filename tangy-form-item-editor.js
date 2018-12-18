@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
-
+import './tangy-form-condensed-editor.js'
+import './tangy-input-editor.js'
 /**
  * `tangy-form-item-editor`
  * ...
@@ -95,8 +96,11 @@ class TangyFormItemEditor extends PolymerElement {
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
           <paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>
-          <paper-toggle-button checked>WYSIWYG</paper-toggle-button> 
-          <slot></slot>
+          <tangy-form-condensed-editor>
+            <template>
+              ${this.item.template}
+            </template>
+          </tangy-form-condensed-editor>
         </div>
         <div class="card-actions">
           <paper-button id="save">
@@ -114,15 +118,6 @@ class TangyFormItemEditor extends PolymerElement {
       </paper-card>
       </div>
     `
-    this.shadowRoot
-      .querySelector('paper-toggle-button')
-      .addEventListener('click', event => {
-        if(event.target.hasAttribute('checked')) {
-          this.showWysiwyg(html_beautify(this.querySelector('juicy-ace-editor').value))
-        } else {
-          this.showAce(html_beautify(this.getTemplateFromWysiwyg()))
-        }
-      })
     // on-open-editor
     let onOpenEditorEl = document.createElement('juicy-ace-editor')
     onOpenEditorEl.setAttribute('mode', 'ace/mode/javascript')
@@ -165,7 +160,6 @@ class TangyFormItemEditor extends PolymerElement {
     }
 
     // Form contents editor.
-    this.showWysiwyg(this.item.template)
     this.$.container.querySelector('#cancel').addEventListener('click', this.onCancelClick.bind(this))
     this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
   }
@@ -192,39 +186,6 @@ class TangyFormItemEditor extends PolymerElement {
     return wysiwygTemplateEl.innerHTML
   }
 
-  showWysiwyg(template) {
-    this.innerHTML = `
-      <div id="editor1" contenteditable="true" style="margin-top: 100px; padding-top: 10px">
-        ${template}
-      </div>
-    `
-    let tangyEls = []
-    this.querySelector('#editor1').childNodes.forEach(node => {
-      if (node.tagName && node.tagName.includes('TANGY')) {
-        tangyEls.push(node)
-      }
-    })
-    tangyEls.forEach(tangyEl => {
-      let wrapperEl = document.createElement('div')
-      wrapperEl.setAttribute('class', tangyEl.localName)
-      tangyEl.parentNode.insertBefore(wrapperEl, tangyEl);
-      wrapperEl.appendChild(tangyEl)
-    })
-    CKEDITOR.disableAutoInline = true
-    CKEDITOR.config.autoParagraph = false
-    CKEDITOR.config.startupFocus = 'start'
-    const instance = CKEDITOR.inline( 'editor1' )
-  }
-
-  showAce(template) {
-    let juicyAceEditorEl = document.createElement('juicy-ace-editor')
-    juicyAceEditorEl.setAttribute('mode', 'ace/mode/html')
-    juicyAceEditorEl.value = template 
-    juicyAceEditorEl.style.height = `${window.innerHeight*.6}px`
-    this.innerHTML = ''
-    this.appendChild(juicyAceEditorEl)
-  }
-
   onCancelClick(event) {
     const proceed = confirm('Are you sure you want to cancel?')
     if (!proceed) return
@@ -233,11 +194,7 @@ class TangyFormItemEditor extends PolymerElement {
 
   onSaveClick(event) {
     let templateEl = document.createElement('template')
-    if (this.querySelector('#editor1')) {
-      templateEl.innerHTML = html_beautify(this.getTemplateFromWysiwyg())
-    } else {
-      templateEl.innerHTML = html_beautify(this.querySelector('juicy-ace-editor').value)
-    }
+    templateEl.innerHTML = this.shadowRoot.querySelector('tangy-form-condensed-editor').markup
     // Do not allow defaults selected in the DOM for value. This will confuse.
     templateEl.content.querySelectorAll('[value]').forEach(el => {
       if (el.hasAttribute('name')) el.removeAttribute('value')
