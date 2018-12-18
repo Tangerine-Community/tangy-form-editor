@@ -50,43 +50,49 @@
     </test-fixture>
 
     <script type="module">
-      suite('tangy-form-editor', () => {
-        
-        test('should have 2 items listed after putting formHtml inline', () => {
-          const element = fixture('TestFixture');
-          assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 3);
-        });
 
-        test('after clicking new item button, should have 3 items', () => {
-          const element = fixture('TestFixture');
-          element.$.container.querySelector('.item-create').click()
-          assert.equal(element.shadowRoot.querySelectorAll('paper-card').length, 4);
-        });
-
-        test('after clicking new item button, formHtml should have 3 tangy-form-item elements', () => {
-          const element = fixture('TestFixture');
-          element.$.container.querySelector('.item-create').click()
-          const containerEl = document.createElement('div')
-          containerEl.innerHTML = element.formHtml
-          assert.equal(containerEl.querySelectorAll('tangy-form-item').length, 4)
-        });
-
-        test('after clicking save, should dispatch tangy-form-editor-change event', (done) => {
-          const element = fixture('TestFixture');
-          element.addEventListener('tangy-form-editor-change', _ => {
-            assert.notEqual(element.formHtml, null)
-            done()
-          })
-          element.$.container.querySelector('.save-form').click()
-        });
-
-        test('opens item editor', () => {
-          const element = fixture('TestFixture');
-          element.$.container.querySelector('.item-edit').click()
-          assert.equal(element.querySelector('tangy-form-item-editor').item.id, 'text_inputs_1')
-        });
-
-      });
+      suite('tangy-form-item-editor', () => {
+       
+        test('should start with no problem', () => {
+          const element = fixture('TangyFormItemEditorFixture');
+          element.categories = false;
+          element.item = {
+            "id": "text_inputs_1",
+            "title": "Text Inputs 1",
+            "tagName": "TANGY-FORM-ITEM",
+            "constructorName": "HTMLElement",
+            "template": "\n                  <tangy-input name=\"text_input_1\" label=\"What is your first name?\" type=\"text\"></tangy-input>\n                ",
+            "onOpen": null,
+            "onChange": null,
+            "category": null,
+            "summary": false,
+            "rightToLeft": false,
+            "hideBackButton": false
+          }
+        })
+ 
+        test('should dispatch save event', () => {
+          const element = fixture('TangyFormItemEditorFixture');
+          element.categories = false;
+          element.item = {
+            "id": "text_inputs_1",
+            "title": "Text Inputs 1",
+            "tagName": "TANGY-FORM-ITEM",
+            "constructorName": "HTMLElement",
+            "template": "\n                  <tangy-input name=\"text_input_1\" label=\"What is your first name?\" type=\"text\"></tangy-input>\n                ",
+            "onOpen": null,
+            "onChange": null,
+            "category": null,
+            "summary": false,
+            "rightToLeft": false,
+            "hideBackButton": false
+          }
+          let hasTriggered = false
+          element.addEventListener('save', _ => hasTriggered = true );
+          element.shadowRoot.querySelector('#save').click()
+          assert.equal(hasTriggered, true)
+        })
+      })
 
     </script>
 
