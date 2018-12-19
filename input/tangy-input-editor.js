@@ -34,12 +34,18 @@ class TangyInputEditor extends PolymerElement {
 			name: {
 				type: String,
 				value: ''
+			},
+			wrapper: {
+				type: Boolean,
+				value: true,
+				reflectToAttribute: true
 			}
     }
   }
 
   connectedCallback() {
 		super.connectedCallback()
+		this.wrapper = true
 		this.upcast()
 	}
 

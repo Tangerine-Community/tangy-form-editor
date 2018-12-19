@@ -63,8 +63,7 @@
           const element = fixture('ContainerFixture')
           element.shadowRoot.querySelector('tangy-input-editor').shadowRoot.querySelector('#add-button').click()
           element.shadowRoot.querySelector('tangy-form-editor-add-input').shadowRoot.querySelector('#tangy-input').click()
-          debugger
-
+          assert.equal(element.shadowRoot.querySelectorAll('[wrapper]').length, 3)
         })
       })
 

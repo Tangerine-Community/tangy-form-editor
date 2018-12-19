@@ -50,7 +50,6 @@ class TangyFormCondensedEditor extends PolymerElement {
     template.content.querySelectorAll('[name]')
       .forEach(el => {
         const wrapperEl = document.createElement(`${el.tagName.toLowerCase()}-editor`)
-        wrapperEl.setAttribute('wrapper', 'true')
         wrap(el, wrapperEl)
       })
     this.shadowRoot.innerHTML = `<sortable-list>${template.innerHTML}</sortable-list>`
