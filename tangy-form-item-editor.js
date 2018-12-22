@@ -1,6 +1,7 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
+import './tangy-widgets.js'
 import './tangy-form-condensed-editor.js'
-import './input/tangy-input-editor.js'
+import './widget/tangy-input-widget.js'
 
 class TangyFormItemEditor extends PolymerElement {
   static get template() {

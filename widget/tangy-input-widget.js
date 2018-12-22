@@ -121,4 +121,4 @@ class TangyInputWidget extends TangyBaseWidget {
 }
 
 window.customElements.define('tangy-input-widget', TangyInputWidget);
-window.tangyFormEditorWidgets.define('tangy-input-widget', TangyInputWidget);
+window.tangyFormEditorWidgets.define('tangy-input-widget', 'tangy-input', TangyInputWidget);

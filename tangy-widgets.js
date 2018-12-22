@@ -2,9 +2,10 @@ class TangyFormEditorWidgets {
   constructor() {
     this.widgets = []
   }
-  define(elementName, widgetClass) {
+  define(widgetName, claimElement, widgetClass) {
     this.widgets.push({
-      elementName,
+      widgetName,
+      claimElement,
       widgetClass
     })
   }

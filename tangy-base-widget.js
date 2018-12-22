@@ -156,7 +156,7 @@ class TangyBaseWidget extends PolymerElement {
       formEl.appendChild(submitEl)
       submitEl.addEventListener('click', (event) => {
         this._config = this.onSave(this._config, this.shadowRoot.querySelector('form'))
-        this.mode = 'info'
+        this.edit = false 
       })
     } else {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderInfo(this._config)

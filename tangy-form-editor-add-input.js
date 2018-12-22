@@ -38,7 +38,9 @@ class TangyFormEditorAddInput extends PolymerElement {
   }
 
   addThis(event) {
-    const wrapperEl = document.createElement(`${event.target.id}-editor`)
+    // @TODO use window.tangyFormWEditorWidgets
+    const widgetElInfo = window.tangyFormEditorWidgets.widgets.find(widgetInfo => widgetInfo.claimElement === event.target.id)
+    const wrapperEl = document.createElement(widgetElInfo.widgetName)
     this.after(wrapperEl)
     this.remove()
   }
