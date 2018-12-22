@@ -18,7 +18,18 @@
     <test-fixture id="ResumeFixture">
       <template>
         <tangy-input-widget>
-          <tangy-input name="input1" label="Input 1"></tangy-input>
+          <tangy-input 
+            name="input1"
+            label="Input 1"
+            required
+            hidden
+            disabled
+            tangy-if="console.log('test')"
+            allowed-pattern="[0-9]"
+            min="0"
+            max="9"
+            type="number">
+          </tangy-input>
         </tangy-input-widget>
       </template>
     </test-fixture>
@@ -31,10 +42,40 @@
       suite('tangy-input-widget', () => {
         test('should open blank with defaults', () => {
           const element = fixture('BlankFixture')
-          debugger
+          assert.equal(element._config.hasOwnProperty('name'), true)
+          assert.equal(element._config.hasOwnProperty('required'), true)
+          assert.equal(element._config.hasOwnProperty('disabled'), true)
+          assert.equal(element._config.hasOwnProperty('hidden'), true)
+          assert.equal(element._config.hasOwnProperty('label'), true)
+          assert.equal(element._config.hasOwnProperty('tangyIf'), true)
+          assert.equal(element._config.hasOwnProperty('allowedPattern'), true)
+          assert.equal(element._config.hasOwnProperty('min'), true)
+          assert.equal(element._config.hasOwnProperty('max'), true)
+          assert.equal(element._config.hasOwnProperty('type'), true)
         })
-        test('should resume and save without edits')
-        test('should resume and save with edits')
+        test('should resume', () => {
+          const element = fixture('ResumeFixture')
+          assert.equal(element._config.name, 'input1')
+          assert.equal(element._config.label, 'Input 1')
+          assert.equal(element._config.required, true)
+          assert.equal(element._config.hidden, true)
+          assert.equal(element._config.disabled, true)
+          assert.equal(element._config.tangyIf, `console.log('test')`)
+          assert.equal(element._config.allowedPattern, `[0-9]`)
+          assert.equal(element._config.min, `0`)
+          assert.equal(element._config.max, `9`)
+          assert.equal(element._config.type, `number`)
+        })
+        test('should resume and save with edits', () => {
+          const element = fixture('ResumeFixture')
+          assert.equal(element._config.required, true)
+          element.shadowRoot.querySelector('#edit-button').click()
+          element.shadowRoot.querySelector('[name=label').value = 'New label'
+          element.shadowRoot.querySelector('[name=required]').click()
+          element.shadowRoot.querySelector('#submit').click()
+          assert.equal(element._config.label, 'New label')
+          assert.equal(element._config.required, false)
+        })
       })
 
     </script>

@@ -8,57 +8,73 @@ class TangyBaseWidget extends PolymerElement {
    * Public API.
    */
 
-  static set markup(markup) {
+  set markup(markup) {
     this.innerHTML = markup
-    this.config = this.upcast(this.config)
+    if (!this.querySelector(this.claimElement)) {
+      this.innerHTML = `<${this.claimElement}></${this.claimElement}>`
+    }
+    this._element = this.querySelector(this.claimElement)
+    this._config = {...this.defaultConfig}
+    this._config = this.upcast(this._config, this._element)
   }
 
-  static get markup() {
-    this.downcast()
+  get markup() {
+    this.innerHTML = this.downcast()
+    this._element = this.querySelector(this.claimElement)
+    this._config = this.defaultConfig()
+    this._config = this.upcast(this._config, this._element)
+    return this.innerHTML
   }
+
+  // Need it?
+  /*
+  detach() {
+
+  }
+  */
 
   /*
    * Implement API.
    */
 
-  defaultConfig() {
+  get claimElement() {
+    return 'tangy-base'
+  }
+
+  get defaultConfig() {
     return {
       name: '...',
-      label: '...',
-      type: 'text',
-      required: false,
-      disabled: false,
-      hidden: false,
-      allowedPattern: '',
-      min: undefined,
-      max: undefined,
-      tangyIf: ''
     }
   }
 
   // Convert this.innerHTML to configuration.
-  upcast(config) {
-    return {}
+  upcast(config, element) {
+    return { ...config, name: element.getAttribute('name') }
   }
 
   // Convert configuration to HTML.
   downcast(config) {
-    return ``
+    return `<tangy-base name="${config.name}"></tangy-base>`
   }
   
   // Return markup for use when in info mode.
   renderInfo(config) {
-    return ``
+    return `Name: ${config.name}`
   }
 
   // Return markup for use when in edit mode.
   renderEdit(config) {
-    return ``
+    return `<input name="${config.name}>`
   }
 
-  // On save of edit form, return updated config.
+  // On save of edit form, return updated _config.
   onSave(config, formEl) {
-    return {...config}
+    return { ...config, name: formEl.querySelector([name=base]).value }
+  }
+
+  // ?? So we can do event listeners on dynamic items?? Could also make form components for things like <tangy-list>.
+  afterRenderEdit() {
+
   }
 
   /*
@@ -96,7 +112,7 @@ class TangyBaseWidget extends PolymerElement {
         type: String,
         value: ''
       },
-      wrapper: {
+      widget: {
         type: Boolean,
         value: true,
         reflectToAttribute: true
@@ -107,7 +123,7 @@ class TangyBaseWidget extends PolymerElement {
         observer: '_render',
         reflectToAttribute: true
       },
-      config: {
+      _config: {
         type: Object,
         value: {},
         observer: '_render',
@@ -118,13 +134,10 @@ class TangyBaseWidget extends PolymerElement {
 
   connectedCallback() {
     super.connectedCallback()
-    // Set to true to make it easier to distinguish that this is a wrapper element in the DOM.
-    this.wrapper = true
-    // Set up this.config with defaults, then find any in upcast.
-    this.config = this.defaultConfig()
-    if (this.innerHTML.replace(/\s/g, '') !== '') {
-      this.config = this.upcast(this.config)
-    }
+    this.markup = this.innerHTML
+    // A useful selector from higher in the DOM.
+    this.widget = true
+
   }
 
   /*
@@ -134,20 +147,20 @@ class TangyBaseWidget extends PolymerElement {
   // Proxy for render to the #container element.
   _render() {
     this.shadowRoot.querySelector('#container').innerHTML = `
-      ${this.edit === false ? this.renderInfo(this.config) :``}
+      ${this.edit === false ? this.renderInfo(this._config) :``}
       ${this.edit === true ? `
         <form>
-          ${this.renderEdit(this.config)}
+          ${this.renderEdit(this._config)}
           <paper-button type="submit" id="submit">submit</paper-button>
         </form>
       `:``}
     `
     if (this.edit === true) {
       this.shadowRoot.querySelector('#submit').addEventListener('click', (event) => {
-        this.config.name = this.shadowRoot.querySelector('[name=name]').value
-        this.config.label = this.shadowRoot.querySelector('[name=label]').value
+        this._config.name = this.shadowRoot.querySelector('[name=name]').value
+        this._config.label = this.shadowRoot.querySelector('[name=label]').value
         this.mode = 'info'
-        this.config = this.onSave(previousConfig, this.shadowRoot.querySelector('form'))
+        this._config = this.onSave(this._config, this.shadowRoot.querySelector('form'))
       })
     }
   }
