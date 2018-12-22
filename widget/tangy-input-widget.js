@@ -89,15 +89,15 @@ class TangyInputWidget extends TangyBaseWidget {
       </p>
       <p>
         Required:
-        <paper-checkbox name="required" value="${config.required ? 'on' : ''}"></paper-checkbox>
+        <paper-checkbox name="required" ${config.required ? 'checked' : ''}></paper-checkbox>
       </p>
       <p>
         Disabled:
-        <paper-checkbox name="disabled" value="${config.disabled ? 'on' : ''}"></paper-checkbox>
+        <paper-checkbox name="disabled" ${config.disabled ? 'checked' : ''}></paper-checkbox>
       </p>
       <p>
         Hidden:
-        <paper-checkbox name="hidden" value="${config.hidden ? 'on' : ''}"></paper-checkbox>
+        <paper-checkbox name="hidden" ${config.hidden ? 'checked' : ''}></paper-checkbox>
       </p>
     `
     return formEl
@@ -108,9 +108,9 @@ class TangyInputWidget extends TangyBaseWidget {
       ...config,
       name: formEl.querySelector('[name=name]').value,
       label: formEl.querySelector('[name=label]').value,
-      required: formEl.querySelector('[name=required]') === 'on' ? true : false,
-      disabled: formEl.querySelector('[name=disabled]') === 'on' ? true : false,
-      hidden: formEl.querySelector('[name=hidden]') === 'on' ? true : false,
+      required: formEl.querySelector('[name=required]').checked ? true : false,
+      disabled: formEl.querySelector('[name=disabled]').checked ? true : false,
+      hidden: formEl.querySelector('[name=hidden]').checked ? true : false,
       type: formEl.querySelector('[name=type]').value,
       tangyIf: formEl.querySelector('[name=tangy-if]').value,
       max: formEl.querySelector('[name=max]').value,
