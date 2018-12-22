@@ -58,8 +58,8 @@ class TangyInputWidget extends TangyBaseWidget {
     `
   }
 
-  renderEdit(config) {
-    return `
+  renderEdit(config, formEl) {
+    formEl.innerHTML = `
       <p>
         Variable name:
         <paper-input name="name" value="${config.name}"></paper-input>
@@ -100,6 +100,7 @@ class TangyInputWidget extends TangyBaseWidget {
         <paper-checkbox name="hidden" value="${config.hidden ? 'on' : ''}"></paper-checkbox>
       </p>
     `
+    return formEl
   }
 
   onSave(config, formEl) {

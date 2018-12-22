@@ -63,8 +63,9 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   // Return markup for use when in edit mode.
-  renderEdit(config) {
-    return `<input name="${config.name}>`
+  renderEdit(config, formEl) {
+    formEl.innerHTML = `<input name="${config.name}>`
+    return formEl
   }
 
   // On save of edit form, return updated _config.
@@ -146,22 +147,19 @@ class TangyBaseWidget extends PolymerElement {
 
   // Proxy for render to the #container element.
   _render() {
-    this.shadowRoot.querySelector('#container').innerHTML = `
-      ${this.edit === false ? this.renderInfo(this._config) :``}
-      ${this.edit === true ? `
-        <form>
-          ${this.renderEdit(this._config)}
-          <paper-button type="submit" id="submit">submit</paper-button>
-        </form>
-      `:``}
-    `
     if (this.edit === true) {
-      this.shadowRoot.querySelector('#submit').addEventListener('click', (event) => {
-        this._config.name = this.shadowRoot.querySelector('[name=name]').value
-        this._config.label = this.shadowRoot.querySelector('[name=label]').value
-        this.mode = 'info'
+      const formEl = document.createElement('form')
+      this.shadowRoot.querySelector('#container').appendChild(this.renderEdit(this._config, formEl))
+      const submitEl = document.createElement('paper-button')
+      submitEl.innerHTML = 'submit'
+      submitEl.setAttribute('id', 'submit')
+      formEl.appendChild(submitEl)
+      submitEl.addEventListener('click', (event) => {
         this._config = this.onSave(this._config, this.shadowRoot.querySelector('form'))
+        this.mode = 'info'
       })
+    } else {
+      this.shadowRoot.querySelector('#container').innerHTML = this.renderInfo(this._config)
     }
   }
 
