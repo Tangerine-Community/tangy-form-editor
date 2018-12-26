@@ -11,7 +11,7 @@ class TangyBaseWidget extends PolymerElement {
   set markup(markup) {
     this.innerHTML = markup
     if (!this.querySelector(this.claimElement)) {
-      this.innerHTML = `<${this.claimElement}></${this.claimElement}>`
+      this.innerHTML = this.downcast(this.defaultConfig)
     }
     this._element = this.querySelector(this.claimElement)
     this._config = {...this.defaultConfig}
@@ -148,19 +148,20 @@ class TangyBaseWidget extends PolymerElement {
   // Proxy for render to the #container element.
   _render() {
     if (this.edit === true) {
-      const formEl = document.createElement('form')
-      this.shadowRoot.querySelector('#container').appendChild(this.renderEdit(this._config, formEl))
-      const submitEl = document.createElement('paper-button')
-      submitEl.innerHTML = 'submit'
-      submitEl.setAttribute('id', 'submit')
-      formEl.appendChild(submitEl)
-      submitEl.addEventListener('click', (event) => {
-        this._config = this.onSave(this._config, this.shadowRoot.querySelector('form'))
-        this.edit = false 
-      })
+      this.shadowRoot.querySelector('#container').innerHTML = this.renderEdit(this._config)
+      this.shadowRoot
+        .querySelector('#container')
+        .querySelector('tangy-form')
+        .addEventListener('submit', (event) => this._onSubmit())
     } else {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderInfo(this._config)
     }
+  }
+
+  _onSubmit() {
+    this._config = this.onSubmit(this._config, this.shadowRoot.querySelector('tangy-form'))
+    this.innerHTML = this.downcast(this._config)
+    this.edit = false
   }
 
   _onRemoveClick() {

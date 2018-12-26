@@ -47,14 +47,13 @@ class TangyFormCondensedEditor extends PolymerElement {
   upcast(markup) {
     const template = document.createElement('template')
     template.innerHTML = markup
-    template.content.querySelectorAll('[name]')
-      .forEach(el => {
-        const widgetElInfo = window.tangyFormEditorWidgets.widgets.find(widgetInfo => widgetInfo.claimElement === el.tagName.toLowerCase())
-        if (widgetElInfo) {
-          const widgetEl = document.createElement(widgetElInfo.widgetName)
-          wrap(el, widgetEl)
-        }
-      })
+    window.tangyFormEditorWidgets.widgets.forEach(widgetInfo => {
+      template.content.querySelectorAll(widgetInfo.claimElement)
+        .forEach(matchingEl => {
+            const widgetEl = document.createElement(widgetInfo.widgetName)
+            wrap(matchingEl, widgetEl)
+        })
+    })
     this.shadowRoot.innerHTML = `<sortable-list>${template.innerHTML}</sortable-list>`
     this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
   }

@@ -20,22 +20,26 @@
       <template>
         <tangy-form-condensed-editor>
           <template>
-            <tangy-input name="input1" label="Input 1"></tangy-input>
-            <tangy-input name="input2" label="Input 2"></tangy-input>
+            <tangy-input type="text" name="input1" label="Input 1"></tangy-input>
+            <tangy-input type="number" name="input2" label="Input 2"></tangy-input>
           </template>
         </tangy-form-condensed-editor>
       </template>
     </test-fixture>
 
     <script type="module">
+
+      import * as Polymer from '../node_modules/@polymer/polymer/polymer-legacy.js'
+      import 'tangy-form/tangy-form.js'
       import 'tangy-form/input/tangy-input.js'
       import '../tangy-widgets.js'
       import '../tangy-form-condensed-editor.js'
-      import '../widget/tangy-input-widget.js'
+      import '../widget/tangy-text-widget.js'
+      import '../widget/tangy-number-widget.js'
       suite('tangy-form-condensed-editor', () => {
         test('should open with 2 input editors', () => {
           const element = fixture('ContainerFixture')
-          assert.equal(element.shadowRoot.querySelectorAll('tangy-input-widget').length, 2)
+          assert.equal(element.shadowRoot.querySelectorAll('[widget]').length, 2)
         })
         test('should get markup back', () => {
           const element = fixture('ContainerFixture')
@@ -46,24 +50,31 @@
         })       
         test('should remove input and see reflected', () => {
           const element = fixture('ContainerFixture')
-          element.shadowRoot.querySelector('tangy-input-widget').shadowRoot.querySelector('#remove-button').click()
+          element.shadowRoot.querySelector('[widget]').shadowRoot.querySelector('#remove-button').click()
+          assert.equal(element.shadowRoot.querySelectorAll('[widget]').length, 1)
           const template = document.createElement('template')
           template.innerHTML = element.markup
-          assert.equal(!!template.content.querySelectorAll('[name]').length, 1)
+          assert.equal(template.content.querySelectorAll('[name]').length, 1)
         })
         test('should edit input and see reflected', () => {
           const element = fixture('ContainerFixture')
-          element.shadowRoot.querySelector('tangy-input-widget').shadowRoot.querySelector('#edit-button').click()
-          element.shadowRoot.querySelector('tangy-input-widget').shadowRoot.querySelector('[name=name]').value = 'foo'
-          element.shadowRoot.querySelector('tangy-input-widget').shadowRoot.querySelector('#submit').click()
+          element.shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('#edit-button').click()
+          element
+            .shadowRoot.querySelector('tangy-text-widget')
+            .shadowRoot.querySelector('tangy-form').newResponse()
+          element
+            .shadowRoot.querySelector('tangy-text-widget')
+            .shadowRoot.querySelector('tangy-form-item')
+            .shadowRoot.querySelector('[name=name]').value = 'foo'
+          element.shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('tangy-form-item').clickedComplete()
           const template = document.createElement('template')
           template.innerHTML = element.markup
           assert.equal(!!template.content.querySelector('[name=foo]'), true)
         })
         test('should add an input and see reflected', () => {
           const element = fixture('ContainerFixture')
-          element.shadowRoot.querySelector('tangy-input-widget').shadowRoot.querySelector('#add-button').click()
-          element.shadowRoot.querySelector('tangy-form-editor-add-input').shadowRoot.querySelector('#tangy-input').click()
+          element.shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('#add-button').click()
+          element.shadowRoot.querySelector('tangy-form-editor-add-input').shadowRoot.querySelector('#tangy-text-widget').click()
           assert.equal(element.shadowRoot.querySelectorAll('[widget]').length, 3)
         })
       })

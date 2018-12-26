@@ -40,6 +40,12 @@
                 on-change="console.log('tangy-form.on-change called')"
                 category="three"
               >
+                <tangy-form-item id="text_and_number" title="Text and Number inputs">
+                  <template>
+                    <tangy-input type="text" name="is_text" label="This is text"></tangy-input>
+                    <tangy-input type="number" name="is_number" label="This is a number"></tangy-input>
+                  </template>
+                </tangy-form-item>
                 <tangy-form-item id="checkboxes_item" title="Checkboxes"  category="two"
                   on-change="
                     // Disable/enable checkbox_3 given checkbox_4's value.

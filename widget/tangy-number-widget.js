@@ -3,7 +3,7 @@ import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/input/tangy-select.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
 
-class TangyInputWidget extends TangyBaseWidget {
+class TangyNumberWidget extends TangyBaseWidget {
 
   get claimElement() {
     return 'tangy-input[type=number]'
@@ -38,9 +38,7 @@ class TangyInputWidget extends TangyBaseWidget {
       <tangy-input 
         name="${config.name}"
         label="${config.label}"
-        type="${config.type}"
-        min="${config.min}"
-        max="${config.max}"
+        type="number"
         tangy-if="${config.tangyIf}"
         allowed-pattern="${config.allowedPattern}"
         ${config.required ? 'required' : ''}
@@ -52,7 +50,7 @@ class TangyInputWidget extends TangyBaseWidget {
   
   renderInfo(config) {
     return `
-      type: Text Input<br>
+      type: Number Input<br>
       variable name: ${config.name}<br>
       label: ${config.label}
     `
@@ -60,18 +58,14 @@ class TangyInputWidget extends TangyBaseWidget {
 
   renderEdit(config) {
     return `
-    <tangy-form id="tangy-input">
+    <tangy-form id="tangy-number-widget">
       <tangy-form-item>
-        <tangy-input name="name" label="Variable name" value="${config.name}"></tangy-input>
+        <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
         <tangy-input name="label" label="Label" value="${config.label}"></tangy-input>
-        <tangy-input name="tangy-if" label="Show if" value="${config.tangyIf}"></tangy-input>
-        Type:
-        <tangy-select name="type" value="${config.type}">
-          <option value="text">Text</option>
-          <option value="number">Number</option>
-        </tangy-select>
-        <tangy-input name="min" label="Minimum" value="${config.min}"></tangy-input>
-        <tangy-input name="max" label="Maximum" value="${config.max}"></tangy-input>
+        <tangy-input name="allowed_pattern" label="Allowed pattern" value="${config.allowedPattern}"></tangy-input>
+        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf}"></tangy-input>
+        <tangy-input name="min" type="number" label="Minimum" value="${config.min}"></tangy-input>
+        <tangy-input name="max" type="number" label="Maximum" value="${config.max}"></tangy-input>
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
         <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
@@ -85,17 +79,17 @@ class TangyInputWidget extends TangyBaseWidget {
       ...config,
       name: formEl.response.items[0].inputs.find(input => input.name === 'name').value,
       label: formEl.response.items[0].inputs.find(input => input.name === 'label').value,
+      min: formEl.response.items[0].inputs.find(input => input.name === 'min').value,
+      max: formEl.response.items[0].inputs.find(input => input.name === 'max').value,
       required: formEl.response.items[0].inputs.find(input => input.name === 'required').value === 'on' ? true : false,
       hidden: formEl.response.items[0].inputs.find(input => input.name === 'hidden').value === 'on' ? true : false,
       disabled: formEl.response.items[0].inputs.find(input => input.name === 'disabled').value === 'on' ? true : false,
-      type: formEl.response.items[0].inputs.find(input => input.name === 'type').value,
-      tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy-if').value,
-      max: formEl.response.items[0].inputs.find(input => input.name === 'max').value,
-      min: formEl.response.items[0].inputs.find(input => input.name === 'min').value
+      allowedPattern: formEl.response.items[0].inputs.find(input => input.name === 'allowed_pattern').value,
+      tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy_if').value
     }
   }
 
 }
 
-window.customElements.define('tangy-input-widget', TangyInputWidget);
-window.tangyFormEditorWidgets.define('tangy-input-widget', 'tangy-input', TangyInputWidget);
+window.customElements.define('tangy-number-widget', TangyNumberWidget);
+window.tangyFormEditorWidgets.define('tangy-number-widget', 'tangy-input[type=number]', TangyNumberWidget);
