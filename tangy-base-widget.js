@@ -69,8 +69,12 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   // On save of edit form, return updated _config.
-  onSave(config, formEl) {
+  onSubmit(config, formEl) {
     return { ...config, name: formEl.querySelector([name=base]).value }
+  }
+
+  editResponse(config) {
+    return false
   }
 
   // ?? So we can do event listeners on dynamic items?? Could also make form components for things like <tangy-list>.
@@ -149,6 +153,17 @@ class TangyBaseWidget extends PolymerElement {
   _render() {
     if (this.edit === true) {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderEdit(this._config)
+      if (this.editResponse(this._config)) {
+        this.shadowRoot
+          .querySelector('#container')
+          .querySelector('tangy-form')
+          .response = this.editResponse(this._config)
+      } else {
+        this.shadowRoot
+          .querySelector('#container')
+          .querySelector('tangy-form')
+          .newResponse()
+      }
       this.shadowRoot
         .querySelector('#container')
         .querySelector('tangy-form')
