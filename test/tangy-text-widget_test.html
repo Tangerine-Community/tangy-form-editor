@@ -66,8 +66,6 @@
           assert.equal(element._config.required, true)
           element.shadowRoot.querySelector('#edit-button').click()
           element
-            .shadowRoot.querySelector('tangy-form').newResponse()
-          element
             .shadowRoot.querySelector('tangy-form-item')
             .shadowRoot.querySelector('[name=label]').value = 'New label'
           element
