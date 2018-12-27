@@ -1,7 +1,9 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/sortable-list/sortable-list.js'
 import './tangy-form-editor-add-input.js'
-
+import './widget/tangy-text-widget.js'
+import './widget/tangy-number-widget.js'
+import './widget/tangy-eftouch-widget.js'
 /**
  * `tangy-form-item-editor`
  * ...
