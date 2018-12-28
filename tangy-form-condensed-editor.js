@@ -57,7 +57,7 @@ class TangyFormCondensedEditor extends PolymerElement {
             wrap(matchingEl, widgetEl)
         })
     })
-    this.shadowRoot.innerHTML = `<sortable-list>${template.innerHTML}</sortable-list>`
+    this.shadowRoot.innerHTML = `<sortable-list style="width: 100%">${template.innerHTML}</sortable-list>`
     this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
   }
 
