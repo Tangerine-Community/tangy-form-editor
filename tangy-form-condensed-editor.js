@@ -29,11 +29,11 @@ class TangyFormCondensedEditor extends PolymerElement {
   }
 
   set markup(value) {
-    this.upcast(value)
+    this.wrap(value)
   }
 
   get markup() {
-    return this.downcast()
+    return this.unwrap()
   }
 
   static get properties() {
@@ -43,10 +43,11 @@ class TangyFormCondensedEditor extends PolymerElement {
 
   connectedCallback() {
     super.connectedCallback()
-    this.upcast(this.querySelector('template').innerHTML)
+    this.wrap(this.querySelector('template').innerHTML)
   }
 
-  upcast(markup) {
+  // Iterate through declared Editor Widgets and wrap them around their corresponding claimed elements.
+  wrap(markup) {
     const template = document.createElement('template')
     template.innerHTML = markup
     window.tangyFormEditorWidgets.widgets.forEach(widgetInfo => {
@@ -60,7 +61,8 @@ class TangyFormCondensedEditor extends PolymerElement {
     this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
   }
 
-  downcast() {
+  // Iterate through widgets and unwrap them by calling TangyWidget.downcast() to convert them to HTML.
+  unwrap() {
     return [...this.shadowRoot.querySelectorAll('[widget]')].map(el => el.downcast(el._config)).join('')
   }
 
