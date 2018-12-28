@@ -134,6 +134,11 @@ class TangyBaseWidget extends PolymerElement {
     }
   }
 
+  constructor() {
+    super()
+    this._config = this.defaultConfig
+  }
+
   connectedCallback() {
     super.connectedCallback()
     this.markup = this.innerHTML
