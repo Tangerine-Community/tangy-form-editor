@@ -222,23 +222,23 @@ class TangyFormEditor extends PolymerElement {
             data-item-id="${item.id}"
             data-item-title="${item.title}">
             <div class="card-content">
-              <h2 style="text-align: left">${item.title}</h2>
-            </div>
-            <div class="card-actions">
-              <paper-button
-                class="item-edit"
-                data-item-id="${item.id}"
-              >
-                <paper-icon-button data-item-id="${item.id}" icon="editor:mode-edit"></paper-icon-button>
-                edit
-              </paper-button>
-              <paper-button
-                class="item-delete"
-                data-item-id="${item.id}"
-              >
-                <paper-icon-button data-item-id="${item.id}" icon="icons:delete"></paper-icon-button>
-                delete
-              </paper-button>
+              <div style="text-align: left; ">
+                <paper-button
+                  class="item-edit"
+                  data-item-id="${item.id}"
+                >
+                  <paper-icon-button data-item-id="${item.id}" icon="editor:mode-edit"></paper-icon-button>
+                  edit
+                </paper-button>
+                <paper-button
+                  class="item-delete"
+                  data-item-id="${item.id}"
+                >
+                  <paper-icon-button data-item-id="${item.id}" icon="icons:delete"></paper-icon-button>
+                  delete
+                </paper-button>
+                <span style="font-size: 30px; position: relative; top: 5px; margin-left: 30px;">${item.title}</span>
+              </div>
             </div>
           </paper-card>
         `).join('')}
