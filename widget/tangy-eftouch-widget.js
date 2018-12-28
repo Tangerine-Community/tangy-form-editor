@@ -24,10 +24,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
 
   upcast(config, element) {
     // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
-    return {...config, ...element.getProps(), ...{
-      tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if')
-        : '',
+    return {...config, ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
           width: option.getAttribute('width'),
@@ -36,7 +33,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
           value: option.getAttribute('value')
         }
       })
-    }}
+    }
   }
 
   downcast(config) {
@@ -44,9 +41,6 @@ class TangyEftouchWidget extends TangyBaseWidget {
       <tangy-eftouch
         name="${config.name}"
         label="${config.label}"
-        type="text"
-        tangy-if="${config.tangyIf}"
-        allowed-pattern="${config.allowedPattern}"
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -75,17 +69,31 @@ class TangyEftouchWidget extends TangyBaseWidget {
     return `
     <tangy-form id="tangy-eftouch">
       <tangy-form-item id="tangy-eftouch">
-        <tangy-input name="name" label="Variable name" required></tangy-input>
-        <tangy-input name="label" label="Label"></tangy-input>
-        <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
-        <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
-        <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
-        <tangy-input-groups name="options">
-          <tangy-input name="width" label="Width" type="number"></tangy-input>
-          <tangy-input name="height" label="Height" type="number"></tangy-input>
-          <tangy-input name="src" label="Path to image" type="text"></tangy-input>
-          <tangy-input name="value" label="Selection value" type="text"></tangy-input>
-        </tangy-input-groups>
+        <template type="tangy-form-item">
+          <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
+          <tangy-input name="label" label="Label" value="${config.label}"></tangy-input>
+          <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
+          <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
+          <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
+          <tangy-list name="options">
+            <template type="tangy-list/new-item">
+              <tangy-input name="width" label="Width" type="number"></tangy-input>
+              <tangy-input name="height" label="Height" type="number"></tangy-input>
+              <tangy-input name="src" label="Path to image" type="text"></tangy-input>
+              <tangy-input name="value" label="Selection value" type="text"></tangy-input>
+            </template>
+            <template type="tangy-list/initial-items">
+              ${config.options.map(option => `
+                <tangy-list-item>
+                  <tangy-input name="width" label="Width" type="number" value="${option.width}"></tangy-input>
+                  <tangy-input name="height" label="Height" type="number" value="${option.height}"></tangy-input>
+                  <tangy-input name="src" label="Path to image" type="text" value="${option.src}"></tangy-input>
+                  <tangy-input name="value" label="Selection value" type="text" value="${option.value}"></tangy-input>
+                </tangy-list-item>
+              `).join('')}
+            </template>
+          </tangy-list>
+        </template>
       </tangy-form-item>
     </tangy-form>
     `
@@ -117,11 +125,14 @@ class TangyEftouchWidget extends TangyBaseWidget {
   onSubmit(config, formEl) {
     return {
       ...config,
-      name: formEl.response.items[0].inputs.find(input => input.name === 'name').value,
-      label: formEl.response.items[0].inputs.find(input => input.name === 'label').value,
-      required: formEl.response.items[0].inputs.find(input => input.name === 'required').value === 'on' ? true : false,
-      hidden: formEl.response.items[0].inputs.find(input => input.name === 'hidden').value === 'on' ? true : false,
-      disabled: formEl.response.items[0].inputs.find(input => input.name === 'disabled').value === 'on' ? true : false,
+      name: formEl.values.name,
+      label: formEl.values.label,
+      required: formEl.values.required === 'on' ? true : false,
+      hidden: formEl.values.hidden === 'on' ? true : false,
+      disabled: formEl.values.disabled === 'on' ? true : false,
+      options: formEl.values.options.map(item => item.reduce((acc, input) => { 
+        return {...acc, [input.name]: input.value} 
+      }, {}))
     }
   }
 

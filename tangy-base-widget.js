@@ -19,11 +19,7 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   get markup() {
-    this.innerHTML = this.downcast()
-    this._element = this.querySelector(this.claimElement)
-    this._config = this.defaultConfig()
-    this._config = this.upcast(this._config, this._element)
-    return this.innerHTML
+    return this.downcast(this._config)
   }
 
   // Need it?
