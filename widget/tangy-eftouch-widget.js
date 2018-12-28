@@ -20,6 +20,9 @@ class TangyEftouchWidget extends TangyBaseWidget {
       transitionSound: '',
       transitionDelay: '',
       transitionMessage: '',
+      warningMessage: '',
+      warningTime: '',
+      timeLimit: '',
       autoProgress: false,
       required: false,
       disabled: false,
@@ -49,6 +52,9 @@ class TangyEftouchWidget extends TangyBaseWidget {
         transition-sound="${config.transitionSound}"
         transition-delay="${config.transitionDelay}"
         transition-message="${config.transitionMessage}"
+        warning-message="${config.warningMessage}"
+        warning-time="${config.warningTime}"
+        time-limit="${config.timeLimit}"
         ${config.autoProgress ? 'auto-progress' : ''}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -85,6 +91,9 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-input name="transition-sound" label="Transition sound" value="${config.transitionSound}"></tangy-input>
           <tangy-input name="transition-delay" label="Transition delay" value="${config.transitionDelay}" type="number"></tangy-input>
           <tangy-input name="transition-message" label="Transition message" value="${config.transitionMessage}"></tangy-input>
+          <tangy-input name="warning-time" label="Warning time" value="${config.warningTime}"></tangy-input>
+          <tangy-input name="warning-message" label="Warning message" value="${config.warningMessage}"></tangy-input>
+          <tangy-input name="time-limit" label="Time limit" value="${config.timeLimit}"></tangy-input>
           <tangy-checkbox name="auto-progress" ${config.autoProgress ? 'value="on"' : ''}>auto-progress</tangy-checkbox>
           <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
           <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
@@ -122,6 +131,9 @@ class TangyEftouchWidget extends TangyBaseWidget {
       transitionDelay: formEl.values['transition-delay'],
       transitionSound: formEl.values['transition-sound'],
       transitionMessage: formEl.values['transition-message'],
+      warningMessage: formEl.values['warning-message'],
+      warningTime: formEl.values['warning-time'],
+      timeLimit: formEl.values['time-limit'],
       autoProgress: formEl.values['auto-progress'] === 'on' ? true : false,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
