@@ -105,16 +105,18 @@ class TangyEftouchWidget extends TangyBaseWidget {
               <tangy-input name="src" label="Path to image" type="text" required></tangy-input>
               <tangy-input name="value" label="Selection value" type="text" required></tangy-input>
             </template>
-            <template type="tangy-list/initial-items">
-              ${config.options.map(option => `
-                <tangy-list-item>
-                  <tangy-input name="width" label="Width" type="number" value="${option.width}" required></tangy-input>
-                  <tangy-input name="height" label="Height" type="number" value="${option.height}" required></tangy-input>
-                  <tangy-input name="src" label="Path to image" type="text" value="${option.src}" required></tangy-input>
-                  <tangy-input name="value" label="Selection value" type="text" value="${option.value}" required></tangy-input>
-                </tangy-list-item>
-              `).join('')}
-            </template>
+            ${config.options.length > 0 ? `
+              <template type="tangy-list/initial-items">
+                ${config.options.map(option => `
+                  <tangy-list-item>
+                    <tangy-input name="width" label="Width" type="number" value="${option.width}" required></tangy-input>
+                    <tangy-input name="height" label="Height" type="number" value="${option.height}" required></tangy-input>
+                    <tangy-input name="src" label="Path to image" type="text" value="${option.src}" required></tangy-input>
+                    <tangy-input name="value" label="Selection value" type="text" value="${option.value}" required></tangy-input>
+                  </tangy-list-item>
+                `).join('')}
+              </template>
+            ` : ''}
           </tangy-list>
         </template>
       </tangy-form-item>
