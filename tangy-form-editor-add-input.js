@@ -45,6 +45,7 @@ class TangyFormEditorAddInput extends PolymerElement {
     const wrapperEl = document.createElement(event.target.id)
     wrapperEl.setAttribute('edit', '')
     this.after(wrapperEl)
+    wrapperEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
     this.remove()
   }
 
