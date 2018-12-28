@@ -77,18 +77,18 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
           <tangy-list name="options">
             <template type="tangy-list/new-item">
-              <tangy-input name="width" label="Width" type="number"></tangy-input>
-              <tangy-input name="height" label="Height" type="number"></tangy-input>
-              <tangy-input name="src" label="Path to image" type="text"></tangy-input>
-              <tangy-input name="value" label="Selection value" type="text"></tangy-input>
+              <tangy-input name="width" label="Width" type="number" required></tangy-input>
+              <tangy-input name="height" label="Height" type="number" required></tangy-input>
+              <tangy-input name="src" label="Path to image" type="text" required></tangy-input>
+              <tangy-input name="value" label="Selection value" type="text" required></tangy-input>
             </template>
             <template type="tangy-list/initial-items">
               ${config.options.map(option => `
                 <tangy-list-item>
-                  <tangy-input name="width" label="Width" type="number" value="${option.width}"></tangy-input>
-                  <tangy-input name="height" label="Height" type="number" value="${option.height}"></tangy-input>
-                  <tangy-input name="src" label="Path to image" type="text" value="${option.src}"></tangy-input>
-                  <tangy-input name="value" label="Selection value" type="text" value="${option.value}"></tangy-input>
+                  <tangy-input name="width" label="Width" type="number" value="${option.width}" required></tangy-input>
+                  <tangy-input name="height" label="Height" type="number" value="${option.height}" required></tangy-input>
+                  <tangy-input name="src" label="Path to image" type="text" value="${option.src}" required></tangy-input>
+                  <tangy-input name="value" label="Selection value" type="text" value="${option.value}" required></tangy-input>
                 </tangy-list-item>
               `).join('')}
             </template>

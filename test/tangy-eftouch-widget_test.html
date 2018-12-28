@@ -62,8 +62,29 @@
           element
             .shadowRoot.querySelector('tangy-form-item')
             .shadowRoot.querySelector('[name=required]').setAttribute('value','')
+          // Add another option and fill out required fields.
           element.shadowRoot.querySelector('tangy-form-item').shadowRoot.querySelector('tangy-list').shadowRoot.querySelector('.add-another').click()
           assert(element.shadowRoot.querySelector('tangy-form-item').shadowRoot.querySelector('tangy-list').shadowRoot.querySelectorAll('tangy-list-item').length, 7)
+          element.shadowRoot
+            .querySelector('tangy-form-item').shadowRoot
+            .querySelector('tangy-list').shadowRoot
+            .querySelectorAll('tangy-list-item')[6]
+            .querySelectorAll('tangy-input')[0].value = '33'
+          element.shadowRoot
+            .querySelector('tangy-form-item').shadowRoot
+            .querySelector('tangy-list').shadowRoot
+            .querySelectorAll('tangy-list-item')[6]
+            .querySelectorAll('tangy-input')[1].value = '33'
+          element.shadowRoot
+            .querySelector('tangy-form-item').shadowRoot
+            .querySelector('tangy-list').shadowRoot
+            .querySelectorAll('tangy-list-item')[6]
+            .querySelectorAll('tangy-input')[2].value = '/assets/images/cat.png'
+          element.shadowRoot
+            .querySelector('tangy-form-item').shadowRoot
+            .querySelector('tangy-list').shadowRoot
+            .querySelectorAll('tangy-list-item')[6]
+            .querySelectorAll('tangy-input')[3].value = 'cat'
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.label, 'New label')
           assert.equal(element._config.options.length, 7)
