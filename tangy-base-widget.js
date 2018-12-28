@@ -88,6 +88,7 @@ class TangyBaseWidget extends PolymerElement {
         :host {
           display: block;
           width: 100%;
+          cursor: move;
         }
         paper-card {
           display: block;
