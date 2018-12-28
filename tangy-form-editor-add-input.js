@@ -30,6 +30,7 @@ class TangyFormEditorAddInput extends PolymerElement {
           <li id="tangy-text-widget" on-click="addThis">Text Input</li>
           <li id="tangy-number-widget" on-click="addThis">Number Input</li>
           <li id="tangy-checkbox-widget" on-click="addThis">Checkbox</li>
+          <li id="tangy-eftouch-widget" on-click="addThis">EF Touch</li>
         </ul>
       </paper-card>
     `;
@@ -43,6 +44,7 @@ class TangyFormEditorAddInput extends PolymerElement {
     // @TODO use window.tangyFormWEditorWidgets
     //const widgetElInfo = window.tangyFormEditorWidgets.widgets.find(widgetInfo => widgetInfo.claimElement === event.target.id)
     const wrapperEl = document.createElement(event.target.id)
+    wrapperEl.setAttribute('edit', '')
     this.after(wrapperEl)
     this.remove()
   }
