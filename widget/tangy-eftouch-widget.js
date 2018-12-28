@@ -16,6 +16,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
       name: '',
       label: '',
       options: [],
+      inputSound: '',
+      transitionSound: '',
+      transitionDelay: '',
+      transitionMessage: '',
+      autoProgress: false,
       required: false,
       disabled: false,
       hidden: false,
@@ -23,7 +28,6 @@ class TangyEftouchWidget extends TangyBaseWidget {
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
     return {...config, ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
@@ -41,6 +45,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
       <tangy-eftouch
         name="${config.name}"
         label="${config.label}"
+        input-sound="${config.inputSound}"
+        transition-sound="${config.transitionSound}"
+        transition-delay="${config.transitionDelay}"
+        transition-message="${config.transitionMessage}"
+        ${config.autoProgress ? 'auto-progress' : ''}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -72,6 +81,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
         <template type="tangy-form-item">
           <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
           <tangy-input name="label" label="Label" value="${config.label}"></tangy-input>
+          <tangy-input name="input-sound" label="Input sound" value="${config.inputSound}"></tangy-input>
+          <tangy-input name="transition-sound" label="Transition sound" value="${config.transitionSound}"></tangy-input>
+          <tangy-input name="transition-delay" label="Transition delay" value="${config.transitionDelay}" type="number"></tangy-input>
+          <tangy-input name="transition-message" label="Transition message" value="${config.transitionMessage}"></tangy-input>
+          <tangy-checkbox name="auto-progress" ${config.autoProgress ? 'value="on"' : ''}>auto-progress</tangy-checkbox>
           <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
           <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
           <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
@@ -99,34 +113,16 @@ class TangyEftouchWidget extends TangyBaseWidget {
     `
   }
 
-  editResponse(config) {
-    return {
-      form: {
-        complete: false
-      },
-      items: [
-        {
-          id: "tangy-eftouch",
-          inputs: [
-            {
-              name: 'name',
-              value: config.name
-            },
-            {
-              name: 'label',
-              value: config.label
-            }
-          ]
-        }
-      ]
-    }
-  }
-
   onSubmit(config, formEl) {
     return {
       ...config,
       name: formEl.values.name,
       label: formEl.values.label,
+      inputSound: formEl.values['input-sound'],
+      transitionDelay: formEl.values['transition-delay'],
+      transitionSound: formEl.values['transition-sound'],
+      transitionMessage: formEl.values['transition-message'],
+      autoProgress: formEl.values['auto-progress'] === 'on' ? true : false,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
