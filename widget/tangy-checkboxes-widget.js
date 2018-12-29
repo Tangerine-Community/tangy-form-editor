@@ -27,7 +27,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
     return {...config, ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
-          value: option.getAttribute('value'),
+          name: option.getAttribute('value'),
           label: option.innerHTML
         }
       })
@@ -45,7 +45,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       >
         ${config.options.map(option => `
           <option
-            name="${option.value}"
+            name="${option.name}"
             label="${option.label}"
           >
         `).join('')}
@@ -74,17 +74,19 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
           <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
           <tangy-list name="options">
             <template type="tangy-list/new-item">
-              <tangy-input name="value" label="Variable name" type="text"></tangy-input>
+              <tangy-input name="name" label="Variable name" type="text"></tangy-input>
               <tangy-input name="label" label="Label" type="text"></tangy-input>
             </template>
+            ${config.options.length > 0 ? `
             <template type="tangy-list/initial-items">
               ${config.options.map(option => `
                 <tangy-list-item>
-                  <tangy-input name="value" label="Variable name" type="text" value="${option.value}"></tangy-input>
+                  <tangy-input name="name" label="Variable name" type="text" value="${option.name}"></tangy-input>
                   <tangy-input name="label" label="Label" type="text" value="${option.label}"></tangy-input>
                 </tangy-list-item>
               `).join('')}
             </template>
+            ` : ''}
           </tangy-list>
         </template>
       </tangy-form-item>

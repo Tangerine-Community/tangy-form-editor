@@ -51,7 +51,7 @@
           assert.equal(element._config.hidden, false)
           assert.equal(element._config.disabled, false)
           assert.equal(element._config.options.length, 6)
-          assert.equal(element._config.options[0].value, 'bird')
+          assert.equal(element._config.options[0].name, 'bird')
         })
         test('should resume and save with edits', () => {
           const element = fixture('ResumeFixture')
