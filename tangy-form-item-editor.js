@@ -88,7 +88,7 @@ class TangyFormItemEditor extends PolymerElement {
           <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
-          <paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>
+          ${this.categories ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>' : ''}
           <tangy-form-condensed-editor>
             <template>
               ${this.item.template}
@@ -146,10 +146,6 @@ class TangyFormItemEditor extends PolymerElement {
       let selectEl = template.content.childNodes;
       let categoriesEditor = this.shadowRoot.querySelector('#categories-editor');
       categoriesEditor.innerHTML = select_str
-    } else {
-      let spanEl = document.createElement("span");
-      spanEl.textContent = "No categories - you must add them to app-config.json";
-      this.shadowRoot.querySelector('#categories-editor').appendChild(spanEl)
     }
 
     // Form contents editor.
