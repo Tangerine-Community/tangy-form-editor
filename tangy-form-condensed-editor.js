@@ -7,6 +7,7 @@ import './widget/tangy-eftouch-widget.js'
 import './widget/tangy-checkbox-widget.js'
 import './widget/tangy-checkboxes-widget.js'
 import './widget/tangy-timed-widget.js'
+import './widget/tangy-radio-buttons-widget.js'
 /**
  * `tangy-form-item-editor`
  * ...
