@@ -11,6 +11,8 @@ import './widget/tangy-radio-buttons-widget.js'
 import './widget/tangy-select-widget.js'
 import './widget/tangy-gps-widget.js'
 import './widget/tangy-location-widget.js'
+import './widget/tangy-date-widget.js'
+import './widget/tangy-time-widget.js'
 
 /**
  * `tangy-form-item-editor`
