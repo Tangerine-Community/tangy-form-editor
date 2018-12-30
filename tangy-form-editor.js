@@ -319,6 +319,17 @@ class TangyFormEditor extends PolymerElement {
       this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.querySelector('tangy-form-item-editor').addEventListener('cancel', this.onItemEditorCancel.bind(this))
       this.$['form-preview'].innerHTML = ``
+      // Will fail in tests if you don't test for tangy-form-editor element
+      if (document.querySelector('tangy-form-editor')) {
+        // enable dragging
+        document.querySelector('tangy-form-editor')
+          .querySelector('tangy-form-item-editor')
+          .shadowRoot.querySelector('#container')
+          .querySelector('paper-card')
+          .querySelector('tangy-form-condensed-editor')
+          .shadowRoot.querySelector('sortable-list')
+          .disabled=false
+      }
     }
   }
 

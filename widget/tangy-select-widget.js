@@ -1,15 +1,14 @@
- import '@polymer/paper-card/paper-card.js'
+import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
-import '@polymer/paper-input/paper-textarea.js'
 import 'tangy-form/tangy-form.js'
-import 'tangy-form/input/tangy-timed.js'
+import 'tangy-form/input/tangy-select.js'
 import 'tangy-form/input/tangy-input.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
 
-class TangyTimedWidget extends TangyBaseWidget {
+class TangySelectWidget extends TangyBaseWidget {
 
   get claimElement() {
-    return 'tangy-timed'
+    return 'tangy-select'
   }
 
   get defaultConfig() {
@@ -25,7 +24,7 @@ class TangyTimedWidget extends TangyBaseWidget {
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyTimed.props thus won't get picked up by TangyTimed.getProps().
+    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
     return {...config, ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
@@ -38,23 +37,23 @@ class TangyTimedWidget extends TangyBaseWidget {
 
   downcast(config) {
     return `
-      <tangy-timed
+      <tangy-select
         name="${config.name}"
         label="${config.label}"
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
       >
-        ${config.options.map(option => `
+         ${config.options.map(option => `
           <option value="${option.name}">${option.label}</option>
         `).join('')}
-      </tangy-timed>
+      </tangy-select>
     `
   }
 
   renderInfo(config) {
     return `
-      type: Tangy Timed<br>
+      type: Select<br>
       variable name: ${config.name}<br>
       label: ${config.label}
     `
@@ -72,10 +71,9 @@ class TangyTimedWidget extends TangyBaseWidget {
         .shadowRoot.querySelector('sortable-list')
         .disabled=true
     }
-
     return `
-    <tangy-form id="tangy-timed">
-      <tangy-form-item id="tangy-timed">
+    <tangy-form id="tangy-select">
+      <tangy-form-item id="tangy-select">
         <template type="tangy-form-item">
           <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
           <tangy-input name="label" label="Label" value="${config.label}"></tangy-input>
@@ -83,8 +81,22 @@ class TangyTimedWidget extends TangyBaseWidget {
           <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
           <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
           <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
-          <tangy-input name="duration" label="Duration in seconds" value="${config.duration}"></tangy-input>
-          <tangy-input name="options"  label="Options (Each option separated by a space)" value="${config.options.map(option => `${option.label}`).join(' ')}"></tangy-input>
+          <tangy-list name="options">
+            <template type="tangy-list/new-item">
+              <tangy-input name="name" label="Variable name" type="text"></tangy-input>
+              <tangy-input name="label" label="Label" type="text"></tangy-input>
+            </template>
+            ${config.options.length > 0 ? `
+            <template type="tangy-list/initial-items">
+              ${config.options.map(option => `
+                <tangy-list-item>
+                  <tangy-input name="name" label="Variable name" type="text" value="${option.name}"></tangy-input>
+                  <tangy-input name="label" label="Label" type="text" value="${option.label}"></tangy-input>
+                </tangy-list-item>
+              `).join('')}
+            </template>
+            ` : ''}
+          </tangy-list>
         </template>
       </tangy-form-item>
     </tangy-form>
@@ -98,7 +110,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       },
       items: [
         {
-          id: "tangy-timed",
+          id: "tangy-select",
           inputs: [
             {
               name: 'name',
@@ -122,13 +134,13 @@ class TangyTimedWidget extends TangyBaseWidget {
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
-      options: formEl.values.options.split(' ').map(item => {
-        return {name: item, label: item}
-      })
+      options: formEl.values.options.map(item => item.reduce((acc, input) => {
+        return {...acc, [input.name]: input.value}
+      }, {}))
     }
   }
 
 }
 
-window.customElements.define('tangy-timed-widget', TangyTimedWidget);
-window.tangyFormEditorWidgets.define('tangy-timed-widget', 'tangy-timed', TangyTimedWidget);
+window.customElements.define('tangy-select-widget', TangySelectWidget);
+window.tangyFormEditorWidgets.define('tangy-select-widget', 'tangy-select', TangySelectWidget);
