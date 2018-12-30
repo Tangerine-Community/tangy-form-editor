@@ -44,12 +44,9 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
       >
-        ${config.options.map(option => `
-          <option
-            name="${option.name}"
-            label="${option.label}"
-          >
-        `).join('')}
+       ${config.options.map(option => `
+        <option value="${option.name}">${option.label}</option>
+      `).join('')}
       </tangy-radio-buttons>
     `
   }

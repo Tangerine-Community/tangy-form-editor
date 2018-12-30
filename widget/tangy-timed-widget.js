@@ -45,9 +45,9 @@ class TangyTimedWidget extends TangyBaseWidget {
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
       >
-        ${config.options.map(option => `
-          <option value="${option.name}">${option.label}</option>
-        `).join('')}
+      ${config.options.map(option => `
+        <option value="${option.name}">${option.label}</option>
+      `).join('')}
       </tangy-timed>
     `
   }
