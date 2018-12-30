@@ -60,6 +60,17 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
+    // Will fail in tests if you don't test for tangy-form-editor element
+    if (document.querySelector('tangy-form-editor')) {
+      // disable dragging
+      document.querySelector('tangy-form-editor')
+        .querySelector('tangy-form-item-editor')
+        .shadowRoot.querySelector('#container')
+        .querySelector('paper-card')
+        .querySelector('tangy-form-condensed-editor')
+        .shadowRoot.querySelector('sortable-list')
+        .disabled=true
+    }
     return `
     <tangy-form id="tangy-radio-buttons">
       <tangy-form-item id="tangy-radio-buttons">
