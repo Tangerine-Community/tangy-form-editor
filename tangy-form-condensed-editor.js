@@ -67,8 +67,12 @@ class TangyFormCondensedEditor extends PolymerElement {
             wrap(matchingEl, widgetEl)
         })
     })
-    this.shadowRoot.innerHTML = `<sortable-list style="width: 100%">${template.innerHTML}</sortable-list>`
+    this.shadowRoot.innerHTML = `<sortable-list style="width: 100%">${template.innerHTML}</sortable-list>
+    
+    ${markup.trim() ? "" : "<paper-button id=\"add-item-button\"><iron-icon icon=\"add-circle-outline\"></iron-icon>Add widget</paper-button>"}
+      `
     this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
+    this.shadowRoot.querySelector('#add-item-button') ? this.shadowRoot.querySelector('#add-item-button').addEventListener('click', this.addInput.bind(this)): null
   }
 
   // Iterate through widgets and unwrap them by calling TangyWidget.downcast() to convert them to HTML.

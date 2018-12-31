@@ -143,7 +143,6 @@ class TangyFormItemEditor extends PolymerElement {
       select_str += "</select></div>\n"
       let template = document.createElement('template');
       template.innerHTML = select_str;
-      let selectEl = template.content.childNodes;
       let categoriesEditor = this.shadowRoot.querySelector('#categories-editor');
       categoriesEditor.innerHTML = select_str
     }
