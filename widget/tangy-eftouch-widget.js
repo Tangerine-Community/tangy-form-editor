@@ -3,6 +3,7 @@ import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/tangy-form.js'
 import 'tangy-form/input/tangy-eftouch.js'
 import 'tangy-form/input/tangy-input.js'
+import './tangy-eftouch-widget-layout.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
 
 class TangyEftouchWidget extends TangyBaseWidget {
@@ -15,7 +16,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
     return {
       name: '',
       label: '',
-      options: [],
+      optionsMarkup: '',
       inputSound: '',
       transitionSound: '',
       transitionDelay: '',
@@ -31,15 +32,10 @@ class TangyEftouchWidget extends TangyBaseWidget {
   }
 
   upcast(config, element) {
-    return {...config, ...element.getProps(),
-      options: [...element.querySelectorAll('option')].map(option => {
-        return {
-          width: option.getAttribute('width'),
-          height: option.getAttribute('height'),
-          src: option.getAttribute('src'),
-          value: option.getAttribute('value')
-        }
-      })
+    return {
+      ...config, 
+      ...element.getProps(),
+      optionsMarkup: element.innerHTML
     }
   }
 
@@ -60,14 +56,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
       >
-        ${config.options.map(option => `
-          <option
-            width="${option.width}"
-            height="${option.height}"
-            src="${option.src}"
-            value="${option.value}"
-          >
-        `).join('')}
+        ${config.optionsMarkup}
       </tangy-eftouch>
     `
   }
@@ -98,26 +87,9 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
           <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
           <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
-          <tangy-list name="options">
-            <template type="tangy-list/new-item">
-              <tangy-input name="width" label="Width" type="number" required></tangy-input>
-              <tangy-input name="height" label="Height" type="number" required></tangy-input>
-              <tangy-input name="src" label="Path to image" type="text" required></tangy-input>
-              <tangy-input name="value" label="Selection value" type="text" required></tangy-input>
-            </template>
-            ${config.options.length > 0 ? `
-              <template type="tangy-list/initial-items">
-                ${config.options.map(option => `
-                  <tangy-list-item>
-                    <tangy-input name="width" label="Width" type="number" value="${option.width}" required></tangy-input>
-                    <tangy-input name="height" label="Height" type="number" value="${option.height}" required></tangy-input>
-                    <tangy-input name="src" label="Path to image" type="text" value="${option.src}" required></tangy-input>
-                    <tangy-input name="value" label="Selection value" type="text" value="${option.value}" required></tangy-input>
-                  </tangy-list-item>
-                `).join('')}
-              </template>
-            ` : ''}
-          </tangy-list>
+          <tangy-eftouch-widget-layout name="options-markup">
+            ${config.optionsMarkup}
+          </tangy-eftouch-widget-layout>
         </template>
       </tangy-form-item>
     </tangy-form>
@@ -140,9 +112,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
-      options: formEl.values.options.map(item => item.reduce((acc, input) => { 
-        return {...acc, [input.name]: input.value} 
-      }, {}))
+      optionsMarkup: formEl.values['options-markup']
     }
   }
 

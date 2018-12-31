@@ -12,7 +12,12 @@ class TangyEftouchWidgetLayout extends PolymerElement {
   }
 
   connectedCallback() {
+    this.name = this.getAttribute('name')
     this.value = this.innerHTML
+  }
+
+  static get _props() {
+    return ['name', 'value']
   }
 
   get value() {
