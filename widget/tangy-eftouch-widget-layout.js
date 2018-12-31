@@ -146,8 +146,8 @@ class TangyEftouchWidgetLayout extends PolymerElement {
     
   _detectViolation(layout) {
     let violationMessage = ''
-    // Look for a row whose sum of columns widths is greater than 100.
-    // Is the sum of rows height greater than 100?
+    // TODO Look for a row whose sum of columns widths is greater than 100.
+    // TODO Is the sum of rows height greater than 100?
 
 
   }
