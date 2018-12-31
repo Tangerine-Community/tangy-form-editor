@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/wct-browser-legacy/browser.js"></script>
+    <script src="../node_modules/redux/dist/redux.min.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="BlankFixture">
+      <template>
+        <tangy-eftouch-widget-layout>
+        </tangy-eftouch-widget-layout>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="ResumeFixture">
+      <template>
+        <tangy-eftouch-widget>
+          <tangy-eftouch name="touch_the_bird" label="Touch the bird.">
+              <option width=30 height=50 src="assets/images/bird.png" value="bird"></option>
+              <option width=30 height=50 src="assets/images/cat.png" value="cat"></option>
+              <option width=30 height=50 src="assets/images/cow.png" value="cow"></option>
+              <option width=30 height=50 src="assets/images/dog.png" value="dog"></option>
+              <option width=30 height=50 src="assets/images/fish.png" value="fish"></option>
+              <option width=30 height=50 src="assets/images/pig.png" value="pig"></option>
+            </tangy-eftouch>
+        </tangy-eftouch-widget>
+      </template>
+    </test-fixture>
+
+    <script type="module">
+      const LONG = 9999999999999999999999999
+      import '../tangy-widgets.js'
+      import '../widget/tangy-eftouch-widget-layout.js'
+      const threeByThreeLayout = [
+        { width: 30, height: 30, src: '/foo.png', value: 'a'},
+        { width: 30, height: 30, src: '/foo.png', value: 'b'},
+        { width: 30, height: 30, src: '/foo.png', value: 'c'},
+        { width: 30, height: 30, src: '/foo.png', value: 'd'},
+        { width: 30, height: 30, src: '/foo.png', value: 'e'},
+        { width: 30, height: 30, src: '/foo.png', value: 'f'},
+        { width: 30, height: 30, src: '/foo.png', value: 'g'},
+        { width: 30, height: 30, src: '/foo.png', value: 'h'},
+        { width: 30, height: 30, src: '/foo.png', value: 'i'},
+      ]
+      suite('tangy-eftouch-widget-layout', () => {
+        test('should open blank with defaults', () => {
+          const element = fixture('BlankFixture')
+        })
+        test('layout should have 3 rows and 3 columns in each row', function (done) {
+          this.timeout(LONG)
+          const element = fixture('BlankFixture')
+          element.props = {options: threeByThreeLayout}
+          // Has three rows?
+          assert(element._props.layout.length, 3)
+          // Each row has three columns?
+          assert(element._props.layout.reduce((eachRowHasThreeColumns, row) => row.columns.length === 3 ? eachRowHasThreeColumns : false, true), true)
+        })
+
+      })
+
+    </script>
+
+  </body>
+</html>
