@@ -46,7 +46,7 @@ class TangyTimedWidget extends TangyBaseWidget {
         ${config.hidden ? 'hidden' : ''}
       >
       ${config.options.map(option => `
-        <option value="${option.name}">${option.label}</option>
+        <option value="${option.value}">${option.label}</option>
       `).join('')}
       </tangy-timed>
     `
@@ -61,18 +61,6 @@ class TangyTimedWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    // Will fail in tests if you don't test for tangy-form-editor element
-    if (document.querySelector('tangy-form-editor')) {
-      // disable dragging
-      document.querySelector('tangy-form-editor')
-        .querySelector('tangy-form-item-editor')
-        .shadowRoot.querySelector('#container')
-        .querySelector('paper-card')
-        .querySelector('tangy-form-condensed-editor')
-        .shadowRoot.querySelector('sortable-list')
-        .disabled=true
-    }
-
     return `
     <tangy-form id="tangy-timed">
       <tangy-form-item id="tangy-timed">
@@ -122,8 +110,8 @@ class TangyTimedWidget extends TangyBaseWidget {
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
-      options: formEl.values.options.split(' ').map(item => {
-        return {name: item, label: item}
+      options: formEl.values.options.split(' ').map((item, i) => {
+        return {value: i, label: item}
       })
     }
   }

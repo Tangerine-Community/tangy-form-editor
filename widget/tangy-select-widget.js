@@ -28,7 +28,7 @@ class TangySelectWidget extends TangyBaseWidget {
     return {...config, ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
-          name: option.getAttribute('value'),
+          value: option.getAttribute('value'),
           label: option.innerHTML
         }
       })
@@ -45,7 +45,7 @@ class TangySelectWidget extends TangyBaseWidget {
         ${config.hidden ? 'hidden' : ''}
       >
        ${config.options.map(option => `
-        <option value="${option.name}">${option.label}</option>
+         <option value="${option.value}">${option.label}</option>
       `).join('')}
       </tangy-select>
     `
@@ -60,17 +60,6 @@ class TangySelectWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    // Will fail in tests if you don't test for tangy-form-editor element
-    if (document.querySelector('tangy-form-editor')) {
-      // disable dragging
-      document.querySelector('tangy-form-editor')
-        .querySelector('tangy-form-item-editor')
-        .shadowRoot.querySelector('#container')
-        .querySelector('paper-card')
-        .querySelector('tangy-form-condensed-editor')
-        .shadowRoot.querySelector('sortable-list')
-        .disabled=true
-    }
     return `
     <tangy-form id="tangy-select">
       <tangy-form-item id="tangy-select">
@@ -83,14 +72,14 @@ class TangySelectWidget extends TangyBaseWidget {
           <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
           <tangy-list name="options">
             <template type="tangy-list/new-item">
-              <tangy-input name="name" label="Variable name" type="text"></tangy-input>
+              <tangy-input name="value" label="Value" type="text"></tangy-input>
               <tangy-input name="label" label="Label" type="text"></tangy-input>
             </template>
             ${config.options.length > 0 ? `
             <template type="tangy-list/initial-items">
               ${config.options.map(option => `
                 <tangy-list-item>
-                  <tangy-input name="name" label="Variable name" type="text" value="${option.name}"></tangy-input>
+                  <tangy-input name="value" label="Value" type="text" value="${option.value}"></tangy-input>
                   <tangy-input name="label" label="Label" type="text" value="${option.label}"></tangy-input>
                 </tangy-list-item>
               `).join('')}

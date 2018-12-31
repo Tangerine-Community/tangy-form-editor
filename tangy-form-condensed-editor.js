@@ -53,6 +53,10 @@ class TangyFormCondensedEditor extends PolymerElement {
 
   connectedCallback() {
     super.connectedCallback()
+    this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
+    this.shadowRoot.addEventListener('edit-input', (event) => this.editInput(event))
+    this.shadowRoot.addEventListener('submit-input', (event) => this.submitInput(event))
+
     this.wrap(this.querySelector('template').innerHTML)
   }
 
@@ -71,7 +75,6 @@ class TangyFormCondensedEditor extends PolymerElement {
     
     ${markup.trim() ? "" : "<paper-button id=\"add-item-button\"><iron-icon icon=\"add-circle-outline\"></iron-icon>Add widget</paper-button>"}
       `
-    this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
     this.shadowRoot.querySelector('#add-item-button') ? this.shadowRoot.querySelector('#add-item-button').addEventListener('click', this.addInput.bind(this)): null
   }
 
@@ -82,6 +85,14 @@ class TangyFormCondensedEditor extends PolymerElement {
 
   addInput(event) {
     event.target.after(document.createElement('tangy-form-editor-add-input'))
+  }
+
+  editInput(event) {
+    this.shadowRoot.querySelector('sortable-list').disabled=true
+  }
+
+  submitInput(event) {
+    this.shadowRoot.querySelector('sortable-list').disabled=false
   }
 
 }

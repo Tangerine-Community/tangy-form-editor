@@ -28,7 +28,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
     return {...config, ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
-          name: option.getAttribute('value'),
+          value: option.getAttribute('value'),
           label: option.innerHTML
         }
       })
@@ -44,33 +44,29 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
       >
-         ${config.options.map(option => `
-          <option value="${option.name}">${option.label}</option>
-        `).join('')}
+       ${config.options.map(option => `
+        <option value="${option.value}">${option.label}</option>
+      `).join('')}
       </tangy-checkboxes>
     `
   }
 
   renderInfo(config) {
-    return `
-      type: Group of Checkboxes<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
+    if (config.options && config.options.length > 0) {
+      let output = `<span class="align-icon-text">${config.label} Variable: ${config.name}</span>`
+      config.options.forEach(option => {
+         output = output + '<br/><iron-icon icon="icons:check-box-outline-blank"></iron-icon> ' + option.label
+        })
+      return output
+    } else {
+      return `
+            <iron-icon icon="icons:check-box-outline-blank"></iron-icon> <iron-icon icon="icons:check-box-outline-blank"></iron-icon><span class="align-icon-text">Group ${config.label} Variable: ${config.name}</span>
     `
+    }
+
   }
 
   renderEdit(config) {
-    // Will fail in tests if you don't test for tangy-form-editor element
-    if (document.querySelector('tangy-form-editor')) {
-      // disable dragging
-      document.querySelector('tangy-form-editor')
-        .querySelector('tangy-form-item-editor')
-        .shadowRoot.querySelector('#container')
-        .querySelector('paper-card')
-        .querySelector('tangy-form-condensed-editor')
-        .shadowRoot.querySelector('sortable-list')
-        .disabled=true
-    }
     return `
     <tangy-form id="tangy-checkboxes">
       <tangy-form-item id="tangy-checkboxes">
@@ -83,16 +79,16 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
           <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
           <tangy-list name="options">
             <template type="tangy-list/new-item">
-              <tangy-input name="name" label="Variable name" type="text"></tangy-input>
+              <tangy-input name="value" label="Value" type="text"></tangy-input>
               <tangy-input name="label" label="Label" type="text"></tangy-input>
             </template>
             ${config.options.length > 0 ? `
             <template type="tangy-list/initial-items">
               ${config.options.map(option => `
                 <tangy-list-item>
-                  <tangy-input name="name" label="Variable name" type="text" value="${option.name}"></tangy-input>
+                  <tangy-input name="value" label="Value" type="text" value="${option.value}"></tangy-input>
                   <tangy-input name="label" label="Label" type="text" value="${option.label}"></tangy-input>
-                </tangy-list-item>
+                </tangy-list-item>  
               `).join('')}
             </template>
             ` : ''}

@@ -50,9 +50,8 @@ class TangyNumberWidget extends TangyBaseWidget {
   
   renderInfo(config) {
     return `
-      type: Number Input<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
+      <iron-icon icon="icons:check-box-outline-blank"><span class="align-icon-text">${config.label} variable name: ${config.name}</span>
+      <style>
     `
   }
 

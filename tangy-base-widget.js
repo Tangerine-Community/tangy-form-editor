@@ -96,6 +96,10 @@ class TangyBaseWidget extends PolymerElement {
           padding: 15px;
           width: 100%;
         }
+        .align-icon-text {
+          display: inline-flex;
+          vertical-align: middle;
+        }
       </style>
       <paper-card>
         <div class="card-content" id="container"></div>
@@ -178,6 +182,7 @@ class TangyBaseWidget extends PolymerElement {
   _onSubmit() {
     this._config = this.onSubmit(this._config, this.shadowRoot.querySelector('tangy-form'))
     this.innerHTML = this.downcast(this._config)
+    this.dispatchEvent(new CustomEvent('submit-input', {bubbles: true}))
     this.edit = false
   }
 
@@ -186,6 +191,7 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   _onEditClick() {
+    this.dispatchEvent(new CustomEvent('edit-input', {bubbles: true}))
     this.edit = true
   }
 
