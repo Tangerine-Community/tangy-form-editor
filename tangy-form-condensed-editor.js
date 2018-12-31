@@ -5,6 +5,15 @@ import './widget/tangy-text-widget.js'
 import './widget/tangy-number-widget.js'
 import './widget/tangy-eftouch-widget.js'
 import './widget/tangy-checkbox-widget.js'
+import './widget/tangy-checkboxes-widget.js'
+import './widget/tangy-timed-widget.js'
+import './widget/tangy-radio-buttons-widget.js'
+import './widget/tangy-select-widget.js'
+import './widget/tangy-gps-widget.js'
+import './widget/tangy-location-widget.js'
+import './widget/tangy-date-widget.js'
+import './widget/tangy-time-widget.js'
+
 /**
  * `tangy-form-item-editor`
  * ...
@@ -44,6 +53,10 @@ class TangyFormCondensedEditor extends PolymerElement {
 
   connectedCallback() {
     super.connectedCallback()
+    this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
+    this.shadowRoot.addEventListener('edit-input', (event) => this.editInput(event))
+    this.shadowRoot.addEventListener('submit-input', (event) => this.submitInput(event))
+
     this.wrap(this.querySelector('template').innerHTML)
   }
 
@@ -58,8 +71,11 @@ class TangyFormCondensedEditor extends PolymerElement {
             wrap(matchingEl, widgetEl)
         })
     })
-    this.shadowRoot.innerHTML = `<sortable-list style="width: 100%">${template.innerHTML}</sortable-list>`
-    this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
+    this.shadowRoot.innerHTML = `<sortable-list style="width: 100%">${template.innerHTML}</sortable-list>
+    
+    ${markup.trim() ? "" : "<paper-button id=\"add-item-button\"><iron-icon icon=\"add-circle-outline\"></iron-icon>Add widget</paper-button>"}
+      `
+    this.shadowRoot.querySelector('#add-item-button') ? this.shadowRoot.querySelector('#add-item-button').addEventListener('click', this.addInput.bind(this)): null
   }
 
   // Iterate through widgets and unwrap them by calling TangyWidget.downcast() to convert them to HTML.
@@ -69,6 +85,14 @@ class TangyFormCondensedEditor extends PolymerElement {
 
   addInput(event) {
     event.target.after(document.createElement('tangy-form-editor-add-input'))
+  }
+
+  editInput(event) {
+    this.shadowRoot.querySelector('sortable-list').disabled=true
+  }
+
+  submitInput(event) {
+    this.shadowRoot.querySelector('sortable-list').disabled=false
   }
 
 }

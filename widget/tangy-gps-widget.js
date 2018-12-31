@@ -3,29 +3,24 @@ import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/input/tangy-select.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
 
-class TangyNumberWidget extends TangyBaseWidget {
+class TangyGpsWidget extends TangyBaseWidget {
 
   get claimElement() {
-    return 'tangy-input[type=number]'
+    return 'tangy-gps'
   }
 
   get defaultConfig() {
     return {
       name: '',
-      label: '',
-      type: 'text',
       required: false,
       disabled: false,
       hidden: false,
-      allowedPattern: '',
-      min: undefined,
-      max: undefined,
       tangyIf: ''
     }
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
+    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyGPS.props thus won't get picked up by TangyGPS.getProps().
     return {...config, ...element.getProps(), ...{
       tangyIf: element.hasAttribute('tangy-if')
         ? element.getAttribute('tangy-if')
@@ -35,36 +30,40 @@ class TangyNumberWidget extends TangyBaseWidget {
 
   downcast(config) {
     return `
-      <tangy-input 
+      <tangy-gps 
         name="${config.name}"
-        label="${config.label}"
-        type="number"
         tangy-if="${config.tangyIf}"
-        allowed-pattern="${config.allowedPattern}"
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
-      ></tangy-input>
+      ></tangy-gps>
     `
   }
   
   renderInfo(config) {
     return `
-      <iron-icon icon="icons:check-box-outline-blank"><span class="align-icon-text">${config.label} variable name: ${config.name}</span>
-      <style>
+      type: Gps<br>
+      variable name: ${config.name}<br>
     `
   }
 
   renderEdit(config) {
+    // Will fail in tests if you don't test for tangy-form-editor element
+    if (document.querySelector('tangy-form-editor')) {
+      // disable dragging
+      document.querySelector('tangy-form-editor')
+        .querySelector('tangy-form-item-editor')
+        .shadowRoot.querySelector('#container')
+        .querySelector('paper-card')
+        .querySelector('tangy-form-condensed-editor')
+        .shadowRoot.querySelector('sortable-list')
+        .disabled=true
+    }
     return `
-    <tangy-form id="tangy-number-widget">
+    <tangy-form id="tangy-gps">
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
-        <tangy-input name="label" label="Label" value="${config.label}"></tangy-input>
-        <tangy-input name="allowed_pattern" label="Allowed pattern" value="${config.allowedPattern}"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf}"></tangy-input>
-        <tangy-input name="min" type="number" label="Minimum" value="${config.min}"></tangy-input>
-        <tangy-input name="max" type="number" label="Maximum" value="${config.max}"></tangy-input>
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
         <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
@@ -77,18 +76,14 @@ class TangyNumberWidget extends TangyBaseWidget {
     return {
       ...config,
       name: formEl.response.items[0].inputs.find(input => input.name === 'name').value,
-      label: formEl.response.items[0].inputs.find(input => input.name === 'label').value,
-      min: formEl.response.items[0].inputs.find(input => input.name === 'min').value,
-      max: formEl.response.items[0].inputs.find(input => input.name === 'max').value,
       required: formEl.response.items[0].inputs.find(input => input.name === 'required').value === 'on' ? true : false,
       hidden: formEl.response.items[0].inputs.find(input => input.name === 'hidden').value === 'on' ? true : false,
       disabled: formEl.response.items[0].inputs.find(input => input.name === 'disabled').value === 'on' ? true : false,
-      allowedPattern: formEl.response.items[0].inputs.find(input => input.name === 'allowed_pattern').value,
       tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy_if').value
     }
   }
 
 }
 
-window.customElements.define('tangy-number-widget', TangyNumberWidget);
-window.tangyFormEditorWidgets.define('tangy-number-widget', 'tangy-input[type=number]', TangyNumberWidget);
+window.customElements.define('tangy-gps-widget', TangyGpsWidget);
+window.tangyFormEditorWidgets.define('tangy-gps-widget', 'tangy-gps', TangyGpsWidget);

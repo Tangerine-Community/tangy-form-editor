@@ -27,10 +27,18 @@ class TangyFormEditorAddInput extends PolymerElement {
       </style>
       <paper-card>
         <ul>
-          <li id="tangy-text-widget" on-click="addThis">Text Input</li>
-          <li id="tangy-number-widget" on-click="addThis">Number Input</li>
           <li id="tangy-checkbox-widget" on-click="addThis">Checkbox</li>
+          <li id="tangy-checkboxes-widget" on-click="addThis">Checkbox Group</li>
+          <li id="tangy-select-widget" on-click="addThis">Dropdown (select)</li>
           <li id="tangy-eftouch-widget" on-click="addThis">EF Touch</li>
+          <li id="tangy-gps-widget" on-click="addThis">GPS</li>
+          <li id="tangy-date-widget" on-click="addThis">Input - Date</li>
+          <li id="tangy-text-widget" on-click="addThis">Input - Text</li>
+          <li id="tangy-time-widget" on-click="addThis">Input - Time</li>
+          <li id="tangy-number-widget" on-click="addThis">Input - Number</li>
+          <li id="tangy-location-widget" on-click="addThis">Location</li>
+          <li id="tangy-radio-buttons-widget" on-click="addThis">Radio Buttons</li>
+          <li id="tangy-timed-widget" on-click="addThis">Timed Grid</li>
         </ul>
       </paper-card>
     `;
