@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/paper-card/paper-card.js'
+import '@polymer/paper-fab/paper-fab.js'
 import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/tangy-form.js'
 import 'tangy-form/input/tangy-eftouch.js'
@@ -45,10 +46,18 @@ class TangyEftouchWidgetLayout extends PolymerElement {
     this.innerHTML = `
       <style>
         .column {
+          position: relative;
           width: 250px;
           background: #EEE;
           margin: 15px;
           padding: 15px;
+        }
+        .remove-column {
+          position: absolute;
+          top: -15px;
+          right: -15px;
+          --paper-fab-background: var(--accent-color);
+          --paper-fab-keyboard-focus-background: var(--accent-color);
         }
         .row {
           display: flex;
@@ -69,12 +78,14 @@ class TangyEftouchWidgetLayout extends PolymerElement {
           <div class="row">
             <div class="column"> 
               Row height: <input row-number="${rowNumber}" type="number" name="height" value="${row.height}"> <br>
+              <paper-button row-number="${rowNumber}" class="remove-row">remove row</paper-button>
             </div>
             ${row.columns.map((column, columnNumber) => `
               <div class="column">
                 Image: <input type="text" row-number="${rowNumber}" column-number="${columnNumber}" name="src" value="${column.src}"><br>
                 Width: <input type="number" row-number="${rowNumber}" column-number="${columnNumber}" name="width" value="${column.width}"><br>
                 Value: <input type="text" row-number="${rowNumber}" column-number="${columnNumber}" name="value" value="${column.value}"><br>
+                <paper-fab mini icon="close" row-number="${rowNumber}" column-number="${columnNumber}" class="remove-column"></paper-fab>
               </div>
             `).join('')}
             <div class="column">
@@ -94,6 +105,17 @@ class TangyEftouchWidgetLayout extends PolymerElement {
     }))
     this.querySelectorAll('.add-column').forEach(addColumnButton => {
       addColumnButton.addEventListener('click', (event) => this.addColumn(parseInt(event.target.getAttribute('row-number'))))
+    })
+    this.querySelectorAll('.remove-column').forEach(removeColumnButton => {
+      removeColumnButton.addEventListener('click', (event) => this.removeColumn(
+        parseInt(event.target.getAttribute('column-number')), 
+        parseInt(event.target.getAttribute('row-number'))
+      ))
+    })
+    this.querySelectorAll('.remove-row').forEach(removeRowButton => {
+      removeRowButton.addEventListener('click', (event) => this.removeRow(
+        parseInt(event.target.getAttribute('row-number'))
+      ))
     })
     this.querySelector('.add-row').addEventListener('click', (event) => this.addRow())
   }
@@ -123,6 +145,23 @@ class TangyEftouchWidgetLayout extends PolymerElement {
     }
   }
 
+  removeColumn(columnNumber = 0, rowNumber = 0) {
+    this.layout = this.layout
+      .map((row, i) => i === rowNumber 
+      ? {
+          ...row, 
+          columns: [ 
+            ...row.columns
+              .reduce((keepColumns, column, i) => i === columnNumber
+              ? keepColumns
+              : [...keepColumns, column]
+              , [] )
+          ]
+        }
+      : row
+    )
+  } 
+
   addColumn(rowNumber = 0) {
     this.layout = this.layout.map((row, i) => i === rowNumber 
       ? {
@@ -138,6 +177,14 @@ class TangyEftouchWidgetLayout extends PolymerElement {
         }
       : row
     ) 
+  }
+
+  removeRow(rowNumber = 0) {
+    this.layout = this.layout
+      .reduce((keepRows, row, i) => i === rowNumber 
+        ? keepRows
+        : [row, ...keepRows]
+        , [])
   }
   
   addRow() {
