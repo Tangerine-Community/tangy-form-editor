@@ -18,7 +18,7 @@ class TangyEftouchWidgetLayout extends PolymerElement {
   }
 
   static get _props() {
-    return ['name', 'value']
+    return ['name', 'value', 'invalid']
   }
 
   get value() {
@@ -195,8 +195,12 @@ class TangyEftouchWidgetLayout extends PolymerElement {
     let violationMessage = ''
     // TODO Look for a row whose sum of columns widths is greater than 100.
     // TODO Is the sum of rows height greater than 100?
+    return violationMessage
 
+  }
 
+  validate() {
+    return this._detectViolation(this.layout) === '' ? true : false
   }
 
   _layoutToOptions(layout = []) {
