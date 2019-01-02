@@ -28,6 +28,8 @@ const tangyFormEditorReducer = function (state = initialState, action) {
       return Object.assign({}, state, {form: Object.assign({}, state.form, action.payload) })
     case 'FORM_TITLE_UPDATE':
       return Object.assign({}, state, { form: Object.assign({}, state.form, {title: action.payload})})
+    case 'TOGGLE_FULLSCREEN':
+      return Object.assign({}, state, { form: Object.assign({}, state.form, {fullscreen: !state.form.fullscreen})})
     case 'ITEM_CREATE':
       return Object.assign({}, state, {
         items: [...state.items, Object.assign({}, itemModel, {id: 'item_'+UUID(), title: '...'})]

@@ -83,6 +83,7 @@ class TangyFormEditor extends PolymerElement {
     const state = this.store.getState()
     return `
       <tangy-form id="${state.form.id}" title="${state.form.title}" category="${state.form.category}"
+        ${(state.form.fullscreen) ? ` fullscreen` : ''}
         on-open="
           ${state.form.onOpen}
         "
@@ -136,6 +137,7 @@ class TangyFormEditor extends PolymerElement {
          template.content.querySelector('tangy-form').getProps(),
          {
            title: template.content.querySelector('tangy-form').getAttribute('title'),
+           fullscreen: template.content.querySelector('tangy-form').hasAttribute('fullscreen'),
            onOpen: template.content.querySelector('tangy-form').getAttribute('on-open'),
            onChange: template.content.querySelector('tangy-form').getAttribute('on-change'),
            category: template.content.querySelector('tangy-form').getAttribute('category')
@@ -203,8 +205,12 @@ class TangyFormEditor extends PolymerElement {
         </div>
         <h2>Form Editor</h2>
         <paper-input label="Form Title" id="form-title" value="${state.form.title}"></paper-input>
-        <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
-        <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
+        <paper-expansion-panel header="advanced settings">
+          <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${state.form.fullscreen ? 'checked' : ''}>Enable fullscreen mode</paper-checkbox>
+          <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
+          <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
+        </paper-expansion-panel>
+        </paper-expansion-panel>
         <div style="float: right; position:relative;">
           <i>
             Drag items to reorder 
@@ -266,6 +272,9 @@ class TangyFormEditor extends PolymerElement {
       this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
 
       // Bind event listeners.
+      this.$.container
+        .querySelector('#fullscreen-checkbox')
+        .addEventListener('click', this.onFullscreenCheckboxClick.bind(this))
       this.$.container
         .querySelector('sortable-list')
         .addEventListener('sort-finish', this.onSortFinish.bind(this))
@@ -378,6 +387,10 @@ class TangyFormEditor extends PolymerElement {
 
   onFormHtmlEditClick() {
     this.store.dispatch({type: 'FORM_EDIT'})
+  }
+
+  onFullscreenCheckboxClick() {
+    this.store.dispatch({type: 'TOGGLE_FULLSCREEN'})
   }
 
   onSortFinish(event) {

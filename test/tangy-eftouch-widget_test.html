@@ -50,8 +50,6 @@
           assert.equal(element._config.required, false)
           assert.equal(element._config.hidden, false)
           assert.equal(element._config.disabled, false)
-          assert.equal(element._config.options.length, 6)
-          assert.equal(element._config.options[0].src, 'assets/images/bird.png')
         })
         test('should resume and save with edits', () => {
           const element = fixture('ResumeFixture')
@@ -62,11 +60,8 @@
           element
             .shadowRoot.querySelector('tangy-form-item')
             .shadowRoot.querySelector('[name=required]').setAttribute('value','')
-          element.shadowRoot.querySelector('tangy-form-item').shadowRoot.querySelector('tangy-list').shadowRoot.querySelector('.add-another').click()
-          assert(element.shadowRoot.querySelector('tangy-form-item').shadowRoot.querySelector('tangy-list').shadowRoot.querySelectorAll('tangy-list-item').length, 7)
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.label, 'New label')
-          assert.equal(element._config.options.length, 7)
           assert.equal(element._config.required, false)
           assert.equal(!!element.markup, true)
         })
