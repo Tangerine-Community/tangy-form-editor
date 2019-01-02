@@ -8,7 +8,7 @@ import 'tangy-form/input/tangy-input.js'
 
 class TangyEftouchWidgetLayout extends PolymerElement {
 
-  teplate() {
+  template() {
     return html``
   }
 
