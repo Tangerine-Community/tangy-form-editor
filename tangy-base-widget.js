@@ -100,6 +100,9 @@ class TangyBaseWidget extends PolymerElement {
           display: inline-flex;
           vertical-align: middle;
         }
+        :host([edit]) paper-card {
+        background-color: pink;
+        }
       </style>
       <paper-card>
         <div class="card-content" id="container"></div>
@@ -127,12 +130,6 @@ class TangyBaseWidget extends PolymerElement {
         type: Boolean,
         value: false,
         observer: '_render',
-        reflectToAttribute: true
-      },
-      highlight: {
-        type: Boolean,
-        value: false,
-        observer: '_style',
         reflectToAttribute: true
       },
       _config: {
@@ -182,12 +179,6 @@ class TangyBaseWidget extends PolymerElement {
         .addEventListener('submit', (event) => this._onSubmit())
     } else {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderInfo(this._config)
-    }
-  }
-
-  _style() {
-    if (this.highlight === true) {
-      this.shadowRoot.querySelector('paper-card').style.backgroundColor = 'pink';
     }
   }
 
