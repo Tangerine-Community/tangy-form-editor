@@ -32,6 +32,7 @@ class TangyFormEditorAddInput extends PolymerElement {
           <li id="tangy-select-widget" on-click="addThis">Dropdown (select)</li>
           <li id="tangy-eftouch-widget" on-click="addThis">EF Touch</li>
           <li id="tangy-gps-widget" on-click="addThis">GPS</li>
+          <li id="tangy-box-widget" on-click="addThis">HTML content container</li>
           <li id="tangy-date-widget" on-click="addThis">Input - Date</li>
           <li id="tangy-text-widget" on-click="addThis">Input - Text</li>
           <li id="tangy-time-widget" on-click="addThis">Input - Time</li>
@@ -53,8 +54,9 @@ class TangyFormEditorAddInput extends PolymerElement {
     //const widgetElInfo = window.tangyFormEditorWidgets.widgets.find(widgetInfo => widgetInfo.claimElement === event.target.id)
     const wrapperEl = document.createElement(event.target.id)
     wrapperEl.setAttribute('edit', '')
+    wrapperEl.setAttribute('highlight', '')
     this.after(wrapperEl)
-    wrapperEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    wrapperEl.scrollIntoView({ behavior: 'smooth', block: 'start', inline: "nearest"})
     this.remove()
   }
 

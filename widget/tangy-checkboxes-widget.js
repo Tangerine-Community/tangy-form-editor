@@ -60,7 +60,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `
+    return `<h2>Add Group of Checkboxes</h2>
     <tangy-form id="tangy-checkboxes">
       <tangy-form-item id="tangy-checkboxes">
         <template type="tangy-form-item">

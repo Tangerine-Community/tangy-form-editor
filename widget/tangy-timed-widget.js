@@ -61,7 +61,7 @@ class TangyTimedWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `
+    return `<h2>Add Timed Grid</h2>
     <tangy-form id="tangy-timed">
       <tangy-form-item id="tangy-timed">
         <template type="tangy-form-item">
