@@ -1,3 +1,9 @@
+## v5.0.0
+- An entirely new Item editor experience replacing CKEditor.
+- Editing a top level form now places "on-change" and "on-open" in an expandable "adanced" section.
+- Now support for adding the "fullscreen" attribute to forms that editors want to add the tangy-form fullscreen experience to.
+- Support for editing `<tangy-eftouch>` elements.
+
 ## v4.10.0
 - added score fields and created Advanced tab for them in the tangy-timed plugin.
 
