@@ -60,7 +60,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `
+    return `<h2>Add Radio Buttons</h2>
     <tangy-form id="tangy-radio-buttons">
       <tangy-form-item id="tangy-radio-buttons">
         <template type="tangy-form-item">

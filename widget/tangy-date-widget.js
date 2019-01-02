@@ -50,7 +50,7 @@ class TangyDateWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `Add a Date Widget
+    return `<h2>Add a Date Input</h2>
     <tangy-form id="tangy-date-widget">
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>

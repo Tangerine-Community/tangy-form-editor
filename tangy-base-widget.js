@@ -100,6 +100,9 @@ class TangyBaseWidget extends PolymerElement {
           display: inline-flex;
           vertical-align: middle;
         }
+        :host([edit]) paper-card {
+        background-color: pink;
+        }
       </style>
       <paper-card>
         <div class="card-content" id="container"></div>

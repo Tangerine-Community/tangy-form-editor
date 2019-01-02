@@ -54,7 +54,7 @@ class TangyNumberWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `
+    return `<h2>Add Number Input</h2>
     <tangy-form id="tangy-number-widget">
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>

@@ -61,7 +61,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         .shadowRoot.querySelector('sortable-list')
         .disabled=true
     }
-    return `
+    return `<h2>Add Location Element</h2>
     <tangy-form id="tangy-location">
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>

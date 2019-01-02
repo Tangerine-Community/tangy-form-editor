@@ -70,7 +70,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `
+    return `<h2>Add EFTouch element</h2>
     <tangy-form id="tangy-eftouch">
       <tangy-form-item id="tangy-eftouch">
         <template type="tangy-form-item">

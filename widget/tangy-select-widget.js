@@ -60,7 +60,7 @@ class TangySelectWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `
+    return `<h2>Add Dropdown</h2>
     <tangy-form id="tangy-select">
       <tangy-form-item id="tangy-select">
         <template type="tangy-form-item">
