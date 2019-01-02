@@ -317,7 +317,7 @@ class TangyFormEditor extends PolymerElement {
         markup: this.formHtml 
       }
       this.$.container.querySelector('tangy-form-html-editor').addEventListener('save', this.onFormHtmlEditorSave.bind(this))
-      this.$.container.querySelector('tangy-form-html-editor').addEventListener('cancel', this.onFormHtmlEditorCancel.bind(this))
+      this.$.container.querySelector('tangy-form-html-editor').addEventListener('close', this.onFormHtmlEditorCancel.bind(this))
     } else if (state.openItem !== '') {
       this.$.container.innerHTML = ''
       this.innerHTML = `

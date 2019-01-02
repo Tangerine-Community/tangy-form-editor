@@ -45,11 +45,8 @@ class TangyTimeWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      type: Time Input<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
-    `
+    return `<strong>Variable name: ${config.name}, Type: Time</strong> <br/>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {

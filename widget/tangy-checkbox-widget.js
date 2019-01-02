@@ -45,9 +45,8 @@ class TangyCheckboxWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      <iron-icon icon="icons:check-box-outline-blank"></iron-icon><span class="align-icon-text">${config.label} Variable: ${config.name}</span>
-    `
+    return `<strong>Variable name: ${config.name}, Type: Checkbox</strong> <br/>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {

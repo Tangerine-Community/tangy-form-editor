@@ -41,10 +41,8 @@ class TangyGpsWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      type: Gps<br>
-      variable name: ${config.name}<br>
-    `
+    return `<strong>Variable name: ${config.name}, Type: GPS</strong> <br/>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {

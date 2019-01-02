@@ -31,7 +31,10 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
           value: option.getAttribute('value'),
           label: option.innerHTML
         }
-      })
+      }),
+      tangyIf: element.hasAttribute('tangy-if')
+        ? element.getAttribute('tangy-if')
+        : ''
     }
   }
 
@@ -52,11 +55,8 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    return `
-      type: Radio Buttons<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
-    `
+    return `<strong>Variable name: ${config.name}, Type: Radio buttons</strong> <br/>
+    ${config.options.length > 0 ? this.downcast(config) : ''}`
   }
 
   renderEdit(config) {
