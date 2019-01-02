@@ -44,7 +44,13 @@
           // Has three rows?
           assert(element.layout.length, 3)
           // Each row has three columns?
-          assert(element.layout.reduce((eachRowHasThreeColumns, row) => row.columns.length === 3 ? eachRowHasThreeColumns : false, true), true)
+          assert(element.layout
+            .reduce((eachRowHasThreeColumns, row) => row.columns.length === 3 
+              ? eachRowHasThreeColumns 
+              : false
+              , true
+            ) 
+          , true)
         })
         test('value should have 9 options', function () {
           const element = fixture('ResumeFixture')
