@@ -47,11 +47,8 @@ class TangyTextWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      type: Text Input<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
-    `
+    return `<strong>Variable name: ${config.name}, Type: Text</strong> <br/>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {

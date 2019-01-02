@@ -31,7 +31,10 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
           value: option.getAttribute('value'),
           label: option.innerHTML
         }
-      })
+      }),
+      tangyIf: element.hasAttribute('tangy-if')
+        ? element.getAttribute('tangy-if')
+        : ''
     }
   }
 
@@ -52,18 +55,8 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    if (config.options && config.options.length > 0) {
-      let output = `<span class="align-icon-text">${config.label} Variable: ${config.name}</span>`
-      config.options.forEach(option => {
-         output = output + '<br/><iron-icon icon="icons:check-box-outline-blank"></iron-icon> ' + option.label
-        })
-      return output
-    } else {
-      return `
-            <iron-icon icon="icons:check-box-outline-blank"></iron-icon> <iron-icon icon="icons:check-box-outline-blank"></iron-icon><span class="align-icon-text">Group ${config.label} Variable: ${config.name}</span>
-    `
-    }
-
+    return `<strong>Variable name: ${config.name}, Type: Checkbox Group</strong> <br/>
+    ${config.options.length > 0 ? this.downcast(config) : ''}`
   }
 
   renderEdit(config) {

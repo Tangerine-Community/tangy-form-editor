@@ -45,15 +45,12 @@ class TangyDateWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      type: Date Input<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
-    `
+    return `<strong>Variable name: ${config.name}, Type: Date</strong> <br/>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {
-    return `
+    return `Add a Date Widget
     <tangy-form id="tangy-date-widget">
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>

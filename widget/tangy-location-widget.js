@@ -45,10 +45,8 @@ class TangyLocationWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      type: Location<br>
-      variable name: ${config.name}<br>
-    `
+    return `<strong>Variable name: ${config.name}, Type: Location</strong> <br/>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {

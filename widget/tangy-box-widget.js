@@ -24,7 +24,10 @@ class TangyBoxWidget extends TangyBaseWidget {
     // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyBox.props thus won't get picked up by TangyBox.getProps().
     return {...config,
       ...element.getProps(),
-      htmlCode: element.innerHTML
+      htmlCode: element.innerHTML,
+      tangyIf: element.hasAttribute('tangy-if')
+        ? element.getAttribute('tangy-if')
+        : ''
     }
   }
 

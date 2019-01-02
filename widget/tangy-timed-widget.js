@@ -32,7 +32,10 @@ class TangyTimedWidget extends TangyBaseWidget {
           name: option.getAttribute('value'),
           label: option.innerHTML
         }
-      })
+      }),
+      tangyIf: element.hasAttribute('tangy-if')
+        ? element.getAttribute('tangy-if')
+        : ''
     }
   }
 
@@ -53,11 +56,8 @@ class TangyTimedWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    return `
-      type: Tangy Timed<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
-    `
+    return `<strong>Variable name: ${config.name}, Type: Timed Grid</strong> <br/>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {

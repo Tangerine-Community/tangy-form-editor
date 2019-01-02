@@ -31,7 +31,10 @@ class TangySelectWidget extends TangyBaseWidget {
           value: option.getAttribute('value'),
           label: option.innerHTML
         }
-      })
+      }),
+      tangyIf: element.hasAttribute('tangy-if')
+        ? element.getAttribute('tangy-if')
+        : ''
     }
   }
 
@@ -52,11 +55,8 @@ class TangySelectWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    return `
-      type: Select<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
-    `
+    return `Variable name: ${config.name} <br/>
+    ${config.options.length > 0 ? this.downcast(config) : ''}`
   }
 
   renderEdit(config) {

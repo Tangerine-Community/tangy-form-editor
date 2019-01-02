@@ -49,10 +49,8 @@ class TangyNumberWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      <iron-icon icon="icons:check-box-outline-blank"><span class="align-icon-text">${config.label} variable name: ${config.name}</span>
-      <style>
-    `
+    return `<strong>Variable name: ${config.name}, Type: Number</strong> <br/>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {
