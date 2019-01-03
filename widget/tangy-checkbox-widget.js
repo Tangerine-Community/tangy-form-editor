@@ -2,7 +2,7 @@ import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/input/tangy-select.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
-
+import {Icon} from "@material/mwc-icon"
 class TangyCheckboxWidget extends TangyBaseWidget {
 
   get claimElement() {
@@ -45,7 +45,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Checkbox</strong> <br/>
+    return `<div class="element-header"><mwc-icon>check_box</mwc-icon>${config.name}</div>
     ${this.downcast(config)}`
   }
 

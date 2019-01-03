@@ -1,7 +1,7 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
-
+import {Fab} from '@material/mwc-fab'
 class TangyBaseWidget extends PolymerElement {
 
   /*
@@ -91,25 +91,61 @@ class TangyBaseWidget extends PolymerElement {
           cursor: move;
         }
         paper-card {
-          display: block;
-          margin: 15px;
+          display: flex;
+          margin: 0px 0px 30px;
           padding: 15px;
           width: 100%;
+          justify-content:space-between;
         }
         .align-icon-text {
           display: inline-flex;
           vertical-align: middle;
         }
         :host([edit]) paper-card {
-        background-color: pink;
+            background-color: pink;
+        }
+        .card-content {
+            text-align:left;
+            padding: 2px;
+            width:100%
+        }
+        .card-actions {
+            border-top: none
+        }
+        .pink {
+          --mdc-theme-on-primary: white;
+          --mdc-theme-primary: #e9437a;
+          --mdc-theme-on-secondary: white;
+          --mdc-theme-secondary: #e9437a;
+          opacity: 0.5;
+        }
+        mwc-fab {
+          bottom: -40px;
+          position: absolute;
+          right: -30px;
+        }
+        .element-header {
+          color: blue;
+          font-size: 2em;
+          opacity: 0.3;
+          margin-left: .5em;
+        }
+        mwc-icon {
+          color:black;
+          opacity:1.0;
+          margin-right:1em;
+          position: absolute;
+          left: -20px;
+          top: -18px;
         }
       </style>
       <paper-card>
         <div class="card-content" id="container"></div>
         <div class="card-actions">
           <paper-button id="remove-button" on-click="_onRemoveClick">remove</paper-button>
+          <br/>
           <paper-button id="edit-button" on-click="_onEditClick">edit</paper-button>
-          <paper-button id="add-button" on-click="_onAddClick">add</paper-button>
+          <mwc-fab icon="add" class="pink" id="add-button" on-click="_onAddClick">add</mwc-fab>
         </div>  
       </paper-card>
     `;

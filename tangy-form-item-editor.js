@@ -79,21 +79,27 @@ class TangyFormItemEditor extends PolymerElement {
     this.$.container.innerHTML = `
       <div style="text-align: center">
       <h2 style="text-align: left">Item Editor</h2>
-      <paper-card style="text-align: left; margin: 0 auto; width:100%;">
         <div class="card-content">
-          <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
-          <p>Item id: ${this.item.id}</p>
-          <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>Show this item in the summary at the end</paper-checkbox></p>
-          <p><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>Hide the back button</paper-checkbox></p>
-          <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
-          <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
-          <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
-          ${this.categories ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>' : ''}
-          <tangy-form-condensed-editor>
-            <template>
-              ${this.item.template}
-            </template>
-          </tangy-form-condensed-editor>
+          <paper-card style="text-align: left; margin: 0 auto; width:100%;" heading="Details">
+          <div class="card-content">
+            <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
+            <p>Item id: ${this.item.id}</p>
+            <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>Show this item in the summary at the end</paper-checkbox></p>
+            <p><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>Hide the back button</paper-checkbox></p>
+            <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
+            <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
+            <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
+            ${this.categories ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>' : ''}
+            </div>
+          </paper-card>
+          <!--<paper-card style="text-align: left; margin: 0 auto; width:100%;" heading="Elements">-->
+            <tangy-form-condensed-editor>
+              <template>
+                ${this.item.template}
+              </template>
+            </tangy-form-condensed-editor>
+          <!--</paper-card>-->
+          </div>
         </div>
         <div class="card-actions">
           <paper-button id="save">
@@ -103,7 +109,7 @@ class TangyFormItemEditor extends PolymerElement {
             <iron-icon icon="icons:cancel"/></iron-icon> cancel 
           </paper-button>
         </div>
-      </paper-card>
+      
       <paper-card style="display: none; text-align: left; margin: 0 auto; width:100%;">
         <div class="card-content">
           ${this.item.template}
