@@ -55,7 +55,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Radio buttons</strong> <br/>
+    return `<div class="element-header"><div><mwc-icon>radio_button_unchecked</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${config.options.length > 0 ? this.downcast(config) : ''}`
   }
 

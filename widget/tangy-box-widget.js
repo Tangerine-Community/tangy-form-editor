@@ -44,10 +44,8 @@ class TangyBoxWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      type: HTML Code Container<br>
-      variable name: ${config.name}<br>
-    `
+    return `<div class="element-header"><mwc-icon>chevron_left</mwc-icon><div id="element-name">${config.name}</div></div>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {

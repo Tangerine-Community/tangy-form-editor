@@ -62,11 +62,8 @@ class TangyEftouchWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `
-      type: Executive Function Test<br>
-      variable name: ${config.name}<br>
-      label: ${config.label}
-    `
+    return `<div class="element-header"><div><mwc-icon>question_answer</mwc-icon></div><div id="element-name">${config.name}</div></div>
+    ${this.downcast(config)}`
   }
 
   renderEdit(config) {

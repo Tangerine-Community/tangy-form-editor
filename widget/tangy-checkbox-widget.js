@@ -45,7 +45,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<div class="element-header"><mwc-icon>check_box</mwc-icon>${config.name}</div>
+    return `<div class="element-header"><div><mwc-icon>check_box</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 

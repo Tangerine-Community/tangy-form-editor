@@ -45,8 +45,9 @@ class TangyDateWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Date</strong> <br/>
+    return `<div class="element-header"><mwc-icon>date_range</mwc-icon><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
+
   }
 
   renderEdit(config) {

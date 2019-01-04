@@ -92,10 +92,11 @@ class TangyBaseWidget extends PolymerElement {
         }
         paper-card {
           display: flex;
-          margin: 0px 0px 30px;
+          margin: 30px 0px 0px;
           padding: 15px;
-          width: 100%;
+          width: 98%;
           justify-content:space-between;
+          z-index:1;
         }
         .align-icon-text {
           display: inline-flex;
@@ -105,12 +106,14 @@ class TangyBaseWidget extends PolymerElement {
             background-color: pink;
         }
         .card-content {
+            /*display: flex;*/
+            /*align-items: center;*/
             text-align:left;
             padding: 2px;
             width:100%
         }
         .card-actions {
-            border-top: none
+            border-top: none;
         }
         .pink {
           --mdc-theme-on-primary: white;
@@ -120,23 +123,32 @@ class TangyBaseWidget extends PolymerElement {
           opacity: 0.5;
         }
         mwc-fab {
-          bottom: -40px;
+          bottom: -42px;
           position: absolute;
-          right: -30px;
+          right: -42px;
         }
         .element-header {
-          color: blue;
-          font-size: 2em;
-          opacity: 0.3;
-          margin-left: .5em;
+          color: #9AB9F0;
+          /*font-size: 2em;*/
+          /*opacity: 0.3;*/
+          margin-left: .7em;
+          margin-bottom: 1.5em;
+          display: flex;
+          justify-content:start;
+          align-items: center;
         }
         mwc-icon {
           color:black;
-          opacity:1.0;
-          margin-right:1em;
+          /*opacity:1.0;*/
+          /*margin-right:1em;*/
           position: absolute;
-          left: -20px;
-          top: -18px;
+          left: -16px;
+          top: -16px;
+          background-color: #B9F09A;
+        }
+        #element-name {
+            position: absolute;
+            top: -12px;
         }
       </style>
       <paper-card>
@@ -198,6 +210,7 @@ class TangyBaseWidget extends PolymerElement {
   _render() {
     if (this.edit === true) {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderEdit(this._config)
+      this.shadowRoot.querySelector('.card-actions').style = "display:none"
       if (this.editResponse(this._config)) {
         this.shadowRoot
           .querySelector('#container')
@@ -235,7 +248,8 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   _onAddClick() {
-    this.dispatchEvent(new CustomEvent('add-input', {bubbles: true}))
+    let addInputEl = this.parentElement.querySelector("tangy-form-editor-add-input");
+    !addInputEl? this.dispatchEvent(new CustomEvent('add-input', {bubbles: true})):this.parentElement.removeChild(addInputEl)
   }
 
 }

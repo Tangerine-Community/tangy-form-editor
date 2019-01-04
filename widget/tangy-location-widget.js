@@ -45,22 +45,11 @@ class TangyLocationWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Location</strong> <br/>
+    return `<div class="element-header"><div><mwc-icon>location_city</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 
   renderEdit(config) {
-    // Will fail in tests if you don't test for tangy-form-editor element
-    if (document.querySelector('tangy-form-editor')) {
-      // disable dragging
-      document.querySelector('tangy-form-editor')
-        .querySelector('tangy-form-item-editor')
-        .shadowRoot.querySelector('#container')
-        .querySelector('paper-card')
-        .querySelector('tangy-form-condensed-editor')
-        .shadowRoot.querySelector('sortable-list')
-        .disabled=true
-    }
     return `<h2>Add Location Element</h2>
     <tangy-form id="tangy-location">
       <tangy-form-item>

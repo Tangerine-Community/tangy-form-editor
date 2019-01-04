@@ -16,8 +16,19 @@ class TangyFormItemEditor extends PolymerElement {
         width: 30px;
         height: 30px;
       }
+      .card-actions {
+        display: flex;
+        justify-content:flex-end;
+        margin-top:3em;
+        margin-right:6em;
+        padding-bottom: 5em;
+      }
+      .card-actions div {
+        background-color:gainsboro;
+      }
       .card-actions paper-button {
         float:right;
+        font-size: 20px;
       }
       paper-button {
         font-family: 'Roboto', 'Noto', sans-serif;
@@ -102,12 +113,14 @@ class TangyFormItemEditor extends PolymerElement {
           </div>
         </div>
         <div class="card-actions">
-          <paper-button id="save">
-            <iron-icon icon="icons:save"/></iron-icon> save 
-          </paper-button>
-          <paper-button id="cancel">
-            <iron-icon icon="icons:cancel"/></iron-icon> cancel 
-          </paper-button>
+          <div>
+            <paper-button id="save">
+              <iron-icon icon="icons:save"/></iron-icon> save 
+            </paper-button>
+            <paper-button id="cancel">
+              <iron-icon icon="icons:cancel"/></iron-icon> cancel 
+            </paper-button>
+           </div>
         </div>
       
       <paper-card style="display: none; text-align: left; margin: 0 auto; width:100%;">

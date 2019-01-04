@@ -3,10 +3,10 @@ import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/input/tangy-select.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
 
-class TangyTextWidget extends TangyBaseWidget {
+class TangyTextGenericWidget extends TangyBaseWidget {
 
   get claimElement() {
-    return 'tangy-input[type=text]'
+    return 'tangy-input'
   }
 
   get defaultConfig() {
@@ -82,5 +82,5 @@ class TangyTextWidget extends TangyBaseWidget {
 
 }
 
-window.customElements.define('tangy-text-widget', TangyTextWidget);
-window.tangyFormEditorWidgets.define('tangy-text-widget', 'tangy-input[type=text]', TangyTextWidget);
+window.customElements.define('tangy-text-generic-widget', TangyTextGenericWidget);
+window.tangyFormEditorWidgets.define('tangy-text-generic-widget', 'tangy-input', TangyTextGenericWidget);

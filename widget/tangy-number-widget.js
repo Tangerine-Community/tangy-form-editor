@@ -49,7 +49,7 @@ class TangyNumberWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Number</strong> <br/>
+    return `<div class="element-header"><div><mwc-icon>looks_one</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 
