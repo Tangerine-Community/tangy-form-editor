@@ -236,6 +236,7 @@ class TangyBaseWidget extends PolymerElement {
     this.innerHTML = this.downcast(this._config)
     this.dispatchEvent(new CustomEvent('submit-input', {bubbles: true}))
     this.edit = false
+    this.shadowRoot.querySelector('.card-actions').style = "display:block"
   }
 
   _onRemoveClick() {
