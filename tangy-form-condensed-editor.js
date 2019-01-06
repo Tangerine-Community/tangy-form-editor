@@ -104,8 +104,7 @@ class TangyFormCondensedEditor extends PolymerElement {
       event.target.after(document.createElement('tangy-form-editor-add-input'))
     } else {
       // making the first element
-      let list = this.shadowRoot.querySelector('sortable-list')
-      list.after(document.createElement('tangy-form-editor-add-input'))
+      event.target.querySelector('sortable-list').appendChild(document.createElement('tangy-form-editor-add-input'))
     }
   }
 
