@@ -6,7 +6,7 @@ import { TangyBaseWidget } from '../tangy-base-widget.js'
 class TangyTextGenericWidget extends TangyBaseWidget {
 
   get claimElement() {
-    return 'tangy-input'
+    return 'tangy-input:not([type])'
   }
 
   get defaultConfig() {
@@ -83,4 +83,4 @@ class TangyTextGenericWidget extends TangyBaseWidget {
 }
 
 window.customElements.define('tangy-text-generic-widget', TangyTextGenericWidget);
-window.tangyFormEditorWidgets.define('tangy-text-generic-widget', 'tangy-input', TangyTextGenericWidget);
+window.tangyFormEditorWidgets.define('tangy-text-generic-widget', 'tangy-input:not([type])', TangyTextGenericWidget);

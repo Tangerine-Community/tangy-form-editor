@@ -60,6 +60,18 @@ class TangyFormItemEditor extends PolymerElement {
       paper-toggle-button {
         padding-top: 10px;
       }
+       .pink {
+          --mdc-theme-on-primary: white;
+          --mdc-theme-primary: #e9437a;
+          --mdc-theme-on-secondary: white;
+          --mdc-theme-secondary: #e9437a;
+          opacity: 0.5;
+        }
+        mwc-fab {
+          bottom: -27px;
+          position: absolute;
+          right: -26px;
+        }
     </style>
     <div id="container"></div> 
     <slot></slot>
@@ -88,10 +100,10 @@ class TangyFormItemEditor extends PolymerElement {
 
   render() {
     this.$.container.innerHTML = `
-      <div style="text-align: center">
+      <div>
       <h2 style="text-align: left">Item Editor</h2>
         <div class="card-content">
-          <paper-card style="text-align: left; margin: 0 auto; width:100%;" heading="Details">
+          <paper-card style="text-align: left; margin: 0 auto; width:98%;" heading="Details">
           <div class="card-content">
             <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
             <p>Item id: ${this.item.id}</p>
@@ -102,7 +114,9 @@ class TangyFormItemEditor extends PolymerElement {
             <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
             ${this.categories ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>' : ''}
             </div>
+            ${!this.item.template ? '<mwc-fab icon="add" class="pink" id="add-button">add</mwc-fab>' : '' }
           </paper-card>
+          
           <!--<paper-card style="text-align: left; margin: 0 auto; width:100%;" heading="Elements">-->
             <tangy-form-condensed-editor>
               <template>
@@ -169,6 +183,9 @@ class TangyFormItemEditor extends PolymerElement {
     // Form contents editor.
     this.$.container.querySelector('#cancel').addEventListener('click', this.onCancelClick.bind(this))
     this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
+    this.$.container.querySelector('#add-button')? this.$.container.querySelector('#add-button').addEventListener('click', this.onAddClick.bind(this)):null
+    // let condensedEditor = this.$.container.querySelector('tangy-form-condensed-editor')
+    // condensedEditor.addEventListener('add-input', this.onAddClick.bind(this));
   }
 
   getTemplateFromWysiwyg() {
@@ -222,6 +239,12 @@ class TangyFormItemEditor extends PolymerElement {
         rightToLeft: this.$.container.querySelector('#right-to-left-checkbox').checked,
         template: templateEl.innerHTML
     })}))
+  }
+
+  onAddClick() {
+    let addInputEl = this.$.container.querySelector("tangy-form-editor-add-input");
+    let condensedEditor = this.$.container.querySelector('tangy-form-condensed-editor').shadowRoot
+    !addInputEl ? condensedEditor.dispatchEvent(new CustomEvent('add-input', {bubbles: true, composed: true})):this.$.container.querySelector(".card-content").removeChild(addInputEl)
   }
 }
 

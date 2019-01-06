@@ -249,11 +249,14 @@ class TangyFormEditor extends PolymerElement {
           </paper-card>
         `).join('')}
         </sortable-list>
-        <paper-button
-            class="item-create">
-            <iron-icon icon="add-circle-outline"></iron-icon>
-            Add item 
-        </paper-button>
+        <div>
+          <paper-button
+              class="item-create">
+              <iron-icon icon="add-circle-outline"></iron-icon>
+              Add item 
+          </paper-button>
+        </div>
+        
       `
 
       let onOpenEditorEl = document.createElement('juicy-ace-editor')
