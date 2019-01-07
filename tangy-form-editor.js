@@ -330,6 +330,9 @@ class TangyFormEditor extends PolymerElement {
       this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
       this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.querySelector('tangy-form-item-editor').addEventListener('cancel', this.onItemEditorCancel.bind(this))
+
+      this.querySelector('tangy-form-item-editor').addEventListener('save-sorted-items', this.onSortSave.bind(this))
+
       this.$['form-preview'].innerHTML = ``
     }
   }
@@ -402,6 +405,13 @@ class TangyFormEditor extends PolymerElement {
       payload: [].slice.call(this.$.container.querySelectorAll('.sortable'))
         .map(sortableEl => sortableEl.dataset.itemId)
     })
+  }
+  onSortSave(event) {
+    let detail = event.detail;
+    console.log("boop you on the nose! " + JSON.stringify(detail))
+    this.store.dispatch({type: 'ITEM_UPDATE', payload: event.detail})
+    // this.store.dispatch({type: 'ITEM_CLOSE', payload: event.detail})
+    this.dispatchChangeEvent()
   }
 
   onItemEditClick(event) {

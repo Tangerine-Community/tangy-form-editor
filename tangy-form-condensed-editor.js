@@ -15,6 +15,7 @@ import './widget/tangy-date-widget.js'
 import './widget/tangy-time-widget.js'
 import './widget/tangy-box-widget.js'
 import './widget/tangy-text-generic-widget.js'
+import './widget/tangy-email-widget.js'
 
 /**
  * `tangy-form-item-editor`
@@ -91,6 +92,7 @@ class TangyFormCondensedEditor extends PolymerElement {
     
     ${markup.trim() ? "" : "<div style='margin-top: 3em; padding: 5px; background-color:#F09AB9; font-size:24px;'>Click the red + icon on the right to add inputs.</div>"} 
       `
+    // this.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', this.onSortFinish.bind(this))
     this.shadowRoot.querySelector('#add-item-button') ? this.shadowRoot.querySelector('#add-item-button').addEventListener('click', this.addInput.bind(this)): null
   }
 
@@ -115,6 +117,14 @@ class TangyFormCondensedEditor extends PolymerElement {
   submitInput(event) {
     this.shadowRoot.querySelector('sortable-list').disabled=false
   }
+
+  // onSortFinish(event) {
+  //   console.log("save me!")
+  //   let payLoad = [].slice.call(this.shadowRoot.querySelectorAll('.sortable'))
+  //     .map(sortableEl => sortableEl.dataset.itemId)
+  //   this.dispatchEvent(new CustomEvent('save-sorted-items', {
+  //     detail: payLoad}))
+  // }
 
 }
 

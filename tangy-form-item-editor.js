@@ -182,9 +182,10 @@ class TangyFormItemEditor extends PolymerElement {
 
     // Form contents editor.
     this.$.container.querySelector('#cancel').addEventListener('click', this.onCancelClick.bind(this))
-    this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this))
+    this.$.container.querySelector('#save').addEventListener('click', this.onSaveClick.bind(this, 'save'))
     this.$.container.querySelector('#add-button')? this.$.container.querySelector('#add-button').addEventListener('click', this.onAddClick.bind(this)):null
-    // let condensedEditor = this.$.container.querySelector('tangy-form-condensed-editor')
+    let condensedEditor = this.$.container.querySelector('tangy-form-condensed-editor')
+    condensedEditor.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', this.onSaveClick.bind(this, 'save-sorted-items'))
     // condensedEditor.addEventListener('add-input', this.onAddClick.bind(this));
   }
 
@@ -216,7 +217,7 @@ class TangyFormItemEditor extends PolymerElement {
     this.dispatchEvent(new CustomEvent('cancel'))
   }
 
-  onSaveClick(event) {
+  onSaveClick(eventName) {
     let templateEl = document.createElement('template')
     templateEl.innerHTML = this.shadowRoot.querySelector('tangy-form-condensed-editor').markup
     // Do not allow defaults selected in the DOM for value. This will confuse.
@@ -228,7 +229,7 @@ class TangyFormItemEditor extends PolymerElement {
     if (categoryEl !== null) {
       categoryValue = categoryEl.value
     }
-    this.dispatchEvent(new CustomEvent('save', {
+    this.dispatchEvent(new CustomEvent(eventName, {
       detail: Object.assign({}, this.item, {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
@@ -246,6 +247,7 @@ class TangyFormItemEditor extends PolymerElement {
     let condensedEditor = this.$.container.querySelector('tangy-form-condensed-editor').shadowRoot
     !addInputEl ? condensedEditor.dispatchEvent(new CustomEvent('add-input', {bubbles: true, composed: true})):this.$.container.querySelector(".card-content").removeChild(addInputEl)
   }
+
 }
 
 window.customElements.define('tangy-form-item-editor', TangyFormItemEditor);
