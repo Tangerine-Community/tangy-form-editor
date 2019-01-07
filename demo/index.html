@@ -354,14 +354,7 @@
                     </tangy-input>
                   </template>
                 </tangy-form-item>
-                <tangy-form-item id="summary" summary title="HTML Code Container">
-                  <template>
-                    <tangy-box name="Summary">
-                      <p>Thank you for taking our survey.</p>
-                    </tangy-box>
-                  </template>
-                </tangy-form-item>
-                <tangy-form-item id="example-1" summary title="Example Form part 1 (mixed widgets)">
+                <tangy-form-item id="example-1" title="Example Form part 1 (mixed widgets)">
                   <template>
                     <tangy-input name="first_name" label="What is your first name?"></tangy-input>
                     <tangy-input name="middle_name" label="What is your middle name?"></tangy-input>
@@ -378,7 +371,7 @@
                     </tangy-select>
                   </template>
                 </tangy-form-item>
-                <tangy-form-item id="example-2" summary title="Example Form part 2 (mixed widgets)">
+                <tangy-form-item id="example-2" title="Example Form part 2 (mixed widgets)">
                   <template>
                     <tangy-checkboxes name="fruit_time" label="What time do you take fruit?">
                       <option name="morning">Morning</option>
@@ -396,6 +389,13 @@
                       <option value="coconut">Coconut</option>
                       <option value="strawberry">Strawberry</option>
                     </tangy-timed>
+                  </template>
+                </tangy-form-item>
+                <tangy-form-item id="summary" summary title="HTML Code Container">
+                  <template>
+                    <tangy-box name="Summary">
+                      <p>Thank you for taking our survey.</p>
+                    </tangy-box>
                   </template>
                 </tangy-form-item>
               </tangy-form>
