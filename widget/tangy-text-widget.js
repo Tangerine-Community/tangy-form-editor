@@ -37,7 +37,7 @@ class TangyTextWidget extends TangyBaseWidget {
         name="${config.name}"
         label="${config.label}"
         type="text"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         allowed-pattern="${config.allowedPattern}"
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}

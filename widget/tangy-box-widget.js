@@ -35,7 +35,7 @@ class TangyBoxWidget extends TangyBaseWidget {
     return `
       <tangy-box 
         name="${config.name}"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}

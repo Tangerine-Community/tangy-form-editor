@@ -32,7 +32,7 @@ class TangyGpsWidget extends TangyBaseWidget {
     return `
       <tangy-gps 
         name="${config.name}"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}

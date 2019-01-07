@@ -36,7 +36,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
       <tangy-checkbox 
         name="${config.name}"
         label="${config.label}"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}

@@ -34,7 +34,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     return `
       <tangy-location 
         name="${config.name}"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -55,7 +55,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
         <tangy-checkbox name="filterByGlobal" ${config.filterByGlobal ? 'value="on"' : ''}>Filter by locations in the user profile?</tangy-checkbox>
-        <tangy-input name="showLevels" label="Show levels (ex. county,subcounty)" value="${config.tangyIf}"></tangy-input>
+        <tangy-input name="showLevels" label="Show levels (ex. county,subcounty)" value="${config.showLevels}"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf}"></tangy-input>
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>

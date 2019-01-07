@@ -36,7 +36,7 @@ class TangyDateWidget extends TangyBaseWidget {
         name="${config.name}"
         label="${config.label}"
         type="date"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}

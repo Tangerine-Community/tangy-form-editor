@@ -35,18 +35,8 @@
                 on-change="console.log('tangy-form.on-change called')"
                 category="three"
               >
-                <tangy-form-item id="eftouch" title="EF Touch">
-                  <template>
-                    <tangy-eftouch name="touch_the_bird" label="Touch the bird.">
-                      <option width=30 height=50 src="assets/images/bird.png" value="bird"></option>
-                      <option width=30 height=50 src="assets/images/cat.png" value="cat"></option>
-                      <option width=30 height=50 src="assets/images/cow.png" value="cow"></option>
-                      <option width=30 height=50 src="assets/images/dog.png" value="dog"></option>
-                      <option width=30 height=50 src="assets/images/fish.png" value="fish"></option>
-                      <option width=30 height=50 src="assets/images/pig.png" value="pig"></option>
-                    </tangy-eftouch>
-                  </template>
-                </tangy-form-item>
+
+
                 <tangy-form-item id="text_and_number" title="Text and Number inputs">
                   <template>
                     <tangy-input type="text" name="is_text" label="This is text"></tangy-input>
@@ -391,6 +381,20 @@
                     </tangy-timed>
                   </template>
                 </tangy-form-item>
+
+                <tangy-form-item id="eftouch" title="EF Touch">
+                  <template>
+                    <tangy-eftouch name="touch_the_bird" label="Touch the bird.">
+                      <option width=30 height=50 src="assets/images/bird.png" value="bird"></option>
+                      <option width=30 height=50 src="assets/images/cat.png" value="cat"></option>
+                      <option width=30 height=50 src="assets/images/cow.png" value="cow"></option>
+                      <option width=30 height=50 src="assets/images/dog.png" value="dog"></option>
+                      <option width=30 height=50 src="assets/images/fish.png" value="fish"></option>
+                      <option width=30 height=50 src="assets/images/pig.png" value="pig"></option>
+                    </tangy-eftouch>
+                  </template>
+                </tangy-form-item>
+
                 <tangy-form-item id="summary" summary title="HTML Code Container">
                   <template>
                     <tangy-box name="Summary">
