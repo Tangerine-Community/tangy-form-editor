@@ -3,7 +3,8 @@
 const initialState = {
   openItem: '',
   form: {},
-  items: []
+  items: [],
+  print: false
 }
 
 const itemModel = {
@@ -22,6 +23,8 @@ const tangyFormEditorReducer = function (state = initialState, action) {
 
     case 'FORM_OPEN':
       return Object.assign({}, initialState, action.payload )
+    case 'FORM_PRINT':
+      return Object.assign({}, state, {print: true} )
     case 'FORM_EDIT':
       return Object.assign({}, state, {openItem: 'form.html'} )
     case 'FORM_UPDATE':
