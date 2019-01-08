@@ -49,6 +49,11 @@ class TangyFormCondensedEditor extends PolymerElement {
 
   static get properties() {
     return {
+      print: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      }
     }
   }
 
@@ -69,6 +74,7 @@ class TangyFormCondensedEditor extends PolymerElement {
       template.content.querySelectorAll(widgetInfo.claimElement)
         .forEach(matchingEl => {
             const widgetEl = document.createElement(widgetInfo.widgetName)
+            widgetEl.setAttribute('mode', this.print ? 'MODE_PRINT' : 'MODE_INFO')
             wrap(matchingEl, widgetEl)
         })
     })

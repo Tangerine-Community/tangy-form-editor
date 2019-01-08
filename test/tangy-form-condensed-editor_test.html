@@ -27,6 +27,16 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="PrintFixture">
+      <template>
+        <tangy-form-condensed-editor print>
+          <template>
+            <tangy-input type="text" name="input1" label="Input 1"></tangy-input>
+            <tangy-input type="number" name="input2" label="Input 2"></tangy-input>
+          </template>
+        </tangy-form-condensed-editor>
+      </template>
+    </test-fixture>
     <script type="module">
 
       import * as Polymer from '../node_modules/@polymer/polymer/polymer-legacy.js'
@@ -74,6 +84,19 @@
           element.shadowRoot.querySelector('tangy-form-editor-add-input').shadowRoot.querySelector('#tangy-text-widget').click()
           assert.equal(element.shadowRoot.querySelectorAll('[widget]').length, 3)
         })
+        test('should show print mode', () => {
+          const element = fixture('PrintFixture')
+          assert.equal(
+            [...element.shadowRoot.querySelectorAll('[widget]')]
+              .reduce((allWidgetsInPrintMode, widgetEl) => widgetEl.mode === 'MODE_PRINT' 
+                ? allWidgetsInPrintMode 
+                : false
+                , true
+              )
+            , true
+          )
+        })
+
       })
 
     </script>
