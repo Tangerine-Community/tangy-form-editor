@@ -31,7 +31,6 @@
         </tangy-text-widget>
       </template>
     </test-fixture>
-
     <script type="module">
       import 'tangy-form/tangy-form.js'
       import 'tangy-form/input/tangy-input.js'
@@ -77,6 +76,10 @@
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.label, 'New label')
           assert.equal(element._config.required, false)
+        })
+        test('should show print view', () => {
+          const element = fixture('ResumeFixture')
+          element.mode = 'MODE_PRINT'
         })
       })
 

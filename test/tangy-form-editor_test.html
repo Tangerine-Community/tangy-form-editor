@@ -48,6 +48,33 @@
         </tangy-form-editor>
       </template>
     </test-fixture>
+ 
+    <test-fixture id="PrintFixture">
+      <template>
+        <tangy-form-editor print>
+          <template>
+            <tangy-form id="field-demo" title="Field Demo">
+              <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
+                <template>
+                  <tangy-input name="text_input_1" label="What is your first name?" type="text"></tangy-input>
+                </template>
+              </tangy-form-item>
+              <tangy-form-item id="text_inputs_2" title="Text Inputs 2">
+                <template>
+                  <tangy-input name="text_input_2" label="What is your last name?" type="text" error-message="This is required." required></tangy-input>
+                </template>
+              </tangy-form-item> 
+              <tangy-form-item id="summary" summary title="Summary">
+                <template>
+                  Thank you for taking our survey.
+                </template>
+              </tangy-form-item> 
+            </tangy-form>
+          </template>
+        </tangy-form-editor>
+      </template>
+    </test-fixture>
+
 
     <script type="module">
       suite('tangy-form-editor', () => {
@@ -84,6 +111,19 @@
           const element = fixture('TestFixture');
           element.$.container.querySelector('.item-edit').click()
           assert.equal(element.querySelector('tangy-form-item-editor').item.id, 'text_inputs_1')
+        });
+
+        test('opens in print mode', () => {
+          const element = fixture('PrintFixture');
+          assert.equal(
+            [...element.shadowRoot.querySelectorAll('tangy-form-condensed-editor')]
+              .reduce((allItemEditorsInPrintMode, itemEl) => itemEl.print === true 
+                ? allItemEditorsInPrintMode 
+                : false
+                , true
+              ),
+            true
+          )
         });
 
       });
