@@ -1,3 +1,6 @@
+## v5.1.0
+- `<tangy-form-editor print>` will show the form in print mode now. Each widget has an additional `renderPrint` method they can implement to provide markup for the print view.
+
 ## v5.0.0
 - An entirely new Item editor experience replacing CKEditor.
 - Editing a top level form now places "on-change" and "on-open" in an expandable "adanced" section.
