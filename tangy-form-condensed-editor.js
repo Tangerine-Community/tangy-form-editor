@@ -94,6 +94,7 @@ class TangyFormCondensedEditor extends PolymerElement {
       `
     // this.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', this.onSortFinish.bind(this))
     this.shadowRoot.querySelector('#add-item-button') ? this.shadowRoot.querySelector('#add-item-button').addEventListener('click', this.addInput.bind(this)): null
+    this.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', this.onSortFinish.bind(this))
   }
 
   // Iterate through widgets and unwrap them by calling TangyWidget.downcast() to convert them to HTML.
@@ -115,16 +116,13 @@ class TangyFormCondensedEditor extends PolymerElement {
   }
 
   submitInput(event) {
+    this.dispatchEvent(new CustomEvent('tangy-form-condensed-editor-changed', {bubbles: true}))
     this.shadowRoot.querySelector('sortable-list').disabled=false
   }
 
-  // onSortFinish(event) {
-  //   console.log("save me!")
-  //   let payLoad = [].slice.call(this.shadowRoot.querySelectorAll('.sortable'))
-  //     .map(sortableEl => sortableEl.dataset.itemId)
-  //   this.dispatchEvent(new CustomEvent('save-sorted-items', {
-  //     detail: payLoad}))
-  // }
+  onSortFinish(event) {
+    this.dispatchEvent(new CustomEvent('tangy-form-condensed-editor-changed', {bubbles: true}))
+  }
 
 }
 
