@@ -74,8 +74,6 @@ class TangyFormCondensedEditor extends PolymerElement {
   connectedCallback() {
     super.connectedCallback()
     this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
-    // this.addEventListener('add-input', (event) => this.addInput(event))
-    // this.parentElement.addEventListener('add-input', (event) => this.addInput(event))
     this.shadowRoot.addEventListener('edit-input', (event) => this.editInput(event))
     this.shadowRoot.addEventListener('submit-input', (event) => this.submitInput(event))
 
@@ -98,7 +96,6 @@ class TangyFormCondensedEditor extends PolymerElement {
     
     ${markup.trim() ? "" : "<div style='margin-top: 3em; padding: 5px; background-color:#F09AB9; font-size:24px;'>Click the red + icon on the right to add inputs.</div>"} 
       `
-    // this.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', this.onSortFinish.bind(this))
     this.shadowRoot.querySelector('#add-item-button') ? this.shadowRoot.querySelector('#add-item-button').addEventListener('click', this.addInput.bind(this)): null
     this.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', this.onSortFinish.bind(this))
   }

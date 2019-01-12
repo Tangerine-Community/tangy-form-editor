@@ -242,10 +242,7 @@ class TangyFormItemEditor extends PolymerElement {
     }
 
     this.$.container.querySelector('#save').addEventListener('click', this.save.bind(this, 'save'))
-    // }
-
     this.$.container.querySelector('#add-button')? this.$.container.querySelector('#add-button').addEventListener('click', this.onAddClick.bind(this)):null
-    // this.addEventListener('sort-finish', this.save.bind(this, 'save-sorted-items'))
     this.shadowRoot.querySelector('tangy-form-condensed-editor').addEventListener('tangy-form-condensed-editor-changed', this.save.bind(this, 'save'))
   }
 

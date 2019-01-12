@@ -14,31 +14,20 @@ import {Button} from "@material/mwc-button"
 class TangyFormEditorAddInput extends PolymerElement {
 
   static get template() {
-    return html`
-        <!--<link rel="stylesheet" href="../fonts/Form-Elements/css/styles.min.css">-->
-        
+    return html`        
       <style>
         :host {
           display: block;
           color: var(--primary-text-color);
           font-size: medium;
-          /*font-family: Form-Elements;*/
           text-align:left;
         }
         paper-card {
-          /*display: flex;*/
           padding: 15px;
           margin-bottom: 15px;
           width:98%;
-          /*justify-content:space-between;*/
           background-color:lightgrey;
         }
-        /*.b-size[data-size="36"] {*/
-            /*font-size: 18px;*/
-        /*}*/
-        /*i.icons8-checkbox {*/
-            /*font-family: Form-Elements;*/
-        /*}*/
         .element-list {
             text-align:left;
         }
@@ -83,7 +72,6 @@ class TangyFormEditorAddInput extends PolymerElement {
         <div>
           <h4>Lists</h4>
           <div class="element-list">
-          <!--<mwc-button id="tangy-checkbox-widget" on-click="addThis"><span><span class="b-size" data-size="36"><i class="icons8-checkbox"></i></span> Checkbox</span></mwc-button><br>-->
               <mwc-button icon="check_box" on-click="addThis"><span id="tangy-checkbox-widget">Checkbox</span></mwc-button><br>
               <mwc-button icon="check_box_outline_blank" on-click="addThis"><span id="tangy-checkboxes-widget">Checkbox Group</span></mwc-button><br>
               <mwc-button icon="arrow_drop_down_circle" on-click="addThis"><span id="tangy-select-widget">Dropdown (select)</span></mwc-button><br>
