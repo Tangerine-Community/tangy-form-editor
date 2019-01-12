@@ -66,10 +66,16 @@ class TangyFormEditor extends PolymerElement {
 
   static get properties() {
     return {
+      print: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
       showPreview: {
         type: Boolean,
         value: false,
-        reflectToAttribute: true },
+        reflectToAttribute: true
+      },
       categories: {
         type: Array,
         value: false,
@@ -164,9 +170,26 @@ class TangyFormEditor extends PolymerElement {
       // Load from this.formJson inline.
       this.store.dispatch({type: 'FORM_OPEN', payload: this.formJson})
     }
+    if (this.hasAttribute('print')) {
+      this.store.dispatch({type: 'FORM_PRINT'})
+    }
   }
 
   render(state) {
+    if (state.print) {
+      this.$.container.innerHTML = `
+        <h1>${state.form.title}</h1> 
+        ${state.items.map(item => `
+          <h2>${item.title}</h2>
+          <tangy-form-condensed-editor print>
+            <template>
+              ${item.template}
+            </template>
+          </tangy-form-condensed-editor>
+        `).join('')}
+      `
+      return
+    }
     if (state.openItem === '') { 
       this.innerHTML = ''
       // Unbind event listeners.

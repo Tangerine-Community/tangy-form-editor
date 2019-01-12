@@ -45,6 +45,15 @@ class TangyTextWidget extends TangyBaseWidget {
       ></tangy-input>
     `
   }
+
+  renderPrint(config) {
+    return `
+      <strong>Variable name:</strong> ${config.name},
+      <strong>Type:</strong> Text,
+      <strong>Prompt:</strong> ${config.label} <br>
+      ${this.downcast(config)}
+    `
+  }
   
   renderInfo(config) {
     return `<div class="element-header"><div><mwc-icon>text_fields</mwc-icon></div><div id="element-name">${config.name}</div></div>

@@ -2,6 +2,11 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
 import {Fab} from '@material/mwc-fab'
+
+const MODE_INFO = 'MODE_INFO'
+const MODE_EDIT = 'MODE_EDIT'
+const MODE_PRINT = 'MODE_PRINT'
+
 class TangyBaseWidget extends PolymerElement {
 
   /*
@@ -150,8 +155,14 @@ class TangyBaseWidget extends PolymerElement {
             position: absolute;
             top: -12px;
         }
+        :host([mode="MODE_PRINT"]) #info-edit-card {
+          display: none;
+        }
+        :host(:not([mode="MODE_PRINT"])) #print-container {
+          display: none;
+        }
       </style>
-      <paper-card>
+      <paper-card id="info-edit-card">
         <div class="card-content" id="container"></div>
         <div class="card-actions">
           <paper-button id="remove-button" on-click="_onRemoveClick">remove</paper-button>
@@ -160,6 +171,7 @@ class TangyBaseWidget extends PolymerElement {
           <mwc-fab icon="add" class="pink" id="add-button" on-click="_onAddClick">add</mwc-fab>
         </div>  
       </paper-card>
+      <span id="print-container"></span>
     `;
   }
 
@@ -174,9 +186,9 @@ class TangyBaseWidget extends PolymerElement {
         value: true,
         reflectToAttribute: true
       },
-      edit: {
-        type: Boolean,
-        value: false,
+      mode: {
+        type: String,
+        value: MODE_INFO,
         observer: '_render',
         reflectToAttribute: true
       },
@@ -199,7 +211,6 @@ class TangyBaseWidget extends PolymerElement {
     this.markup = this.innerHTML
     // A useful selector from higher in the DOM.
     this.widget = true
-
   }
 
   /*
@@ -208,7 +219,7 @@ class TangyBaseWidget extends PolymerElement {
 
   // Proxy for render to the #container element.
   _render() {
-    if (this.edit === true) {
+    if (this.mode === MODE_EDIT) {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderEdit(this._config)
       this.shadowRoot.querySelector('.card-actions').style = "display:none"
       if (this.editResponse(this._config)) {
@@ -226,8 +237,14 @@ class TangyBaseWidget extends PolymerElement {
         .querySelector('#container')
         .querySelector('tangy-form')
         .addEventListener('submit', (event) => this._onSubmit())
-    } else {
+    } else if (this.mode === MODE_INFO) {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderInfo(this._config)
+    } else if (this.mode === MODE_PRINT) {
+      // Make implementing renderPrint optional.
+      this.shadowRoot.querySelector('#container').innerHTML = `` 
+      this.shadowRoot.querySelector('#print-container').innerHTML = this.renderPrint 
+        ? this.renderPrint(this._config)
+        : this.renderInfo(this._config)
     }
   }
 
@@ -235,8 +252,7 @@ class TangyBaseWidget extends PolymerElement {
     this._config = this.onSubmit(this._config, this.shadowRoot.querySelector('tangy-form'))
     this.innerHTML = this.downcast(this._config)
     this.dispatchEvent(new CustomEvent('submit-input', {bubbles: true}))
-    this.edit = false
-    this.shadowRoot.querySelector('.card-actions').style = "display:block"
+    this.mode = MODE_INFO
   }
 
   _onRemoveClick() {
@@ -245,7 +261,7 @@ class TangyBaseWidget extends PolymerElement {
 
   _onEditClick() {
     this.dispatchEvent(new CustomEvent('edit-input', {bubbles: true}))
-    this.edit = true
+    this.mode = MODE_EDIT
   }
 
   _onAddClick() {
