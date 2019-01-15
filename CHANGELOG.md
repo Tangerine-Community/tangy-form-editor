@@ -1,3 +1,8 @@
+
+## v5.2.0
+- CSS improvements and general consistency improvements around save buttons.
+- Added ability to edit metadata related output of a tangy-location element.
+
 ## v5.1.0
 - `<tangy-form-editor print>` will show the form in print mode now. Each widget has an additional `renderPrint` method they can implement to provide markup for the print view.
 
