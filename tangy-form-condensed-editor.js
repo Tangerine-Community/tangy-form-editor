@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/sortable-list/sortable-list.js'
+import {Fab} from '@material/mwc-fab'
 import './tangy-form-editor-add-input.js'
 import './widget/tangy-text-widget.js'
 import './widget/tangy-number-widget.js'
@@ -29,28 +30,7 @@ import './widget/tangy-email-widget.js'
 class TangyFormCondensedEditor extends PolymerElement {
 
   static get template() {
-    return html`
-      <style>
-        :host {
-          display: block;
-          color: var(--primary-text-color);
-          font-size: medium;
-        }
-        .pink {
-          --mdc-theme-on-primary: white;
-          --mdc-theme-primary: #e9437a;
-          --mdc-theme-on-secondary: white;
-          --mdc-theme-secondary: #e9437a;
-          opacity: 0.5;
-        }
-        mwc-fab {
-          bottom: -42px;
-          position: absolute;
-          right: -42px;
-        }
-      </style>
-      <div id="container"></div>
-    `;
+    return html``;
   }
 
   set markup(value) {
@@ -73,10 +53,9 @@ class TangyFormCondensedEditor extends PolymerElement {
 
   connectedCallback() {
     super.connectedCallback()
-    this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event))
-    this.shadowRoot.addEventListener('edit-input', (event) => this.editInput(event))
-    this.shadowRoot.addEventListener('submit-input', (event) => this.submitInput(event))
-
+    this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event.target))
+    this.shadowRoot.addEventListener('edit-input', (event) => this.editInput())
+    this.shadowRoot.addEventListener('submit-input', (event) => this.submitInput())
     this.wrap(this.querySelector('template').innerHTML)
   }
 
@@ -92,12 +71,38 @@ class TangyFormCondensedEditor extends PolymerElement {
             wrap(matchingEl, widgetEl)
         })
     })
-    this.shadowRoot.innerHTML = `<sortable-list style="width: 100%">${template.innerHTML}</sortable-list>
-    
-    ${markup.trim() ? "" : "<div style='margin-top: 3em; padding: 5px; background-color:#F09AB9; font-size:24px;'>Click the red + icon on the right to add inputs.</div>"} 
-      `
-    this.shadowRoot.querySelector('#add-item-button') ? this.shadowRoot.querySelector('#add-item-button').addEventListener('click', this.addInput.bind(this)): null
-    this.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', this.onSortFinish.bind(this))
+    this.shadowRoot.innerHTML = `
+      <style>
+        #add-button-container {
+          position: relative;
+        }
+        #add-button {
+          --mdc-theme-on-primary: white;
+          --mdc-theme-primary: #e9437a;
+          --mdc-theme-on-secondary: white;
+          --mdc-theme-secondary: #e9437a;
+          opacity: 0.5;
+          position: absolute;
+          bottom: -27px;
+          right: -14px;
+          z-index: 1;
+        }
+      </style>
+      <div id="add-button-container">
+        <mwc-fab icon="add" id="add-button">add</mwc-fab>
+      </div>
+      <sortable-list style="width: 100%">${template.innerHTML}</sortable-list>
+      ${markup.trim() 
+        ? "" 
+        : `
+          <div style='margin-top: 3em; padding: 5px; background-color:#F09AB9; font-size:24px;'>
+            Click the red + icon on the right to add inputs.
+          </div>
+        `
+      } 
+    `
+    this.shadowRoot.querySelector('#add-button').addEventListener('click', (event) => this.addInput())
+    this.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', (event) => this.onSortFinish(event))
   }
 
   // Iterate through widgets and unwrap them by calling TangyWidget.downcast() to convert them to HTML.
@@ -105,26 +110,29 @@ class TangyFormCondensedEditor extends PolymerElement {
     return [...this.shadowRoot.querySelectorAll('[widget]')].map(el => el.downcast(el._config)).join('')
   }
 
-  addInput(event) {
-    if (event.target.after) {
-      event.target.after(document.createElement('tangy-form-editor-add-input'))
+  addInput(insertAfterEl) {
+    if (this.shadowRoot.querySelector('tangy-form-editor-add-input')) {
+      return this.shadowRoot.querySelector('tangy-form-editor-add-input').remove()
+    }
+    if (insertAfterEl) {
+      insertAfterEl.after(document.createElement('tangy-form-editor-add-input'))
     } else {
       // making the first element
-      event.target.querySelector('sortable-list').appendChild(document.createElement('tangy-form-editor-add-input'))
+      this.shadowRoot.querySelector('sortable-list').prepend(document.createElement('tangy-form-editor-add-input'))
     }
     setTimeout(_ => this.shadowRoot.querySelector('tangy-form-editor-add-input').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
   }
 
-  editInput(event) {
+  editInput() {
     this.shadowRoot.querySelector('sortable-list').disabled=true
   }
 
-  submitInput(event) {
+  submitInput() {
     this.dispatchEvent(new CustomEvent('tangy-form-condensed-editor-changed', {bubbles: true}))
     this.shadowRoot.querySelector('sortable-list').disabled=false
   }
 
-  onSortFinish(event) {
+  onSortFinish() {
     this.dispatchEvent(new CustomEvent('tangy-form-condensed-editor-changed', {bubbles: true}))
   }
 

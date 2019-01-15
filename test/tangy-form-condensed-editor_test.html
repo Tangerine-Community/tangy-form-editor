@@ -16,6 +16,16 @@
   </head>
   <body>
 
+    <test-fixture id="EmptyTemplateFixture">
+      <template>
+        <tangy-form-condensed-editor>
+          <template>
+          </template>
+        </tangy-form-condensed-editor>
+      </template>
+    </test-fixture>
+
+
     <test-fixture id="ContainerFixture">
       <template>
         <tangy-form-condensed-editor>
@@ -47,6 +57,11 @@
       import '../widget/tangy-text-widget.js'
       import '../widget/tangy-number-widget.js'
       suite('tangy-form-condensed-editor', () => {
+        test('should open with a blank template and add the first input', () => {
+          const element = fixture('EmptyTemplateFixture')
+          element.shadowRoot.querySelector('#add-button').click()
+          assert(!!element.shadowRoot.querySelector('tangy-form-editor-add-input'), true)
+        })
         test('should open with 2 input editors', () => {
           const element = fixture('ContainerFixture')
           assert.equal(element.shadowRoot.querySelectorAll('[widget]').length, 2)
@@ -57,7 +72,12 @@
           template.innerHTML = element.markup
           assert.equal(template.content.querySelectorAll('[name]').length, 2)
           assert.equal(template.content.querySelectorAll('[label]').length, 2)
-        })       
+        })
+        test('should add input to top of template', () => {
+          const element = fixture('ContainerFixture')
+          element.shadowRoot.querySelector('#add-button').click()
+          assert(element.shadowRoot.querySelector('sortable-list').children[0].tagName, 'TANGY-FORM-EDITOR-ADD-INPUT')
+        })
         test('should remove input and see reflected', () => {
           const element = fixture('ContainerFixture')
           element.shadowRoot.querySelector('[widget]').shadowRoot.querySelector('#remove-button').click()

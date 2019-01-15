@@ -40,18 +40,6 @@ class TangyFormItemEditor extends PolymerElement {
       paper-toggle-button {
         padding-top: 10px;
       }
-     .pink {
-        --mdc-theme-on-primary: white;
-        --mdc-theme-primary: #e9437a;
-        --mdc-theme-on-secondary: white;
-        --mdc-theme-secondary: #e9437a;
-        opacity: 0.5;
-      }
-      mwc-fab {
-        bottom: -27px;
-        position: absolute;
-        right: -26px;
-      }
       paper-card {
         display: flex;
         justify-content: space-between;
@@ -175,7 +163,6 @@ class TangyFormItemEditor extends PolymerElement {
             <paper-button id="edit-button">edit</paper-button>
         </div>
 
-        ${!this.item.template ? '<mwc-fab icon="add" class="pink" id="add-button">add</mwc-fab>' : '' }
       </paper-card>
         
       <tangy-form-condensed-editor>
@@ -242,8 +229,6 @@ class TangyFormItemEditor extends PolymerElement {
 
     this.$.container.querySelector('#save').addEventListener('click', this.save.bind(this))
     this.shadowRoot.querySelector('tangy-form-condensed-editor').addEventListener('tangy-form-condensed-editor-changed', this.save.bind(this))
-    // todo: move this logic into the condensed editor
-    !this.item.template? this.$.container.querySelector('#add-button').addEventListener('click', this.onAddClick.bind(this)):null
   }
 
   getTemplateFromWysiwyg() {
