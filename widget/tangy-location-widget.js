@@ -1,6 +1,7 @@
 import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
-import 'tangy-form/input/tangy-select.js'
+import 'tangy-form/input/tangy-location.js'
+import 'tangy-form/input/tangy-checkbox.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
 
 class TangyLocationWidget extends TangyBaseWidget {
@@ -16,6 +17,8 @@ class TangyLocationWidget extends TangyBaseWidget {
       disabled: false,
       hidden: false,
       tangyIf: '',
+      showMetaData: false,
+      metaDataTemplate: '',
       filterByGlobal: false,
       showLevels: ''
     }
@@ -26,7 +29,8 @@ class TangyLocationWidget extends TangyBaseWidget {
     return {...config, ...element.getProps(), ...{
       tangyIf: element.hasAttribute('tangy-if')
         ? element.getAttribute('tangy-if')
-        : ''
+        : '',
+      metaDataTemplate: element.innerHTML
     }}
   }
 
@@ -39,8 +43,11 @@ class TangyLocationWidget extends TangyBaseWidget {
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
         ${config.filterByGlobal ? 'required' : ''}
-        showLevels="${config.showLevels}"
-      ></tangy-location>
+        show-levels="${config.showLevels}"
+        ${config.showMetaData ? 'show-meta-data' : ''}
+      >
+        ${config.metaDataTemplate}
+      </tangy-location>
     `
   }
   
@@ -60,6 +67,8 @@ class TangyLocationWidget extends TangyBaseWidget {
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
         <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
+        <tangy-checkbox name="show-meta-data" ${config.showMetaData ? 'value="on"' : ''}>show meta-data</tangy-checkbox>
+        <tangy-input name="meta-data-template" label="Meta-data template" value="${config.metaDataTemplate}"></tangy-input>
       </tangy-form-item>
     </tangy-form>
     `
@@ -74,7 +83,9 @@ class TangyLocationWidget extends TangyBaseWidget {
       disabled: formEl.response.items[0].inputs.find(input => input.name === 'disabled').value === 'on' ? true : false,
       tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy_if').value,
       filterByGlobal: formEl.response.items[0].inputs.find(input => input.name === 'filterByGlobal').value,
-      showLevels: formEl.response.items[0].inputs.find(input => input.name === 'showLevels').value
+      showLevels: formEl.response.items[0].inputs.find(input => input.name === 'showLevels').value,
+      showMetaData: formEl.response.items[0].inputs.find(input => input.name === 'show-meta-data').value === 'on' ? true : false,
+      metaDataTemplate: formEl.response.items[0].inputs.find(input => input.name === 'meta-data-template').value,
     }
   }
 
