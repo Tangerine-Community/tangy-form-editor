@@ -218,7 +218,6 @@ class TangyFormItemEditor extends PolymerElement {
     onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
 
-
     // categories
     if (this.categories !== null && this.categories.length > 0) {
       let select_str = "<div class='rightCategories'>Select a category: <select id='category'>\n"
@@ -241,9 +240,10 @@ class TangyFormItemEditor extends PolymerElement {
       categoriesEditor.innerHTML = select_str
     }
 
-    this.$.container.querySelector('#save').addEventListener('click', this.save.bind(this, 'save'))
-    this.$.container.querySelector('#add-button')? this.$.container.querySelector('#add-button').addEventListener('click', this.onAddClick.bind(this)):null
-    this.shadowRoot.querySelector('tangy-form-condensed-editor').addEventListener('tangy-form-condensed-editor-changed', this.save.bind(this, 'save'))
+    this.$.container.querySelector('#save').addEventListener('click', this.save.bind(this))
+    this.shadowRoot.querySelector('tangy-form-condensed-editor').addEventListener('tangy-form-condensed-editor-changed', this.save.bind(this))
+    // todo: move this logic into the condensed editor
+    !this.item.template? this.$.container.querySelector('#add-button').addEventListener('click', this.onAddClick.bind(this)):null
   }
 
   getTemplateFromWysiwyg() {
@@ -270,7 +270,7 @@ class TangyFormItemEditor extends PolymerElement {
     this.dispatchEvent(new CustomEvent('cancel'))
   }
 
-  save(eventName) {
+  save() {
     let templateEl = document.createElement('template')
     templateEl.innerHTML = this.shadowRoot.querySelector('tangy-form-condensed-editor').markup
     // Do not allow defaults selected in the DOM for value. This will confuse.
@@ -282,7 +282,7 @@ class TangyFormItemEditor extends PolymerElement {
     if (categoryEl !== null) {
       categoryValue = categoryEl.value
     }
-    this.dispatchEvent(new CustomEvent(eventName, {
+    this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
         onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,

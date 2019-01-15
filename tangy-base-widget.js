@@ -2,6 +2,7 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
 import {Fab} from '@material/mwc-fab'
+import {Icon} from "@material/mwc-icon"
 
 const MODE_INFO = 'MODE_INFO'
 const MODE_EDIT = 'MODE_EDIT'
@@ -94,6 +95,8 @@ class TangyBaseWidget extends PolymerElement {
           display: block;
           width: 100%;
           cursor: move;
+          background-color: var(--special-bgcolor);
+          --special-bgcolor: #ffffff;
         }
         paper-card {
           display: flex;
@@ -126,6 +129,9 @@ class TangyBaseWidget extends PolymerElement {
           --mdc-theme-on-secondary: white;
           --mdc-theme-secondary: #e9437a;
           opacity: 0.5;
+        }
+        .hotpink {
+        background-color: hotpink;
         }
         mwc-fab {
           bottom: -42px;
@@ -198,6 +204,12 @@ class TangyBaseWidget extends PolymerElement {
         observer: '_render',
         reflectToAttribute: true
       }
+      // sparkle: {
+      //   type: String,
+      //   value: '',
+      //   observer: '_sparkler',
+      //   reflectToAttribute: true
+      // },
     }
   }
 
@@ -248,11 +260,29 @@ class TangyBaseWidget extends PolymerElement {
     }
   }
 
+  _sparkler() {
+    console.log("sparkler: ")
+    console.log("sparkler: " + this.sparkle)
+    if ( this.sparkle !=='') {
+      console.log("sparkler me now: " + this.sparkle)
+    }
+  }
+
   _onSubmit() {
     this._config = this.onSubmit(this._config, this.shadowRoot.querySelector('tangy-form'))
     this.innerHTML = this.downcast(this._config)
     this.dispatchEvent(new CustomEvent('submit-input', {bubbles: true}))
     this.mode = MODE_INFO
+    setTimeout(_ => this.shadowRoot.querySelector('#container').scrollIntoView({ behavior: 'smooth', block: 'start', inline: "nearest" }), 50)
+    // this.shadowRoot.querySelector('.card-content').style.backgroundColor = "lightblue";
+    // this.shadowRoot.querySelector('#container').style = 'background-color:lightblue';
+
+    // this.updateStyles({
+    //   '--special-bgcolor': 'blue',
+    // });
+    // this.updateStyles({'--paper-toolbar-background': '#ed0'});
+    this.sparkle = "now"
+
   }
 
   _onRemoveClick() {
