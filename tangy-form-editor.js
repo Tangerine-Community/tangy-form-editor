@@ -272,11 +272,14 @@ class TangyFormEditor extends PolymerElement {
           </paper-card>
         `).join('')}
         </sortable-list>
-        <paper-button
-            class="item-create">
-            <iron-icon icon="add-circle-outline"></iron-icon>
-            Add item 
-        </paper-button>
+        <div>
+          <paper-button
+              class="item-create">
+              <iron-icon icon="add-circle-outline"></iron-icon>
+              Add item 
+          </paper-button>
+        </div>
+        
       `
 
       let onOpenEditorEl = document.createElement('juicy-ace-editor')
@@ -350,6 +353,7 @@ class TangyFormEditor extends PolymerElement {
       this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
       this.querySelector('tangy-form-item-editor').addEventListener('save', this.onItemEditorSave.bind(this))
       this.querySelector('tangy-form-item-editor').addEventListener('cancel', this.onItemEditorCancel.bind(this))
+
       this.$['form-preview'].innerHTML = ``
     }
   }
@@ -371,7 +375,6 @@ class TangyFormEditor extends PolymerElement {
 
   onItemEditorSave(event) {
     this.store.dispatch({type: 'ITEM_UPDATE', payload: event.detail})
-    this.store.dispatch({type: 'ITEM_CLOSE', payload: event.detail})
     this.dispatchChangeEvent()
   }
 

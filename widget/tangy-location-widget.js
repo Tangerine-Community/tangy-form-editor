@@ -34,7 +34,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     return `
       <tangy-location 
         name="${config.name}"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -45,28 +45,17 @@ class TangyLocationWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Location</strong> <br/>
+    return `<div class="element-header"><div><mwc-icon>location_city</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 
   renderEdit(config) {
-    // Will fail in tests if you don't test for tangy-form-editor element
-    if (document.querySelector('tangy-form-editor')) {
-      // disable dragging
-      document.querySelector('tangy-form-editor')
-        .querySelector('tangy-form-item-editor')
-        .shadowRoot.querySelector('#container')
-        .querySelector('paper-card')
-        .querySelector('tangy-form-condensed-editor')
-        .shadowRoot.querySelector('sortable-list')
-        .disabled=true
-    }
     return `<h2>Add Location Element</h2>
     <tangy-form id="tangy-location">
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
         <tangy-checkbox name="filterByGlobal" ${config.filterByGlobal ? 'value="on"' : ''}>Filter by locations in the user profile?</tangy-checkbox>
-        <tangy-input name="showLevels" label="Show levels (ex. county,subcounty)" value="${config.tangyIf}"></tangy-input>
+        <tangy-input name="showLevels" label="Show levels (ex. county,subcounty)" value="${config.showLevels}"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf}"></tangy-input>
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>

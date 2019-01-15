@@ -55,7 +55,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Checkbox Group</strong> <br/>
+    return `<div class="element-header"><mwc-icon>check_box_outline_blank</mwc-icon><div id="element-name">${config.name}</div></div>
     ${config.options.length > 0 ? this.downcast(config) : ''}`
   }
 

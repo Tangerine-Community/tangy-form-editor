@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/sortable-list/sortable-list.js'
+import {Button} from "@material/mwc-button"
 
 /**
  * `tangy-form-item-editor`
@@ -13,34 +14,80 @@ import '@polymer/sortable-list/sortable-list.js'
 class TangyFormEditorAddInput extends PolymerElement {
 
   static get template() {
-    return html`
+    return html`        
       <style>
         :host {
           display: block;
           color: var(--primary-text-color);
           font-size: medium;
+          text-align:left;
         }
         paper-card {
           padding: 15px;
-          margin: 15px;
+          margin-bottom: 15px;
+          width:98%;
+          background-color:lightgrey;
         }
+        .element-list {
+            text-align:left;
+        }
+        .add-elements-header {
+          display: flex;
+          justify-content:center;
+          align-items: center;
+        }
+        #container {
+          display: flex;
+          width:100%;
+          justify-content:space-between;
+          background-color:lightgrey;
+        }
+        mwc-icon {
+          vertical-align: center;
+        }
+        mwc-button span {
+          text-decoration: underline;
+        }
+
       </style>
       <paper-card>
-        <ul>
-          <li id="tangy-checkbox-widget" on-click="addThis">Checkbox</li>
-          <li id="tangy-checkboxes-widget" on-click="addThis">Checkbox Group</li>
-          <li id="tangy-select-widget" on-click="addThis">Dropdown (select)</li>
-          <li id="tangy-eftouch-widget" on-click="addThis">EF Touch</li>
-          <li id="tangy-gps-widget" on-click="addThis">GPS</li>
-          <li id="tangy-box-widget" on-click="addThis">HTML content container</li>
-          <li id="tangy-date-widget" on-click="addThis">Input - Date</li>
-          <li id="tangy-text-widget" on-click="addThis">Input - Text</li>
-          <li id="tangy-time-widget" on-click="addThis">Input - Time</li>
-          <li id="tangy-number-widget" on-click="addThis">Input - Number</li>
-          <li id="tangy-location-widget" on-click="addThis">Location</li>
-          <li id="tangy-radio-buttons-widget" on-click="addThis">Radio Buttons</li>
-          <li id="tangy-timed-widget" on-click="addThis">Timed Grid</li>
-        </ul>
+      <div class="add-elements-header"><mwc-icon>note_add</mwc-icon><div>Add Elements</div></div>
+      <div id="container">
+        <div>
+          <h4>Inputs</h4>
+          <div class="element-list">
+            <mwc-button icon="date_range" on-click="addThis"><span id="tangy-date-widget">Input - Date</span></mwc-button><br>
+            <mwc-button icon="text_fields" on-click="addThis"><span id="tangy-text-widget">Input - Text</span></mwc-button><br>
+            <mwc-button icon="timer" on-click="addThis"><span id="tangy-time-widget">Input - Time</span></mwc-button><br>
+            <mwc-button icon="looks_one" on-click="addThis"><span id="tangy-number-widget">Input - Number</span></mwc-button>
+          </div>
+        </div>
+        <div>
+          <h4>Location</h4>
+          <div class="element-list">
+              <mwc-button icon="add_location" on-click="addThis"><span id="tangy-gps-widget">GPS</span></mwc-button><br>
+              <mwc-button icon="location_city" on-click="addThis"><span id="tangy-location-widget">Location</span></mwc-button>
+          </div>
+        </div>
+        <div>
+          <h4>Lists</h4>
+          <div class="element-list">
+              <mwc-button icon="check_box" on-click="addThis"><span id="tangy-checkbox-widget">Checkbox</span></mwc-button><br>
+              <mwc-button icon="check_box_outline_blank" on-click="addThis"><span id="tangy-checkboxes-widget">Checkbox Group</span></mwc-button><br>
+              <mwc-button icon="arrow_drop_down_circle" on-click="addThis"><span id="tangy-select-widget">Dropdown (select)</span></mwc-button><br>
+              <mwc-button icon="radio_button_unchecked" on-click="addThis"><span id="tangy-radio-buttons-widget">Radio Buttons</span></mwc-button><br>
+          </div>
+        </div>
+        <div>
+          <h4>Misc</h4>
+          <div class="element-list">
+            <mwc-button icon="question_answer" on-click="addThis"><span id="tangy-eftouch-widget">EF Touch</span></mwc-button><br>
+            <mwc-button icon="chevron_left" on-click="addThis"><span id="tangy-box-widget">HTML content container</span></mwc-button><br>
+            <mwc-button icon="av_timer"on-click="addThis"><span id="tangy-timed-widget" >Timed Grid</span></mwc-button>
+          </div>
+        </div>
+      </div>
+
       </paper-card>
     `;
   }
@@ -53,7 +100,7 @@ class TangyFormEditorAddInput extends PolymerElement {
     // @TODO use window.tangyFormWEditorWidgets
     //const widgetElInfo = window.tangyFormEditorWidgets.widgets.find(widgetInfo => widgetInfo.claimElement === event.target.id)
     const wrapperEl = document.createElement(event.target.id)
-    wrapperEl.setAttribute('edit', '')
+    wrapperEl.setAttribute('mode', 'MODE_EDIT')
     this.after(wrapperEl)
     setTimeout(() => {
         wrapperEl.scrollIntoView({ behavior: 'smooth', block: 'start', inline: "nearest"})

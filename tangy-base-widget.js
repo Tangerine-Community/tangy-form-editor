@@ -1,6 +1,8 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
+import {Fab} from '@material/mwc-fab'
+import {Icon} from "@material/mwc-icon"
 
 const MODE_INFO = 'MODE_INFO'
 const MODE_EDIT = 'MODE_EDIT'
@@ -93,19 +95,71 @@ class TangyBaseWidget extends PolymerElement {
           display: block;
           width: 100%;
           cursor: move;
+          background-color: var(--special-bgcolor);
+          --special-bgcolor: #ffffff;
         }
         paper-card {
-          display: block;
-          margin: 15px;
+          display: flex;
+          margin: 30px 0px 0px;
           padding: 15px;
-          width: 100%;
+          width: 98%;
+          justify-content:space-between;
+          z-index:1;
         }
         .align-icon-text {
           display: inline-flex;
           vertical-align: middle;
         }
-        :host([edit]) paper-card {
-        background-color: pink;
+        :host([mode='MODE_EDIT']) paper-card {
+            background-color: pink;
+        }
+        .card-content {
+            /*display: flex;*/
+            /*align-items: center;*/
+            text-align:left;
+            padding: 2px;
+            width:100%
+        }
+        .card-actions {
+            border-top: none;
+        }
+        .pink {
+          --mdc-theme-on-primary: white;
+          --mdc-theme-primary: #e9437a;
+          --mdc-theme-on-secondary: white;
+          --mdc-theme-secondary: #e9437a;
+          opacity: 0.5;
+        }
+        .hotpink {
+        background-color: hotpink;
+        }
+        mwc-fab {
+          bottom: -42px;
+          position: absolute;
+          right: -42px;
+        }
+        .element-header {
+          color: #9AB9F0;
+          /*font-size: 2em;*/
+          /*opacity: 0.3;*/
+          margin-left: .7em;
+          margin-bottom: 1.5em;
+          display: flex;
+          justify-content:start;
+          align-items: center;
+        }
+        mwc-icon {
+          color:black;
+          /*opacity:1.0;*/
+          /*margin-right:1em;*/
+          position: absolute;
+          left: -16px;
+          top: -16px;
+          background-color: #B9F09A;
+        }
+        #element-name {
+            position: absolute;
+            top: -12px;
         }
         :host([mode="MODE_PRINT"]) #info-edit-card {
           display: none;
@@ -118,8 +172,9 @@ class TangyBaseWidget extends PolymerElement {
         <div class="card-content" id="container"></div>
         <div class="card-actions">
           <paper-button id="remove-button" on-click="_onRemoveClick">remove</paper-button>
+          <br/>
           <paper-button id="edit-button" on-click="_onEditClick">edit</paper-button>
-          <paper-button id="add-button" on-click="_onAddClick">add</paper-button>
+          <mwc-fab icon="add" class="pink" id="add-button" on-click="_onAddClick">add</mwc-fab>
         </div>  
       </paper-card>
       <span id="print-container"></span>
@@ -149,6 +204,12 @@ class TangyBaseWidget extends PolymerElement {
         observer: '_render',
         reflectToAttribute: true
       }
+      // sparkle: {
+      //   type: String,
+      //   value: '',
+      //   observer: '_sparkler',
+      //   reflectToAttribute: true
+      // },
     }
   }
 
@@ -172,6 +233,7 @@ class TangyBaseWidget extends PolymerElement {
   _render() {
     if (this.mode === MODE_EDIT) {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderEdit(this._config)
+      this.shadowRoot.querySelector('.card-actions').style = "display:none"
       if (this.editResponse(this._config)) {
         this.shadowRoot
           .querySelector('#container')
@@ -198,11 +260,29 @@ class TangyBaseWidget extends PolymerElement {
     }
   }
 
+  _sparkler() {
+    console.log("sparkler: ")
+    console.log("sparkler: " + this.sparkle)
+    if ( this.sparkle !=='') {
+      console.log("sparkler me now: " + this.sparkle)
+    }
+  }
+
   _onSubmit() {
     this._config = this.onSubmit(this._config, this.shadowRoot.querySelector('tangy-form'))
     this.innerHTML = this.downcast(this._config)
     this.dispatchEvent(new CustomEvent('submit-input', {bubbles: true}))
-    this.mode = MODE_INFO 
+    this.mode = MODE_INFO
+    setTimeout(_ => this.shadowRoot.querySelector('#container').scrollIntoView({ behavior: 'smooth', block: 'start', inline: "nearest" }), 50)
+    // this.shadowRoot.querySelector('.card-content').style.backgroundColor = "lightblue";
+    // this.shadowRoot.querySelector('#container').style = 'background-color:lightblue';
+
+    // this.updateStyles({
+    //   '--special-bgcolor': 'blue',
+    // });
+    // this.updateStyles({'--paper-toolbar-background': '#ed0'});
+    this.sparkle = "now"
+
   }
 
   _onRemoveClick() {
@@ -215,7 +295,8 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   _onAddClick() {
-    this.dispatchEvent(new CustomEvent('add-input', {bubbles: true}))
+    let addInputEl = this.parentElement.querySelector("tangy-form-editor-add-input");
+    !addInputEl? this.dispatchEvent(new CustomEvent('add-input', {bubbles: true})):this.parentElement.removeChild(addInputEl)
   }
 
 }

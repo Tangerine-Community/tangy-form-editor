@@ -55,7 +55,7 @@ class TangySelectWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    return `Variable name: ${config.name} <br/>
+    return `<div class="element-header"><div><mwc-icon>arrow_drop_down_circle</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${config.options.length > 0 ? this.downcast(config) : ''}`
   }
 

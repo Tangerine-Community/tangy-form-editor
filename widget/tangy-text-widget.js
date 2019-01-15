@@ -6,9 +6,8 @@ import { TangyBaseWidget } from '../tangy-base-widget.js'
 class TangyTextWidget extends TangyBaseWidget {
 
   get claimElement() {
-    return 'tangy-input[type=text]'
+    return 'tangy-input[type=text], tangy-input:not([type])'
   }
-
   get defaultConfig() {
     return {
       name: '',
@@ -37,7 +36,7 @@ class TangyTextWidget extends TangyBaseWidget {
         name="${config.name}"
         label="${config.label}"
         type="text"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         allowed-pattern="${config.allowedPattern}"
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -56,7 +55,7 @@ class TangyTextWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Text</strong> <br/>
+    return `<div class="element-header"><div><mwc-icon>text_fields</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 
@@ -92,4 +91,4 @@ class TangyTextWidget extends TangyBaseWidget {
 }
 
 window.customElements.define('tangy-text-widget', TangyTextWidget);
-window.tangyFormEditorWidgets.define('tangy-text-widget', 'tangy-input[type=text]', TangyTextWidget);
+window.tangyFormEditorWidgets.define('tangy-text-widget', 'tangy-input[type=text], tangy-input:not([type])', TangyTextWidget);

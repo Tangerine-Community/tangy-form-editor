@@ -2,7 +2,6 @@ import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/input/tangy-select.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
-
 class TangyCheckboxWidget extends TangyBaseWidget {
 
   get claimElement() {
@@ -36,7 +35,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
       <tangy-checkbox 
         name="${config.name}"
         label="${config.label}"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -45,7 +44,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Checkbox</strong> <br/>
+    return `<div class="element-header"><div><mwc-icon>check_box</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 

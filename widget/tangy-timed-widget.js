@@ -56,7 +56,7 @@ class TangyTimedWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Timed Grid</strong> <br/>
+    return `<div class="element-header"><div><mwc-icon>av_timer</mwc-icon></div><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 

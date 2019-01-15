@@ -36,7 +36,7 @@ class TangyTimeWidget extends TangyBaseWidget {
         name="${config.name}"
         label="${config.label}"
         type="time"
-        tangy-if="${config.tangyIf}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -45,7 +45,7 @@ class TangyTimeWidget extends TangyBaseWidget {
   }
   
   renderInfo(config) {
-    return `<strong>Variable name: ${config.name}, Type: Time</strong> <br/>
+    return `<div class="element-header"><mwc-icon>timer</mwc-icon><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 
