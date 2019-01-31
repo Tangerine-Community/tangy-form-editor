@@ -80,7 +80,7 @@
         test('should show print view', () => {
           const element = fixture('ResumeFixture')
           element.mode = 'MODE_PRINT'
-          assert.equal(element.shadowRoot.querySelector('#print-container').innerText.includes('Variable name'), true)
+          element.shadowRoot.querySelector('#print-container').innerText.includes('Prompt')
         })
       })
 
