@@ -14,6 +14,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
     return {
       name: '',
       label: '',
+      hintText: '',
       options: [],
       required: false,
       disabled: false,
@@ -44,6 +45,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
       <tangy-radio-buttons
         name="${config.name}"
         label="${config.label}"
+        hintText="${config.hintText}"
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -68,7 +70,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
     <table>
       <tr><td><strong>Prompt:</strong></td><td>${config.label}</td></tr>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
-      <tr><td><strong>Hint:</strong></td><td>${config.hint}</td></tr>
+      <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
@@ -94,6 +96,9 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
           }" required></tangy-input>
           <tangy-input name="label" label="Label" value="${
             config.label
+          }"></tangy-input>
+          <tangy-input name="hintText" label="Hint Text" value="${
+            config.hintText
           }"></tangy-input>
           <tangy-input name="tangy_if" label="Show if" value="${
             config.tangyIf

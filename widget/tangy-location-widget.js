@@ -12,6 +12,7 @@ class TangyLocationWidget extends TangyBaseWidget {
   get defaultConfig() {
     return {
       name: '',
+      hintText: '',
       required: false,
       disabled: false,
       hidden: false,
@@ -41,6 +42,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     return `
       <tangy-location 
         name="${config.name}"
+        hintText="${config.hintText}"
         ${config.tangyIf === '' ? '' : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -61,7 +63,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         config.showLevels
       }</td></tr>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
-      <tr><td><strong>Hint:</strong></td><td>${config.hint}</td></tr>
+      <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
@@ -82,6 +84,9 @@ class TangyLocationWidget extends TangyBaseWidget {
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${
           config.name
+        }" required></tangy-input>
+        <tangy-input name="hintText" label="Hint Text" value="${
+          config.hintText
         }" required></tangy-input>
         <tangy-checkbox name="filterByGlobal" ${
           config.filterByGlobal ? 'value="on"' : ''

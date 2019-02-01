@@ -12,6 +12,7 @@ class TangyDateWidget extends TangyBaseWidget {
     return {
       name: '',
       label: '',
+      hintText: '',
       type: 'date',
       required: false,
       disabled: false,
@@ -38,6 +39,7 @@ class TangyDateWidget extends TangyBaseWidget {
       <tangy-input 
         name="${config.name}"
         label="${config.label}"
+        hintText="${config.hintText}"
         type="date"
         ${config.tangyIf === '' ? '' : `tangy-if="${config.tangyIf}"`}
         ${config.required ? 'required' : ''}
@@ -52,7 +54,7 @@ class TangyDateWidget extends TangyBaseWidget {
       <table>
         <tr><td><strong>Prompt:</strong></td><td>${config.label}</td></tr>
         <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
-        <tr><td><strong>Hint:</strong></td><td>${config.hint}</td></tr>
+        <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
         <tr><td><strong>Type:</strong></td><td>${config.type}</td></tr>
         <tr><td><strong>Error Message:</strong></td><td>${
           config.errorMessage
@@ -86,6 +88,9 @@ class TangyDateWidget extends TangyBaseWidget {
         }" required></tangy-input>
         <tangy-input name="label" label="Label" value="${
           config.label
+        }"></tangy-input>
+        <tangy-input name="hintText" label="Hint Text" value="${
+          config.hintText
         }"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${
           config.tangyIf

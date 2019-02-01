@@ -15,6 +15,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
     return {
       name: '',
       label: '',
+      hintText: '',
       optionsMarkup: '',
       inputSound: '',
       transitionSound: '',
@@ -43,6 +44,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       <tangy-eftouch
         name="${config.name}"
         label="${config.label}"
+        hintText="${config.hintText}"
         input-sound="${config.inputSound}"
         transition-sound="${config.transitionSound}"
         transition-delay="${config.transitionDelay}"
@@ -77,6 +79,9 @@ class TangyEftouchWidget extends TangyBaseWidget {
           }" required></tangy-input>
           <tangy-input name="label" label="Label" value="${
             config.label
+          }"></tangy-input>
+          <tangy-input name="hintText" label="Hint Text" value="${
+            config.hintText
           }"></tangy-input>
           <tangy-input name="input-sound" label="Input sound" value="${
             config.inputSound
@@ -126,7 +131,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
     <table>
     <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
     <tr><td><strong>Variable Label:</strong></td><td>${config.label}</td></tr>
-    <tr><td><strong>Hint:</strong></td><td>${config.hint}</td></tr>
+    <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
     <tr><td><strong>Input Sound:</strong></td><td>${config.inputSound}</td></tr>
     <tr><td><strong>Transition Sound:</strong></td><td>${
       config.transitionSound
