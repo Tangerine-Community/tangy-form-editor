@@ -15,6 +15,7 @@ class TangyTimedWidget extends TangyBaseWidget {
     return {
       name: '',
       label: '',
+      autoStop: '',
       options: [],
       required: false,
       disabled: false,
@@ -45,6 +46,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       <tangy-timed
         name="${config.name}"
         label="${config.label}"
+        autoStop="${config.autoStop}"
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -71,6 +73,7 @@ class TangyTimedWidget extends TangyBaseWidget {
     <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
     <tr><td><strong>Hint:</strong></td><td>${config.hint}</td></tr>
     <tr><td><strong>Duration:</strong></td><td>${config.duration}</td></tr>
+    <tr><td><strong>Duration:</strong></td><td>${config.autoStop}</td></tr>
     <tr><td><strong>Mode:</strong></td><td>${config.mode}</td></tr>
       <tr><td><strong>Columns:</strong></td><td>${config.columns}</td></tr>
       <tr><td><strong>Show Labels:</strong></td><td>${
@@ -101,6 +104,9 @@ class TangyTimedWidget extends TangyBaseWidget {
           }" required></tangy-input>
           <tangy-input name="label" label="Label" value="${
             config.label
+          }"></tangy-input>
+          <tangy-input name="autoStop" label="Auto Stop" value="${
+            config.autoStop
           }"></tangy-input>
           <tangy-input name="tangy_if" label="Show if" value="${
             config.tangyIf
