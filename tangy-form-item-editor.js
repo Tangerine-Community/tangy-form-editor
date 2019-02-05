@@ -233,26 +233,6 @@ class TangyFormItemEditor extends PolymerElement {
     this.shadowRoot.querySelector('tangy-form-condensed-editor').addEventListener('tangy-form-condensed-editor-changed', this.save.bind(this))
   }
 
-  getTemplateFromWysiwyg() {
-    let wysiwygTemplateEl = document.createElement('div') 
-    wysiwygTemplateEl.innerHTML = CKEDITOR.instances.editor1.getData()
-    let tangyWrapperEls = []
-    wysiwygTemplateEl.childNodes.forEach(node => {
-      if (node.tagName && node.getAttribute('class') && node.getAttribute('class').includes('tangy')) {
-        tangyWrapperEls.push(node)
-      }
-    })
-    tangyWrapperEls.forEach(tangyWrapperEl => {
-      // get the element's parent node
-      var parent = tangyWrapperEl.parentNode;
-      // move all children out of the element
-      while (tangyWrapperEl.firstChild) parent.insertBefore(tangyWrapperEl.firstChild, tangyWrapperEl);
-      // remove the empty element
-      parent.removeChild(tangyWrapperEl);
-    })
-    return wysiwygTemplateEl.innerHTML
-  }
-
   onBackToForms(event) {
     this.dispatchEvent(new CustomEvent('cancel'))
   }
