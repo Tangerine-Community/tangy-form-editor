@@ -35,7 +35,7 @@ class TangyTimedWidget extends TangyBaseWidget {
         };
       }),
       tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if')
+        ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
         : ''
     };
   }
@@ -48,6 +48,7 @@ class TangyTimedWidget extends TangyBaseWidget {
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
       >
       ${config.options
         .map(
@@ -84,6 +85,7 @@ class TangyTimedWidget extends TangyBaseWidget {
     <hr/>
     `;
   }
+
   renderInfo(config) {
     return `<div class="element-header"><div><mwc-icon>av_timer</mwc-icon></div><div id="element-name">${
       config.name
@@ -102,9 +104,7 @@ class TangyTimedWidget extends TangyBaseWidget {
           <tangy-input name="label" label="Label" value="${
             config.label
           }"></tangy-input>
-          <tangy-input name="tangy_if" label="Show if" value="${
-            config.tangyIf
-          }"></tangy-input>
+          <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-checkbox name="required" ${
             config.required ? 'value="on"' : ''
           }>Required</tangy-checkbox>
