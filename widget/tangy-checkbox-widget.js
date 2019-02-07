@@ -25,7 +25,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
     // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
     return {...config, ...element.getProps(), ...{
       tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if')
+        ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
         : ''
     }}
   }
@@ -35,7 +35,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
       <tangy-checkbox 
         name="${config.name}"
         label="${config.label}"
-        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -54,7 +54,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
         <tangy-input name="label" label="Label" value="${config.label}"></tangy-input>
-        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf}"></tangy-input>
+        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
         <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>

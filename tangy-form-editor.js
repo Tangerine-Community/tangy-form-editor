@@ -129,9 +129,9 @@ class TangyFormEditor extends PolymerElement {
       el.getProps(), 
       {
         template: (el.querySelector('template')) ? el.querySelector('template').innerHTML : el.innerHTML,
-        onOpen: el.getAttribute('on-open'),
-        onChange: el.getAttribute('on-change'),
-        category: el.getAttribute('category'),
+        onOpen: el.hasAttribute('on-open') ? el.getAttribute('on-open') : '',
+        onChange: el.hasAttribute('on-change') ? el.getAttribute('on-change') : '',
+        category: el.hasAttribute('category') ? el.getAttribute('category') : '',
         summary: el.hasAttribute('summary'),
         rightToLeft: el.hasAttribute('right-to-left'),
         hideBackButton: el.hasAttribute('hide-back-button')
@@ -144,9 +144,15 @@ class TangyFormEditor extends PolymerElement {
          {
            title: template.content.querySelector('tangy-form').getAttribute('title'),
            fullscreen: template.content.querySelector('tangy-form').hasAttribute('fullscreen'),
-           onOpen: template.content.querySelector('tangy-form').getAttribute('on-open'),
-           onChange: template.content.querySelector('tangy-form').getAttribute('on-change'),
-           category: template.content.querySelector('tangy-form').getAttribute('category')
+           onOpen: template.content.querySelector('tangy-form').hasAttribute('on-open')
+            ? template.content.querySelector('tangy-form').getAttribute('on-open')
+            : '',
+           onChange: template.content.querySelector('tangy-form').hasAttribute('on-change')
+             ? template.content.querySelector('tangy-form').getAttribute('on-change')
+             : '',
+           category: template.content.querySelector('tangy-form').hasAttribute('category')
+            ? template.content.querySelector('tangy-form').getAttribute('category')
+            : ''
          }
       ),
       items
@@ -285,14 +291,14 @@ class TangyFormEditor extends PolymerElement {
       let onOpenEditorEl = document.createElement('juicy-ace-editor')
       onOpenEditorEl.setAttribute('mode', 'ace/mode/javascript')
       //onOpenEditorEl.value = itemFormEl.getAttribute('on-open') 
-      onOpenEditorEl.value = state.form.onOpen 
+      onOpenEditorEl.value = state.form.onOpen  ? state.form.onOpen.replace(/&#34;/g, '"') : ''
       onOpenEditorEl.style.height = `${window.innerHeight*.6}px`
       onOpenEditorEl.addEventListener('change', _ => _.stopPropagation())
       this.shadowRoot.querySelector('#on-open-editor').appendChild(onOpenEditorEl)
       // on-change-editor
       let onChangeEditorEl = document.createElement('juicy-ace-editor')
       onChangeEditorEl.setAttribute('mode', 'ace/mode/javascript')
-      onChangeEditorEl.value = state.form.onChange 
+      onChangeEditorEl.value = state.form.onChange  ? state.form.onChange.replace(/&#34;/g, '"') : ''
       onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
       onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
       this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
@@ -386,8 +392,8 @@ class TangyFormEditor extends PolymerElement {
     }
     this.store.dispatch({type: 'FORM_UPDATE', payload: {
       title: this.shadowRoot.querySelector('#form-title').value,
-      onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
-      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
+      onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       category: categoryValue
     }})
     this.dispatchChangeEvent()

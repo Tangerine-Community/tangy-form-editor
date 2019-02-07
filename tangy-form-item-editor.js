@@ -193,14 +193,16 @@ class TangyFormItemEditor extends PolymerElement {
     // on-open-editor
     let onOpenEditorEl = document.createElement('juicy-ace-editor')
     onOpenEditorEl.setAttribute('mode', 'ace/mode/javascript')
-    onOpenEditorEl.value = this.item.onOpen
+    // Convert HTML double quote character to standard double quote character.
+    onOpenEditorEl.value = this.item.onOpen ? this.item.onOpen.replace(/&#34;/g, '"') : ''
     onOpenEditorEl.style.height = `${window.innerHeight*.6}px`
     onOpenEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.shadowRoot.querySelector('#on-open-editor').appendChild(onOpenEditorEl)
     // on-change-editor
     let onChangeEditorEl = document.createElement('juicy-ace-editor')
     onChangeEditorEl.setAttribute('mode', 'ace/mode/javascript')
-    onChangeEditorEl.value = this.item.onChange
+    // Convert HTML double quote character to standard double quote character.
+    onChangeEditorEl.value = this.item.onChange ? this.item.onChange.replace(/&#34;/g, '"') : ''
     onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
     onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
     this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
@@ -231,26 +233,6 @@ class TangyFormItemEditor extends PolymerElement {
     this.shadowRoot.querySelector('tangy-form-condensed-editor').addEventListener('tangy-form-condensed-editor-changed', this.save.bind(this))
   }
 
-  getTemplateFromWysiwyg() {
-    let wysiwygTemplateEl = document.createElement('div') 
-    wysiwygTemplateEl.innerHTML = CKEDITOR.instances.editor1.getData()
-    let tangyWrapperEls = []
-    wysiwygTemplateEl.childNodes.forEach(node => {
-      if (node.tagName && node.getAttribute('class') && node.getAttribute('class').includes('tangy')) {
-        tangyWrapperEls.push(node)
-      }
-    })
-    tangyWrapperEls.forEach(tangyWrapperEl => {
-      // get the element's parent node
-      var parent = tangyWrapperEl.parentNode;
-      // move all children out of the element
-      while (tangyWrapperEl.firstChild) parent.insertBefore(tangyWrapperEl.firstChild, tangyWrapperEl);
-      // remove the empty element
-      parent.removeChild(tangyWrapperEl);
-    })
-    return wysiwygTemplateEl.innerHTML
-  }
-
   onBackToForms(event) {
     this.dispatchEvent(new CustomEvent('cancel'))
   }
@@ -269,8 +251,9 @@ class TangyFormItemEditor extends PolymerElement {
     }
     this.dispatchEvent(new CustomEvent('save', {
       detail: Object.assign({}, this.item, {
-        onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value,
-        onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value,
+        // Convert standard double quote character to safe HTML double quote character.
+        onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+        onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
         category: categoryValue,
         title: this.$.container.querySelector('#itemTitle').value,
         summary: this.$.container.querySelector('#summary-checkbox').checked,
