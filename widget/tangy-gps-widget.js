@@ -26,7 +26,7 @@ class TangyGpsWidget extends TangyBaseWidget {
       ...element.getProps(),
       ...{
         tangyIf: element.hasAttribute('tangy-if')
-          ? element.getAttribute('tangy-if')
+          ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
           : ''
       }
     };
@@ -36,8 +36,12 @@ class TangyGpsWidget extends TangyBaseWidget {
     return `
       <tangy-gps 
         name="${config.name}"
+<<<<<<< HEAD
         hintText="${config.hintText}"
         ${config.tangyIf === '' ? '' : `tangy-if="${config.tangyIf}"`}
+=======
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+>>>>>>> origin/master
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -95,9 +99,7 @@ class TangyGpsWidget extends TangyBaseWidget {
         <tangy-input name="hintText" label="Hint Text" value="${
           config.hintText
         }" required></tangy-input>
-        <tangy-input name="tangy_if" label="Show if" value="${
-          config.tangyIf
-        }"></tangy-input>
+        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
         }>Required</tangy-checkbox>

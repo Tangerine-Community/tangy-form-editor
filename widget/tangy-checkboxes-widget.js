@@ -35,7 +35,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
         };
       }),
       tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if')
+        ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
         : ''
     };
   }
@@ -46,6 +46,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
         name="${config.name}"
         label="${config.label}"
         hintText="${config.hintText}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -99,9 +100,6 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
           }"></tangy-input>
           <tangy-input name="hintText" label="Hint Text" value="${
             config.hintText
-          }"></tangy-input>
-          <tangy-input name="tangy_if" label="Show if" value="${
-            config.tangyIf
           }"></tangy-input>
           <tangy-checkbox name="required" ${
             config.required ? 'value="on"' : ''

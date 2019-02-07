@@ -28,7 +28,7 @@ class TangyEmailWidget extends TangyBaseWidget {
       ...element.getProps(),
       ...{
         tangyIf: element.hasAttribute('tangy-if')
-          ? element.getAttribute('tangy-if')
+          ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
           : ''
       }
     };
@@ -41,7 +41,7 @@ class TangyEmailWidget extends TangyBaseWidget {
         label="${config.label}"
         hintText="${config.hintText}"
         type="email"
-        ${config.tangyIf === '' ? '' : `tangy-if="${config.tangyIf}"`}
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -90,9 +90,7 @@ class TangyEmailWidget extends TangyBaseWidget {
         <tangy-input name="hintText" label="Hint Text" value="${
           config.hintText
         }"></tangy-input>
-        <tangy-input name="tangy_if" label="Show if" value="${
-          config.tangyIf
-        }"></tangy-input>
+        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
         }>Required</tangy-checkbox>

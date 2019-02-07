@@ -26,7 +26,7 @@ class TangyBoxWidget extends TangyBaseWidget {
       ...element.getProps(),
       htmlCode: element.innerHTML,
       tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if')
+        ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
         : ''
     }
   }
@@ -35,7 +35,7 @@ class TangyBoxWidget extends TangyBaseWidget {
     return `
       <tangy-box 
         name="${config.name}"
-        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf}"`}
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -53,11 +53,11 @@ class TangyBoxWidget extends TangyBaseWidget {
     <tangy-form id="tangy-input">
       <tangy-form-item>
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
-        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf}"></tangy-input>
+        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
         <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
-        <tangy-input name="htmlCode" label="Enter HTML code" value="${config.htmlCode}"></tangy-input>
+        <tangy-input name="htmlCode" label="Enter HTML code" value="${config.htmlCode.replace(/"/g, '&quot;')}"></tangy-input>
       </tangy-form-item>
     </tangy-form>
     `
