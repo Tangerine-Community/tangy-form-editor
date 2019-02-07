@@ -39,7 +39,7 @@ class TangyTextWidget extends TangyBaseWidget {
       <tangy-input 
         name="${config.name}"
         label="${config.label}"
-        hintText="${config.hintText}"
+        hint-text="${config.hintText}"
         type="text"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         allowed-pattern="${config.allowedPattern}"
@@ -119,6 +119,7 @@ class TangyTextWidget extends TangyBaseWidget {
       label: formEl.response.items[0].inputs.find(
         input => input.name === 'label'
       ).value,
+      hintText: formEl.values.hintText,
       required:
         formEl.response.items[0].inputs.find(input => input.name === 'required')
           .value === 'on'

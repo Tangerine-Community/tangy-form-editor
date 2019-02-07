@@ -166,6 +166,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       name: formEl.values.name,
       label: formEl.values.label,
       autoStop: formEl.values.autoStop,
+      hintText: formEl.values.hintText,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,

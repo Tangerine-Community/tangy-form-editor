@@ -42,7 +42,7 @@ class TangyNumberWidget extends TangyBaseWidget {
       <tangy-input 
         name="${config.name}"
         label="${config.label}"
-        hintText="${config.hintText}"
+        hint-text="${config.hintText}"
         type="number"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         allowed-pattern="${config.allowedPattern}"
@@ -132,6 +132,7 @@ class TangyNumberWidget extends TangyBaseWidget {
         .value,
       max: formEl.response.items[0].inputs.find(input => input.name === 'max')
         .value,
+      hintText: formEl.values.hintText,
       required:
         formEl.response.items[0].inputs.find(input => input.name === 'required')
           .value === 'on'

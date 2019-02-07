@@ -45,7 +45,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       <tangy-checkboxes
         name="${config.name}"
         label="${config.label}"
-        hintText="${config.hintText}"
+        hint-text="${config.hintText}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -175,6 +175,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
+      hintText: formEl.values.hintText,
       options: formEl.values.options.map(item =>
         item.reduce((acc, input) => {
           return { ...acc, [input.name]: input.value };

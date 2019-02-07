@@ -42,7 +42,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     return `
       <tangy-location 
         name="${config.name}"
-        hintText="${config.hintText}"
+        hint-text="${config.hintText}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -87,7 +87,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         }" required></tangy-input>
         <tangy-input name="hintText" label="Hint Text" value="${
           config.hintText
-        }" required></tangy-input>
+        }"></tangy-input>
         <tangy-checkbox name="filterByGlobal" ${
           config.filterByGlobal ? 'value="on"' : ''
         }>Filter by locations in the user profile?</tangy-checkbox>
@@ -125,6 +125,7 @@ class TangyLocationWidget extends TangyBaseWidget {
           .value === 'on'
           ? true
           : false,
+      hintText: formEl.values.hintText,
       hidden:
         formEl.response.items[0].inputs.find(input => input.name === 'hidden')
           .value === 'on'

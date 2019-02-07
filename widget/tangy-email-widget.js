@@ -39,7 +39,7 @@ class TangyEmailWidget extends TangyBaseWidget {
       <tangy-input 
         name="${config.name}"
         label="${config.label}"
-        hintText="${config.hintText}"
+        hint-text="${config.hintText}"
         type="email"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
@@ -113,6 +113,7 @@ class TangyEmailWidget extends TangyBaseWidget {
       label: formEl.response.items[0].inputs.find(
         input => input.name === 'label'
       ).value,
+      hintText: formEl.values.hintText,
       required:
         formEl.response.items[0].inputs.find(input => input.name === 'required')
           .value === 'on'
