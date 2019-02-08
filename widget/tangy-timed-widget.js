@@ -48,6 +48,7 @@ class TangyTimedWidget extends TangyBaseWidget {
         name="${config.name}"
         label="${config.label}"
         hintText="${config.hintText}"
+        ${config.duration ? `duration="${config.duration}"` : ``}
         ${config.autoStop ? `autoStop="${config.autoStop}"` : ``}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -113,7 +114,7 @@ class TangyTimedWidget extends TangyBaseWidget {
             config.hintText
           }"></tangy-input>
           <tangy-input name="autoStop" label="Auto Stop" value="${
-            config.autoStop
+            config.autoStop ? config.autoStop : ''
           }"></tangy-input>
           <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-checkbox name="required" ${
@@ -166,6 +167,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       name: formEl.values.name,
       label: formEl.values.label,
       autoStop: formEl.values.autoStop,
+      duration: formEl.values.duration,
       hintText: formEl.values.hintText,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
