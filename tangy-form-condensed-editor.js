@@ -63,6 +63,14 @@ class TangyFormCondensedEditor extends PolymerElement {
   wrap(markup) {
     const template = document.createElement('template')
     template.innerHTML = markup
+    // Wrap text nodes with tangy-box.
+    template.content.childNodes.forEach(node => {
+      if(node.nodeName === '#text') {
+        const wrapper = document.createElement('tangy-box')
+        wrap(node, wrapper) 
+      }
+    })
+    // Wrap all nodes with their corresponding widget elements.
     window.tangyFormEditorWidgets.widgets.forEach(widgetInfo => {
       template.content.querySelectorAll(widgetInfo.claimElement)
         .forEach(matchingEl => {
