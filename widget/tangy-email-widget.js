@@ -12,6 +12,7 @@ class TangyEmailWidget extends TangyBaseWidget {
     return {
       name: '',
       label: '',
+      hintText: '',
       type: 'email',
       required: false,
       disabled: false,
@@ -38,6 +39,7 @@ class TangyEmailWidget extends TangyBaseWidget {
       <tangy-input 
         name="${config.name}"
         label="${config.label}"
+        hint-text="${config.hintText}"
         type="email"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
@@ -52,7 +54,7 @@ class TangyEmailWidget extends TangyBaseWidget {
     <table>
       <tr><td><strong>Prompt:</strong></td><td>${config.label}</td></tr>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
-      <tr><td><strong>Hint:</strong></td><td>${config.hint}</td></tr>
+      <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
       <tr><td><strong>Type:</strong></td><td>${config.type}</td></tr>
       <tr><td><strong>Error Message:</strong></td><td>${
         config.errorMessage
@@ -85,6 +87,9 @@ class TangyEmailWidget extends TangyBaseWidget {
         <tangy-input name="label" label="Label" value="${
           config.label
         }"></tangy-input>
+        <tangy-input name="hintText" label="Hint Text" value="${
+          config.hintText
+        }"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
@@ -108,6 +113,7 @@ class TangyEmailWidget extends TangyBaseWidget {
       label: formEl.response.items[0].inputs.find(
         input => input.name === 'label'
       ).value,
+      hintText: formEl.values.hintText,
       required:
         formEl.response.items[0].inputs.find(input => input.name === 'required')
           .value === 'on'

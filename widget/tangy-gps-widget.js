@@ -11,6 +11,7 @@ class TangyGpsWidget extends TangyBaseWidget {
   get defaultConfig() {
     return {
       name: '',
+      hintText: '',
       required: false,
       disabled: false,
       hidden: false,
@@ -35,6 +36,7 @@ class TangyGpsWidget extends TangyBaseWidget {
     return `
       <tangy-gps 
         name="${config.name}"
+        hint-text="${config.hintText}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -47,7 +49,7 @@ class TangyGpsWidget extends TangyBaseWidget {
    
     <table>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
-      <tr><td><strong>Hint:</strong></td><td>${config.hint}</td></tr>
+      <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
       <tr><td><strong>Hide Accuracy Distance:</strong></td><td>${
         config.hideAccuracyDistance
       }</td></tr>
@@ -90,6 +92,9 @@ class TangyGpsWidget extends TangyBaseWidget {
         <tangy-input name="name" label="Variable name" value="${
           config.name
         }" required></tangy-input>
+        <tangy-input name="hintText" label="Hint Text" value="${
+          config.hintText
+        }"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
@@ -115,6 +120,7 @@ class TangyGpsWidget extends TangyBaseWidget {
           .value === 'on'
           ? true
           : false,
+      hintText: formEl.values.hintText,
       hidden:
         formEl.response.items[0].inputs.find(input => input.name === 'hidden')
           .value === 'on'

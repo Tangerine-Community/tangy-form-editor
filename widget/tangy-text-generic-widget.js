@@ -72,6 +72,7 @@ class TangyTextGenericWidget extends TangyBaseWidget {
       ...config,
       name: formEl.response.items[0].inputs.find(input => input.name === 'name').value,
       label: formEl.response.items[0].inputs.find(input => input.name === 'label').value,
+      hintText: formEl.values.hintText,
       required: formEl.response.items[0].inputs.find(input => input.name === 'required').value === 'on' ? true : false,
       hidden: formEl.response.items[0].inputs.find(input => input.name === 'hidden').value === 'on' ? true : false,
       disabled: formEl.response.items[0].inputs.find(input => input.name === 'disabled').value === 'on' ? true : false,

@@ -39,6 +39,7 @@ class TangyTimeWidget extends TangyBaseWidget {
         name="${config.name}"
         label="${config.label}"
         type="time"
+        hint-text="${config.hintText}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -82,6 +83,9 @@ class TangyTimeWidget extends TangyBaseWidget {
         <tangy-input name="label" label="Label" value="${
           config.label
         }"></tangy-input>
+        <tangy-input name="hintText" label="Hint Text" value="${
+          config.hintText
+        }"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
@@ -110,6 +114,7 @@ class TangyTimeWidget extends TangyBaseWidget {
           .value === 'on'
           ? true
           : false,
+      hintText: formEl.values.hintText,
       hidden:
         formEl.response.items[0].inputs.find(input => input.name === 'hidden')
           .value === 'on'
