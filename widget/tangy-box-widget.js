@@ -57,7 +57,9 @@ class TangyBoxWidget extends TangyBaseWidget {
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
         <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
-        <tangy-input name="htmlCode" label="Enter HTML code" value="${config.htmlCode.replace(/"/g, '&quot;')}"></tangy-input>
+        <tangy-code mode="ace/mode/html" name="htmlCode" height="600" required>
+          ${config.htmlCode}
+        </tangy-code>
       </tangy-form-item>
     </tangy-form>
     `

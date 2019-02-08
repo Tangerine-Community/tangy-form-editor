@@ -6,6 +6,7 @@ import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
 import {tangyFormEditorReducer} from './tangy-form-editor-reducer.js'
 import './tangy-form-item-editor.js'
 import './tangy-form-html-editor.js'
+import './tangy-code.js'
 
 //   <!-- Tangy Elements -->
 import 'tangy-form/tangy-form.js'
