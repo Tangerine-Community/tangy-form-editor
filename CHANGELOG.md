@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v5.3.1
+- Convert both text nodes and unclaimed elements by widgets to tangy-box widgets.
+- Fix a bug where tangy-code would end up removing its value if not edited.
+- Change "Back to Forms Listing" to "Back to Items Listing".
+- Fix undefined values for tangy-timed options and remove unused label on tangy-timed.
+
 ## v5.3.0
 - bug fixes
   - Dragging Add Widget before Submitting it closes the widget without save https://github.com/Tangerine-Community/Tangerine/issues/1283
