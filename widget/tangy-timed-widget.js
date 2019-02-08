@@ -14,7 +14,6 @@ class TangyTimedWidget extends TangyBaseWidget {
   get defaultConfig() {
     return {
       name: '',
-      label: '',
       hintText: '',
       autoStop: '',
       options: [],
@@ -32,7 +31,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
-          name: option.getAttribute('value'),
+          value: option.getAttribute('value'),
           label: option.innerHTML
         };
       }),
@@ -46,10 +45,9 @@ class TangyTimedWidget extends TangyBaseWidget {
     return `
       <tangy-timed
         name="${config.name}"
-        label="${config.label}"
-        hintText="${config.hintText}"
+        hint-text="${config.hintText}"
         ${config.duration ? `duration="${config.duration}"` : ``}
-        ${config.autoStop ? `autoStop="${config.autoStop}"` : ``}
+        ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -107,9 +105,6 @@ class TangyTimedWidget extends TangyBaseWidget {
           <tangy-input name="name" label="Variable name" value="${
             config.name
           }" required></tangy-input>
-          <tangy-input name="label" label="Label" value="${
-            config.label
-          }"></tangy-input>
           <tangy-input name="hintText" label="Hint Text" value="${
             config.hintText
           }"></tangy-input>
@@ -165,7 +160,6 @@ class TangyTimedWidget extends TangyBaseWidget {
     return {
       ...config,
       name: formEl.values.name,
-      label: formEl.values.label,
       autoStop: formEl.values.autoStop,
       duration: formEl.values.duration,
       hintText: formEl.values.hintText,
