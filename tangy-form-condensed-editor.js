@@ -121,6 +121,7 @@ class TangyFormCondensedEditor extends PolymerElement {
       this.shadowRoot.querySelector('sortable-list').prepend(document.createElement('tangy-form-editor-add-input'))
     }
     setTimeout(_ => this.shadowRoot.querySelector('tangy-form-editor-add-input').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+    this.shadowRoot.querySelector('sortable-list').disabled=true
   }
 
   editInput() {
