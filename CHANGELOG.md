@@ -1,3 +1,14 @@
+# CHANGELOG
+
+## v5.3.0
+- bug fixes
+  - Dragging Add Widget before Submitting it closes the widget without save https://github.com/Tangerine-Community/Tangerine/issues/1283
+  - Unclosed tags in html container can break form https://github.com/Tangerine-Community/Tangerine/issues/1289
+  - time on grids cannot be changes and is always 60 seconds https://github.com/Tangerine-Community/Tangerine/issues/1301
+  - Min and Max for input number cannot be saved through the interface https://github.com/Tangerine-Community/Tangerine/issues/1297
+  - `undefined` should not be the default value in on-change/on-open editor https://github.com/Tangerine-Community/Tangerine/issues/1317
+  - If you use a double quote in on change logic the form breaks https://github.com/Tangerine-Community/Tangerine/issues/1185
+- Most widgets now have a "hint" field you can add.
 
 ## v5.2.0
 - CSS improvements and general consistency improvements around save buttons.
