@@ -46,6 +46,8 @@ class TangyNumberWidget extends TangyBaseWidget {
         type="number"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         allowed-pattern="${config.allowedPattern}"
+        ${config.min ? `min="${config.min}"` : ``}
+        ${config.max ? `max="${config.max}"` : ``}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -128,10 +130,8 @@ class TangyNumberWidget extends TangyBaseWidget {
       label: formEl.response.items[0].inputs.find(
         input => input.name === 'label'
       ).value,
-      min: formEl.response.items[0].inputs.find(input => input.name === 'min')
-        .value,
-      max: formEl.response.items[0].inputs.find(input => input.name === 'max')
-        .value,
+      min: formEl.values.min,
+      max: formEl.values.max,
       hintText: formEl.values.hintText,
       required:
         formEl.response.items[0].inputs.find(input => input.name === 'required')
