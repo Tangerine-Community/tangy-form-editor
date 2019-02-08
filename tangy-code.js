@@ -67,6 +67,7 @@ export class TangyCode extends PolymerElement {
       </juicy-ace-editor>
     `
     this.shadowRoot.querySelector('juicy-ace-editor').value = this.innerHTML
+    this.value = this.innerHTML
     this.shadowRoot.querySelector('juicy-ace-editor').addEventListener('change', (event) => {
       this.value = event.target.value
     })
