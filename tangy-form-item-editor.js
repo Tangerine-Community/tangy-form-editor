@@ -131,7 +131,7 @@ class TangyFormItemEditor extends PolymerElement {
     this.$.container.innerHTML = `
       <div id="header">
         <div><h2 style="text-align: left">Item Editor</h2></div>
-        <div><paper-button raised id="back-to-forms" >Back to Form Listing</paper-button></div>
+        <div><paper-button raised id="back-to-forms" >Back to Items Listing</paper-button></div>
       </div>
       <paper-card id="details-card">
         <div class="card-content">
