@@ -17,7 +17,7 @@
     "js-beautify": "^1.7.5",
     "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
-    "tangy-form": "^3.5.0"
+    "tangy-form": "^3.6.0"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",

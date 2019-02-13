@@ -17,7 +17,8 @@ class TangyTextWidget extends TangyBaseWidget {
       disabled: false,
       hidden: false,
       allowedPattern: '',
-      tangyIf: ''
+      tangyIf: '',
+      validIf: ''
     };
   }
 
@@ -29,6 +30,9 @@ class TangyTextWidget extends TangyBaseWidget {
       ...{
         tangyIf: element.hasAttribute('tangy-if')
           ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+          : '',
+        validIf: element.hasAttribute('valid-if')
+          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
           : ''
       }
     };
@@ -42,6 +46,7 @@ class TangyTextWidget extends TangyBaseWidget {
         hint-text="${config.hintText}"
         type="text"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         allowed-pattern="${config.allowedPattern}"
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -97,6 +102,7 @@ class TangyTextWidget extends TangyBaseWidget {
           config.allowedPattern
         }"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+        <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
         }>Required</tangy-checkbox>
@@ -137,6 +143,9 @@ class TangyTextWidget extends TangyBaseWidget {
           : false,
       allowedPattern: formEl.response.items[0].inputs.find(
         input => input.name === 'allowed_pattern'
+      ).value,
+      validIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'valid_if'
       ).value,
       tangyIf: formEl.response.items[0].inputs.find(
         input => input.name === 'tangy_if'

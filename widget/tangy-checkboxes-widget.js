@@ -19,7 +19,8 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       required: false,
       disabled: false,
       hidden: false,
-      tangyIf: ''
+      tangyIf: '',
+      validIf: ''
     };
   }
 
@@ -36,6 +37,9 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       }),
       tangyIf: element.hasAttribute('tangy-if')
         ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+        : '',
+      validIf: element.hasAttribute('valid-if')
+        ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
         : ''
     };
   }
@@ -47,6 +51,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
         label="${config.label}"
         hint-text="${config.hintText}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -99,6 +104,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
             config.label
           }"></tangy-input>
           <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+          <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-input name="hintText" label="Hint Text" value="${
             config.hintText
           }"></tangy-input>
@@ -176,6 +182,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy_if').value,
+      validIf: formEl.response.items[0].inputs.find(input => input.name === 'valid_if').value,
       disabled: formEl.values.disabled === 'on' ? true : false,
       hintText: formEl.values.hintText,
       options: formEl.values.options.map(item =>

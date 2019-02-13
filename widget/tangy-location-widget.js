@@ -17,6 +17,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       disabled: false,
       hidden: false,
       tangyIf: '',
+      validIf: '',
       showMetaData: false,
       metaDataTemplate: '',
       filterByGlobal: false,
@@ -33,6 +34,9 @@ class TangyLocationWidget extends TangyBaseWidget {
         tangyIf: element.hasAttribute('tangy-if')
           ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
           : '',
+        validIf: element.hasAttribute('valid-if')
+          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
+          : '',
         metaDataTemplate: element.innerHTML
       }
     };
@@ -44,6 +48,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         name="${config.name}"
         hint-text="${config.hintText}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -95,6 +100,7 @@ class TangyLocationWidget extends TangyBaseWidget {
           config.showLevels
         }"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+        <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
         }>Required</tangy-checkbox>
@@ -138,6 +144,9 @@ class TangyLocationWidget extends TangyBaseWidget {
           : false,
       tangyIf: formEl.response.items[0].inputs.find(
         input => input.name === 'tangy_if'
+      ).value,
+      validIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'valid_if'
       ).value,
       filterByGlobal: formEl.response.items[0].inputs.find(
         input => input.name === 'filterByGlobal'

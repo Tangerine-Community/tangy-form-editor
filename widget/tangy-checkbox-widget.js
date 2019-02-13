@@ -17,7 +17,8 @@ class TangyCheckboxWidget extends TangyBaseWidget {
       disabled: false,
       hidden: false,
       allowedPattern: '',
-      tangyIf: ''
+      tangyIf: '',
+      validIf: ''
     }
   }
 
@@ -26,6 +27,9 @@ class TangyCheckboxWidget extends TangyBaseWidget {
     return {...config, ...element.getProps(), ...{
       tangyIf: element.hasAttribute('tangy-if')
         ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+        : '',
+      validIf: element.hasAttribute('valid-if')
+        ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
         : ''
     }}
   }
@@ -36,6 +40,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
         name="${config.name}"
         label="${config.label}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -55,6 +60,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
         <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
         <tangy-input name="label" label="Label" value="${config.label}"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+        <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${config.required ? 'value="on"' : ''}>Required</tangy-checkbox>
         <tangy-checkbox name="disabled" ${config.disabled ? 'value="on"' : ''}>Disabled</tangy-checkbox>
         <tangy-checkbox name="hidden" ${config.hidden ? 'value="on"' : ''}>Hidden</tangy-checkbox>
@@ -71,7 +77,8 @@ class TangyCheckboxWidget extends TangyBaseWidget {
       required: formEl.response.items[0].inputs.find(input => input.name === 'required').value === 'on' ? true : false,
       hidden: formEl.response.items[0].inputs.find(input => input.name === 'hidden').value === 'on' ? true : false,
       disabled: formEl.response.items[0].inputs.find(input => input.name === 'disabled').value === 'on' ? true : false,
-      tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy_if').value
+      tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy_if').value,
+      validIf: formEl.response.items[0].inputs.find(input => input.name === 'valid_if').value
     }
   }
 

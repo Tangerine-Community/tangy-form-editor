@@ -16,11 +16,14 @@ class TangyTimedWidget extends TangyBaseWidget {
       name: '',
       hintText: '',
       autoStop: '',
+      columns: 4,
       options: [],
       required: false,
       disabled: false,
       hidden: false,
-      tangyIf: ''
+      rowMarkers: false,
+      tangyIf: '',
+      validIf: ''
     };
   }
 
@@ -37,6 +40,9 @@ class TangyTimedWidget extends TangyBaseWidget {
       }),
       tangyIf: element.hasAttribute('tangy-if')
         ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+        : '',
+      validIf: element.hasAttribute('valid-if')
+        ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
         : ''
     };
   }
@@ -46,12 +52,15 @@ class TangyTimedWidget extends TangyBaseWidget {
       <tangy-timed
         name="${config.name}"
         hint-text="${config.hintText}"
+        columns="${config.columns}"
         ${config.duration ? `duration="${config.duration}"` : ``}
         ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
+        ${config.rowMarkers ? 'row-markers' : ''}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
       >
       ${config.options
         .map(
@@ -105,6 +114,9 @@ class TangyTimedWidget extends TangyBaseWidget {
           <tangy-input name="name" label="Variable name" value="${
             config.name
           }" required></tangy-input>
+          <tangy-input name="columns" type="number" label="Hint Text" value="${
+            config.columns
+          }"></tangy-input>
           <tangy-input name="hintText" label="Hint Text" value="${
             config.hintText
           }"></tangy-input>
@@ -112,6 +124,10 @@ class TangyTimedWidget extends TangyBaseWidget {
             config.autoStop ? config.autoStop : ''
           }"></tangy-input>
           <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+          <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
+          <tangy-checkbox name="rowMarkers" ${
+            config.rowMarkers ? 'value="on"' : ''
+          }>Mark entire rows</tangy-checkbox>
           <tangy-checkbox name="required" ${
             config.required ? 'value="on"' : ''
           }>Required</tangy-checkbox>
@@ -163,9 +179,13 @@ class TangyTimedWidget extends TangyBaseWidget {
       autoStop: formEl.values.autoStop,
       duration: formEl.values.duration,
       hintText: formEl.values.hintText,
+      columns: formEl.values.columns,
+      rowMarkers: formEl.values.rowMarkers === 'on' ? true : false,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
+      tangyIf: formEl.values.tangy_if,
+      validIf: formEl.values.valid_if,
       options: formEl.values.options.split(' ').map((item, i) => {
         return { value: i, label: item };
       })

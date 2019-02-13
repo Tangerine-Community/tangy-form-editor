@@ -24,6 +24,8 @@ class TangyEftouchWidget extends TangyBaseWidget {
       warningMessage: '',
       warningTime: '',
       timeLimit: '',
+      tangyIf: '',
+      validIf: '',
       autoProgress: false,
       required: false,
       disabled: false,
@@ -35,7 +37,15 @@ class TangyEftouchWidget extends TangyBaseWidget {
     return {
       ...config,
       ...element.getProps(),
-      optionsMarkup: element.innerHTML
+      ...{
+        tangyIf: element.hasAttribute('tangy-if')
+          ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+          : '',
+        validIf: element.hasAttribute('valid-if')
+          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
+          : '',
+        optionsMarkup: element.innerHTML
+      }
     };
   }
 
@@ -52,6 +62,8 @@ class TangyEftouchWidget extends TangyBaseWidget {
         warning-message="${config.warningMessage}"
         warning-time="${config.warningTime}"
         time-limit="${config.timeLimit}"
+        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.autoProgress ? 'auto-progress' : ''}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
@@ -80,6 +92,8 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-input name="label" label="Label" value="${
             config.label
           }"></tangy-input>
+          <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+          <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-input name="hintText" label="Hint Text" value="${
             config.hintText
           }"></tangy-input>
@@ -178,7 +192,13 @@ class TangyEftouchWidget extends TangyBaseWidget {
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
-      optionsMarkup: formEl.values['options-markup']
+      optionsMarkup: formEl.values['options-markup'],
+      tangyIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'tangy_if'
+      ).value,
+      validIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'valid_if'
+      ).value
     };
   }
 }

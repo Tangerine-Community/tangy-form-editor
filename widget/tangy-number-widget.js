@@ -20,7 +20,8 @@ class TangyNumberWidget extends TangyBaseWidget {
       allowedPattern: '',
       min: undefined,
       max: undefined,
-      tangyIf: ''
+      tangyIf: '',
+      validIf: ''
     };
   }
 
@@ -32,6 +33,9 @@ class TangyNumberWidget extends TangyBaseWidget {
       ...{
         tangyIf: element.hasAttribute('tangy-if')
           ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+          : '',
+        validIf: element.hasAttribute('valid-if')
+          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
           : ''
       }
     };
@@ -45,6 +49,7 @@ class TangyNumberWidget extends TangyBaseWidget {
         hint-text="${config.hintText}"
         type="number"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         allowed-pattern="${config.allowedPattern}"
         ${config.min ? `min="${config.min}"` : ``}
         ${config.max ? `max="${config.max}"` : ``}
@@ -95,13 +100,14 @@ class TangyNumberWidget extends TangyBaseWidget {
         <tangy-input name="label" label="Label" value="${
           config.label
         }"></tangy-input>
+        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+        <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-input name="hintText" label="Hint Text" value="${
           config.hintText
         }"></tangy-input>
         <tangy-input name="allowed_pattern" label="Allowed pattern" value="${
           config.allowedPattern
         }"></tangy-input>
-        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-input name="min" type="number" label="Minimum" value="${
           config.min
         }"></tangy-input>
@@ -153,6 +159,9 @@ class TangyNumberWidget extends TangyBaseWidget {
       ).value,
       tangyIf: formEl.response.items[0].inputs.find(
         input => input.name === 'tangy_if'
+      ).value,
+      validIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'valid_if'
       ).value
     };
   }

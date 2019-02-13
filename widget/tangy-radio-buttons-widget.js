@@ -19,7 +19,8 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
       required: false,
       disabled: false,
       hidden: false,
-      tangyIf: ''
+      tangyIf: '',
+      validIf: ''
     };
   }
 
@@ -36,6 +37,9 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
       }),
       tangyIf: element.hasAttribute('tangy-if')
         ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+        : '',
+      validIf: element.hasAttribute('valid-if')
+        ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
         : ''
     };
   }
@@ -47,6 +51,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
         label="${config.label}"
         hint-text="${config.hintText}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -102,6 +107,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
             config.hintText
           }"></tangy-input>
           <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+          <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-checkbox name="required" ${
             config.required ? 'value="on"' : ''
           }>Required</tangy-checkbox>
@@ -173,6 +179,8 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
       ...config,
       name: formEl.values.name,
       label: formEl.values.label,
+      tangyIf: formEl.values.tangy_if,
+      validIf: formEl.values.valid_if,
       required: formEl.values.required === 'on' ? true : false,
       hintText: formEl.values.hintText,
       hidden: formEl.values.hidden === 'on' ? true : false,

@@ -17,7 +17,8 @@ class TangyEmailWidget extends TangyBaseWidget {
       required: false,
       disabled: false,
       hidden: false,
-      tangyIf: ''
+      tangyIf: '',
+      validIf: ''
     };
   }
 
@@ -29,6 +30,9 @@ class TangyEmailWidget extends TangyBaseWidget {
       ...{
         tangyIf: element.hasAttribute('tangy-if')
           ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+          : '',
+        validIf: element.hasAttribute('valid-if')
+          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
           : ''
       }
     };
@@ -42,6 +46,7 @@ class TangyEmailWidget extends TangyBaseWidget {
         hint-text="${config.hintText}"
         type="email"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -91,6 +96,7 @@ class TangyEmailWidget extends TangyBaseWidget {
           config.hintText
         }"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+        <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
         }>Required</tangy-checkbox>
@@ -131,6 +137,9 @@ class TangyEmailWidget extends TangyBaseWidget {
           : false,
       tangyIf: formEl.response.items[0].inputs.find(
         input => input.name === 'tangy_if'
+      ).value,
+      validIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'valid_if'
       ).value
     };
   }

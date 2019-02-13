@@ -15,7 +15,8 @@ class TangyGpsWidget extends TangyBaseWidget {
       required: false,
       disabled: false,
       hidden: false,
-      tangyIf: ''
+      tangyIf: '',
+      validIf: ''
     };
   }
 
@@ -25,8 +26,11 @@ class TangyGpsWidget extends TangyBaseWidget {
       ...config,
       ...element.getProps(),
       ...{
-        tangyIf: element.hasAttribute('tangy-if')
-          ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
+        tangyIf: element.hasattribute('tangy-if')
+          ? element.getattribute('tangy-if').replace(/&quot;/g, '"')
+          : '',
+        validIf: element.hasattribute('valid-if')
+          ? element.getattribute('valid-if').replace(/&quot;/g, '"')
           : ''
       }
     };
@@ -38,6 +42,7 @@ class TangyGpsWidget extends TangyBaseWidget {
         name="${config.name}"
         hint-text="${config.hintText}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
+        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -96,6 +101,7 @@ class TangyGpsWidget extends TangyBaseWidget {
           config.hintText
         }"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+        <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
         }>Required</tangy-checkbox>
@@ -133,6 +139,9 @@ class TangyGpsWidget extends TangyBaseWidget {
           : false,
       tangyIf: formEl.response.items[0].inputs.find(
         input => input.name === 'tangy_if'
+      ).value,
+      validIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'valid_if'
       ).value
     };
   }
