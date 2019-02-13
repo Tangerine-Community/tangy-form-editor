@@ -76,7 +76,7 @@ class TangyFormItemEditor extends PolymerElement {
         background: var(--accent-color);
       }
       .element-header {
-        color: #9AB9F0;
+        color: var(--primary-color);
         /*font-size: 2em;*/
         /*opacity: 0.3;*/
         margin-left: .7em;
@@ -85,14 +85,19 @@ class TangyFormItemEditor extends PolymerElement {
         justify-content:start;
         align-items: center;
       }
-      mwc-icon {
-        color:black;
+      #back-to-forms {
+        background: var(--accent-color);
+      }
+      #item-icon {
+        color: var(--primary-color);
         /*opacity:1.0;*/
         /*margin-right:1em;*/
         position: absolute;
         left: -16px;
         top: -16px;
-        background-color: #B9F09A;
+      }
+      #edit-button {
+        background: var(--accent-color);
       }
       #element-name {
         position: absolute;

@@ -91,15 +91,11 @@ class TangyFormCondensedEditor extends PolymerElement {
           position: relative;
         }
         #add-button {
-          --mdc-theme-on-primary: white;
-          --mdc-theme-primary: #e9437a;
-          --mdc-theme-on-secondary: white;
-          --mdc-theme-secondary: #e9437a;
-          opacity: 0.5;
           position: absolute;
           bottom: -27px;
           right: -14px;
           z-index: 1;
+          --mdc-theme-secondary: var(--accent-color);
         }
       </style>
       <div id="add-button-container">
