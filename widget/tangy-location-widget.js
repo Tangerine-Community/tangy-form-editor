@@ -47,7 +47,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
-        ${config.filterByGlobal ? 'required' : ''}
+        ${config.filterByGlobal ? 'filter-by-global' : ''}
         show-levels="${config.showLevels}"
         ${config.showMetaData ? 'show-meta-data' : ''}
       >
@@ -141,7 +141,9 @@ class TangyLocationWidget extends TangyBaseWidget {
       ).value,
       filterByGlobal: formEl.response.items[0].inputs.find(
         input => input.name === 'filterByGlobal'
-      ).value,
+      ).value === 'on'
+          ? true
+          : false,
       showLevels: formEl.response.items[0].inputs.find(
         input => input.name === 'showLevels'
       ).value,
