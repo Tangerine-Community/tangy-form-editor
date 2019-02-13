@@ -98,6 +98,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
           <tangy-input name="label" label="Label" value="${
             config.label
           }"></tangy-input>
+          <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-input name="hintText" label="Hint Text" value="${
             config.hintText
           }"></tangy-input>
@@ -174,6 +175,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       label: formEl.values.label,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
+      tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy_if').value,
       disabled: formEl.values.disabled === 'on' ? true : false,
       hintText: formEl.values.hintText,
       options: formEl.values.options.map(item =>
