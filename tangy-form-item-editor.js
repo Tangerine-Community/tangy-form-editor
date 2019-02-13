@@ -97,6 +97,7 @@ class TangyFormItemEditor extends PolymerElement {
         top: -16px;
       }
       #edit-button {
+        width: 110px;
         background: var(--accent-color);
       }
       #element-name {
@@ -135,12 +136,11 @@ class TangyFormItemEditor extends PolymerElement {
   render() {
     this.$.container.innerHTML = `
       <div id="header">
-        <div><h2 style="text-align: left">Item Editor</h2></div>
-        <div><paper-button raised id="back-to-forms" >Back to Items Listing</paper-button></div>
+        <div><paper-button raised id="back-to-forms" ><iron-icon icon="arrow-back"></iron-icon>Back</paper-button></div>
       </div>
       <paper-card id="details-card">
         <div class="card-content">
-          <div class="element-header"><div><mwc-icon>category</mwc-icon></div><div id="element-name">${this.item.id}</div></div>
+          <div class="element-header"><div><iron-icon id="item-icon" icon="view-agenda"></iron-icon></div><div id="element-name">${this.item.id}</div></div>
           <h3 style="text-align: left">Item Details</h3>
           <div id="details-content-edit">
             <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
@@ -165,7 +165,7 @@ class TangyFormItemEditor extends PolymerElement {
         </div>
 
         <div id="details-content-view-actions" class="card-actions">
-            <paper-button id="edit-button">edit</paper-button>
+            <paper-button id="edit-button"><iron-icon icon="create"></iron-icon>edit</paper-button>
         </div>
 
       </paper-card>

@@ -52,6 +52,10 @@ class TangyFormEditor extends PolymerElement {
       :host(:not([show-preview])) #form-preview {
         display: none;
       }
+      paper-button {
+        background: var(--accent-color);
+        height: 47px;
+      }
       .rightCategories {
         margin-left: 2em;
       }
@@ -211,29 +215,30 @@ class TangyFormEditor extends PolymerElement {
           .removeEventListener('sort-finish', this.onSortFinish.bind(this))
       }
       this.$.container.innerHTML = `
-        <div style="float: right;">
-          <paper-button
-              class="form-html-edit">
-              <iron-icon icon="editor:mode-edit"></iron-icon>
-              Edit HTML
-          </paper-button>
-          <paper-button
-              class="show-preview">
-              <iron-icon icon="av:play-circle-filled"></iron-icon>
-              Preview
-          </paper-button>
-          <paper-button
-              class="hide-preview">
-              <iron-icon icon="av:pause-circle-filled"></iron-icon>
-              Preview
-          </paper-button>
-          <paper-button
-              class="save-form">
-              <iron-icon icon="icons:save"></iron-icon>
-              Save 
-          </paper-button>
+        <div style="width:100%; text-align: right;">
+          <div>
+            <paper-button
+                class="form-html-edit">
+                <iron-icon icon="editor:mode-edit"></iron-icon>
+                Edit HTML
+            </paper-button>
+            <paper-button
+                class="show-preview">
+                <iron-icon icon="av:play-circle-filled"></iron-icon>
+                Preview
+            </paper-button>
+            <paper-button
+                class="hide-preview">
+                <iron-icon icon="av:pause-circle-filled"></iron-icon>
+                Preview
+            </paper-button>
+            <paper-button
+                class="save-form">
+                <iron-icon icon="icons:save"></iron-icon>
+                Save 
+            </paper-button>
+          </div>
         </div>
-        <h2>Form Editor</h2>
         <paper-input label="Form Title" id="form-title" value="${state.form.title}"></paper-input>
         <paper-expansion-panel header="advanced settings">
           <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${state.form.fullscreen ? 'checked' : ''}>Enable fullscreen mode</paper-checkbox>
