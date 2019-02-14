@@ -93,7 +93,7 @@ class TangyFormCondensedEditor extends PolymerElement {
         #add-button {
           position: absolute;
           bottom: -27px;
-          right: -14px;
+          right: -4px;
           z-index: 1;
           --mdc-theme-secondary: var(--accent-color);
         }
