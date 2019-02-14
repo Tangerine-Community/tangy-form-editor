@@ -1,11 +1,13 @@
 # CHANGELOG
 
+## v5.4.1
+- Enforce consistent usage of styles by utilizing CSS variables.
+
 ## v5.4.0
 - New 'Valid if' on all widgets.
 - Set rows and mark all rows on tangy-timed.
 - Fix some widgets having issues with tangy-if.
 - Fix tangy location widget's filter by global setting.
-
 
 ## v5.3.1
 - Convert both text nodes and unclaimed elements by widgets to tangy-box widgets.
