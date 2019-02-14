@@ -112,7 +112,7 @@ class TangyBaseWidget extends PolymerElement {
           vertical-align: middle;
         }
         :host([mode='MODE_EDIT']) paper-card {
-            background-color: var(--accent-color);
+            background-color: lightgrey;
         }
         .card-content {
             text-align:left;
