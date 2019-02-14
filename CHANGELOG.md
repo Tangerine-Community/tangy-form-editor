@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.4.2
+- Enforce consistent usage of styles by utilizing CSS variables.
+
 ## v5.4.1
 - Enforce consistent usage of styles by utilizing CSS variables.
 
