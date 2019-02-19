@@ -31,7 +31,6 @@
     </test-fixture>
 
     <script type="module">
-      import 'tangy-form/tangy-form.js'
       import 'tangy-form/input/tangy-box.js'
       import '../tangy-widgets.js'
       import '../widget/tangy-box-widget.js'
@@ -49,18 +48,6 @@
           assert.equal(element._config.hidden, true)
           // assert.equal(element._config.tangyIf, `console.log('test')`)
           assert.equal(element._config.htmlCode, `<p>Thank you for taking our survey. You may close the book.</p>`)
-        })
-        test('should resume and save with edits', () => {
-          const element = fixture('ResumeFixture')
-          element.shadowRoot.querySelector('#edit-button').click()
-          element
-            .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=required]').value = ''
-          element
-            .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=htmlCode]').setAttribute('value','Something new')
-          element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
-          assert.equal(element._config.htmlCode, 'Something new')
         })
       })
 

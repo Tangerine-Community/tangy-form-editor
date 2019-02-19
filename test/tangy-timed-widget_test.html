@@ -34,7 +34,6 @@
           assert.equal(element._config.hasOwnProperty('required'), true)
           assert.equal(element._config.hasOwnProperty('disabled'), true)
           assert.equal(element._config.hasOwnProperty('hidden'), true)
-          assert.equal(element._config.hasOwnProperty('label'), true)
         })
         test('should resume', () => {
           const element = fixture('ResumeFixture')
@@ -43,7 +42,7 @@
           assert.equal(element._config.hidden, false)
           assert.equal(element._config.disabled, false)
           assert.equal(element._config.options.length, 32)
-          assert.equal(element._config.options[0].name, 'class1_term2-1')
+          assert.equal(element._config.options[0].value, 'class1_term2-1')
         })
         test('should resume and save with edits', () => {
           const element = fixture('ResumeFixture')
