@@ -111,10 +111,10 @@ class TangyTimedWidget extends TangyBaseWidget {
     <tangy-form id="tangy-timed">
       <tangy-form-item id="tangy-timed">
         <template type="tangy-form-item">
-          <tangy-input name="name" label="Variable name" value="${
+          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${
             config.name
           }" required></tangy-input>
-          <tangy-input name="columns" type="number" label="Hint Text" value="${
+          <tangy-input name="columns" type="number" label="Number of columns" value="${
             config.columns
           }"></tangy-input>
           <tangy-input name="hintText" label="Hint Text" value="${

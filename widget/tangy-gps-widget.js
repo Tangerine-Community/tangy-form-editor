@@ -94,7 +94,7 @@ class TangyGpsWidget extends TangyBaseWidget {
     return `<h2>Add GPS Element</h2>
     <tangy-form id="tangy-gps">
       <tangy-form-item>
-        <tangy-input name="name" label="Variable name" value="${
+        <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${
           config.name
         }" required></tangy-input>
         <tangy-input name="hintText" label="Hint Text" value="${

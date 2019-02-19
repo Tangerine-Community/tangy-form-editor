@@ -88,7 +88,7 @@ class TangyDateWidget extends TangyBaseWidget {
     return `<h2>Add a Date Input</h2>
     <tangy-form id="tangy-date-widget">
       <tangy-form-item>
-        <tangy-input name="name" label="Variable name" value="${
+        <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${
           config.name
         }" required></tangy-input>
         <tangy-input name="label" label="Label" value="${

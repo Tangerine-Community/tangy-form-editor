@@ -57,7 +57,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
     return `<h2>Add Checkbox</h2>
     <tangy-form id="tangy-checkbox">
       <tangy-form-item>
-        <tangy-input name="name" label="Variable name" value="${config.name}" required></tangy-input>
+        <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${config.name}" required></tangy-input>
         <tangy-input name="label" label="Label" value="${config.label}"></tangy-input>
         <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
         <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>

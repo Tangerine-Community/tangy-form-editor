@@ -97,7 +97,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
     <tangy-form id="tangy-checkboxes">
       <tangy-form-item id="tangy-checkboxes">
         <template type="tangy-form-item">
-          <tangy-input name="name" label="Variable name" value="${
+          <tangy-input valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" name="name" label="Variable name" value="${
             config.name
           }" required></tangy-input>
           <tangy-input name="label" label="Label" value="${
