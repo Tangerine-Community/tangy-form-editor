@@ -26,10 +26,10 @@ class TangyGpsWidget extends TangyBaseWidget {
       ...config,
       ...element.getProps(),
       ...{
-        tangyIf: element.hasattribute('tangy-if')
+        tangyIf: element.hasAttribute('tangy-if')
           ? element.getattribute('tangy-if').replace(/&quot;/g, '"')
           : '',
-        validIf: element.hasattribute('valid-if')
+        validIf: element.hasAttribute('valid-if')
           ? element.getattribute('valid-if').replace(/&quot;/g, '"')
           : ''
       }
