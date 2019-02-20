@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v5.5.1
+- Fix issue where if you remove an input from an item and then click back, the item is not saved.
+- Bump tangy-form to v3.7.1 to fix long tangy lists that are cut off. 
+
 ## v5.5.0
 - Add hint text to all Widget edit screens.
 - Sanitize input of variable names to ensure they don't break forms.
