@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v5.5.0
+- Add hint text to all Widget edit screens.
+- Sanitize input of variable names to ensure they don't break forms.
+
 ## v5.4.2
 - Enforce consistent usage of styles by utilizing CSS variables.
 
