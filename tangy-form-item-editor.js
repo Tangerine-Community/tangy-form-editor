@@ -239,6 +239,7 @@ class TangyFormItemEditor extends PolymerElement {
   }
 
   onBackToForms(event) {
+    this.save()
     this.dispatchEvent(new CustomEvent('cancel'))
   }
 
