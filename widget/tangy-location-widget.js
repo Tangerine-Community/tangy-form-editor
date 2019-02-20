@@ -87,20 +87,37 @@ class TangyLocationWidget extends TangyBaseWidget {
     return `<h2>Add Location Element</h2>
     <tangy-form id="tangy-location">
       <tangy-form-item>
-        <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${
-          config.name
-        }" required></tangy-input>
-        <tangy-input name="hintText" label="Hint Text" value="${
+        <tangy-input
+          name="name"
+          valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
+          inner-label="Variable name" 
+          hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+          value="${
+            config.name
+          }"
+          required>
+        </tangy-input>
+        <tangy-input name="hintText" inner-label="Hint Text" value="${
           config.hintText
         }"></tangy-input>
         <tangy-checkbox name="filterByGlobal" ${
           config.filterByGlobal ? 'value="on"' : ''
         }>Filter by locations in the user profile?</tangy-checkbox>
-        <tangy-input name="showLevels" label="Show levels (ex. county,subcounty)" value="${
+        <tangy-input name="showLevels" inner-label="Show levels" hint-text="e.g. county,subcounty" value="${
           config.showLevels
         }"></tangy-input>
-        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
-        <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
+        <tangy-input 
+          name="tangy_if"
+          inner-label="Show if"
+          hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
+          value="${config.tangyIf.replace(/"/g, '&quot;')}">
+        </tangy-input>
+        <tangy-input
+          name="valid_if"
+          inner-label="Valid if"
+          hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
+          value="${config.validIf.replace(/"/g, '&quot;')}">
+        </tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
         }>Required</tangy-checkbox>

@@ -94,26 +94,69 @@ class TangyNumberWidget extends TangyBaseWidget {
     return `<h2>Add Number Input</h2>
     <tangy-form id="tangy-number-widget">
       <tangy-form-item>
-        <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${
-          config.name
-        }" required></tangy-input>
-        <tangy-input name="label" label="Label" value="${
-          config.label
-        }"></tangy-input>
-        <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
-        <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
-        <tangy-input name="hintText" label="Hint Text" value="${
-          config.hintText
-        }"></tangy-input>
-        <tangy-input name="allowed_pattern" label="Allowed pattern" value="${
-          config.allowedPattern
-        }"></tangy-input>
-        <tangy-input name="min" type="number" label="Minimum" value="${
-          config.min
-        }"></tangy-input>
-        <tangy-input name="max" type="number" label="Maximum" value="${
-          config.max
-        }"></tangy-input>
+        <tangy-input
+          name="name" 
+          valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
+          inner-label="Variable name"
+          hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
+          value="${
+            config.name
+          }"
+          required>
+        </tangy-input>
+        <tangy-input 
+          name="label"
+          inner-label="Label"
+          hint-text="Enter the Question or Statement Text"
+          value="${
+            config.label
+          }">
+        </tangy-input>
+        <tangy-input
+          name="tangy_if"
+          label="Show if"
+          hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
+          value="${config.tangyIf.replace(/"/g, '&quot;')}">
+        </tangy-input>
+        <tangy-input
+          name="valid_if"
+          label="Valid if"
+          hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
+          value="${config.validIf.replace(/"/g, '&quot;')}">
+        </tangy-input>
+        <tangy-input
+          name="hintText"
+          inner-label="Hint Text"
+          value="${
+            config.hintText
+          }">
+        </tangy-input>
+        <tangy-input
+          name="allowed_pattern"
+          inner-label="Allowed pattern"
+          hint-text="Optional Javascript RegExp pattern to validate text (e.g. minimum length of 5 characters would be [a-zA-Z]{5,})
+          value="${
+            config.allowedPattern
+          }">
+        </tangy-input>
+        <tangy-input
+          name="min"
+          type="number"
+          inner-label="Minimum"
+          hint-text="Optional minimum number allowed."
+          value="${
+            config.min
+          }">
+        </tangy-input>
+        <tangy-input
+          name="max"
+          type="number"
+          inner-label="Maximum"
+          hint-text="Optional maximum number allowed."
+          value="${
+            config.max
+          }">
+        </tangy-input>
         <tangy-checkbox name="required" ${
           config.required ? 'value="on"' : ''
         }>Required</tangy-checkbox>

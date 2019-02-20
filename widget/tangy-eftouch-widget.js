@@ -86,36 +86,57 @@ class TangyEftouchWidget extends TangyBaseWidget {
     <tangy-form id="tangy-eftouch">
       <tangy-form-item id="tangy-eftouch">
         <template type="tangy-form-item">
-          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${
+          <tangy-input
+            name="name"
+            valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
+            inner-label="Variable name"
+            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+            value="${
             config.name
-          }" required></tangy-input>
-          <tangy-input name="label" label="Label" value="${
-            config.label
-          }"></tangy-input>
-          <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
-          <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
-          <tangy-input name="hintText" label="Hint Text" value="${
+            }"
+            required>
+          </tangy-input>
+          <tangy-input
+            name="label"
+            inner-label="Label"
+            value="${
+              config.label
+            }">
+          </tangy-input>
+          <tangy-input
+            name="tangy_if"
+            inner-label="Show if"
+            hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
+            value="${config.tangyIf.replace(/"/g, '&quot;')}">
+          </tangy-input>
+          <tangy-input
+            name="valid_if"
+            inner-label="Valid if"
+            hint-text="Enter any conditional validation logic."
+            value="${config.validIf.replace(/"/g, '&quot;')}">
+          </tangy-input>
+          <tangy-input name="hintText" inner-label="Hint Text" value="${
             config.hintText
           }"></tangy-input>
-          <tangy-input name="input-sound" label="Input sound" value="${
+          <tangy-input name="input-sound" inner-label="Input sound" value="${
             config.inputSound
           }"></tangy-input>
-          <tangy-input name="transition-sound" label="Transition sound" value="${
+          <tangy-input name="transition-sound" inner-label="Transition sound" value="${
             config.transitionSound
           }"></tangy-input>
-          <tangy-input name="transition-delay" label="Transition delay" value="${
+          <tangy-input name="transition-delay" inner-label="Transition delay" value="${
             config.transitionDelay
           }" type="number"></tangy-input>
-          <tangy-input name="transition-message" label="Transition message" value="${
+          <tangy-input name="transition-message" inner-label="Transition message" value="${
             config.transitionMessage
           }"></tangy-input>
-          <tangy-input name="warning-time" label="Warning time" value="${
+          <tangy-input name="warning-time" inner-label="Warning time" value="${
             config.warningTime
           }"></tangy-input>
-          <tangy-input name="warning-message" label="Warning message" value="${
+          <tangy-input name="warning-message" inner-label="Warning message" value="${
             config.warningMessage
           }"></tangy-input>
-          <tangy-input name="time-limit" label="Time limit" value="${
+          <tangy-input name="time-limit" inner-label="Time limit" value="${
             config.timeLimit
           }"></tangy-input>
           <tangy-checkbox name="auto-progress" ${

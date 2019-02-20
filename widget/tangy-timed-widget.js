@@ -111,20 +111,22 @@ class TangyTimedWidget extends TangyBaseWidget {
     <tangy-form id="tangy-timed">
       <tangy-form-item id="tangy-timed">
         <template type="tangy-form-item">
-          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${
-            config.name
-          }" required></tangy-input>
-          <tangy-input name="columns" type="number" label="Number of columns" value="${
+          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" 
+            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+            inner-label="Variable name" value="${
+              config.name
+            }" required></tangy-input>
+          <tangy-input name="columns" type="number" inner-label="Number of columns" value="${
             config.columns
           }"></tangy-input>
-          <tangy-input name="hintText" label="Hint Text" value="${
+          <tangy-input name="hintText" inner-label="Hint Text" value="${
             config.hintText
           }"></tangy-input>
-          <tangy-input name="autoStop" label="Auto Stop" value="${
+          <tangy-input name="autoStop" inner-label="Auto Stop" value="${
             config.autoStop ? config.autoStop : ''
           }"></tangy-input>
-          <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
-          <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
+          <tangy-input name="tangy_if" inner-label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
+          <tangy-input name="valid_if" inner-label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-checkbox name="rowMarkers" ${
             config.rowMarkers ? 'value="on"' : ''
           }>Mark entire rows</tangy-checkbox>
@@ -137,10 +139,12 @@ class TangyTimedWidget extends TangyBaseWidget {
           <tangy-checkbox name="hidden" ${
             config.hidden ? 'value="on"' : ''
           }>Hidden</tangy-checkbox>
-          <tangy-input name="duration" label="Duration in seconds" value="${
+          <tangy-input name="duration" hint-text="Enter the time limit for this grid." inner-label="Duration in seconds" value="${
             config.duration
           }"></tangy-input>
-          <tangy-input name="options"  label="Options (Each option separated by a space)" value="${config.options
+          <tangy-input name="options"
+            hint-text="Enter the options to be displayed for the grid separated by spaces."
+            inner-label="Options (Each option separated by a space)" value="${config.options
             .map(option => `${option.label}`)
             .join(' ')}"></tangy-input>
         </template>

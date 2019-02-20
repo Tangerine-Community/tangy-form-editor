@@ -100,17 +100,39 @@ class TangySelectWidget extends TangyBaseWidget {
     <tangy-form id="tangy-select">
       <tangy-form-item id="tangy-select">
         <template type="tangy-form-item">
-          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" label="Variable name" value="${
-            config.name
-          }" required></tangy-input>
-          <tangy-input name="label" label="Label" value="${
-            config.label
-          }"></tangy-input>
-          <tangy-input name="hintText" label="Hint Text" value="${
+          <tangy-input
+            name="name"
+            valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
+            inner-label="Variable name"
+            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+            value="${
+              config.name
+            }"
+            required>
+          </tangy-input>
+          <tangy-input
+            name="label"
+            inner-label="Label"
+            hint-text="Enter the Question or Statement Text"
+            value="${
+              config.label
+            }">
+          </tangy-input>
+          <tangy-input name="hintText" inner-label="Hint Text" value="${
             config.hintText
           }"></tangy-input>
-          <tangy-input name="tangy_if" label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
-          <tangy-input name="valid_if" label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
+          <tangy-input
+            name="tangy_if"
+            inner-label="Show if"
+            hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
+            value="${config.tangyIf.replace(/"/g, '&quot;')}">
+          </tangy-input>
+          <tangy-input
+            name="valid_if"
+            label="Valid if"
+            hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
+            value="${config.validIf.replace(/"/g, '&quot;')}">
+          </tangy-input>
           <tangy-checkbox name="required" ${
             config.required ? 'value="on"' : ''
           }>Required</tangy-checkbox>
@@ -122,8 +144,8 @@ class TangySelectWidget extends TangyBaseWidget {
           }>Hidden</tangy-checkbox>
           <tangy-list name="options">
             <template type="tangy-list/new-item">
-              <tangy-input name="value" label="Value" type="text"></tangy-input>
-              <tangy-input name="label" label="Label" type="text"></tangy-input>
+              <tangy-input name="value" hint-text="Enter the variable name of this drop-down option." allowed-pattern="[a-zA-Z0-9\-_]" inner-label="Value" type="text"></tangy-input>
+              <tangy-input name="label" hint-text="Enter the label for this drop-down option." label="Label" type="text"></tangy-input>
             </template>
             ${
               config.options.length > 0
@@ -133,10 +155,10 @@ class TangySelectWidget extends TangyBaseWidget {
                 .map(
                   option => `
                 <tangy-list-item>
-                  <tangy-input name="value" label="Value" type="text" value="${
+                  <tangy-input hint-text="Enter the variable name of this drop-down option." name="value" allowed-pattern="[a-zA-Z0-9\-_]" label="Value" type="text" value="${
                     option.value
                   }"></tangy-input>
-                  <tangy-input name="label" label="Label" type="text" value="${
+                  <tangy-input hint-text="Enter the label for this drop-down option." name="label" label="Label" type="text" value="${
                     option.label
                   }"></tangy-input>
                 </tangy-list-item>
