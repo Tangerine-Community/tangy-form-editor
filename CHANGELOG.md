@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.6.0
+- Increase tangy-form version to v3.8.0
+
 ## v5.5.1
 - Fix issue where if you remove an input from an item and then click back, the item is not saved.
 - Bump tangy-form to v3.7.1 to fix long tangy lists that are cut off. 
