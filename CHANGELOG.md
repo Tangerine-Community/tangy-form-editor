@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.7.0
+- Add ability to work with `<tangy-qr>` elements for scanning QR Codes. 
+
 ## v5.6.0
 - Increase tangy-form version to v3.8.0
 
