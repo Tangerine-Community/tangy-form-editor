@@ -22,6 +22,7 @@ import 'tangy-form/input/tangy-gps.js'
 import 'tangy-form/input/tangy-acasi.js';
 import 'tangy-form/input/tangy-eftouch.js';
 import 'tangy-form/input/tangy-photo-capture.js';
+import 'tangy-form/input/tangy-qr.js';
 
 
 

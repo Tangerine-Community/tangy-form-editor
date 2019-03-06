@@ -16,6 +16,7 @@ import './widget/tangy-date-widget.js'
 import './widget/tangy-time-widget.js'
 import './widget/tangy-box-widget.js'
 import './widget/tangy-email-widget.js'
+import './widget/tangy-qr-widget.js'
 
 /**
  * `tangy-form-item-editor`
