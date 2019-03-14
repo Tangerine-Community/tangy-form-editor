@@ -15,6 +15,7 @@ import './widget/tangy-location-widget.js'
 import './widget/tangy-date-widget.js'
 import './widget/tangy-time-widget.js'
 import './widget/tangy-box-widget.js'
+import './widget/tangy-template-widget.js'
 import './widget/tangy-email-widget.js'
 import './widget/tangy-qr-widget.js'
 
