@@ -55,6 +55,7 @@ class TangyFormCondensedEditor extends PolymerElement {
   connectedCallback() {
     super.connectedCallback()
     this.shadowRoot.addEventListener('add-input', (event) => this.addInput(event.target))
+    this.shadowRoot.addEventListener('copy-input', (event) => this.copyInput(event.target))
     this.shadowRoot.addEventListener('edit-input', (event) => this.editInput())
     this.shadowRoot.addEventListener('submit-input', (event) => this.submitInput())
     this.wrap(this.querySelector('template').innerHTML)
@@ -140,6 +141,16 @@ class TangyFormCondensedEditor extends PolymerElement {
     this.shadowRoot.querySelector('sortable-list').disabled=true
   }
 
+  copyInput(el) {
+    let clone = el.cloneNode()
+    clone.innerHTML = el.innerHTML
+    clone.children[0].setAttribute('name', 'widget_'+ UUID())
+    el.after(clone)
+    clone._onEditClick()
+    setTimeout(_ => clone.scrollIntoView({ behavior: 'smooth', block: 'start', inline: "nearest" }), 50)
+    this.shadowRoot.querySelector('sortable-list').disabled=true
+  }
+
   submitInput() {
     this.dispatchEvent(new CustomEvent('tangy-form-condensed-editor-changed', {bubbles: true}))
     this.shadowRoot.querySelector('sortable-list').disabled=false
@@ -154,6 +165,33 @@ class TangyFormCondensedEditor extends PolymerElement {
 function wrap(el, wrapper) {
   el.parentNode.insertBefore(wrapper, el);
   wrapper.appendChild(el);
+}
+
+// TODO: Create a utilities class for this function? It is a duplicate from tangy-form-editor-reducer
+function UUID(separator) {
+  if (typeof separator === 'undefined') {
+    separator = '';
+  }
+  var self = {};
+  var lut = [];
+  for (var i = 0; i < 256; i++) {
+    lut[i] = (i < 16 ? '0' : '') + (i).toString(16);
+  }
+  /**
+   * Generates a UUID
+   * @returns {string}
+   */
+  self.generate = function (separator) {
+    var d0 = Math.random() * 0xffffffff | 0;
+    var d1 = Math.random() * 0xffffffff | 0;
+    var d2 = Math.random() * 0xffffffff | 0;
+    var d3 = Math.random() * 0xffffffff | 0;
+    return lut[d0 & 0xff] + lut[d0 >> 8 & 0xff] + lut[d0 >> 16 & 0xff] + lut[d0 >> 24 & 0xff] + separator +
+      lut[d1 & 0xff] + lut[d1 >> 8 & 0xff] + separator + lut[d1 >> 16 & 0x0f | 0x40] + lut[d1 >> 24 & 0xff] + separator +
+      lut[d2 & 0x3f | 0x80] + lut[d2 >> 8 & 0xff] + separator + lut[d2 >> 16 & 0xff] + lut[d2 >> 24 & 0xff] +
+      lut[d3 & 0xff] + lut[d3 >> 8 & 0xff] + lut[d3 >> 16 & 0xff] + lut[d3 >> 24 & 0xff];
+  };
+  return self.generate(separator);
 }
 
 window.customElements.define('tangy-form-condensed-editor', TangyFormCondensedEditor);
