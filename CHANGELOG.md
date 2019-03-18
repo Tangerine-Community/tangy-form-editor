@@ -1,6 +1,7 @@
 # CHANGELOG
 
-
+## v5.9.0
+- Add widget Copy feature.
 
 ## v5.8.0
 - Add support for editing `<tangy-form-widget>`.
