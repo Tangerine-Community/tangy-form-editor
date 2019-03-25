@@ -122,8 +122,9 @@ class TangyBaseWidget extends PolymerElement {
         .card-actions {
             border-top: none;
         }
-        #remove-button, #edit-button {
-          margin: 0 0 15px 0;
+
+        .card-actions > paper-button  {
+            margin: 0 0 15px 0;
           width: 110px;
         }
         mwc-fab {
@@ -162,9 +163,11 @@ class TangyBaseWidget extends PolymerElement {
       <paper-card id="info-edit-card">
         <div class="card-content" id="container"></div>
         <div class="card-actions">
-          <paper-button id="edit-button" on-click="_onEditClick"><iron-icon icon="create"></iron-icon> edit</paper-button>
+          <paper-button id="edit-button" class="action-buttons" on-click="_onEditClick"><iron-icon icon="create"></iron-icon> edit</paper-button>
           <br/>
-          <paper-button id="remove-button" on-click="_onRemoveClick"><iron-icon icon="delete"></iron-icon> remove</paper-button>
+          <paper-button id="remove-button" class="action-buttons" on-click="_onRemoveClick"><iron-icon icon="delete"></iron-icon> remove</paper-button>
+          <br/>
+          <paper-button id="copy-button" class="action-buttons" on-click="_onCopyClick"><iron-icon icon="content-copy"></iron-icon> copy</paper-button>
           <mwc-fab icon="add" id="add-button" on-click="_onAddClick">add</mwc-fab>
         </div>  
       </paper-card>
@@ -288,6 +291,10 @@ class TangyBaseWidget extends PolymerElement {
   _onAddClick() {
     let addInputEl = this.parentElement.querySelector("tangy-form-editor-add-input");
     !addInputEl? this.dispatchEvent(new CustomEvent('add-input', {bubbles: true})):this.parentElement.removeChild(addInputEl)
+  }
+
+  _onCopyClick() {
+    this.dispatchEvent(new CustomEvent('copy-input', {bubbles: true}))
   }
 
 }

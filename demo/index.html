@@ -35,7 +35,6 @@
                 category="three"
               >
 
-
                 <tangy-form-item id="text_and_number" title="Text and Number inputs">
                   <template>
                     <tangy-input type="text" name="is_text" label="This is text"></tangy-input>
@@ -200,6 +199,13 @@
                     <tangy-timed required columns="4" duration=80 name="class1_term2"><option value="class1_term2-1">Jumatatu,</option><option value="class1_term2-2">wezi</option><option value="class1_term2-3">walikuja</option><option value="class1_term2-4">kijijini.</option><option value="class1_term2-5">Watu</option><option value="class1_term2-6">wakapiga</option><option value="class1_term2-7">mayowe.</option><option value="class1_term2-8">“Tunataka</option><option value="class1_term2-9">dhahabu!”</option><option value="class1_term2-10">wezi</option><option value="class1_term2-11">wakasema.</option><option value="class1_term2-12">Watu</option><option value="class1_term2-13">walipatwa</option><option value="class1_term2-14">na</option><option value="class1_term2-15">wasiwasi.</option><option value="class1_term2-16">Watu</option><option value="class1_term2-17">wakasema,</option><option value="class1_term2-18">“Hatuna</option><option value="class1_term2-19">chochote</option><option value="class1_term2-20">cha</option><option value="class1_term2-21">thamani.”</option><option value="class1_term2-22">Polisi</option><option value="class1_term2-23">walifika</option><option value="class1_term2-24">hapo.</option><option value="class1_term2-25">Waliwashika</option><option value="class1_term2-26">wezi</option><option value="class1_term2-27">na</option><option value="class1_term2-28">kuwatia</option><option value="class1_term2-29">pingu.</option><option value="class1_term2-30">Wezi</option><option value="class1_term2-31">walipelekwa</option><option value="class1_term2-32">gerezani.</option></tangy-timed>
                   </template>
                 </tangy-form-item>
+                <tangy-form-item id="untimed-grid-item" title="Untimed Grid" right-to-left>
+                  <template>
+                    <tangy-untimed-grid required columns="3" name="class1_term2">
+                      <option value="class1_term2-d">1</option><option value="class1_term2-1">Jumatatu,</option><option value="class1_term2-2">wezi</option><option value="class1_term2-3">walikuja</option><option value="class1_term2-4">kijijini.</option><option value="class1_term2-5">Watu</option><option value="class1_term2-6">wakapiga</option><option value="class1_term2-7">mayowe.</option><option value="class1_term2-8">“Tunataka</option><option value="class1_term2-9">dhahabu!”</option><option value="class1_term2-10">wezi</option><option value="class1_term2-11">wakasema.</option><option value="class1_term2-12">Watu</option><option value="class1_term2-13">walipatwa</option><option value="class1_term2-14">na</option><option value="class1_term2-15">wasiwasi.</option><option value="class1_term2-16">Watu</option><option value="class1_term2-17">wakasema,</option><option value="class1_term2-18">“Hatuna</option><option value="class1_term2-19">chochote</option><option value="class1_term2-20">cha</option><option value="class1_term2-21">thamani.”</option><option value="class1_term2-22">Polisi</option><option value="class1_term2-23">walifika</option><option value="class1_term2-24">hapo.</option><option value="class1_term2-25">Waliwashika</option><option value="class1_term2-26">wezi</option><option value="class1_term2-27">na</option><option value="class1_term2-28">kuwatia</option><option value="class1_term2-29">pingu.</option><option value="class1_term2-30">Wezi</option><option value="class1_term2-31">walipelekwa</option><option value="class1_term2-32">gerezani.</option>
+                    </tangy-untimed-grid>
+                  </template>
+                </tangy-form-item>
                 <tangy-form-item id="radio_buttons_item" title="Radiobuttons"
                   on-change="
                     // Disable/enable radio_buttons_3 given radio_buttons_3_enable's value.
@@ -343,6 +349,7 @@
                     </tangy-input>
                   </template>
                 </tangy-form-item>
+
                 <tangy-form-item id="example-1" title="Example Form part 1 (mixed widgets)">
                   <template>
                     <tangy-input name="first_name" label="What is your first name?"></tangy-input>
@@ -382,6 +389,17 @@
                       <option value="coconut">Coconut</option>
                       <option value="strawberry">Strawberry</option>
                     </tangy-timed>
+                  </template>
+                </tangy-form-item>
+
+                <tangy-form-item id="html_template" title="HTML Template">
+                  <template>
+                    <tangy-template name="template1">
+                      <h1>Name: ${getValue('first_name')} ${getValue('last_name')}</h1>
+                    </tangy-template>
+                    <tangy-box name="box1">Type your name and you will see it printed above.</tangy-box>
+                    <tangy-input type="text" name="first_name" label="First name"></tangy-input>
+                    <tangy-input type="text" name="last_name" label="Last name"></tangy-input>
                   </template>
                 </tangy-form-item>
 

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v5.9.0
+- Add widget Copy feature.
+
+## v5.8.0
+- Add support for editing `<tangy-form-widget>`.
+
 ## v5.7.0
 - Add ability to work with `<tangy-qr>` elements for scanning QR Codes. 
 

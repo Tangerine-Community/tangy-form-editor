@@ -3,10 +3,10 @@ import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/input/tangy-select.js'
 import { TangyBaseWidget } from '../tangy-base-widget.js'
 
-class TangyBoxWidget extends TangyBaseWidget {
+class TangyTemplateWidget extends TangyBaseWidget {
 
   get claimElement() {
-    return 'tangy-box'
+    return 'tangy-template'
   }
 
   get defaultConfig() {
@@ -22,7 +22,7 @@ class TangyBoxWidget extends TangyBaseWidget {
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyBox.props thus won't get picked up by TangyBox.getProps().
+    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyTemplate.props thus won't get picked up by TangyTemplate.getProps().
     return {...config,
       ...element.getProps(),
       htmlCode: element.innerHTML,
@@ -37,24 +37,24 @@ class TangyBoxWidget extends TangyBaseWidget {
 
   downcast(config) {
     return `
-      <tangy-box 
+      <tangy-template 
         name="${config.name}"
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
-      >${config.htmlCode}</tangy-box>
+      >${config.htmlCode}</tangy-template>
     `
   }
   
   renderInfo(config) {
-    return `<div class="element-header"><mwc-icon>code</mwc-icon><div id="element-name">${config.name}</div></div>
+    return `<div class="element-header"><mwc-icon>attach_money</mwc-icon><div id="element-name">${config.name}</div></div>
     ${this.downcast(config)}`
   }
 
   renderEdit(config) {
-    return `<h2>Add HTML content</h2>
+    return `<h2>Add Template content</h2>
     <tangy-form id="tangy-input">
       <tangy-form-item>
         <tangy-input 
@@ -102,5 +102,5 @@ class TangyBoxWidget extends TangyBaseWidget {
 
 }
 
-window.customElements.define('tangy-box-widget', TangyBoxWidget);
-window.tangyFormEditorWidgets.define('tangy-box-widget', 'tangy-box', TangyBoxWidget);
+window.customElements.define('tangy-template-widget', TangyTemplateWidget);
+window.tangyFormEditorWidgets.define('tangy-template-widget', 'tangy-template', TangyTemplateWidget);
