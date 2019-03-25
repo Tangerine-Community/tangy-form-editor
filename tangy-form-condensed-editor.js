@@ -18,6 +18,8 @@ import './widget/tangy-box-widget.js'
 import './widget/tangy-template-widget.js'
 import './widget/tangy-email-widget.js'
 import './widget/tangy-qr-widget.js'
+import './widget/tangy-consent-widget.js'
+import './widget/tangy-untimed-grid-widget.js'
 
 /**
  * `tangy-form-item-editor`

@@ -350,6 +350,46 @@
                   </template>
                 </tangy-form-item>
 
+                <tangy-form-item id="html_template" title="HTML Template">
+                  <template>
+                    <tangy-template name="template1">
+                      <h1>Name: ${getValue('first_name')} ${getValue('last_name')}</h1>
+                    </tangy-template>
+                    <tangy-box name="box1">Type your name and you will see it printed above.</tangy-box>
+                    <tangy-input type="text" name="first_name" label="First name"></tangy-input>
+                    <tangy-input type="text" name="last_name" label="Last name"></tangy-input>
+                  </template>
+                </tangy-form-item>
+
+                <tangy-form-item id="eftouch" title="EF Touch">
+                  <template>
+                    <tangy-eftouch name="touch_the_bird" label="Touch the bird.">
+                      <option width=30 height=50 src="assets/images/bird.png" value="bird"></option>
+                      <option width=30 height=50 src="assets/images/cat.png" value="cat"></option>
+                      <option width=30 height=50 src="assets/images/cow.png" value="cow"></option>
+                      <option width=30 height=50 src="assets/images/dog.png" value="dog"></option>
+                      <option width=30 height=50 src="assets/images/fish.png" value="fish"></option>
+                      <option width=30 height=50 src="assets/images/pig.png" value="pig"></option>
+                    </tangy-eftouch>
+                  </template>
+                </tangy-form-item>
+
+                <tangy-form-item id="summary" summary title="HTML Code Container">
+                  <template>
+                    <tangy-box name="Summary">
+                      <p>Thank you for taking our survey.</p>
+                    </tangy-box>
+                  </template>
+                </tangy-form-item>
+
+                <tangy-form-item id="consent-item" title="Consent">
+                  <template>
+                    <tangy-consent name="consent"
+                                   prompt="The Institute of Curriculum Development is carrying out a Monitoring Survey on the status of the implementation of the competency-based curriculum. This interview is aimed at obtaining information that will guide in the improvement of the curriculum. As a teacher, you are well placed to give informed opinions and offer important suggestions that will help to improve the ongoing implementation.">
+                    </tangy-consent>
+                  </template>
+                </tangy-form-item>
+
                 <tangy-form-item id="example-1" title="Example Form part 1 (mixed widgets)">
                   <template>
                     <tangy-input name="first_name" label="What is your first name?"></tangy-input>
@@ -392,37 +432,6 @@
                   </template>
                 </tangy-form-item>
 
-                <tangy-form-item id="html_template" title="HTML Template">
-                  <template>
-                    <tangy-template name="template1">
-                      <h1>Name: ${getValue('first_name')} ${getValue('last_name')}</h1>
-                    </tangy-template>
-                    <tangy-box name="box1">Type your name and you will see it printed above.</tangy-box>
-                    <tangy-input type="text" name="first_name" label="First name"></tangy-input>
-                    <tangy-input type="text" name="last_name" label="Last name"></tangy-input>
-                  </template>
-                </tangy-form-item>
-
-                <tangy-form-item id="eftouch" title="EF Touch">
-                  <template>
-                    <tangy-eftouch name="touch_the_bird" label="Touch the bird.">
-                      <option width=30 height=50 src="assets/images/bird.png" value="bird"></option>
-                      <option width=30 height=50 src="assets/images/cat.png" value="cat"></option>
-                      <option width=30 height=50 src="assets/images/cow.png" value="cow"></option>
-                      <option width=30 height=50 src="assets/images/dog.png" value="dog"></option>
-                      <option width=30 height=50 src="assets/images/fish.png" value="fish"></option>
-                      <option width=30 height=50 src="assets/images/pig.png" value="pig"></option>
-                    </tangy-eftouch>
-                  </template>
-                </tangy-form-item>
-
-                <tangy-form-item id="summary" summary title="HTML Code Container">
-                  <template>
-                    <tangy-box name="Summary">
-                      <p>Thank you for taking our survey.</p>
-                    </tangy-box>
-                  </template>
-                </tangy-form-item>
               </tangy-form>
             </template>
           </tangy-form-editor>

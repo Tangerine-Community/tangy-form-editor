@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.10.0
+- Add editors for <tangy-consent> and <tangy-untimed-grid>
+
 ## v5.9.0
 - Add widget Copy feature.
 
