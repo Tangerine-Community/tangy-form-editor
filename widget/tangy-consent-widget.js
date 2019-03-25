@@ -124,7 +124,7 @@ class TangyConsentWidget extends TangyBaseWidget {
       ...config,
       name: formEl.response.items[0].inputs.find(input => input.name === 'name')
         .value,
-      prompt: formEl.response.items[0].inputs.find(input => input.prompt === 'prompt')
+      prompt: formEl.response.items[0].inputs.find(input => input.name === 'prompt')
         .value,
       required:
         formEl.response.items[0].inputs.find(input => input.name === 'required')
