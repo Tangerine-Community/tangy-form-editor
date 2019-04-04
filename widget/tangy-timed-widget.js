@@ -130,7 +130,7 @@ class TangyTimedWidget extends TangyBaseWidget {
           }"></tangy-input>
           <tangy-input name="tangy_if" inner-label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-input name="valid_if" inner-label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
-          <tangy-checkbox name="rowMarkers" ${
+          <tangy-checkbox name="showLabels" ${
             config.showLabels ? 'value="on"' : ''
           }>Show text labels on the control buttons</tangy-checkbox>
           <tangy-checkbox name="rowMarkers" ${
