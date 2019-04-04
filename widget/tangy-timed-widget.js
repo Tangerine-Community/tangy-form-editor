@@ -39,6 +39,7 @@ class TangyTimedWidget extends TangyBaseWidget {
           label: option.innerHTML
         };
       }),
+      showLabels: element.hasAttribute('show-labels'),
       tangyIf: element.hasAttribute('tangy-if')
         ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
         : '',
