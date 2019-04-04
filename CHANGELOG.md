@@ -1,9 +1,6 @@
 # CHANGELOG
 
-## v5.11.2
-- Add breaking show-labels attribute on tangy-timed.
-
-## v5.11.1
+## v5.11.3
 - Add support for missing show-labels attribute on tangy-timed.
 
 ## v5.11.0
