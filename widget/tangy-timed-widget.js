@@ -18,6 +18,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       autoStop: '',
       columns: 4,
       options: [],
+      showLabels: true,
       required: false,
       disabled: false,
       hidden: false,
@@ -56,6 +57,7 @@ class TangyTimedWidget extends TangyBaseWidget {
         ${config.duration ? `duration="${config.duration}"` : ``}
         ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
         ${config.rowMarkers ? 'row-markers' : ''}
+        ${config.showLabels ? 'show-labels' : ''}
         ${config.required ? 'required' : ''}
         ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
@@ -128,6 +130,9 @@ class TangyTimedWidget extends TangyBaseWidget {
           <tangy-input name="tangy_if" inner-label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-input name="valid_if" inner-label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-checkbox name="rowMarkers" ${
+            config.showLabels ? 'value="on"' : ''
+          }>Show text labels on the control buttons</tangy-checkbox>
+          <tangy-checkbox name="rowMarkers" ${
             config.rowMarkers ? 'value="on"' : ''
           }>Mark entire rows</tangy-checkbox>
           <tangy-checkbox name="required" ${
@@ -185,6 +190,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       hintText: formEl.values.hintText,
       columns: formEl.values.columns,
       rowMarkers: formEl.values.rowMarkers === 'on' ? true : false,
+      showLabels: formEl.values.showLabels === 'on' ? true : false,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
