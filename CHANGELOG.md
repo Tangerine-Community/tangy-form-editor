@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.11.1
+- Add support for missing show-labels attribute on tangy-timed.
+
 ## v5.11.0
 - Add editors for <tangy-consent> and <tangy-untimed-grid>
 
