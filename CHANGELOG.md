@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.12.0
+- Add support for translations using tangy-translation
+
 ## v5.11.3
 - Add support for missing show-labels attribute on tangy-timed.
 
