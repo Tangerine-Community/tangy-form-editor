@@ -1,36 +1,33 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-import '@polymer/sortable-list/sortable-list.js'
-import '@polymer/paper-toggle-button/paper-toggle-button.js'
-import 'juicy-ace-editor/juicy-ace-editor-module.js'
-import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
-import {tangyFormEditorReducer} from './tangy-form-editor-reducer.js'
-import './tangy-form-item-editor.js'
-import './tangy-form-html-editor.js'
-import './tangy-code.js'
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@polymer/sortable-list/sortable-list.js';
+import '@polymer/paper-toggle-button/paper-toggle-button.js';
+import 'juicy-ace-editor/juicy-ace-editor-module.js';
+import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js';
+import { tangyFormEditorReducer } from './tangy-form-editor-reducer.js';
+import './tangy-form-item-editor.js';
+import './tangy-form-html-editor.js';
+import './tangy-code.js';
 
 //   <!-- Tangy Elements -->
-import 'tangy-form/tangy-form.js'
-import 'tangy-form/input/tangy-box.js'
-import 'tangy-form/input/tangy-input.js'
-import 'tangy-form/input/tangy-timed.js'
-import 'tangy-form/input/tangy-untimed-grid.js'
-import 'tangy-form/input/tangy-checkbox.js'
-import 'tangy-form/input/tangy-checkboxes.js'
-import 'tangy-form/input/tangy-radio-buttons.js'
-import 'tangy-form/input/tangy-select.js'
-import 'tangy-form/input/tangy-location.js'
-import 'tangy-form/input/tangy-gps.js'
+import 'tangy-form/tangy-form.js';
+import 'tangy-form/input/tangy-box.js';
+import 'tangy-form/input/tangy-input.js';
+import 'tangy-form/input/tangy-timed.js';
+import 'tangy-form/input/tangy-untimed-grid.js';
+import 'tangy-form/input/tangy-checkbox.js';
+import 'tangy-form/input/tangy-checkboxes.js';
+import 'tangy-form/input/tangy-radio-buttons.js';
+import 'tangy-form/input/tangy-select.js';
+import 'tangy-form/input/tangy-location.js';
+import 'tangy-form/input/tangy-gps.js';
 import 'tangy-form/input/tangy-acasi.js';
 import 'tangy-form/input/tangy-eftouch.js';
 import 'tangy-form/input/tangy-photo-capture.js';
 import 'tangy-form/input/tangy-qr.js';
 
-
-
-
 /**
  * `tangy-form-editor`
- * 
+ *
  *
  * @customElement
  * @polymer
@@ -39,35 +36,73 @@ import 'tangy-form/input/tangy-qr.js';
 class TangyFormEditor extends PolymerElement {
   static get template() {
     return html`
-    <style>
-      :host {
-        display: block;
-        color: var(--primary-text-color);
-        font-size: medium;
-      }
-      :host([show-preview]) .show-preview {
-        display: none;
-      }
-      :host(:not([show-preview])) .hide-preview {
-        display: none;
-      }
-      :host(:not([show-preview])) #form-preview {
-        display: none;
-      }
-      paper-button {
-        background: var(--accent-color);
-        height: 47px;
-      }
-      .rightCategories {
-        margin-left: 2em;
-      }
-    </style>
-    <!-- FORM ITEM LISTING -->
-    <div id="container"></div>
-    <div id="editor-region">
-      <slot></slot>
-    </div>
-    <div id="form-preview"></div>
+      <style>
+        :host {
+          display: block;
+          color: var(--primary-text-color);
+          font-size: medium;
+          
+        }
+        :host([show-preview]) .show-preview {
+          display: none;
+        }
+        :host(:not([show-preview])) .hide-preview {
+          display: none;
+        }
+        :host(:not([show-preview])) #form-preview {
+          display: none;
+        }
+        paper-input {
+          --paper-input-container-underline-focus: {
+            border-color:var(--accent-color);
+          } 
+        }
+        .rightCategories {
+          margin-left: 2em;
+        }
+        .tangy-spacer{
+          flex: 1 1 auto;
+        }
+        .sortable{
+          display:inline-flex;
+          cursor: move;
+           margin-left: 4px;
+           margin-bottom: 10px;
+           width:100%;
+        }
+        .list-item-text{
+          padding-top: 0.9rem;
+          font-size: 128%;
+          font-weight: bold
+        }
+        .tangy-icons{
+          background-color:var(--accent-text-color);
+          color:var(--lighter-accent-color);
+        }
+        .tangy-action-buttons{
+          color: var(--accent-text-color);
+          background-color: var(--accent-color);
+          font-size: 12px;
+          font-weight: 500;
+          height: 2rem;
+        }
+        paper-icon-button{
+          margin-top: 0.4rem;
+        }
+        .form-actions-container{
+          display: flex; 
+          justify-content: space-between;
+        }
+        .form-actions{
+          margin-top: 1rem;
+        }
+      </style>
+      <!-- FORM ITEM LISTING -->
+      <div id="container"></div>
+      <div id="editor-region">
+        <slot></slot>
+      </div>
+      <div id="form-preview"></div>
     `;
   }
 
@@ -88,15 +123,16 @@ class TangyFormEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true
       }
-    }
-      
+    };
   }
 
   get formHtml() {
-    const state = this.store.getState()
+    const state = this.store.getState();
     return `
-      <tangy-form id="${state.form.id}" title="${state.form.title}" category="${state.form.category}"
-        ${(state.form.fullscreen) ? ` fullscreen` : ''}
+      <tangy-form id="${state.form.id}" title="${state.form.title}" category="${
+      state.form.category
+    }"
+        ${state.form.fullscreen ? ` fullscreen` : ''}
         on-open="
           ${state.form.onOpen}
         "
@@ -104,10 +140,16 @@ class TangyFormEditor extends PolymerElement {
           ${state.form.onChange}
         "
       >
-        ${state.items.map(item => `
+        ${state.items
+          .map(
+            item => `
           <tangy-form-item id="${item.id}" 
             title="${item.title}"
-            ${(item.hideBackButton) ? ` hide-back-button` : ''}${(item.summary) ? ` summary` : ``}${(item.hideBackButton) ? ` hide-back-button` : ``}${(item.rightToLeft) ? ` right-to-left` : ''}
+            ${item.hideBackButton ? ` hide-back-button` : ''}${
+              item.summary ? ` summary` : ``
+            }${item.hideBackButton ? ` hide-back-button` : ``}${
+              item.rightToLeft ? ` right-to-left` : ''
+            }
             on-open="
               ${item.onOpen}
             "

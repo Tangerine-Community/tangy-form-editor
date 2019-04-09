@@ -96,81 +96,98 @@ class TangyBaseWidget extends PolymerElement {
           width: 100%;
           cursor: move;
         }
-        paper-card {
-          display: flex;
-          margin: 30px 0px 0px;
-          padding: 15px;
-          width: 98%;
-          justify-content:space-between;
-          z-index:1;
-        }
+        
         paper-button {
           background: var(--accent-color);
+          color:var(--accent-text-color);
+          margin-top:10px;
         }
-        .align-icon-text {
-          display: inline-flex;
-          vertical-align: middle;
-        }
+        
         :host([mode='MODE_EDIT']) paper-card {
             background-color: lightgrey;
         }
-        .card-content {
-            text-align:left;
-            padding: 2px;
-            width:100%
+        .tangy-spacer{
+          flex: 1 1 auto;
         }
+        .span-spacer{
+          margin-left:10px;
+        }
+        .card-header{
+          display:flex;
+          height: 20px;
+          height:34px;
+          padding-top:10px;
+          background:var(--lighter-accent-color);
+          color:var(--accent-text-color);
+          border-radius: 5px 5px 0px 0px
+        }
+        paper-card {
+          text-align: left; 
+          width:98%;
+          margin: 30px 0px 0px;
+        }
+  
+        .card-content {
+          text-align: left;
+          padding: 15px;
+        }
+        
         .card-actions {
-            border-top: none;
+           border-top: none;
+        }
+        .card-actions-edit {
+          margin-top:3em;
+          margin-right:3em;
+          margin-bottom: 100px;
+        }
+        
+        .card-actions-edit paper-button {
+          float:right;
+          line-height: 1em;
+          background: var(--accent-color);
+        }
+        
+        .tangy-action-buttons{
+          color: var(--accent-text-color);
+          background-color: var(--accent-color);
+          font-size: 12px;
+          font-weight: 500;
+          height: 2rem;
         }
 
-        .card-actions > paper-button  {
-            margin: 0 0 15px 0;
-          width: 110px;
+        .action-buttons{
+          margin-right:10px;
+          cursor: pointer;
         }
-        mwc-fab {
-          bottom: -42px;
-          position: absolute;
-          right: -42px;
-          --mdc-theme-secondary: var(--accent-color);
-        }
-        .element-header {
-          color: var(--primary-color);
-          /*font-size: 2em;*/
-          /*opacity: 0.3;*/
-          margin-left: .7em;
-          margin-bottom: 1.5em;
-          display: flex;
-          justify-content:start;
-          align-items: center;
-        }
-        mwc-icon {
-          color:var(--primary-color);
-          position: absolute;
-          left: -16px;
-          top: -16px;
-        }
-        #element-name {
-            position: absolute;
-            top: -12px;
-        }
+
         :host([mode="MODE_PRINT"]) #info-edit-card {
           display: none;
         }
         :host(:not([mode="MODE_PRINT"])) #print-container {
           display: none;
         }
+        span span .header-text, #container span mwc-icon{
+          display:none;
+        }
       </style>
+
       <paper-card id="info-edit-card">
+        <div class="card-header" >
+          <span class="span-spacer" id="icon"></span>
+          <span class="span-spacer tangy-spacer" id="name"></span>
+          <span id="edit-button" class="action-buttons" on-click="_onEditClick"><iron-icon icon="create"></iron-icon></span>
+          <span id="copy-button" class="action-buttons" on-click="_onCopyClick"><iron-icon icon="content-copy"></iron-icon></span>
+          <span id="remove-button" class="action-buttons" on-click="_onRemoveClick"><iron-icon icon="delete"></iron-icon></span>
+        </div>
         <div class="card-content" id="container"></div>
-        <div class="card-actions">
-          <paper-button id="edit-button" class="action-buttons" on-click="_onEditClick"><iron-icon icon="create"></iron-icon> edit</paper-button>
-          <br/>
-          <paper-button id="remove-button" class="action-buttons" on-click="_onRemoveClick"><iron-icon icon="delete"></iron-icon> remove</paper-button>
-          <br/>
-          <paper-button id="copy-button" class="action-buttons" on-click="_onCopyClick"><iron-icon icon="content-copy"></iron-icon> copy</paper-button>
-          <mwc-fab icon="add" id="add-button" on-click="_onAddClick">add</mwc-fab>
-        </div>  
+        
       </paper-card>
+      <paper-button id="add-button" 
+            class="tangy-action-buttons" on-click="_onAddClick">
+            <iron-icon icon="add"></iron-icon>
+            Insert Here
+          </paper-button>
+     
       <span id="print-container"></span>
     `;
   }
@@ -227,7 +244,6 @@ class TangyBaseWidget extends PolymerElement {
   _render() {
     if (this.mode === MODE_EDIT) {
       this.shadowRoot.querySelector('#container').innerHTML = this.renderEdit(this._config)
-      this.shadowRoot.querySelector('.card-actions').style = "display:none"
       if (this.editResponse(this._config)) {
         this.shadowRoot
           .querySelector('#container')

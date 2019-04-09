@@ -63,10 +63,9 @@ class TangyQrWidget extends TangyBaseWidget {
     `;
   }
   renderInfo(config) {
-    return `<div class="element-header"><div><mwc-icon>filter_center_focus</mwc-icon></div><div id="element-name">${
-      config.name
-    }</div></div>
-    ${this.downcast(config)}`;
+    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>filter_center_focus</mwc-icon><span>`
+    const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
+    return `${icon} ${name} ${this.downcast(config)}`;
   }
 
   renderEdit(config) {
