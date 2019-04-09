@@ -86,10 +86,9 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
     `;
   }
   renderInfo(config) {
-    return `<div class="element-header"><div><mwc-icon>radio_button_unchecked</mwc-icon></div><div id="element-name">${
-      config.name
-    }</div></div>
-    ${config.options.length > 0 ? this.downcast(config) : ''}`;
+    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>filter_center_focus</mwc-icon><span>`
+    const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
+    return `${icon} ${name} ${config.options.length > 0 ? this.downcast(config) : ''}`;
   }
 
   renderEdit(config) {

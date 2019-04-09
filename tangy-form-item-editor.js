@@ -12,54 +12,39 @@ class TangyFormItemEditor extends PolymerElement {
         color: var(--primary-text-color);
         font-size: medium;
       }
-      paper-icon-button.small {
-        width: 30px;
-        height: 30px;
-      }
-      paper-button.indigo {
-        background-color: var(--paper-indigo-500);
-        color: white;
-        --paper-button-raised-keyboard-focus: {
-          background-color: var(--paper-pink-a200) !important;
-          color: white !important;
-        };
-      }
-      paper-button.indigo:hover {
-        background-color: var(--paper-indigo-400);
-      }
-      paper-button.green {
-        background-color: var(--paper-green-500);
-        color: white;
-      }
-      paper-button.green[active] {
-        background-color: var(--paper-red-500);
-      }
+      
       .rightCategories {
         margin-left: 2em;
       }
-      paper-toggle-button {
-        padding-top: 10px;
+     
+      .tangy-spacer{
+        flex: 1 1 auto;
+      }
+      .span-spacer{
+        margin-left:10px;
+      }
+      .card-header{
+        display:flex;
+        height: 20px;
+        height:34px;
+        padding-top:10px;
+        background:var(--primary-color-lighter);
+        color:var(--accent-text-color);
+        border-radius: 5px 5px 0px 0px
+      }
+      #edit-button{
+        margin-right:10px;
+        cursor: pointer;
       }
       paper-card {
-        display: flex;
-        justify-content: space-between;
         text-align: left; 
         width:98%;
         margin: 30px 0px 0px;
-        padding: 15px;
       }
-      paper-card .display {
-        display: flex;
-        justify-content: space-between;
-        text-align: left; 
-        width:98%;
-        margin: 30px 0px 0px;
-        padding: 15px;
-      }
+
       .card-content {
         text-align: left;
-        padding: 2px;
-        width: 100%;
+        padding: 15px;
       }
       
       .card-actions {
@@ -70,43 +55,23 @@ class TangyFormItemEditor extends PolymerElement {
         margin-right:3em;
         margin-bottom: 100px;
       }
+      
       .card-actions-edit paper-button {
         float:right;
         line-height: 1em;
         background: var(--accent-color);
       }
-      .element-header {
-        color: var(--primary-color);
-        /*font-size: 2em;*/
-        /*opacity: 0.3;*/
-        margin-left: .7em;
-        margin-bottom: 1.5em;
-        display: flex;
-        justify-content:start;
-        align-items: center;
+      
+      
+      .gray-background{
+        background:#ebebeb;
       }
-      #back-to-forms {
-        background: var(--accent-color);
-      }
-      #item-icon {
-        color: var(--primary-color);
-        /*opacity:1.0;*/
-        /*margin-right:1em;*/
-        position: absolute;
-        left: -16px;
-        top: -16px;
-      }
-      #edit-button {
-        width: 110px;
-        background: var(--accent-color);
-      }
-      #element-name {
-        position: absolute;
-        top: -12px;
-      }
-      #header {
-        display: flex;
-        justify-content: space-between;
+      .tangy-action-buttons{
+        color: var(--accent-text-color);
+        background-color: var(--accent-color);
+        font-size: 12px;
+        font-weight: 500;
+        height: 2rem;
       }
     </style>
     <div id="container"></div> 
@@ -135,13 +100,24 @@ class TangyFormItemEditor extends PolymerElement {
 
   render() {
     this.$.container.innerHTML = `
-      <div id="header">
-        <div><paper-button raised id="back-to-forms" ><iron-icon icon="arrow-back"></iron-icon>${t('Back')}</paper-button></div>
+      <div>
+        <div>
+          <paper-button id="back-to-forms" 
+            class="tangy-action-buttons">
+            <iron-icon icon="arrow-back"></iron-icon>
+            ${t('Back')}
+          </paper-button>
+        </div>
+        
       </div>
-      <paper-card id="details-card">
-        <div class="card-content">
-          <div class="element-header"><div><iron-icon id="item-icon" icon="view-agenda"></iron-icon></div><div id="element-name">${this.item.id}</div></div>
-          <h3 style="text-align: left">${t('Item Details')}</h3>
+      <paper-card>
+        <div class="card-header">
+          <span class="span-spacer"><iron-icon id="item-icon" icon="icons:assignment"></iron-icon></span>
+          <span class="span-spacer">${this.item.id}</span>
+          <span class="tangy-spacer span-spacer">${t('Item Details')}</span>
+          <span id="edit-button"><iron-icon icon="create"></iron-icon></span>
+        </div>
+        <div class="card-content gray-background">
           <div id="details-content-edit">
             <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
             <p>Item id: ${this.item.id}</p>
@@ -159,28 +135,19 @@ class TangyFormItemEditor extends PolymerElement {
             <p><paper-checkbox disabled id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
           </div>
         </div>
-       
         <div id="details-content-edit-actions" class="card-actions-edit">
-            <paper-button id="save" style="float:right" role="button" tabindex="0" animated="" elevation="0">${t('Submit')}</paper-button>
+          <paper-button class="tangy-action-buttons" id="save" style="float:right" role="button" tabindex="0" animated="" elevation="0">${t('Submit')}</paper-button>
         </div>
-
         <div id="details-content-view-actions" class="card-actions">
-            <paper-button id="edit-button"><iron-icon icon="create"></iron-icon>${t('edit')}</paper-button>
+           <paper-button id="edit-button"><iron-icon icon="create"></iron-icon>${t('edit')}</paper-button>
         </div>
-
       </paper-card>
         
-      <tangy-form-condensed-editor>
+     <tangy-form-condensed-editor>
         <template>
           ${this.item.template}
         </template>
       </tangy-form-condensed-editor>
-      
-      <paper-card style="display: none; text-align: left; margin: 0 auto; width:100%;">
-        <div class="card-content">
-          ${this.item.template}
-        </div>
-      </paper-card>
       </div>
     `
     if (!this.edit) {
@@ -188,8 +155,8 @@ class TangyFormItemEditor extends PolymerElement {
       this.$.container.querySelector('#details-content-edit-actions').style = 'display:none'
     } else {
       this.$.container.querySelector('#details-content-view').style = 'display:none'
-      this.$.container.querySelector('#details-content-view-actions').style = 'display:none'
-      this.$.container.querySelector('#details-card').style = "display:block"
+      // this.$.container.querySelector('#details-content-view-actions').style = 'display:none'
+      // this.$.container.querySelector('#details-card').style = "display:block"
 
     }
     this.$.container.querySelector('#back-to-forms').addEventListener('click', this.onBackToForms.bind(this))

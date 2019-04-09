@@ -92,20 +92,22 @@ class TangyFormCondensedEditor extends PolymerElement {
     })
     this.shadowRoot.innerHTML = `
       <style>
-        #add-button-container {
-          position: relative;
-        }
         #add-button {
-          position: absolute;
-          bottom: -27px;
-          right: -4px;
-          z-index: 1;
-          --mdc-theme-secondary: var(--accent-color);
+          margin-top: 10px;
+        }
+        .tangy-action-buttons{
+          color: var(--accent-text-color);
+          background-color: var(--accent-color);
+          font-size: 12px;
+          font-weight: 500;
+          height: 2rem;
         }
       </style>
-      <div id="add-button-container">
-        <mwc-fab icon="add" id="add-button">add</mwc-fab>
-      </div>
+      <paper-button id="add-button" 
+            class="tangy-action-buttons">
+            <iron-icon icon="add"></iron-icon>
+            Insert Here
+          </paper-button>
       <sortable-list style="width: 100%">${template.innerHTML}</sortable-list>
       ${markup.trim() 
         ? "" 
