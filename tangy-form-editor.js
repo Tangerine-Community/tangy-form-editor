@@ -1,12 +1,14 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/sortable-list/sortable-list.js';
-import '@polymer/paper-toggle-button/paper-toggle-button.js';
-import 'juicy-ace-editor/juicy-ace-editor-module.js';
-import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js';
-import { tangyFormEditorReducer } from './tangy-form-editor-reducer.js';
-import './tangy-form-item-editor.js';
-import './tangy-form-html-editor.js';
-import './tangy-code.js';
+import '@polymer/sortable-list/sortable-list.js'
+import '@polymer/paper-toggle-button/paper-toggle-button.js'
+import 'juicy-ace-editor/juicy-ace-editor-module.js'
+import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
+import { tangyFormEditorReducer } from './tangy-form-editor-reducer.js'
+import './tangy-form-item-editor.js'
+import './tangy-form-html-editor.js'
+import './tangy-code.js'
+import 'tangy-translate'
+
 
 //   <!-- Tangy Elements -->
 import 'tangy-form/tangy-form.js';
@@ -24,6 +26,7 @@ import 'tangy-form/input/tangy-acasi.js';
 import 'tangy-form/input/tangy-eftouch.js';
 import 'tangy-form/input/tangy-photo-capture.js';
 import 'tangy-form/input/tangy-qr.js';
+import 'tangy-form/input/tangy-consent.js';
 
 /**
  * `tangy-form-editor`
@@ -219,7 +222,7 @@ class TangyFormEditor extends PolymerElement {
       this.render(this.store.getState())
     })
     if (this.querySelector('template')) {
-      this.formHtml = this.querySelector('template').innerHTML 
+      this.formHtml = this.querySelector('template').innerHTML
       this.innerHTML = ''
     } else {
       // Load from this.formJson inline.
@@ -264,27 +267,27 @@ class TangyFormEditor extends PolymerElement {
             <paper-button
                 class="form-html-edit">
                 <iron-icon icon="editor:mode-edit"></iron-icon>
-                Edit HTML
+                 ${t('Edit HTML')}
             </paper-button>
             <paper-button
                 class="show-preview">
                 <iron-icon icon="av:play-circle-filled"></iron-icon>
-                Preview
+                 ${t('Preview')}
             </paper-button>
             <paper-button
                 class="hide-preview">
                 <iron-icon icon="av:pause-circle-filled"></iron-icon>
-                Preview
+                 ${t('Preview')}
             </paper-button>
             <paper-button
                 class="save-form">
                 <iron-icon icon="icons:save"></iron-icon>
-                Save 
+                 ${t('Save')}
             </paper-button>
           </div>
         </div>
-        <paper-input label="Form Title" id="form-title" value="${state.form.title}"></paper-input>
-        <paper-expansion-panel header="advanced settings">
+        <paper-input label=" ${t('Form Title')}" id="form-title" value="${state.form.title}"></paper-input>
+        <paper-expansion-panel header=" ${t('advanced settings')}">
           <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${state.form.fullscreen ? 'checked' : ''}>Enable fullscreen mode</paper-checkbox>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
@@ -292,7 +295,7 @@ class TangyFormEditor extends PolymerElement {
         </paper-expansion-panel>
         <div style="float: right; position:relative;">
           <i>
-            Drag items to reorder 
+            ${t('Drag items to reorder')}
           </i>
           <iron-icon 
             icon="icons:subdirectory-arrow-left"
@@ -313,14 +316,14 @@ class TangyFormEditor extends PolymerElement {
                   data-item-id="${item.id}"
                 >
                   <paper-icon-button data-item-id="${item.id}" icon="editor:mode-edit"></paper-icon-button>
-                  edit
+                   ${t('edit')}
                 </paper-button>
                 <paper-button
                   class="item-delete"
                   data-item-id="${item.id}"
                 >
                   <paper-icon-button data-item-id="${item.id}" icon="icons:delete"></paper-icon-button>
-                  delete
+                   ${t('delete')}
                 </paper-button>
                 <span style="font-size: 30px; position: relative; top: 5px; margin-left: 30px;">${item.title}</span>
               </div>
@@ -332,7 +335,7 @@ class TangyFormEditor extends PolymerElement {
           <paper-button
               class="item-create">
               <iron-icon icon="add-circle-outline"></iron-icon>
-              Add item 
+              ${t('Add item')}
           </paper-button>
         </div>
         

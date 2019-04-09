@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v5.12.0
+- Add support for translations using tangy-translation
+
+## v5.11.3
+- Add support for missing show-labels attribute on tangy-timed.
+
+## v5.11.0
+- Add editors for <tangy-consent> and <tangy-untimed-grid>
+
+## v5.10.0
+- Add support for <tangy-untimed-grid>
+
 ## v5.9.0
 - Add widget Copy feature.
 

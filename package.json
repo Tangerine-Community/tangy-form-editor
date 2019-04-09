@@ -1,13 +1,13 @@
 {
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
-  "version": "5.10.0",
+  "version": "5.12.0",
   "scripts": {
     "start": "./node_modules/.bin/polymer serve",
     "test": "./node_modules/.bin/polymer test -l chrome"
   },
   "dependencies": {
-    "@material/mwc-button": "^0.3.4",
+    "@material/mwc-button": "^0.4.0",
     "@material/mwc-fab": "^0.3.4",
     "@material/mwc-icon": "^0.3.4",
     "@polymer/paper-toggle-button": "^3.0.0-pre.21",
@@ -17,7 +17,8 @@
     "js-beautify": "^1.7.5",
     "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
-    "tangy-form": "^3.11.0"
+    "tangy-form": "^3.12.0",
+    "tangy-translate": "^1.0.0"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",

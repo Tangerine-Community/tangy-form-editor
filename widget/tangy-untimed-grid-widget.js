@@ -95,13 +95,13 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>av_timer</mwc-icon><span>`
+    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>grid_on</mwc-icon><span>`
     const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
     return `${icon} ${name} ${this.downcast(config)}`;
   }
 
   renderEdit(config) {
-    return `<h2>Add Timed Grid</h2>
+    return `<h2>Add Untimed Grid</h2>
     <tangy-form id="tangy-untimed-grid">
       <tangy-form-item id="tangy-untimed-grid">
         <template type="tangy-form-item">

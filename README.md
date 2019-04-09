@@ -73,5 +73,8 @@ Your application is already set up to be tested via [web-component-tester](https
 ## Browser Compatibility
 The combination of CKEditor breaking when used in Shadow DOM and Firefox / IE shadow DOM support is still behind a flag, this means this element does not currently work in Firefox and IE.
 
+## Support for translations
+Follow the instructions for the [tangy-translate](https://github.com/Tangerine-Community/tangy-translate) library to enable translated or alternate labels.
+
 ## Trademark and License
 Tangerine is a registered trademark of [RTI International](https://rti.org). This software is licensed under the [GPLv3 License](https://www.gnu.org/licenses/gpl-3.0.en.html).

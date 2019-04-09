@@ -105,7 +105,7 @@ class TangyFormItemEditor extends PolymerElement {
           <paper-button id="back-to-forms" 
             class="tangy-action-buttons">
             <iron-icon icon="arrow-back"></iron-icon>
-            Back
+            ${t('Back')}
           </paper-button>
         </div>
         
@@ -114,29 +114,32 @@ class TangyFormItemEditor extends PolymerElement {
         <div class="card-header">
           <span class="span-spacer"><iron-icon id="item-icon" icon="icons:assignment"></iron-icon></span>
           <span class="span-spacer">${this.item.id}</span>
-          <span class="tangy-spacer span-spacer">Item Details</span>
+          <span class="tangy-spacer span-spacer">${t('Item Details')}</span>
           <span id="edit-button"><iron-icon icon="create"></iron-icon></span>
         </div>
         <div class="card-content gray-background">
           <div id="details-content-edit">
             <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
             <p>Item id: ${this.item.id}</p>
-            <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>Show this item in the summary at the end</paper-checkbox></p>
-            <p><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>Hide the back button</paper-checkbox></p>
-            <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
+            <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></p>
+            <p><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></p>
+            <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>${t('right-to-left orientation')}</paper-checkbox></p>
             <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
             <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
             ${this.categories ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>' : ''}
           </div>
           <div id="details-content-view">
             ${this.item.title}<br/>
-            <p><paper-checkbox disabled id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>Show this item in the summary at the end</paper-checkbox></p>
-            <p><paper-checkbox disabled id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>Hide the back button</paper-checkbox></p>
+            <p><paper-checkbox disabled id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></p>
+            <p><paper-checkbox disabled id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></p>
             <p><paper-checkbox disabled id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
           </div>
         </div>
         <div id="details-content-edit-actions" class="card-actions-edit">
-        <paper-button class="tangy-action-buttons" id="save" style="float:right" role="button" tabindex="0" animated="" elevation="0">Submit</paper-button>
+          <paper-button class="tangy-action-buttons" id="save" style="float:right" role="button" tabindex="0" animated="" elevation="0">${t('Submit')}</paper-button>
+        </div>
+        <div id="details-content-view-actions" class="card-actions">
+           <paper-button id="edit-button"><iron-icon icon="create"></iron-icon>${t('edit')}</paper-button>
         </div>
       </paper-card>
         
