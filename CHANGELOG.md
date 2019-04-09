@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.13.0
+- UI Color improvements. https://github.com/Tangerine-Community/tangy-form-editor/pull/44
+
 ## v5.12.0
 - Add support for translations using tangy-translation
 
