@@ -103,20 +103,11 @@ class TangyFormCondensedEditor extends PolymerElement {
           height: 2rem;
         }
       </style>
-      <paper-button id="add-button" 
-            class="tangy-action-buttons">
-            <iron-icon icon="add"></iron-icon>
-            Insert Here
-          </paper-button>
+      <paper-button id="add-button" class="tangy-action-buttons">
+        <iron-icon icon="add"></iron-icon>
+        Insert Here
+      </paper-button>
       <sortable-list style="width: 100%">${template.innerHTML}</sortable-list>
-      ${markup.trim() 
-        ? "" 
-        : `
-          <div style='margin-top: 3em; padding: 5px; background-color:#F09AB9; font-size:24px;'>
-            Click the red + icon on the right to add inputs.
-          </div>
-        `
-      } 
     `
     this.shadowRoot.querySelector('#add-button').addEventListener('click', (event) => this.addInput())
     this.shadowRoot.querySelector('sortable-list').addEventListener('sort-finish', (event) => this.onSortFinish(event))
