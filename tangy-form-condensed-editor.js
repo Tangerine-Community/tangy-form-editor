@@ -102,9 +102,6 @@ class TangyFormCondensedEditor extends PolymerElement {
           font-weight: 500;
           height: 2rem;
         }
-        sortable-list {
-          width: 100%;
-        }
       </style>
       <paper-button id="add-button" class="tangy-action-buttons">
         <iron-icon icon="add"></iron-icon>

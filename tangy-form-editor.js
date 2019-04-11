@@ -99,6 +99,9 @@ class TangyFormEditor extends PolymerElement {
         .form-actions{
           margin-top: 1rem;
         }
+        sortable-list {
+          width: 100%;
+        }
         
       </style>
       <!-- FORM ITEM LISTING -->
