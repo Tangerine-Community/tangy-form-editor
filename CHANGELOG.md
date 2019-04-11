@@ -2,6 +2,7 @@
 
 ## v5.13.2
 - Remove stray button with no functionality on item details editor.
+- Remove reference to clicking a + icon to add inputs.
 
 ## v5.13.1
 - Add additional UI color improvements left out of last release.
