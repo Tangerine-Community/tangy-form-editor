@@ -96,6 +96,7 @@ class TangyFormEditor extends PolymerElement {
         .form-actions{
           margin-top: 1rem;
         }
+        
       </style>
       <!-- FORM ITEM LISTING -->
       <div id="container"></div>
@@ -259,78 +260,97 @@ class TangyFormEditor extends PolymerElement {
           .removeEventListener('sort-finish', this.onSortFinish.bind(this))
       }
       this.$.container.innerHTML = `
-        <div style="width:100%; text-align: right;">
-          <div>
+        <div class="form-actions-container">
+          <span style="width:40%;">
+            <paper-input label="Form Title" id="form-title" value="${
+              state.form.title
+            }"></paper-input>
+          </span>
+          
+          <span class="form-actions">
             <paper-button
-                class="form-html-edit">
-                <iron-icon icon="editor:mode-edit"></iron-icon>
+                class="form-html-edit tangy-action-buttons">
+                <iron-icon icon="icons:code"></iron-icon>
                 Edit HTML
             </paper-button>
             <paper-button
-                class="show-preview">
-                <iron-icon icon="av:play-circle-filled"></iron-icon>
+                class="show-preview tangy-action-buttons">
+                <iron-icon icon="image:remove-red-eye"></iron-icon>
                 Preview
             </paper-button>
             <paper-button
-                class="hide-preview">
+                class="hide-preview tangy-action-buttons">
                 <iron-icon icon="av:pause-circle-filled"></iron-icon>
                 Preview
             </paper-button>
             <paper-button
-                class="save-form">
+                class="save-form tangy-action-buttons">
                 <iron-icon icon="icons:save"></iron-icon>
                 Save 
             </paper-button>
-          </div>
+            <paper-button
+                class="advanced tangy-action-buttons">
+                <iron-icon icon="icons:settings"></iron-icon>
+                Advanced 
+            </paper-button>
+          </span>
         </div>
-        <paper-input label="Form Title" id="form-title" value="${state.form.title}"></paper-input>
-        <paper-expansion-panel header="advanced settings">
-          <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${state.form.fullscreen ? 'checked' : ''}>Enable fullscreen mode</paper-checkbox>
+       
+        <paper-expansion-panel header="advanced settings" id="main-expansion-panel">
+          <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${
+            state.form.fullscreen ? 'checked' : ''
+          }>Enable fullscreen mode</paper-checkbox>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
         </paper-expansion-panel>
         </paper-expansion-panel>
-        <div style="float: right; position:relative;">
-          <i>
-            Drag items to reorder 
-          </i>
-          <iron-icon 
-            icon="icons:subdirectory-arrow-left"
-            style="position: absolute; z-index: 999; bottom: -30px; right: 0px;"
-          ></iron-icon>
-        </div>
-        <sortable-list style="text-align: center">
-        ${state.items.map(item => `
+        
+        <sortable-list >
+        ${state.items
+          .map(
+            item => `
           <paper-card
-            style="cursor: move; margin: 15px; width: 100%;"
             class="sortable"
             data-item-id="${item.id}"
             data-item-title="${item.title}">
-            <div class="card-content">
-              <div style="text-align: left; ">
-                <paper-button
-                  class="item-edit"
+            <span >
+                <span 
                   data-item-id="${item.id}"
                 >
-                  <paper-icon-button data-item-id="${item.id}" icon="editor:mode-edit"></paper-icon-button>
-                  edit
-                </paper-button>
-                <paper-button
-                  class="item-delete"
+                  <paper-icon-button data-item-id="${
+                    item.id
+                  }" icon="icons:reorder"></paper-icon-button></span>
+                  </span>
+            
+                <span class="tangy-spacer list-item-text">${
+                  item.title
+                }</span>
+                
+                <span>
+                <a class="tangy-icons item-edit"
                   data-item-id="${item.id}"
                 >
-                  <paper-icon-button data-item-id="${item.id}" icon="icons:delete"></paper-icon-button>
-                  delete
-                </paper-button>
-                <span style="font-size: 30px; position: relative; top: 5px; margin-left: 30px;">${item.title}</span>
-              </div>
-            </div>
+                  <paper-icon-button data-item-id="${
+                    item.id
+                  }" icon="editor:mode-edit"></paper-icon-button></a>
+                  
+                <a
+                  class="tangy-icons item-delete"
+                  data-item-id="${item.id}"
+                >
+                  <paper-icon-button data-item-id="${
+                    item.id
+                  }" icon="icons:delete"></paper-icon-button></a>
+                  </span>
+            
           </paper-card>
-        `).join('')}
+        `
+          )
+          .join('')}
         </sortable-list>
         <div>
           <paper-button
-              class="item-create">
+              class="item-create tangy-action-buttons">
               <iron-icon icon="add-circle-outline"></iron-icon>
               Add item 
           </paper-button>
@@ -354,6 +374,9 @@ class TangyFormEditor extends PolymerElement {
       this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
 
       // Bind event listeners.
+      this.$.container
+        .querySelector('.advanced')
+        .addEventListener('click', this.onClickAdvancedSettings.bind(this))
       this.$.container
         .querySelector('#fullscreen-checkbox')
         .addEventListener('click', this.onFullscreenCheckboxClick.bind(this))
@@ -497,6 +520,9 @@ class TangyFormEditor extends PolymerElement {
       type: 'ITEM_DELETE',
       payload: event.target.dataset.itemId
     })
+  }
+  onClickAdvancedSettings(){
+    this.$.container.querySelector('#main-expansion-panel').opened=!this.$.container.querySelector('#main-expansion-panel').opened; 
   }
 }
 
