@@ -110,14 +110,14 @@ class TangyFormItemEditor extends PolymerElement {
         </div>
         
       </div>
-      <paper-card>
+      <paper-card id="item-info" class="gray-background">
         <div class="card-header">
           <span class="span-spacer"><iron-icon id="item-icon" icon="icons:assignment"></iron-icon></span>
           <span class="span-spacer">${this.item.id}</span>
           <span class="tangy-spacer span-spacer">${t('Item Details')}</span>
           <span id="edit-button"><iron-icon icon="create"></iron-icon></span>
         </div>
-        <div class="card-content gray-background">
+        <div class="card-content">
           <div id="details-content-edit">
             <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
             <p>Item id: ${this.item.id}</p>
@@ -137,9 +137,6 @@ class TangyFormItemEditor extends PolymerElement {
         </div>
         <div id="details-content-edit-actions" class="card-actions-edit">
           <paper-button class="tangy-action-buttons" id="save" style="float:right" role="button" tabindex="0" animated="" elevation="0">${t('Submit')}</paper-button>
-        </div>
-        <div id="details-content-view-actions" class="card-actions">
-           <paper-button id="edit-button"><iron-icon icon="create"></iron-icon>${t('edit')}</paper-button>
         </div>
       </paper-card>
         
