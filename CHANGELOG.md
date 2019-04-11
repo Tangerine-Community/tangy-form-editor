@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.13.1
+- Add additional UI color improvements left out of last release.
+
 ## v5.13.0
 - UI Color improvements. https://github.com/Tangerine-Community/tangy-form-editor/pull/44
 
