@@ -51,7 +51,7 @@ class TangyTemplateWidget extends TangyBaseWidget {
   renderInfo(config) {
     const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>attach_money</mwc-icon><span>`
     const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
-    return `${icon} ${name} ${this.downcast(config)}`
+    return `${icon} ${name} (output only available in preview mode)`
   }
 
   renderEdit(config) {
