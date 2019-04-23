@@ -16,6 +16,7 @@ class TangyTimeWidget extends TangyBaseWidget {
       required: false,
       disabled: false,
       hidden: false,
+      hintText: '',
       tangyIf: '',
       validIf: ''
     };
