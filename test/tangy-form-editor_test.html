@@ -28,7 +28,7 @@
       <template>
         <tangy-form-editor>
           <template>
-            <tangy-form id="field-demo" title="Field Demo">
+            <tangy-form id="field-demo" title="Field Demo" on-submit="1+1">
               <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
                 <template>
                   <tangy-input name="text_input_1" label="What is your first name?" type="text"></tangy-input>
@@ -49,7 +49,7 @@
         </tangy-form-editor>
       </template>
     </test-fixture>
- 
+
     <test-fixture id="PrintFixture">
       <template>
         <tangy-form-editor print>
@@ -112,12 +112,16 @@
           const element = fixture('TestFixture');
           element.shadowRoot.querySelector('#main-expansion-panel').opened = true
           element.shadowRoot.querySelector('#on-submit-editor').opened = true
-          element.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value = '1+1'
+          element.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value = '2+2'
           element.shadowRoot.querySelector('.save-form').click()
-          element.formHtml.includes(`on-submit="
-          1+1
-        "`) 
-          
+          assert.equal(element.formHtml.includes(`on-submit="
+          2+2
+        "`), true) 
+        })
+
+        test('should have tangy-form.on-submit available to edit', () => {
+          const element = fixture('TestFixture');
+          assert(element.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value, '1+1')
         })
 
         test('opens item editor', () => {
