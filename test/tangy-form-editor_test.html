@@ -108,6 +108,18 @@
           element.$.container.querySelector('.save-form').click()
         });
 
+        test('should update form level on-submit logic', () => {
+          const element = fixture('TestFixture');
+          element.shadowRoot.querySelector('#main-expansion-panel').opened = true
+          element.shadowRoot.querySelector('#on-submit-editor').opened = true
+          element.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value = '1+1'
+          element.shadowRoot.querySelector('.save-form').click()
+          element.formHtml.includes(`on-submit="
+          1+1
+        "`) 
+          
+        })
+
         test('opens item editor', () => {
           const element = fixture('TestFixture');
           element.$.container.querySelector('.item-edit').click()
