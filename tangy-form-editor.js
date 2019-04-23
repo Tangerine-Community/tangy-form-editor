@@ -146,6 +146,9 @@ class TangyFormEditor extends PolymerElement {
         on-change="
           ${state.form.onChange}
         "
+        on-submit="
+          ${state.form.onSubmit}
+        "
       >
         ${state.items
           .map(
@@ -205,6 +208,9 @@ class TangyFormEditor extends PolymerElement {
             : '',
            onChange: template.content.querySelector('tangy-form').hasAttribute('on-change')
              ? template.content.querySelector('tangy-form').getAttribute('on-change')
+             : '',
+          onSubmit: template.content.querySelector('tangy-form').hasAttribute('on-submit')
+             ? template.content.querySelector('tangy-form').getAttribute('on-submit')
              : '',
            category: template.content.querySelector('tangy-form').hasAttribute('category')
             ? template.content.querySelector('tangy-form').getAttribute('category')
@@ -307,7 +313,7 @@ class TangyFormEditor extends PolymerElement {
           }>${t('Enable fullscreen mode')}</paper-checkbox>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
-        </paper-expansion-panel>
+          <paper-expansion-panel header="on-submit logic" id="on-submit-editor"></paper-expansion-panel>
         </paper-expansion-panel>
         
         <sortable-list >
@@ -377,6 +383,12 @@ class TangyFormEditor extends PolymerElement {
       onChangeEditorEl.style.height = `${window.innerHeight*.6}px`
       onChangeEditorEl.addEventListener('change', _ => _.stopPropagation())
       this.shadowRoot.querySelector('#on-change-editor').appendChild(onChangeEditorEl)
+      let onSubmitEditorEl = document.createElement('juicy-ace-editor')
+      onSubmitEditorEl.setAttribute('mode', 'ace/mode/javascript')
+      onSubmitEditorEl.value = state.form.onSubmit  ? state.form.onSubmit.replace(/&#34;/g, '"') : ''
+      onSubmitEditorEl.style.height = `${window.innerHeight*.6}px`
+      onSubmitEditorEl.addEventListener('change', _ => _.stopPropagation())
+      this.shadowRoot.querySelector('#on-submit-editor').appendChild(onSubmitEditorEl)
 
       // Bind event listeners.
       this.$.container
@@ -472,6 +484,7 @@ class TangyFormEditor extends PolymerElement {
       title: this.shadowRoot.querySelector('#form-title').value,
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      onSubmit: this.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       category: categoryValue
     }})
     this.dispatchChangeEvent()
