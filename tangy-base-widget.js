@@ -279,11 +279,11 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   _onSubmit() {
+    this.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
     this._config = this.onSubmit(this._config, this.shadowRoot.querySelector('tangy-form'))
     this.innerHTML = this.downcast(this._config)
     this.dispatchEvent(new CustomEvent('submit-input', {bubbles: true}))
     this.mode = MODE_INFO
-    setTimeout(_ => this.shadowRoot.querySelector('#container').scrollIntoView({ behavior: 'smooth', block: 'start', inline: "nearest" }), 50)
     // this.shadowRoot.querySelector('.card-content').style.backgroundColor = "lightblue";
     // this.shadowRoot.querySelector('#container').style = 'background-color:lightblue';
 
@@ -292,7 +292,6 @@ class TangyBaseWidget extends PolymerElement {
     // });
     // this.updateStyles({'--paper-toolbar-background': '#ed0'});
     this.sparkle = "now"
-
   }
 
   _onRemoveClick() {
