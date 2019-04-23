@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.14.0
+- Add "on submit" logic editor [#46](https://github.com/Tangerine-Community/tangy-form-editor/pull/46)
+
 ## v5.13.2
 - Remove stray button with no functionality on item details editor.
 - Remove reference to clicking a + icon to add inputs.
