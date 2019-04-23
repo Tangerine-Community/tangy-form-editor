@@ -363,7 +363,7 @@ class TangyFormEditor extends PolymerElement {
           <paper-button
               class="item-create tangy-action-buttons">
               <iron-icon icon="add-circle-outline"></iron-icon>
-              ${t('Add item')}
+              ${t('Add section')}
           </paper-button>
         </div>
         
