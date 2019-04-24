@@ -5,8 +5,7 @@
 [Check out the demo on Glitch](https://tangy-form-editor.glitch.me/)
 
 ## Install
-Global dependencies: redux, js-beautify, ckeditor (special build included in this repo)
-
+Global dependencies: redux, js-beautify
 ```
 npm install --save tangy-form-editor
 ```
