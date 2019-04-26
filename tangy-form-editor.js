@@ -428,6 +428,7 @@ class TangyFormEditor extends PolymerElement {
         <h2>Form preview</h2>
         ${this.formHtml}
       `
+      this.$['form-preview'].querySelector('tangy-form').setAttribute('error-logging', '')
     } else if (state.openItem === 'form.html') {
       this.$['form-preview'].innerHTML = ``
       this.innerHTML = ''
