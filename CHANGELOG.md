@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.15.0
+- Now when there is an error in any of your custom logic, during preview an error message will appear with an approximation to where the issue is.
+
 ## v5.14.0
 - Add "on submit" logic editor [#46](https://github.com/Tangerine-Community/tangy-form-editor/pull/46)
 
