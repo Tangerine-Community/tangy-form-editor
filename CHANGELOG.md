@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.16.0
+- Increase tangy-form version to v3.15.0
+
 ## v5.15.0
 - Now when there is an error in any of your custom logic, during preview an error message will appear with an approximation to where the issue is.
 
