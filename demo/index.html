@@ -449,6 +449,25 @@
                     </tangy-timed>
                   </template>
                 </tangy-form-item>
+                <tangy-form-item id="tangy-box-nested-table" title="Tangy Box nested table" on-open="" on-change="" category="">
+                  <template>
+                  <tangy-box name="boxer">
+                    <table>
+                      <tbody>
+                      <tr>
+                        <td>Here is something nice</td>
+                        <td>
+                          <tangy-box>
+                            <tangy-input name="whoareu" label="Who are you?" hint-text="" type="text" allowed-pattern="" incomplete="" min="" max=""></tangy-input>
+                          </tangy-box>
+                        </td>
+                      </tr>
+                    </tbody>
+                    </table>
+                  </tangy-box>
+                  <tangy-input name="datery" label="datery" hint-text="" type="date"></tangy-input>
+                  </template>
+                </tangy-form-item>
 
               </tangy-form>
             </template>
