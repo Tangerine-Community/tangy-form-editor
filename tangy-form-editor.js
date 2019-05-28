@@ -502,7 +502,8 @@ class TangyFormEditor extends PolymerElement {
 
   onFormHtmlEditorSave(event) {
     this.formHtml = event.detail
-    //this.store.dispatch({type: '_UPDATE', payload: event.detail})
+    this.store.dispatch({type: '_UPDATE', payload: event.detail})
+    this.dispatchChangeEvent()
   }
 
   onFormHtmlEditorCancel(event) {
