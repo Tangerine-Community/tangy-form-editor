@@ -30,9 +30,38 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="NestedFixture">
+      <template>
+        <tangy-box-widget>
+          <tangy-box name="boxer"><table>
+            <tbody><tr>
+              <td>Here is something nice</td>
+              <td>
+                <tangy-text-widget>
+                  <tangy-input
+                          name="input1"
+                          label="Input 1"
+                          required
+                          hidden
+                          disabled
+                          tangy-if="console.log('test')"
+                          type="text">
+                  </tangy-input>
+                </tangy-text-widget>
+              </td>
+            </tr>
+            </tbody></table>
+          </tangy-box>
+        </tangy-box-widget>
+      </template>
+    </test-fixture>
+
     <script type="module">
-      import 'tangy-form/input/tangy-box.js'
+      import 'tangy-form/tangy-form.js'
+      import 'tangy-form/input/tangy-input.js'
       import '../tangy-widgets.js'
+      import '../widget/tangy-text-widget.js'
+      import 'tangy-form/input/tangy-box.js'
       import '../widget/tangy-box-widget.js'
       suite('tangy-box-widget', () => {
         test('should open blank with defaults', () => {
@@ -48,6 +77,22 @@
           assert.equal(element._config.hidden, true)
           // assert.equal(element._config.tangyIf, `console.log('test')`)
           assert.equal(element._config.htmlCode, `<p>Thank you for taking our survey. You may close the book.</p>`)
+        })
+        test('should resume and save with edits', () => {
+          const element = fixture('NestedFixture')
+          element.shadowRoot.querySelector('#edit-button').click()
+          element
+                  .shadowRoot.querySelector('tangy-form-item')
+                  .shadowRoot.querySelector('#content')
+                  .querySelector("tangy-code").querySelector('tangy-text-widget').shadowRoot.querySelector('#edit-button').click()
+          element
+                  .shadowRoot.querySelector('tangy-form-item')
+                  .shadowRoot.querySelector('#content')
+                  .querySelector("tangy-code").querySelector("tangy-text-widget")
+                  .shadowRoot.querySelector('tangy-form-item')
+                  .shadowRoot.querySelector('[name=label]').value = "New label"
+          debugger;
+          element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
         })
       })
 

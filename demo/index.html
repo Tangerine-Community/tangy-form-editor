@@ -449,6 +449,31 @@
                     </tangy-timed>
                   </template>
                 </tangy-form-item>
+                <tangy-form-item id="tangy-box-nested-table" title="Tangy Box nested table" on-open="" on-change="" category="">
+                  <template>
+                  <tangy-box name="boxer">
+                    <div style="line-height: 1.6;">
+                      <tangy-radio-buttons name="activity_1_teacher_did_activity" label="pim pam" required="" incomplete="" columns="0">
+                        <option value="1">yes</option>
+                        <option value="0">no</option>
+                      </tangy-radio-buttons>
+                      <tangy-radio-buttons name="activity_1_teacher_did_follow_steps" label="dingaling" required="" incomplete="" columns="0">
+                        <option value="1">yes</option>
+                        <option value="0">no</option>
+                      </tangy-radio-buttons>
+                      <tangy-radio-buttons name="activity_1_teacher_did_keep_time" label="beep boop" required="" incomplete="" columns="0">
+                        <option value="1">yes</option>
+                        <option value="0">no</option>
+                      </tangy-radio-buttons>
+                      <tangy-radio-buttons id="activity_1_teacher_did_use_words_in_bold" name="activity_1_teacher_did_use_words_in_bold" label="himina himina" required="" incomplete="" columns="0">
+                        <option value="1">yes</option>
+                        <option value="0">no</option>
+                      </tangy-radio-buttons>
+                    </div>
+                  </tangy-box>
+                  <tangy-input name="datery" label="datery" hint-text="" type="date"></tangy-input>
+                  </template>
+                </tangy-form-item>
 
               </tangy-form>
             </template>

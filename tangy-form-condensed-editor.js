@@ -67,25 +67,30 @@ class TangyFormCondensedEditor extends PolymerElement {
   wrap(markup) {
     const template = document.createElement('template')
     template.innerHTML = markup
-    // Wrap all nodes with their corresponding widget elements.
-    window.tangyFormEditorWidgets.widgets.forEach(widgetInfo => {
-      template.content.querySelectorAll(widgetInfo.claimElement)
-        .forEach(matchingEl => {
-            const widgetEl = document.createElement(widgetInfo.widgetName)
-            widgetEl.setAttribute('widget', '')
-            widgetEl.setAttribute('mode', this.print ? 'MODE_PRINT' : 'MODE_INFO')
-            wrap(matchingEl, widgetEl)
-        })
+
+    // Wrap all nodes (1 level deep) with their corresponding widget elements.
+    template.content.childNodes.forEach(childNode => {
+      if (childNode.nodeName !== '#text') {
+        let foundWidget = window.tangyFormEditorWidgets.widgets
+          .find(widgetInfo => widgetInfo.claimElement.indexOf(childNode.tagName.toLowerCase()) === 0)
+        if (foundWidget) {
+          const widgetEl = document.createElement(foundWidget.widgetName)
+          widgetEl.setAttribute('widget', '')
+          widgetEl.setAttribute('mode', this.print ? 'MODE_PRINT' : 'MODE_INFO')
+          wrap(childNode, widgetEl)
+        }
+      }
     })
+
     // Wrap all unclaimed nodes with tangy-box.
     template.content.childNodes.forEach(node => {
       if(
-        (node.hasAttribute && !node.hasAttribute('widget')) 
-        || 
+        (node.hasAttribute && !node.hasAttribute('widget'))
+        ||
         (node.nodeName === '#text' && !!node.wholeText.replace(/ /g, '').replace(/\s+/g,''))
       ) {
         const tangyEl = document.createElement('tangy-box')
-        wrap(node, tangyEl) 
+        wrap(node, tangyEl)
         const widgetEl = document.createElement('tangy-box-widget')
         wrap(tangyEl, widgetEl)
       }
