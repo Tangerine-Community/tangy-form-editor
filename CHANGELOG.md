@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v5.16.1
+- Fix bug that created duplicate elements when editing a tangy-box element. 
+- Enable saving the whole form when using the html editor
+
 ## v5.16.0
 - Increase tangy-form version to v3.15.0
 
