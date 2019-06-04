@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v5.17.0
+- Added optionFontSize input for tangy-timed and tangy-untimed-grid widgets.
+- Increase tangy-form version to 3.16.0 to support new optionFontSize property in tangy-form.
+
 ## v5.16.1
 - Fix bug that created duplicate elements when editing a tangy-box element. 
 - Enable saving the whole form when using the html editor

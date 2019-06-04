@@ -22,7 +22,8 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
       hidden: false,
       rowMarkers: false,
       tangyIf: '',
-      validIf: ''
+      validIf: '',
+      optionFontSize: ''
     };
   }
 
@@ -58,6 +59,7 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
         ${config.hidden ? 'hidden' : ''}
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
+        ${config.optionFontSize ? `option-font-size="${config.optionFontSize}"` : ``}
       >
       ${config.options
         .map(
@@ -88,6 +90,7 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
+      <tr><td><strong>Option Font Size:</strong></td><td>${config.optionFontSize}</td></tr>
       <tr><td><strong>Options:</strong></td><td><ul>${gridValues}</ul></td></tr>
     </table>
     <hr/>
@@ -130,6 +133,9 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
           <tangy-checkbox name="hidden" ${
             config.hidden ? 'value="on"' : ''
           }>Hidden</tangy-checkbox>
+          <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
+          config.optionFontSize
+          }"></tangy-input>
           <tangy-input name="options"
             hint-text="Enter the options to be displayed for the grid separated by spaces."
             inner-label="Options (Each option separated by a space)" value="${config.options
@@ -176,6 +182,7 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
       disabled: formEl.values.disabled === 'on' ? true : false,
       tangyIf: formEl.values.tangy_if,
       validIf: formEl.values.valid_if,
+      optionFontSize: formEl.values.optionFontSize,
       options: formEl.values.options.split(' ').map((item, i) => {
         return { value: i, label: item };
       })

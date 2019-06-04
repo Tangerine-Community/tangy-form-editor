@@ -24,7 +24,8 @@ class TangyTimedWidget extends TangyBaseWidget {
       hidden: false,
       rowMarkers: false,
       tangyIf: '',
-      validIf: ''
+      validIf: '',
+      optionFontSize: ''
     };
   }
 
@@ -64,6 +65,7 @@ class TangyTimedWidget extends TangyBaseWidget {
         ${config.hidden ? 'hidden' : ''}
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
+        ${config.optionFontSize ? `option-font-size="${config.optionFontSize}"` : ``}
       >
       ${config.options
         .map(
@@ -87,15 +89,16 @@ class TangyTimedWidget extends TangyBaseWidget {
     <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
     <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
     <tr><td><strong>Duration:</strong></td><td>${config.duration}</td></tr>
-    <tr><td><strong>Duration:</strong></td><td>${config.autoStop}</td></tr>
+    <tr><td><strong>AutoStop:</strong></td><td>${config.autoStop}</td></tr>
     <tr><td><strong>Mode:</strong></td><td>${config.mode}</td></tr>
-      <tr><td><strong>Columns:</strong></td><td>${config.columns}</td></tr>
-      <tr><td><strong>Show Labels:</strong></td><td>${
+    <tr><td><strong>Columns:</strong></td><td>${config.columns}</td></tr>
+    <tr><td><strong>Show Labels:</strong></td><td>${
         config.showLabels
       }</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
+      <tr><td><strong>Option Font Size:</strong></td><td>${config.optionFontSize}</td></tr>
       <tr><td><strong>Options:</strong></td><td><ul>${gridValues}</ul></td></tr>
     </table>
     <hr/>
@@ -147,6 +150,9 @@ class TangyTimedWidget extends TangyBaseWidget {
           <tangy-input name="duration" hint-text="Enter the time limit for this grid." inner-label="Duration in seconds" value="${
             config.duration
           }"></tangy-input>
+          <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
+            config.optionFontSize
+          }"></tangy-input>
           <tangy-input name="options"
             hint-text="Enter the options to be displayed for the grid separated by spaces."
             inner-label="Options (Each option separated by a space)" value="${config.options
@@ -196,6 +202,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       disabled: formEl.values.disabled === 'on' ? true : false,
       tangyIf: formEl.values.tangy_if,
       validIf: formEl.values.valid_if,
+      optionFontSize: formEl.values.optionFontSize,
       options: formEl.values.options.split(' ').map((item, i) => {
         return { value: i, label: item };
       })
