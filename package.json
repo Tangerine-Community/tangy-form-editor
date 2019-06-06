@@ -9,7 +9,7 @@
   "dependencies": {
     "@material/mwc-button": "^0.4.0",
     "@material/mwc-fab": "^0.3.4",
-    "@material/mwc-icon": "^0.3.4",
+    "@material/mwc-icon": "^0.6.0",
     "@polymer/paper-toggle-button": "^3.0.0-pre.21",
     "@polymer/polymer": "^3.0.0",
     "@polymer/sortable-list": "git://github.com/DrNiels/sortable-list.git#polymer-3",
