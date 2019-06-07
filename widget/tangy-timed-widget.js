@@ -204,7 +204,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       validIf: formEl.values.valid_if,
       optionFontSize: formEl.values.optionFontSize,
       options: formEl.values.options.split(' ').map((item, i) => {
-        return { value: i, label: item };
+        return { value: i+1, label: item };
       })
     };
   }

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.18.0
+- Change numbering of tangy-timed and tangy-untimed-grid options to start from 1 instead of 0.
+
 ## v5.17.0
 - Added optionFontSize input for tangy-timed and tangy-untimed-grid widgets.
 - Increase tangy-form version to 3.16.0 to support new optionFontSize property in tangy-form.
