@@ -72,7 +72,7 @@ class TangyFormCondensedEditor extends PolymerElement {
     template.content.childNodes.forEach(childNode => {
       if (childNode.nodeName !== '#text') {
         let foundWidget = window.tangyFormEditorWidgets.widgets
-          .find(widgetInfo => widgetInfo.claimElement.indexOf(childNode.tagName.toLowerCase()) === 0)
+          .find(widgetInfo => childNode.matches(widgetInfo.claimElement))
         if (foundWidget) {
           const widgetEl = document.createElement(foundWidget.widgetName)
           widgetEl.setAttribute('widget', '')
