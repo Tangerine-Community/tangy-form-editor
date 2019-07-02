@@ -85,6 +85,7 @@ class TangyFormEditorAddInput extends PolymerElement {
             <mwc-button icon="attach_money" on-click="addThis"><span id="tangy-template-widget">HTML template</span></mwc-button><br>
             <mwc-button icon="filter_center_focus" on-click="addThis"><span id="tangy-qr-widget">QR Code Scanner</span></mwc-button><br>
             <mwc-button icon="question_answer" on-click="addThis"><span id="tangy-eftouch-widget">EF Touch</span></mwc-button><br>
+            <mwc-button icon="speaker" on-click="addThis"><span id="tangy-acasi-widget">Acasi</span></mwc-button><br>
             <mwc-button icon="av_timer"on-click="addThis"><span id="tangy-timed-widget" >Timed Grid</span></mwc-button><br>
             <mwc-button icon="grid_on"on-click="addThis"><span id="tangy-untimed-grid-widget" >Untimed Grid</span></mwc-button><br>
             <mwc-button icon="thumbs_up_down"on-click="addThis"><span id="tangy-consent-widget" >Consent</span></mwc-button><br>
