@@ -25,7 +25,7 @@
           <option width=33 height=33 src="foo.png" value="d"></option>
           <option width=33 height=33 src="foo.png" value="e"></option>
           <option width=33 height=33 src="foo.png" value="f" disabled></option>
-          <option width=33 height=33 src="foo.png" value="g"></option>
+          <option width=33 height=33 src="foo.png" value="g" correct></option>
           <option width=33 height=33 src="foo.png" value="h"></option>
           <option width=33 height=33 src="foo.png" value="i"></option>
         </tangy-eftouch-widget-layout>
@@ -39,11 +39,20 @@
 
         test('should disable a cell', function () {
           const element = fixture('ResumeFixture')
-          element.querySelectorAll('tangy-checkbox')[0].value = 'on'
-          element.querySelectorAll('tangy-checkbox')[0].dispatchEvent(new Event('change', {bubbles: true}))
+          element.querySelectorAll('tangy-checkbox[name=disabled]')[0].value = 'on'
+          element.querySelectorAll('tangy-checkbox[name=disabled]')[0].dispatchEvent(new Event('change', {bubbles: true}))
           const template = document.createElement('template')
           template.innerHTML = element.value
           assert.equal(template.content.querySelector('option').hasAttribute('disabled'), true)
+        })
+
+        test('should disable a cell', function () {
+          const element = fixture('ResumeFixture')
+          element.querySelectorAll('tangy-checkbox[name=correct]')[0].value = 'on'
+          element.querySelectorAll('tangy-checkbox[name=correct]')[0].dispatchEvent(new Event('change', {bubbles: true}))
+          const template = document.createElement('template')
+          template.innerHTML = element.value
+          assert.equal(template.content.querySelector('option').hasAttribute('correct'), true)
         })
 
         test('should open blank with defaults', function () {
@@ -63,6 +72,7 @@
             ) 
           , true)
           assert.equal(element.layout[1].columns[2].disabled, true)
+          assert.equal(element.layout[2].columns[0].correct, true)
         })
 
         test('value should have 9 options', function () {

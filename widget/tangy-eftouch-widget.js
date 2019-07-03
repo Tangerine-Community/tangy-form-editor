@@ -15,8 +15,8 @@ class TangyEftouchWidget extends TangyBaseWidget {
     return {
       name: '',
       label: '',
-      hintText: '',
       optionsMarkup: '',
+      openSound: '',
       inputSound: '',
       transitionSound: '',
       transitionDelay: '',
@@ -28,8 +28,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
       validIf: '',
       autoProgress: false,
       required: false,
-      disabled: false,
-      hidden: false
+      hidden: false,
+      multiSelect: false,
+      requiredCorrect: false,
+      ifIncorrectThenHighlightCorrect: false,
+      noCorrections: false
     };
   }
 
@@ -38,6 +41,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
       ...config,
       ...element.getProps(),
       ...{
+        multiSelect: element.hasAttribute('multi-select'),
+        requiredCorrect: element.hasAttribute('required-correct'),
+        ifIncorrectThenHighlightCorrect: element.hasAttribute('if-incorrect-then-highlight-correct'),
+        noCorrections: element.hasAttribute('no-corrections'),
+        openSound: element.hasAttribute('open-sound') ? element.getAttribute('open-sound') : '',
         tangyIf: element.hasAttribute('tangy-if')
           ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
           : '',
@@ -54,7 +62,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       <tangy-eftouch
         name="${config.name}"
         label="${config.label}"
-        hintText="${config.hintText}"
+        open-sound="${config.openSound}"
         input-sound="${config.inputSound}"
         transition-sound="${config.transitionSound}"
         transition-delay="${config.transitionDelay}"
@@ -66,8 +74,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
         ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.autoProgress ? 'auto-progress' : ''}
         ${config.required ? 'required' : ''}
-        ${config.disabled ? 'disabled' : ''}
         ${config.hidden ? 'hidden' : ''}
+        ${config.multiSelect ? 'multi-select' : ''}
+        ${config.requiredCorrect ? 'required-correct' : ''}
+        ${config.ifIncorrectThenHighlightCorrect ? 'if-incorrect-then-highlight-correct' : ''}
+        ${config.noCorrections ? 'no-corrections' : ''}
       >
         ${config.optionsMarkup}
       </tangy-eftouch>
@@ -77,7 +88,10 @@ class TangyEftouchWidget extends TangyBaseWidget {
   renderInfo(config) {
     const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>question_answer</mwc-icon><span>`
     const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
-    return `${icon} ${name} ${this.downcast(config)}`;
+    return `${icon} ${name} 
+      <style>tangy-eftouch {position: static} </style> 
+      ${this.downcast(config)}
+    `;
   }
 
   renderEdit(config) {
@@ -114,8 +128,8 @@ class TangyEftouchWidget extends TangyBaseWidget {
             hint-text="Enter any conditional validation logic."
             value="${config.validIf.replace(/"/g, '&quot;')}">
           </tangy-input>
-          <tangy-input name="hintText" inner-label="Hint Text" value="${
-            config.hintText
+          <tangy-input name="open-sound" inner-label="Open sound" value="${
+            config.openSound
           }"></tangy-input>
           <tangy-input name="input-sound" inner-label="Input sound" value="${
             config.inputSound
@@ -144,12 +158,21 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-checkbox name="required" ${
             config.required ? 'value="on"' : ''
           }>Required</tangy-checkbox>
-          <tangy-checkbox name="disabled" ${
-            config.disabled ? 'value="on"' : ''
-          }>Disabled</tangy-checkbox>
           <tangy-checkbox name="hidden" ${
             config.hidden ? 'value="on"' : ''
           }>Hidden</tangy-checkbox>
+          <tangy-checkbox name="multi-select" ${
+            config.multiSelect ? 'value="on"' : ''
+          }>multi-select</tangy-checkbox>
+          <tangy-checkbox name="required-correct" ${
+            config.requiredCorrect ? 'value="on"' : ''
+          }>Required correct</tangy-checkbox>
+          <tangy-checkbox name="if-incorrect-then-highlight-correct" ${
+            config.ifIncorrectThenHighlightCorrect ? 'value="on"' : ''
+          }>If incorrect selection, then highlight correct answers.</tangy-checkbox>
+          <tangy-checkbox name="no-corrections" ${
+            config.noCorrections ? 'value="on"' : ''
+          }>No corrections allowed</tangy-checkbox>
           <tangy-eftouch-widget-layout name="options-markup">
             ${config.optionsMarkup}
           </tangy-eftouch-widget-layout>
@@ -165,7 +188,6 @@ class TangyEftouchWidget extends TangyBaseWidget {
     <table>
     <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
     <tr><td><strong>Variable Label:</strong></td><td>${config.label}</td></tr>
-    <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
     <tr><td><strong>Input Sound:</strong></td><td>${config.inputSound}</td></tr>
     <tr><td><strong>Transition Sound:</strong></td><td>${
       config.transitionSound
@@ -187,7 +209,6 @@ class TangyEftouchWidget extends TangyBaseWidget {
         config.autoProgress
       }</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
-      <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
       <tr><td><strong>Options Markup:</strong></td><td><ul>${
         config.optionsMarkup
@@ -211,7 +232,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
       autoProgress: formEl.values['auto-progress'] === 'on' ? true : false,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
-      disabled: formEl.values.disabled === 'on' ? true : false,
+      openSound: formEl.values['open-sound'],
+      multiSelect: formEl.values['multi-select'] === 'on' ? true : false,
+      requiredCorrect: formEl.values['required-correct'] === 'on' ? true : false,
+      ifIncorrectThenHighlightCorrect: formEl.values['if-incorrect-then-highlight-correct'] === 'on' ? true : false,
+      noCorrections: formEl.values['no-corrections'] === 'on' ? true : false,
       optionsMarkup: formEl.values['options-markup'],
       tangyIf: formEl.response.items[0].inputs.find(
         input => input.name === 'tangy_if'
