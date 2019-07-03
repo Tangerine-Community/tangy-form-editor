@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.19.0
+- Add new eftouch features [#55](https://github.com/Tangerine-Community/tangy-form-editor/pull/55)
+
 ## v5.18.1
 - Fix breaking date/number/time widgets [#54](https://github.com/Tangerine-Community/tangy-form-editor/pull/54)
 
