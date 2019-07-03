@@ -37,6 +37,7 @@
       suite('tangy-acasi-widget', () => {
         test('should open blank with defaults', () => {
           const element = fixture('BlankFixture')
+          debugger;
           assert.equal(element._config.hasOwnProperty('name'), true)
           assert.equal(element._config.hasOwnProperty('required'), true)
           assert.equal(element._config.hasOwnProperty('disabled'), true)
@@ -56,14 +57,9 @@
           element.shadowRoot.querySelector('#edit-button').click()
           element
             .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=label]').value = 'New label'
-          element
-            .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=required]').setAttribute('value','')
+            .shadowRoot.querySelector('[name=introsrc]').value = '../demo/assets/sounds/2.mp3'
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
-          assert.equal(element._config.label, 'New label')
-          assert.equal(element._config.required, false)
-          assert.equal(!!element.markup, true)
+          assert.equal(element._config.introsrc, '../demo/assets/sounds/2.mp3')
         })
       })
 

@@ -32,10 +32,10 @@ class TangyAcasiWidget extends TangyBaseWidget {
       ...config,
       ...element.getProps(),
       ...{
-        images: element.images,
-        touchsrc: element.touchsrc,
-        introsrc: element.introsrc,
-        transitionsrc: element.transitionsrc,
+        images: element.getAttribute('images'),
+        touchsrc: element.getAttribute('touchsrc'),
+        introsrc: element.hasAttribute('introsrc') ? element.getAttribute('introsrc'): '',
+        transitionsrc: element.getAttribute('transitionsrc'),
         tangyIf: element.hasAttribute('tangy-if')
           ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
           : '',
