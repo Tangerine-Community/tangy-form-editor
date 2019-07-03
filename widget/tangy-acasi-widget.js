@@ -19,10 +19,10 @@ class TangyAcasiWidget extends TangyBaseWidget {
       allowedPattern: '',
       tangyIf: '',
       validIf: '',
-      images:'../demo/assets/images/never.png,../demo/assets/images/once.png,../demo/assets/images/few.png,../demo/assets/images/many.png,../demo/assets/images/dont_know.png',
-      touchsrc:'../demo/assets/sounds/never_Eng.mp3,../demo/assets/sounds/once_Eng.mp3,../demo/assets/sounds/fewtimes_Eng.mp3,../demo/assets/sounds/manytimes_Eng.mp3,../demo/assets/sounds/noresponse_Eng.mp3',
+      images:'./assets/images/never.png,./assets/images/once.png,./assets/images/few.png,./assets/images/many.png,./assets/images/dont_know.png',
+      touchsrc:'./assets/sounds/never_Eng.mp3,./assets/sounds/once_Eng.mp3,./assets/sounds/fewtimes_Eng.mp3,./assets/sounds/manytimes_Eng.mp3,./assets/sounds/noresponse_Eng.mp3',
       introsrc:'',
-      transitionsrc:'../demo/assets/sounds/swish.mp3'
+      transitionsrc:'./assets/sounds/swish.mp3'
     };
   }
 
@@ -157,7 +157,7 @@ class TangyAcasiWidget extends TangyBaseWidget {
           Hidden
         </tangy-checkbox>
         <h2>Media Elements</h2>
-        <p>Paths: Images should use the format: "../assets/images/image.png". Sounds should take the format "../assets/sounds/sound.mp3"</p>
+        <p>Paths: Images should use the format: "./assets/images/image.png". Sounds should take the format "./assets/sounds/sound.mp3"</p>
         <h3>Page Loading Sound</h3>
          <tangy-input
           name="introsrc"
