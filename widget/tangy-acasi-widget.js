@@ -85,10 +85,10 @@ class TangyAcasiWidget extends TangyBaseWidget {
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
-      <tr><td><strong>images:</strong></td><td>${config.images}</td></tr>
-      <tr><td><strong>touchsrc:</strong></td><td>${config.touchsrc}</td></tr>
-      <tr><td><strong>introsrc:</strong></td><td>${config.introsrc}</td></tr>
-      <tr><td><strong>transitionsrc:</strong></td><td>${config.transitionsrc}</td></tr>
+      <tr><td><strong>Images:</strong></td><td>${config.images}</td></tr>
+      <tr><td><strong>Touchsrc:</strong></td><td>${config.touchsrc}</td></tr>
+      <tr><td><strong>Introsrc:</strong></td><td>${config.introsrc}</td></tr>
+      <tr><td><strong>Transitionsrc:</strong></td><td>${config.transitionsrc}</td></tr>
     </table>
     <hr/>
     `;
@@ -158,26 +158,26 @@ class TangyAcasiWidget extends TangyBaseWidget {
         </tangy-checkbox>
          <tangy-input
           name="introsrc"
-          inner-label="introsrc - path to audio file that plays when the page loads"
-          hint-text="Enter the introsrc, commma-separated."
+          inner-label="Path to audio file that plays when the page loads"
+          hint-text="Enter the path to the audio file that plays when the page loads."
           value="${config.introsrc}">
           </tangy-input>
          <tangy-input
           name="images"
-          inner-label="images"
+          inner-label="Images"
           hint-text="Enter the images, comma-separated."
           value="${config.images}">
           </tangy-input>
          <tangy-input
           name="touchsrc"
-          inner-label="touchsrc - path to audio files"
-          hint-text="Enter the touchsrc, commma-separated."
+          inner-label="Path to each audio file"
+          hint-text="Enter the paths to each audio file, commma-separated."
           value="${config.touchsrc}">
         </tangy-input>
          <tangy-input
           name="transitionsrc"
-          inner-label="transitionsrc - path to audio file that plays when transitioning to a new page"
-          hint-text="Enter the transitionsrc, commma-separated."
+          inner-label="Transition sound - the path to the audio file that plays when transitioning to a new page"
+          hint-text="Enter the Transition sound - the path to the audio file that plays when transitioning to a new page."
           value="${config.transitionsrc}">
         </tangy-input>
       </tangy-form-item>
