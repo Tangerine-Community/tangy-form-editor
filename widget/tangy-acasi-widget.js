@@ -156,22 +156,27 @@ class TangyAcasiWidget extends TangyBaseWidget {
           ${config.hidden ? 'value="on"' : ''}>
           Hidden
         </tangy-checkbox>
+        <h2>Media Elements</h2>
+        <p>Paths: Images should use the format: "../assets/images/image.png". Sounds should take the format "../assets/sounds/sound.mp3"</p>
+        <h3>Page Loading Sound</h3>
          <tangy-input
           name="introsrc"
           inner-label="Path to audio file that plays when the page loads"
           hint-text="Enter the path to the audio file that plays when the page loads."
           value="${config.introsrc}">
           </tangy-input>
+          <h3>Defaults</h3>
+          <p>You may not need to change any of the following fields:</p>
          <tangy-input
           name="images"
-          inner-label="Images"
-          hint-text="Enter the images, comma-separated."
+          inner-label="Path to images"
+          hint-text="Enter the path to the images, comma-separated."
           value="${config.images}">
           </tangy-input>
          <tangy-input
           name="touchsrc"
           inner-label="Path to each audio file"
-          hint-text="Enter the paths to each audio file, commma-separated."
+          hint-text="Enter the paths to each audio file, comma-separated."
           value="${config.touchsrc}">
         </tangy-input>
          <tangy-input
