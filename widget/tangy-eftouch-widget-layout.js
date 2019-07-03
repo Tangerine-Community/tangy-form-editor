@@ -5,6 +5,7 @@ import '@polymer/paper-button/paper-button.js'
 import 'tangy-form/tangy-form.js'
 import 'tangy-form/input/tangy-eftouch.js'
 import 'tangy-form/input/tangy-input.js'
+import 'tangy-form/input/tangy-checkbox.js'
 
 class TangyEftouchWidgetLayout extends PolymerElement {
 
@@ -86,6 +87,8 @@ class TangyEftouchWidgetLayout extends PolymerElement {
                 Width: <input type="number" row-number="${rowNumber}" column-number="${columnNumber}" name="width" value="${column.width}"><br>
                 Value: <input type="text" row-number="${rowNumber}" column-number="${columnNumber}" name="value" value="${column.value}"><br>
                 <paper-fab mini icon="close" row-number="${rowNumber}" column-number="${columnNumber}" class="remove-column"></paper-fab>
+                <tangy-checkbox label="disabled" row-number="${rowNumber}" column-number="${columnNumber}" name="disabled" value="${column.disabled ? 'on' : ''}"></tangy-checkbox><br>
+                <tangy-checkbox label="correct" row-number="${rowNumber}" column-number="${columnNumber}" name="correct" value="${column.correct ? 'on' : ''}"></tangy-checkbox><br>
               </div>
             `).join('')}
             <div class="column">
@@ -95,7 +98,6 @@ class TangyEftouchWidgetLayout extends PolymerElement {
         `).join('')}
         <paper-button class="add-row">add row</paper-button>
       </div>
-    
     `
     this.addEventListener('change', (ev) => this.changeLayout({
       rowNumber: ev.target.hasAttribute('row-number') ? parseInt(ev.target.getAttribute('row-number')) : undefined,
@@ -213,7 +215,7 @@ class TangyEftouchWidgetLayout extends PolymerElement {
         } 
       })
     ], [])
-    return options.map(option => `<option value="${option.value}" height="${option.height}" width="${option.width}" src="${option.src}"></options>`).join('')
+    return options.map(option => `<option ${option.correct ? 'correct' : ''} ${option.disabled ? 'disabled' : ''} value="${option.value}" height="${option.height}" width="${option.width}" src="${option.src}"></options>`).join('')
   }
 
   // Given an array of options objects with option.width properties, group them into a matrix
@@ -224,7 +226,9 @@ class TangyEftouchWidgetLayout extends PolymerElement {
         width: parseInt(option.getAttribute('width')),
         height: parseInt(option.getAttribute('height')),
         src: option.getAttribute('src'),
-        value: option.getAttribute('value')
+        value: option.getAttribute('value'),
+        disabled: option.hasAttribute('disabled'),
+        correct: option.hasAttribute('correct')
       }
     })
     const { layout } = options.reduce((acc, option) => option.width + acc.rowWidth > 100
