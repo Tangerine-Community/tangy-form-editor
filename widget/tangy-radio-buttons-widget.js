@@ -154,12 +154,13 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
                 .map(
                   option => `
                 <tangy-list-item>
-                  <tangy-input name="value" allowed-pattern="[a-zA-Z0-9\-_]" hint-text="Enter the variable value of the radiobutton" inner-label="Value" type="text" value="${
+                  <tangy-input name="value" allowed-pattern="[a-zA-Z0-9\-_]" hint-text="Enter the variable value of the radio button" inner-label="Value" type="text" value="${
                     option.value
                   }"></tangy-input>
                   <tangy-input name="label" hint-text="Enter the display label of the radio button" inner-label="Label" type="text" value="${
                     option.label
                   }"></tangy-input>
+                  <tangy-checkbox name="correct" hint-text="Select if this is the correct answer."  label="Correct"  value="${option.correct ? 'on' : ''}"></tangy-checkbox>
                 </tangy-list-item>
               `
                 )
