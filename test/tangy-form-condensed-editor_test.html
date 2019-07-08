@@ -63,6 +63,7 @@
         test('should open with 2 input editors', () => {
           const element = fixture('ContainerFixture')
           assert.equal(element.shadowRoot.querySelectorAll('[widget]').length, 2)
+          assert.equal(element.shadowRoot.querySelectorAll('[widget]')[1].tagName, 'TANGY-NUMBER-WIDGET')
         })
         test('should get markup back', () => {
           const element = fixture('ContainerFixture')
