@@ -131,8 +131,8 @@ class TangyFormItemEditor extends PolymerElement {
             <p><paper-checkbox disabled id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></p>
             <p><paper-checkbox disabled id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></p>
             <p><paper-checkbox disabled id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
-            <p><paper-input id="incorrectThresholdInput" ${typeof this.item.incorrectThreshold !== 'undefined' ? value="${this.item.incorrectThreshold}" : ''} label="Threshold: Number of Incorrect Answers before abandoning form" always-float-label></paper-input>
-            <label id="hintText">Currently limited to radio-buttons; proceeds to next page when threshold of incorrect answers is reached.</label></p>
+            <p><paper-input id="incorrectThresholdInput" ${typeof this.item.incorrectThreshold !== 'undefined' ? value="${this.item.incorrectThreshold}" : ''} label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
+            <label id="hintText">Currently limited to radio-buttons; disables remaining questions when threshold of incorrect answers is reached.</label></p>
 
           </div>
         </div>
