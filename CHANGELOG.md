@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.20.0
+- Add ACASI widget and support for incorrect-threshold in tangy-form-item [#56](https://github.com/Tangerine-Community/tangy-form-editor/pull/56)
+
 ## v5.19.0
 - Add new eftouch features [#55](https://github.com/Tangerine-Community/tangy-form-editor/pull/55)
 
