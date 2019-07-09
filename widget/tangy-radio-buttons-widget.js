@@ -3,6 +3,7 @@ import '@polymer/paper-button/paper-button.js';
 import 'tangy-form/tangy-form.js';
 import 'tangy-form/input/tangy-radio-buttons.js';
 import 'tangy-form/input/tangy-input.js';
+import 'tangy-form/input/tangy-checkbox.js';
 import { TangyBaseWidget } from '../tangy-base-widget.js';
 
 class TangyRadioButtonsWidget extends TangyBaseWidget {
@@ -32,7 +33,8 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
       options: [...element.querySelectorAll('option')].map(option => {
         return {
           value: option.getAttribute('value'),
-          label: option.innerHTML
+          label: option.innerHTML,
+          correct: option.hasAttribute('correct')
         };
       }),
       tangyIf: element.hasAttribute('tangy-if')
@@ -59,7 +61,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
        ${config.options
          .map(
            option => `
-       <option value="${option.value}">${option.label}</option>
+       <option value="${option.value}" ${option.correct ? 'correct' : ''} >${option.label}</option>
       `
          )
          .join('')}
@@ -69,7 +71,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
   renderPrint(config) {
     let keyValuePairs = '';
     config.options.map(option => {
-      keyValuePairs += `<li>${option.value}: ${option.label}</li>`;
+      keyValuePairs += `<li>${option.value}: ${option.label} ${option.correct ? 'correct' : ''}</li>`;
     });
     return `
    
@@ -141,10 +143,13 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
           <tangy-checkbox name="hidden" ${
             config.hidden ? 'value="on"' : ''
           }>Hidden</tangy-checkbox>
+          <h2>Options</h2>
+          <p>Click the "Correct" property for options that are the correct answer. This property is used with the Section Detail's Threshold property.</p>
           <tangy-list name="options">
             <template type="tangy-list/new-item">
               <tangy-input name="value" allowed-pattern="[a-zA-Z0-9\-_]" hint-text="Enter the variable value of the radio button" inner-label="Value" type="text"></tangy-input>
               <tangy-input name="label" hint-text="Enter the display label of the radio button" inner-label="Label" type="text"></tangy-input>
+              <tangy-checkbox name="correct" hint-text="Select if this is the correct answer."  label="Correct" ></tangy-checkbox>
             </template>
             ${
               config.options.length > 0
