@@ -20,6 +20,7 @@ import './widget/tangy-email-widget.js'
 import './widget/tangy-qr-widget.js'
 import './widget/tangy-consent-widget.js'
 import './widget/tangy-untimed-grid-widget.js'
+import './widget/tangy-acasi-widget.js'
 
 /**
  * `tangy-form-item-editor`
