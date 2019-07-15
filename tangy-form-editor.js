@@ -8,6 +8,9 @@ import './tangy-form-item-editor.js'
 import './tangy-form-html-editor.js'
 import './tangy-code.js'
 import 'tangy-translate'
+import 'file-list-component/file-list.js'
+import 'file-list-component/file-list-http.js'
+import 'file-list-component/file-list-select.js'
 
 
 //   <!-- Tangy Elements -->
@@ -129,6 +132,10 @@ class TangyFormEditor extends PolymerElement {
         type: Array,
         value: false,
         reflectToAttribute: true
+      },
+      filesEndpoint: {
+        type: String,
+        value: ''
       }
     };
   }
@@ -444,7 +451,7 @@ class TangyFormEditor extends PolymerElement {
     } else if (state.openItem !== '') {
       this.$.container.innerHTML = ''
       this.innerHTML = `
-        <tangy-form-item-editor></tangy-form-item-editor>
+        <tangy-form-item-editor files-endpoint="${this.filesEndpoint}"></tangy-form-item-editor>
       `
       this.querySelector('tangy-form-item-editor').categories = this.categories
       this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)

@@ -106,6 +106,7 @@ class TangyFormEditorAddInput extends PolymerElement {
     //const widgetElInfo = window.tangyFormEditorWidgets.widgets.find(widgetInfo => widgetInfo.claimElement === event.target.id)
     const wrapperEl = document.createElement(event.target.id)
     wrapperEl.setAttribute('mode', 'MODE_EDIT')
+    wrapperEl.setAttribute('files-endpoint', this.getAttribute('files-endpoint'))
     this.after(wrapperEl)
     setTimeout(() => {
         wrapperEl.scrollIntoView({ behavior: 'smooth', block: 'start', inline: "nearest"})
