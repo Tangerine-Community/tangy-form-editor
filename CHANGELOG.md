@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.21.0
+- Implement usage of endpoint and file-list-select element for selecting files. [#57](https://github.com/Tangerine-Community/tangy-form-editor/pull/57)
+
 ## v5.20.0
 - Add ACASI widget, support for incorrect-threshold in tangy-form-item, and 'correct' attribute in tangy-radio-buttons [#56](https://github.com/Tangerine-Community/tangy-form-editor/pull/56)
 
