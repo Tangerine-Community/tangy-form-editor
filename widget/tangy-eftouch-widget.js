@@ -95,10 +95,23 @@ class TangyEftouchWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `<h2>Add EFTouch element</h2>
+    return `
     <tangy-form id="tangy-eftouch">
       <tangy-form-item id="tangy-eftouch">
         <template type="tangy-form-item">
+        <style>
+        label {
+          margin: 15px 0px 5px 15px;
+          display: block;
+          width: 100%;
+          color: #333;
+          font-weight: heavy;
+          font-size: 1.2em;
+        }
+        file-list-select {
+          margin: 0px 0px 0px 10px;
+        }
+        </style>
           <tangy-input
             name="name"
             valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
@@ -128,15 +141,18 @@ class TangyEftouchWidget extends TangyBaseWidget {
             hint-text="Enter any conditional validation logic."
             value="${config.validIf.replace(/"/g, '&quot;')}">
           </tangy-input>
-          <tangy-input name="open-sound" inner-label="Open sound" value="${
-            config.openSound
-          }"></tangy-input>
-          <tangy-input name="input-sound" inner-label="Input sound" value="${
-            config.inputSound
-          }"></tangy-input>
-          <tangy-input name="transition-sound" inner-label="Transition sound" value="${
-            config.transitionSound
-          }"></tangy-input>
+          <label for="open-sound">Open sound</label>
+          <file-list-select name="open-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
+            config.openSound ? config.openSound : ''
+          }"></file-list-select>
+          <label for="input-sound">Input sound</label>
+          <file-list-select name="input-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
+            config.inputSound ? config.inputSound : ''
+          }"></file-list-select>
+          <label for="transition-sound">Transition sounds</label>
+          <file-list-select name="transition-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
+            config.transitionSound ? config.transitionSound : ''
+          }"></file-list-select>
           <tangy-input name="transition-delay" inner-label="Transition delay" value="${
             config.transitionDelay
           }" type="number"></tangy-input>
@@ -173,7 +189,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-checkbox name="no-corrections" ${
             config.noCorrections ? 'value="on"' : ''
           }>No corrections allowed</tangy-checkbox>
-          <tangy-eftouch-widget-layout name="options-markup">
+          <tangy-eftouch-widget-layout files-endpoint="${this.getAttribute('files-endpoint')}" name="options-markup">
             ${config.optionsMarkup}
           </tangy-eftouch-widget-layout>
         </template>
@@ -222,9 +238,9 @@ class TangyEftouchWidget extends TangyBaseWidget {
       ...config,
       name: formEl.values.name,
       label: formEl.values.label,
-      inputSound: formEl.values['input-sound'],
+      inputSound: formEl.querySelector('tangy-form-item').shadowRoot.querySelector('[name=input-sound]').value,
       transitionDelay: formEl.values['transition-delay'],
-      transitionSound: formEl.values['transition-sound'],
+      transitionSound: formEl.querySelector('tangy-form-item').shadowRoot.querySelector('[name=transition-sound]').value,
       transitionMessage: formEl.values['transition-message'],
       warningMessage: formEl.values['warning-message'],
       warningTime: formEl.values['warning-time'],
@@ -232,7 +248,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       autoProgress: formEl.values['auto-progress'] === 'on' ? true : false,
       required: formEl.values.required === 'on' ? true : false,
       hidden: formEl.values.hidden === 'on' ? true : false,
-      openSound: formEl.values['open-sound'],
+      openSound: formEl.querySelector('tangy-form-item').shadowRoot.querySelector('[name=open-sound]').value,
       multiSelect: formEl.values['multi-select'] === 'on' ? true : false,
       requiredCorrect: formEl.values['required-correct'] === 'on' ? true : false,
       ifIncorrectThenHighlightCorrect: formEl.values['if-incorrect-then-highlight-correct'] === 'on' ? true : false,

@@ -88,6 +88,10 @@ class TangyFormItemEditor extends PolymerElement {
         type: Array,
         value: false,
         reflectToAttribute: true
+      },
+      filesEndpoint: {
+        type: String,
+        value: ''
       }
     }
   }
@@ -141,7 +145,7 @@ class TangyFormItemEditor extends PolymerElement {
         </div>
       </paper-card>
         
-     <tangy-form-condensed-editor>
+     <tangy-form-condensed-editor files-endpoint="${this.filesEndpoint}">
         <template>
           ${this.item.template}
         </template>

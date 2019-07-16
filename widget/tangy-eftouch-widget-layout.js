@@ -83,7 +83,7 @@ class TangyEftouchWidgetLayout extends PolymerElement {
             </div>
             ${row.columns.map((column, columnNumber) => `
               <div class="column">
-                Image: <input type="text" row-number="${rowNumber}" column-number="${columnNumber}" name="src" value="${column.src}"><br>
+                <file-list-select endpoint="${this.getAttribute('files-endpoint')}" row-number="${rowNumber}" column-number="${columnNumber}" name="src" value="${column.src}"></file-list-select><br>
                 Width: <input type="number" row-number="${rowNumber}" column-number="${columnNumber}" name="width" value="${column.width}"><br>
                 Value: <input type="text" row-number="${rowNumber}" column-number="${columnNumber}" name="value" value="${column.value}"><br>
                 <paper-fab mini icon="close" row-number="${rowNumber}" column-number="${columnNumber}" class="remove-column"></paper-fab>

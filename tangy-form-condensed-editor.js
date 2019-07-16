@@ -51,6 +51,10 @@ class TangyFormCondensedEditor extends PolymerElement {
         type: Boolean,
         value: false,
         reflectToAttribute: true
+      },
+      filesEndpoint: {
+        type: String,
+        value: ''
       }
     }
   }
@@ -78,6 +82,7 @@ class TangyFormCondensedEditor extends PolymerElement {
           const widgetEl = document.createElement(foundWidget.widgetName)
           widgetEl.setAttribute('widget', '')
           widgetEl.setAttribute('mode', this.print ? 'MODE_PRINT' : 'MODE_INFO')
+          widgetEl.setAttribute('files-endpoint', this.filesEndpoint)
           wrap(childNode, widgetEl)
         }
       }
@@ -128,11 +133,13 @@ class TangyFormCondensedEditor extends PolymerElement {
     if (this.shadowRoot.querySelector('tangy-form-editor-add-input')) {
       return this.shadowRoot.querySelector('tangy-form-editor-add-input').remove()
     }
+    const addInputEl = document.createElement('tangy-form-editor-add-input')
+    addInputEl.setAttribute('files-endpoint', this.filesEndpoint)
     if (insertAfterEl) {
-      insertAfterEl.after(document.createElement('tangy-form-editor-add-input'))
+      insertAfterEl.after(addInputEl)
     } else {
       // making the first element
-      this.shadowRoot.querySelector('sortable-list').prepend(document.createElement('tangy-form-editor-add-input'))
+      this.shadowRoot.querySelector('sortable-list').prepend(addInputEl)
     }
     setTimeout(_ => this.shadowRoot.querySelector('tangy-form-editor-add-input').scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
     this.shadowRoot.querySelector('sortable-list').disabled=true
