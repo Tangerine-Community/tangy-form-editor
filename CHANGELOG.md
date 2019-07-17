@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.22.0
+- Add an Image option for inserting content into forms using the new file list selector. [#58](https://github.com/Tangerine-Community/tangy-form-editor/pull/58) 
+
 ## v5.21.0
 - Implement usage of endpoint and file-list-select element for selecting files. [#57](https://github.com/Tangerine-Community/tangy-form-editor/pull/57)
 
