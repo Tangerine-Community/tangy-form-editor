@@ -1,7 +1,7 @@
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-button/paper-button.js';
 import 'tangy-form/tangy-form.js';
-import './tangy-form/input/tangy-partial-date.js';
+import 'tangy-form/input/tangy-partial-date.js';
 import 'tangy-form/input/tangy-input.js';
 import { TangyBaseWidget } from '../tangy-base-widget.js';
 
