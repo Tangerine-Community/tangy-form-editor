@@ -105,7 +105,7 @@ class TangyPartialDateWidget extends TangyBaseWidget {
     <hr/>
     `;
   }
-  // Continue here....
+ 
   renderInfo(config) {
     const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>looks_one</mwc-icon><span>`
     const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
@@ -113,12 +113,13 @@ class TangyPartialDateWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `<h2>Add Dropdown</h2>
-    <tangy-form id="tangy-select">
-      <tangy-form-item id="tangy-select">
+    return `<h2>Add Partial Date</h2>
+    <tangy-form id="tangy-partial-date">
+      <tangy-form-item id="tangy-partial-date">
         <template type="tangy-form-item">
           <tangy-input
             name="name"
+            label="B;ah"
             valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
             inner-label="Variable name"
             hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
@@ -132,9 +133,9 @@ class TangyPartialDateWidget extends TangyBaseWidget {
             inner-label="Question number"
             hint-text="Enter the question number"
             value="${
-              config.label
+              config.questionNumber
             }">
-          
+          </tangy-input>
           <tangy-input
             name="label"
             inner-label="Label"
@@ -143,21 +144,24 @@ class TangyPartialDateWidget extends TangyBaseWidget {
               config.label
             }">
           </tangy-input>
-          <tangy-input name="hintText" inner-label="Hint Text" value="${
+          <tangy-input name="hintText" inner-label="Hint Text" hint-text="Enter hint text." value="${
             config.hintText
           }"></tangy-input>
+
           <tangy-input
             name="tangy_if"
             inner-label="Show if"
             hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
             value="${config.tangyIf.replace(/"/g, '&quot;')}">
           </tangy-input>
+
           <tangy-input
             name="valid_if"
             label="Valid if"
             hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
             value="${config.validIf.replace(/"/g, '&quot;')}">
           </tangy-input>
+
           <tangy-checkbox name="required" ${
             config.required ? 'value="on"' : ''
           }>Required</tangy-checkbox>
@@ -167,49 +171,51 @@ class TangyPartialDateWidget extends TangyBaseWidget {
           <tangy-checkbox name="hidden" ${
             config.hidden ? 'value="on"' : ''
           }>Hidden</tangy-checkbox>
-
           <tangy-checkbox name="disallow-future-date" ${
             config.disallowFutureDate ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
+          }>Disallow future date</tangy-checkbox>
           <tangy-checkbox name="allow-unknown-day" ${
             config.allowUnknownDay ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
+          }>Allow unknown day</tangy-checkbox>
           <tangy-checkbox name="allow-unknown-month" ${
             config.allowUnknownMonth ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
+          }>Allow unknown month</tangy-checkbox>
           <tangy-checkbox name="allow-unknown-year" ${
             config.allowUnknownYear ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
+          }>Allow unknown year</tangy-checkbox>
           <tangy-checkbox name="show-today-button" ${
             config.showTodayButton ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
+          }>Show today button</tangy-checkbox>
 
           <tangy-input
             name="missing-date-error-text"
             label="Missing date error text"
             hint-text="Enter text to be displayed when the date is required but missing."
             value="${config.missingDateErrorText.replace(/"/g, '&quot;')}">
+            </tangy-input>
             <tangy-input
             name="invalid-date-error-text"
             label="Invalid date error text"
             hint-text="Enter text to be displayed when the date is invalid."
             value="${config.invalidDateErrorText.replace(/"/g, '&quot;')}">
+            </tangy-input>
             <tangy-input
             name="future-date-error-text"
             label="Future date error text"
             hint-text="Enter text to be displayed when the date is in the future."
             value="${config.futureDateErrorText.replace(/"/g, '&quot;')}">
-
+</tangy-input>
             <tangy-input
             name="min-year"
             label="Minimum year"
             hint-text="Enter minimum year for the dropdowm list."
-            value="${config.minYear.replace(/"/g, '&quot;')}">
+            value="${config.minYear}">
             <tangy-input
             name="max-year"
             label="Maximum year"
             hint-text="Enter maximum year for the dropdowm list."
-            value="${config.maxYear.replace(/"/g, '&quot;')}">
+            value="${config.maxYear}">
+            </tanby-input
         </template>
       </tangy-form-item>
     </tangy-form>
@@ -223,7 +229,7 @@ class TangyPartialDateWidget extends TangyBaseWidget {
       },
       items: [
         {
-          id: 'tangy-select',
+          id: 'tangy-partial-date',
           inputs: [
             {
               name: 'name',
@@ -232,7 +238,12 @@ class TangyPartialDateWidget extends TangyBaseWidget {
             {
               name: 'label',
               value: config.label
+            },
+            {
+              name: 'question-number',
+              value: config.questionNumber
             }
+
           ]
         }
       ]
