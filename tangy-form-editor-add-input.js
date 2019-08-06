@@ -76,7 +76,7 @@ class TangyFormEditorAddInput extends PolymerElement {
               <mwc-button icon="check_box_outline_blank" on-click="addThis"><span id="tangy-checkboxes-widget">Checkbox Group</span></mwc-button><br>
               <mwc-button icon="arrow_drop_down_circle" on-click="addThis"><span id="tangy-select-widget">Dropdown (select)</span></mwc-button><br>
               <mwc-button icon="radio_button_unchecked" on-click="addThis"><span id="tangy-radio-buttons-widget">Radio Buttons</span></mwc-button><br>
-              <mwc-button icon="date_range" on-click="addThis"><span id="tangy-partial-date-widget">Partial Date</span></mwc-button>
+
               </div>
         </div>
         <div>
@@ -91,6 +91,7 @@ class TangyFormEditorAddInput extends PolymerElement {
             <mwc-button icon="av_timer"on-click="addThis"><span id="tangy-timed-widget" >Timed Grid</span></mwc-button><br>
             <mwc-button icon="grid_on"on-click="addThis"><span id="tangy-untimed-grid-widget" >Untimed Grid</span></mwc-button><br>
             <mwc-button icon="thumbs_up_down"on-click="addThis"><span id="tangy-consent-widget" >Consent</span></mwc-button><br>
+            <mwc-button icon="calendar_today" on-click="addThis"><span id="tangy-partial-date-widget">Partial Date</span></mwc-button>
           </div>
         </div>
       </div>
