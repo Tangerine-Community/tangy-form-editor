@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.23.0
+- Add option for adding partial date inputs.
+
 ## v5.22.0
 - Add an Image option for inserting content into forms using the new file list selector. [#58](https://github.com/Tangerine-Community/tangy-form-editor/pull/58) 
 
