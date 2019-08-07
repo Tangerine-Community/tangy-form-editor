@@ -102,7 +102,7 @@ class TangyPartialDateWidget extends TangyBaseWidget {
   renderInfo(config) {
     const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>looks_one</mwc-icon><span>`
     const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
-    return `${icon} ${name}${config.options.length > 0 ? this.downcast(config) : ''}`;
+    return `${icon} ${name} ${this.downcast(config)}`;
   }
 
   renderEdit(config) {
@@ -363,17 +363,17 @@ class TangyPartialDateWidget extends TangyBaseWidget {
       hintText: formEl.values.hintText,
       hidden: formEl.values.hidden === 'on' ? true : false,
       disabled: formEl.values.disabled === 'on' ? true : false,
-      disallowFutureDate: formEl.values.disallowFutureDate === 'on' ? true : false,
-      allowUnknownDay: formEl.values.allowUnknownDay === 'on' ? true : false,
-      allowUnknownMonth: formEl.values.allowUnknownMonth === 'on' ? true : false,
-      allowUnknownYear: formEl.values.allowUnknownYear === 'on' ? true : false,
-      showTodayButton: formEl.values.showTodayButton === 'on' ? true : false,
-      minYear: formEl.values.minYear,
-      maxYear: formEl.values.maxYear,
-      questionNumber: formEl.values.questionNumber,
-      futureDateErrorText: formEl.values.futureDateErrorText,
-      missingDateErrorText: formEl.values.missingDateErrorText,
-      invalidDateErrorText: formEl.values.invalidDateErrorText
+      disallowFutureDate: formEl.values['disallow-future-date'] === 'on' ? true : false,
+      allowUnknownDay: formEl.values['allow-unknown-day'] === 'on' ? true : false,
+      allowUnknownMonth: formEl.values['allow-unknown-month'] === 'on' ? true : false,
+      allowUnknownYear: formEl.values['allow-unknown-year'] === 'on' ? true : false,
+      showTodayButton: formEl.values['show-today-button'] === 'on' ? true : false,
+      minYear: formEl.values['min-year'],
+      maxYear: formEl.values['max-year'],
+      questionNumber: formEl.values['question-number'],
+      futureDateErrorText: formEl.values['future-date-error-text'],
+      missingDateErrorText: formEl.values['missing-date-error-text'],
+      invalidDateErrorText: formEl.values['invalid-date-error-text']
     }
   }
 }
