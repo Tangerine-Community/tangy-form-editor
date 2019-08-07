@@ -100,7 +100,7 @@ class TangyPartialDateWidget extends TangyBaseWidget {
   }
  
   renderInfo(config) {
-    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>looks_one</mwc-icon><span>`
+    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>calendar_today</mwc-icon><span>`
     const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
     return `${icon} ${name} ${this.downcast(config)}`;
   }
