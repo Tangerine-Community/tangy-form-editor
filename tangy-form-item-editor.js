@@ -129,7 +129,7 @@ class TangyFormItemEditor extends PolymerElement {
             <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
             <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
             ${this.categories ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>' : ''}
-            <p><paper-input id="incorrectThresholdInput" ${typeof this.item.incorrectThreshold !== 'undefined' ? value="${this.item.incorrectThreshold}" : ''} label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
+            <p><paper-input type="number" id="incorrectThreshold" value="${this.item.incorrectThreshold}" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
             <label id="hintText">Currently limited to radio-buttons; disables remaining questions when threshold of incorrect answers is reached.</label></p>
           </div>
           <div id="details-content-view">
@@ -137,7 +137,8 @@ class TangyFormItemEditor extends PolymerElement {
             <p><paper-checkbox disabled id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></p>
             <p><paper-checkbox disabled id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></p>
             <p><paper-checkbox disabled id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
-          </div>
+            <p><paper-input disabled type="number" id="incorrectThreshold" value="${this.item.incorrectThreshold}" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
+            </div>
         </div>
         <div id="details-content-edit-actions" class="card-actions-edit">
           <paper-button class="tangy-action-buttons" id="save" style="float:right" role="button" tabindex="0" animated="" elevation="0">${t('Submit')}</paper-button>
@@ -230,6 +231,7 @@ class TangyFormItemEditor extends PolymerElement {
         onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
         category: categoryValue,
         title: this.$.container.querySelector('#itemTitle').value,
+        incorrectThreshold: this.$.container.querySelector('#incorrectThreshold').value,
         summary: this.$.container.querySelector('#summary-checkbox').checked,
         hideBackButton: this.$.container.querySelector('#hide-back-button-checkbox').checked,
         rightToLeft: this.$.container.querySelector('#right-to-left-checkbox').checked,
