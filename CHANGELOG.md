@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.23.1
+- Increment tangy-form by patch version to receive some updates that will help with editing `<tangy-partial-date>`.
+
 ## v5.23.0
 - Add option for adding partial date inputs.
 
