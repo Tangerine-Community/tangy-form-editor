@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v5.24.0
+- Bump `tangy-form` version to `v3.23.0` for `inputs.VARIABE_NAME` access in `valid-if` logic.
+
 ## v5.23.2
 - Fix for tnagy partial date editing.
 
