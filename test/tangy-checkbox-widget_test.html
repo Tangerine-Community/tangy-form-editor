@@ -62,13 +62,13 @@
           element.shadowRoot.querySelector('#edit-button').click()
           element
             .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=label]').value = 'New label'
+            .querySelector('[name=label]').value = 'New label'
           element
             .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=required]').value = ''
+            .querySelector('[name=required]').value = ''
           element
             .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=required]').setAttribute('value','')
+            .querySelector('[name=required]').setAttribute('value','')
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.label, 'New label')
           assert.equal(element._config.required, false)

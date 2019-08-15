@@ -57,7 +57,7 @@
           element.shadowRoot.querySelector('#edit-button').click()
           element
             .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=introsrc]').value = '../demo/assets/sounds/2.mp3'
+            .querySelector('[name=introsrc]').value = '../demo/assets/sounds/2.mp3'
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.introsrc, '../demo/assets/sounds/2.mp3')
         })

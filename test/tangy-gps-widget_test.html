@@ -50,10 +50,10 @@
           element.shadowRoot.querySelector('#edit-button').click()
           element
             .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=name]').value = 'gps-coords-test'
+            .querySelector('[name=name]').value = 'gps-coords-test'
           element
             .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=required]').value = ''
+            .querySelector('[name=required]').value = ''
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.name, 'gps-coords-test')
           assert.equal(element._config.required, false)

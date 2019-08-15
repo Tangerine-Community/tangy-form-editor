@@ -95,7 +95,7 @@ class TangyImageWidget extends TangyBaseWidget {
       hidden: formEl.response.items[0].inputs.find(input => input.name === 'hidden').value === 'on' ? true : false,
       tangyIf: formEl.response.items[0].inputs.find(input => input.name === 'tangy_if').value,
       width: formEl.response.items[0].inputs.find(input => input.name === 'width').value,
-      src: formEl.querySelector('tangy-form-item').shadowRoot.querySelector('[name=src]').value
+      src: formEl.querySelector('tangy-form-item').querySelector('[name=src]').value
     }
   }
 
