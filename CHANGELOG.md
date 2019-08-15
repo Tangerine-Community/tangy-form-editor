@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.0.0
+- Upgrade to tangy-form v4.0.0 which includes breaking changes for form content. See details in the [tangy-form CHANGELOG](https://github.com/Tangerine-Community/tangy-form/blob/master/CHANGELOG.md#v400).
+
 ## v5.24.0
 - Bump `tangy-form` version to `v3.23.0` for `inputs.VARIABE_NAME` access in `valid-if` logic.
 
