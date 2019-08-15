@@ -83,14 +83,12 @@
           element.shadowRoot.querySelector('#edit-button').click()
           element
                   .shadowRoot.querySelector('tangy-form-item')
-                  .shadowRoot.querySelector('#content')
                   .querySelector("tangy-code").querySelector('tangy-text-widget').shadowRoot.querySelector('#edit-button').click()
           element
                   .shadowRoot.querySelector('tangy-form-item')
-                  .shadowRoot.querySelector('#content')
                   .querySelector("tangy-code").querySelector("tangy-text-widget")
                   .shadowRoot.querySelector('tangy-form-item')
-                  .shadowRoot.querySelector('[name=label]').value = "New label"
+                  .querySelector('[name=label]').value = "New label"
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
         })
       })

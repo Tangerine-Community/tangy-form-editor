@@ -91,7 +91,7 @@
           element
             .shadowRoot.querySelector('tangy-text-widget')
             .shadowRoot.querySelector('tangy-form-item')
-            .shadowRoot.querySelector('[name=name]').value = 'foo'
+            .querySelector('[name=name]').value = 'foo'
           element.shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('tangy-form-item').clickedComplete()
           const template = document.createElement('template')
           template.innerHTML = element.markup

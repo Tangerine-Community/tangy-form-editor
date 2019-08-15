@@ -48,7 +48,7 @@
           const element = fixture('ResumeFixture')
           element.shadowRoot.querySelector('#edit-button').click()
           let formEl = element.shadowRoot.querySelector('tangy-form')
-          let optionEl = formEl.querySelector('tangy-form-item').shadowRoot.querySelector('#content').querySelector("tangy-input[name='options']")
+          let optionEl = formEl.querySelector('tangy-form-item').querySelector("tangy-input[name='options']")
           optionEl.value = optionEl.value + ' foo'
           // Force dom-if to not defer render so buttons are shown.
           formEl.querySelector('tangy-form-item').shadowRoot.querySelector('dom-if').render()
