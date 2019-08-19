@@ -9,11 +9,11 @@ class TangyTextWidget extends TangyBaseWidget {
   }
   get defaultConfig() {
     return {
-      label: '',
-      hintText: '',
       type: 'text',
       allowedPattern: '',
-      ...this.defaultConfigCommonAttributes()
+      innerLabel: '',
+      ...this.defaultConfigCommonAttributes(),
+      ...this.defaultConfigLabelAttributes()
     };
   }
 
@@ -21,6 +21,7 @@ class TangyTextWidget extends TangyBaseWidget {
     return {
       ...config,
       ...this.upcastCommonAttributes(config, element),
+      ...this.upcastLabelAttributes(config, element),
       ...element.getProps()
     };
   }
@@ -28,11 +29,11 @@ class TangyTextWidget extends TangyBaseWidget {
   downcast(config) {
     return `
       <tangy-input 
-        label="${config.label}"
-        hint-text="${config.hintText}"
         type="text"
         allowed-pattern="${config.allowedPattern}"
+        inner-label="${config.innerLabel}"
         ${this.downcastCommonAttributes(config)}
+        ${this.downcastLabelAttributes(config)}
       ></tangy-input>
     `;
   }
@@ -70,16 +71,13 @@ class TangyTextWidget extends TangyBaseWidget {
     <tangy-form id="tangy-input">
       <tangy-form-item>
         ${this.renderEditCommonAttributes(config)}
+        ${this.renderEditLabelAttributes(config)}
         <tangy-input
-          name="label"
-          inner-label="Label"
-          hint-text="Enter the Question or Statement Text"
-          value="${config.label}">
-        </tangy-input>
-        <tangy-input
-          name="hintText"
-          inner-label="Hint Text"
-          value="${config.hintText}">
+          name="inner_label"
+          inner-label="Inner Label"
+          value="${
+            config.innerLabel
+          }">
         </tangy-input>
         <tangy-input
           name="allowed_pattern"
@@ -96,10 +94,10 @@ class TangyTextWidget extends TangyBaseWidget {
     return {
       ...config,
       ...this.onSubmitCommonAttributes(config, formEl),
-      label: formEl.response.items[0].inputs.find(
-        input => input.name === 'label'
+      ...this.onSubmitLabelAttributes(config, formEl),
+      innerLabel: formEl.response.items[0].inputs.find(
+        input => input.name === 'inner_label'
       ).value,
-      hintText: formEl.values.hintText,
       allowedPattern: formEl.response.items[0].inputs.find(
         input => input.name === 'allowed_pattern'
       ).value
