@@ -62,6 +62,15 @@ class TangyBaseWidget extends PolymerElement {
     }
   }
 
+  defaultConfigLabelAttributes() {
+    return {
+      label: '',
+      hintText: '',
+      errorMessage: ''
+    }
+  }
+
+
   // Convert this.innerHTML to configuration.
   upcast(config, element) {
     return { 
@@ -96,6 +105,19 @@ class TangyBaseWidget extends PolymerElement {
     }
   }
 
+  upcastLabelAttributes(config, element) {
+    return {
+      label: element.hasAttribute('label')
+        ? element.getAttribute('label')
+        : '',
+      errorMessage: element.hasAttribute('error-message')
+        ? element.getAttribute('error-message')
+        : '',
+      hintText: element.hasAttribute('hint-text')
+        ? element.getAttribute('hint-text')
+        : ''
+    }
+  }
   // Convert configuration to HTML.
   downcast(config) {
     return `<tangy-base ${this.downcastCommonAttributes(config)}></tangy-base>`
@@ -113,6 +135,14 @@ class TangyBaseWidget extends PolymerElement {
       ${config.required ? 'required' : ''}
       ${config.disabled ? 'disabled' : ''}
       ${config.hidden ? 'hidden' : ''}
+  `
+  }
+
+   downcastLabelAttributes(config) {
+    return `
+      label="${config.label}"
+      error-message="${config.errorMessage}"
+      hint-text="${config.hintText}"
   `
   }
   
@@ -177,6 +207,32 @@ class TangyBaseWidget extends PolymerElement {
     `
   }
 
+  renderEditLabelAttributes(config) {
+    return `
+      <tangy-input
+        name="label"
+        inner-label="Label"
+        hint-text="Enter the Question or Statement Text"
+        value="${
+          config.label
+        }">
+      </tangy-input>
+      <tangy-input
+        name="hint-text"
+        inner-label="Hint text"
+        value="${
+          config.hintText
+        }">
+      </tangy-input>
+      <tangy-input
+        name="error-message"
+        inner-label="Error message"
+        value="${
+          config.errorMessage
+        }">
+      </tangy-input>
+    `
+  }
   // On save of edit form, return updated _config.
   onSubmit(config, formEl) {
     return { 
@@ -213,6 +269,16 @@ class TangyBaseWidget extends PolymerElement {
     }
   }
 
+  onSubmitLabelAttributes(config, formEl) {
+    return { 
+      label: formEl.response.items[0].inputs.find(input => input.name === 'label')
+        .value,
+       errorMessage: formEl.response.items[0].inputs.find(input => input.name === 'error-message')
+        .value,
+       hintText: formEl.response.items[0].inputs.find(input => input.name === 'hint-text')
+        .value
+    }
+  }
   editResponse(config) {
     return false
   }
