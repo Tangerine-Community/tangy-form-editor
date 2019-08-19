@@ -45,34 +45,172 @@ class TangyBaseWidget extends PolymerElement {
 
   get defaultConfig() {
     return {
-      name: '...',
+      ...this.defaultConfigCommonAttributes()
+    }
+  }
+
+  defaultConfigCommonAttributes() {
+    return {
+      name: '',
+      class: '',
+      style: '',
+      required: false,
+      disabled: false,
+      hidden: false,
+      showIf: '',
+      validIf: ''
     }
   }
 
   // Convert this.innerHTML to configuration.
   upcast(config, element) {
-    return { ...config, name: element.getAttribute('name') }
+    return { 
+      ...config,
+      ...this.upcastCommonAttributes()
+    }
+  }
+
+  upcastCommonAttributes(config, element) {
+    return {
+      ...{
+        name: element.hasAttribute('name')
+          ? element.getAttribute('name')
+          : '',
+        class: element.hasAttribute('class')
+          ? element.getAttribute('class')
+          : '',
+        style: element.hasAttribute('style')
+          ? element.getAttribute('style')
+          : '',
+        showIf: (
+          element.hasAttribute('show-if')
+            ? element.getAttribute('show-if')
+            : element.hasAttribute('tangy-if')
+              ? element.getAttribute('tangy-if')
+              : ''
+          ).replace(/&quot;/g, '"'),
+        validIf: element.hasAttribute('valid-if')
+          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
+          : ''
+      }
+    }
   }
 
   // Convert configuration to HTML.
   downcast(config) {
-    return `<tangy-base name="${config.name}"></tangy-base>`
+    return `<tangy-base ${this.downcastCommonAttributes(config)}></tangy-base>`
+  }
+
+  downcastCommonAttributes(config) {
+    return `
+      name="${config.name}"
+      class="${config.class}"
+      style="${config.style}"
+      error-message="${config.errorMessage}"
+      invalid-message="${config.errorMessage}"
+      ${config.showIf === "" ? "" : `tangy-if="${config.showIf.replace(/"/g, '&quot;')}"`}
+      ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
+      ${config.required ? 'required' : ''}
+      ${config.disabled ? 'disabled' : ''}
+      ${config.hidden ? 'hidden' : ''}
+  `
   }
   
   // Return markup for use when in info mode.
   renderInfo(config) {
+    return `${this.renderInfoCommonAttributes(config)}`
+  }
+
+  renderInfoCommonAttributes(config) {
     return `Name: ${config.name}`
   }
 
   // Return markup for use when in edit mode.
-  renderEdit(config, formEl) {
-    formEl.innerHTML = `<input name="${config.name}>`
-    return formEl
+  renderEdit(config) {
+    return `<h2>Add Text Input</h2>
+      <tangy-form id="form">
+        <tangy-form-item id='item'>
+          ${this.renderEditCommonAttributes(config)}
+          ...custom attributes here...
+        </tangy-form-item>
+      </tangy-form>
+    `
+  }
+
+  renderEditCommonAttributes(config) {
+    return `
+      <tangy-input 
+        name="name" 
+        valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" 
+        inner-label="Variable name"
+        value="${config.name}"
+        hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+        required>
+      </tangy-input>
+      <tangy-input
+        name="show_if"
+        inner-label="Show if"
+        hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
+        value="${config.showIf.replace(/"/g, '&quot;')}">
+      </tangy-input>
+      <tangy-input 
+        name="valid_if"
+        inner-label="Valid if"
+        hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
+        value="${config.validIf.replace(/"/g, '&quot;')}">
+      </tangy-input>
+      <tangy-checkbox
+        name="required" 
+        ${config.required ? 'value="on"' : ''}>
+        Required
+      </tangy-checkbox>
+      <tangy-checkbox
+        name="disabled" 
+        ${config.disabled ? 'value="on"' : ''}>
+        Disabled
+      </tangy-checkbox>
+      <tangy-checkbox
+        name="hidden"
+        ${config.hidden ? 'value="on"' : ''}>
+        Hidden
+      </tangy-checkbox>
+    `
   }
 
   // On save of edit form, return updated _config.
   onSubmit(config, formEl) {
-    return { ...config, name: formEl.querySelector([name=base]).value }
+    return { 
+      ...config, 
+      ...this.onSubmitCommonAttributes(config, formEl)
+    }
+  }
+
+  onSubmitCommonAttributes(config, formEl) {
+    return { 
+      name: formEl.response.items[0].inputs.find(input => input.name === 'name')
+        .value,
+      required:
+        formEl.response.items[0].inputs.find(input => input.name === 'required')
+          .value === 'on'
+          ? true
+          : false,
+      hidden:
+        formEl.response.items[0].inputs.find(input => input.name === 'hidden')
+          .value === 'on'
+          ? true
+          : false,
+      disabled:
+        formEl.response.items[0].inputs.find(input => input.name === 'disabled')
+          .value === 'on'
+          ? true
+          : false,
+      validIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'valid_if'
+      ).value,
+      showIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'show_if'
+      ).value
+    }
   }
 
   editResponse(config) {
