@@ -51,23 +51,7 @@ Encapsulate a `tangy-form` with `tangy-form-editor` then listen for the `tangy-f
 ```
 
 ## Develop
-```
-git clone git@github.com:tangerine-community/tangy-form-editor
-cd tangy-form-editor
-npm install
-npm install --save polymer-cli
-# Serve up the demo.
-polymer serve
-```
-
-## Running Tests
-
-```
-$ polymer test
-```
-Note, IE and Firefox tests will fail.
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+See [DEVELOPER.md](./DEVELOPER.md) for docs.
 
 ## Browser Compatibility
 The combination of CKEditor breaking when used in Shadow DOM and Firefox / IE shadow DOM support is still behind a flag, this means this element does not currently work in Firefox and IE.
