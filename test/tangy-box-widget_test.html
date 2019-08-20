@@ -68,14 +68,13 @@
           const element = fixture('BlankFixture')
           assert.equal(element._config.hasOwnProperty('name'), true)
           assert.equal(element._config.hasOwnProperty('hidden'), true)
-          assert.equal(element._config.hasOwnProperty('tangyIf'), true)
+          assert.equal(element._config.hasOwnProperty('showIf'), true)
           assert.equal(element._config.hasOwnProperty('htmlCode'), true)
         })
         test('should resume', () => {
           const element = fixture('ResumeFixture')
           assert.equal(element._config.name, 'Summary')
           assert.equal(element._config.hidden, true)
-          // assert.equal(element._config.tangyIf, `console.log('test')`)
           assert.equal(element._config.htmlCode, `<p>Thank you for taking our survey. You may close the book.</p>`)
         })
         test('should resume and save with edits', () => {
