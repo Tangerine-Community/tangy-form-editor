@@ -4,22 +4,22 @@ import 'tangy-form/input/tangy-select.js';
 import { TangyBaseWidget } from '../tangy-base-widget.js';
 
 class TangyTextWidget extends TangyBaseWidget {
+
   get claimElement() {
     return 'tangy-input[type=text], tangy-input:not([type])';
   }
+
   get defaultConfig() {
     return {
-      type: 'text',
-      allowedPattern: '',
-      innerLabel: '',
       ...this.defaultConfigCommonAttributes(),
-      ...this.defaultConfigLabelAttributes()
+      ...this.defaultConfigLabelAttributes(),
+      allowedPattern: '',
+      innerLabel: ''
     };
   }
 
   upcast(config, element) {
     return {
-      ...config,
       ...this.upcastCommonAttributes(config, element),
       ...this.upcastLabelAttributes(config, element),
       ...element.getProps()
