@@ -23,7 +23,8 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
       rowMarkers: false,
       tangyIf: '',
       validIf: '',
-      optionFontSize: ''
+      optionFontSize: '',
+      autoStop: ''
     };
   }
 
@@ -60,6 +61,8 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
         ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
         ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.optionFontSize ? `option-font-size="${config.optionFontSize}"` : ``}
+        ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
+
       >
       ${config.options
         .map(
@@ -82,6 +85,7 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
     <table>
     <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
     <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
+    <tr><td><strong>AutoStop:</strong></td><td>${config.autoStop}</td></tr>
     <tr><td><strong>Mode:</strong></td><td>${config.mode}</td></tr>
       <tr><td><strong>Columns:</strong></td><td>${config.columns}</td></tr>
       <tr><td><strong>Show Labels:</strong></td><td>${
@@ -118,6 +122,9 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
           }"></tangy-input>
           <tangy-input name="hintText" inner-label="Hint Text" value="${
             config.hintText
+          }"></tangy-input>
+          <tangy-input name="autoStop" inner-label="Auto Stop" value="${
+            config.autoStop ? config.autoStop : ''
           }"></tangy-input>
           <tangy-input name="tangy_if" inner-label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-input name="valid_if" inner-label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
@@ -174,6 +181,7 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
     return {
       ...config,
       name: formEl.values.name,
+      autoStop: formEl.values.autoStop,
       hintText: formEl.values.hintText,
       columns: formEl.values.columns,
       rowMarkers: formEl.values.rowMarkers === 'on' ? true : false,
