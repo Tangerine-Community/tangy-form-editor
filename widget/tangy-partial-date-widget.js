@@ -7,19 +7,13 @@ import { TangyBaseWidget } from '../tangy-base-widget.js';
 
 class TangyPartialDateWidget extends TangyBaseWidget {
   get claimElement() {
-    return 'tangy-partial-date';
+    return 'tangy-partial-date'
   }
 
   get defaultConfig() {
     return {
-      name: '',
-      label: '',
-      hintText: '',
-      required: true,
-      disabled: false,
-      hidden: false,
-      tangyIf: '',
-      validIf: '',
+      ...this.defaultConfigCommonAttributes(),
+      ...this.defaultConfigLabelAttributes(),
       futureDateErrorText: '',
       missingDateErrorText: '',
       invalidDateErrorText: '',
@@ -31,40 +25,28 @@ class TangyPartialDateWidget extends TangyBaseWidget {
       allowUnknownMonth: false,
       allowUnknownYear: false,
       showTodayButton: true
-    };
+    }
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
     return {
-      ...config,
-      ...element.getProps(),
-      tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
-        : '',
-      validIf: element.hasAttribute('valid-if')
-        ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
-        : ''
-    };
+      ...this.upcastCommonAttributes(config, element),
+      ...this.upcastLabelAttributes(config, element),
+      ...element.getProps()
+    }
   }
 
   downcast(config) {
     return `
       <tangy-partial-date
-        name="${config.name}"
-        label="${config.label}"
-        hint-text="${config.hintText}"
+        ${this.downcastCommonAttributes(config)}
+        ${this.downcastLabelAttributes(config)}
         future-date-error-text="${config.futureDateErrorText}"
         missing-date-error-text="${config.missingDateErrorText}"
         invalid-date-error-text="${config.invalidDateErrorText}"
         question-number="${config.questionNumber}"
         min-year="${config.minYear}"
         max-year="${config.maxYear}"
-        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
-        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
-        ${config.required ? 'required' : ''}
-        ${config.disabled ? 'disabled' : ''}
-        ${config.hidden ? 'hidden' : ''}
         ${config.showTodayButton ? 'show-today-button' : ''}
         ${config.allowUnknownDay ? 'allow-unknown-day' : ''}
         ${config.allowUnknownMonth ? 'allow-unknown-month' : ''}
@@ -106,172 +88,90 @@ class TangyPartialDateWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `<h2>Add Partial Date</h2>
-    <tangy-form id="tangy-partial-date">
-      <tangy-form-item id="tangy-partial-date">
-        <template type="tangy-form-item">
-
-        <h3>General Settings</h3>
-        
-          <tangy-input
-            name="name"
-            valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
-            inner-label="Variable name"
-            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
-            value="${config.name}"
-            required>
-          </tangy-input>
-
-          <tangy-input
-            name="question-number"
-            inner-label="Question number"
-            hint-text="Enter the question number"
-            value="${config.questionNumber}">
-          </tangy-input>
-
-          <tangy-input
-            name="label"
-            inner-label="Label"
-            hint-text="Enter the Question or Statement Text"
-            value="${config.label}">
-          </tangy-input>
-
-          <tangy-input
-            name="hintText"
-            inner-label="Hint text"
-            hint-text="Enter hint text."
-            value="${config.hintText}">
-          </tangy-input>
-
-          <tangy-input
-            name="tangy_if"
-            inner-label="Show if"
-            hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
-            value="${config.tangyIf.replace(/"/g, '&quot;')}">
-          </tangy-input>
-
-          <tangy-input
-            name="valid_if"
-            inner-label="Valid if"
-            hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
-            value="${config.validIf.replace(/"/g, '&quot;')}">
-          </tangy-input>
-
-          <br>
-
-          <h3>General Configuration</h3>
-
-          <tangy-checkbox 
-            name="required" 
-            ${config.required ? 'value="on"' : ''}>
-            Required
-          </tangy-checkbox>
-
-          <tangy-checkbox
-            name="disabled"
-            ${config.disabled ? 'value="on"' : ''}>
-            Disabled
-          </tangy-checkbox>
-
-          <tangy-checkbox
-            name="hidden" ${config.hidden ? 'value="on"' : ''}>
-            Hidden
-          </tangy-checkbox>
-
-          <tangy-checkbox
-            name="show-today-button"
-            ${config.showTodayButton ? 'value="on"' : ''}>
-            Show today button
-          </tangy-checkbox>
-
-          <br>
-
-          <h3>Date Behavior</h3>
-      
-          <tangy-checkbox
-            name="allow-unknown-day"
-            ${config.allowUnknownDay ? 'value="on"' : ''}>
-            Allow unknown day
-          </tangy-checkbox>
-
-          <tangy-checkbox
-            name="allow-unknown-month"
-            ${config.allowUnknownMonth ? 'value="on"' : ''}>
-            Allow unknown month
-          </tangy-checkbox>
-
-          <tangy-checkbox
-            name="allow-unknown-year" 
-            ${config.allowUnknownYear ? 'value="on"' : ''}>
-            Allow unknown year
-          </tangy-checkbox>
-
-          <tangy-checkbox
-            name="disallow-future-date"
-            ${config.disallowFutureDate ? 'value="on"' : ''}>
-            Disallow future date
-          </tangy-checkbox>
-
-          <br>
-
-          <h3>Error Messages</h3>
-
-         <tangy-input
-            name="missing-date-error-text"
-            inner-label="Missing date error text"
-            hint-text="Enter text to be displayed when the date is required but missing."
-            value="${config.missingDateErrorText.replace(/"/g, '&quot;')}">
-          </tangy-input>
-
-          <tangy-input
-            name="invalid-date-error-text"
-            inner-label="Invalid date error text"
-            hint-text="Enter text to be displayed when the date is invalid."
-            value="${config.invalidDateErrorText.replace(/"/g, '&quot;')}">
-          </tangy-input>
-
-          <tangy-input
-            name="future-date-error-text"
-            inner-label="Future date error text"
-            hint-text="Enter text to be displayed when the date is in the future."
-            value="${config.futureDateErrorText.replace(/"/g, '&quot;')}">
-          </tangy-input>
-           
-          <br>
-
-          <h3>Validation</h3>
-
-          <tangy-input
-            name="min-year"
-            inner-label="Minimum year"
-            hint-text="Enter minimum year for the dropdowm list."
-            value="${config.minYear}">
-          </tangy-input>
-
-          <tangy-input
-            name="max-year"
-            inner-label="Maximum year"
-            hint-text="Enter maximum year for the dropdown list."
-            value="${config.maxYear}">
-          </tangy-input>
-
-        </template>
-      </tangy-form-item>
-    </tangy-form>
-    `;
+    return `
+      <tangy-form id="tangy-partial-date">
+        <tangy-form-item id="tangy-partial-date">
+          <template type="tangy-form-item">
+            <h3>General Settings</h3>
+            ${this.renderEditCommonAttributes(config)}
+            ${this.renderEditLabelAttributes(config)}
+            <tangy-input
+              name="question-number"
+              inner-label="Question number"
+              hint-text="Enter the question number"
+              value="${config.questionNumber}">
+            </tangy-input>
+            <h3>Date Behavior</h3>
+            <tangy-checkbox
+              name="show-today-button"
+              ${config.showTodayButton ? 'value="on"' : ''}>
+              Show today button
+            </tangy-checkbox>
+            <br>
+            <tangy-checkbox
+              name="allow-unknown-day"
+              ${config.allowUnknownDay ? 'value="on"' : ''}>
+              Allow unknown day
+            </tangy-checkbox>
+            <tangy-checkbox
+              name="allow-unknown-month"
+              ${config.allowUnknownMonth ? 'value="on"' : ''}>
+              Allow unknown month
+            </tangy-checkbox>
+            <tangy-checkbox
+              name="allow-unknown-year" 
+              ${config.allowUnknownYear ? 'value="on"' : ''}>
+              Allow unknown year
+            </tangy-checkbox>
+            <tangy-checkbox
+              name="disallow-future-date"
+              ${config.disallowFutureDate ? 'value="on"' : ''}>
+              Disallow future date
+            </tangy-checkbox>
+            <br>
+            <h3>Error Messages</h3>
+            <tangy-input
+              name="missing-date-error-text"
+              inner-label="Missing date error text"
+              hint-text="Enter text to be displayed when the date is required but missing."
+              value="${config.missingDateErrorText.replace(/"/g, '&quot;')}">
+            </tangy-input>
+            <tangy-input
+              name="invalid-date-error-text"
+              inner-label="Invalid date error text"
+              hint-text="Enter text to be displayed when the date is invalid."
+              value="${config.invalidDateErrorText.replace(/"/g, '&quot;')}">
+            </tangy-input>
+            <tangy-input
+              name="future-date-error-text"
+              inner-label="Future date error text"
+              hint-text="Enter text to be displayed when the date is in the future."
+              value="${config.futureDateErrorText.replace(/"/g, '&quot;')}">
+            </tangy-input>
+            <br>
+            <h3>Validation</h3>
+            <tangy-input
+              name="min-year"
+              inner-label="Minimum year"
+              hint-text="Enter minimum year for the dropdowm list."
+              value="${config.minYear}">
+            </tangy-input>
+            <tangy-input
+              name="max-year"
+              inner-label="Maximum year"
+              hint-text="Enter maximum year for the dropdown list."
+              value="${config.maxYear}">
+            </tangy-input>
+          </template>
+        </tangy-form-item>
+      </tangy-form>
+    `
   }
 
   onSubmit(config, formEl) {
     return {
-      ...config,
-      name: formEl.values.name,
-      label: formEl.values.label,
-      tangyIf: formEl.values.tangy_if,
-      validIf: formEl.values.valid_if,
-      required: formEl.values.required === 'on' ? true : false,
-      hintText: formEl.values.hintText,
-      hidden: formEl.values.hidden === 'on' ? true : false,
-      disabled: formEl.values.disabled === 'on' ? true : false,
+      ...this.onSubmitCommonAttributes(config, formEl),
+      ...this.onSubmitLabelAttributes(config, formEl),
       disallowFutureDate: formEl.values['disallow-future-date'] === 'on' ? true : false,
       allowUnknownDay: formEl.values['allow-unknown-day'] === 'on' ? true : false,
       allowUnknownMonth: formEl.values['allow-unknown-month'] === 'on' ? true : false,

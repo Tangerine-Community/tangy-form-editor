@@ -4,60 +4,42 @@ import 'tangy-form/input/tangy-select.js';
 import { TangyBaseWidget } from '../tangy-base-widget.js';
 
 class TangyTextWidget extends TangyBaseWidget {
+
   get claimElement() {
     return 'tangy-input[type=text], tangy-input:not([type])';
   }
+
   get defaultConfig() {
     return {
-      name: '',
-      label: '',
-      hintText: '',
-      type: 'text',
-      required: false,
-      disabled: false,
-      hidden: false,
+      ...this.defaultConfigCommonAttributes(),
+      ...this.defaultConfigLabelAttributes(),
       allowedPattern: '',
-      tangyIf: '',
-      validIf: ''
+      innerLabel: ''
     };
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
     return {
-      ...config,
-      ...element.getProps(),
-      ...{
-        tangyIf: element.hasAttribute('tangy-if')
-          ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
-          : '',
-        validIf: element.hasAttribute('valid-if')
-          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
-          : ''
-      }
+      ...this.upcastCommonAttributes(config, element),
+      ...this.upcastLabelAttributes(config, element),
+      ...element.getProps()
     };
   }
 
   downcast(config) {
     return `
       <tangy-input 
-        name="${config.name}"
-        label="${config.label}"
-        hint-text="${config.hintText}"
         type="text"
-        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
-        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         allowed-pattern="${config.allowedPattern}"
-        ${config.required ? 'required' : ''}
-        ${config.disabled ? 'disabled' : ''}
-        ${config.hidden ? 'hidden' : ''}
+        inner-label="${config.innerLabel}"
+        ${this.downcastCommonAttributes(config)}
+        ${this.downcastLabelAttributes(config)}
       ></tangy-input>
     `;
   }
 
   renderPrint(config) {
     return `
-   
     <table>
       <tr><td><strong>Prompt:</strong></td><td>${config.label}</td></tr>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
@@ -88,24 +70,14 @@ class TangyTextWidget extends TangyBaseWidget {
     return `<h2>Add Text Input</h2>
     <tangy-form id="tangy-input">
       <tangy-form-item>
-        <tangy-input 
-          name="name" 
-          valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" 
-          inner-label="Variable name"
-          value="${config.name}"
-          hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
-          required>
-        </tangy-input>
+        ${this.renderEditCommonAttributes(config)}
+        ${this.renderEditLabelAttributes(config)}
         <tangy-input
-          name="label"
-          inner-label="Label"
-          hint-text="Enter the Question or Statement Text"
-          value="${config.label}">
-        </tangy-input>
-        <tangy-input
-          name="hintText"
-          inner-label="Hint Text"
-          value="${config.hintText}">
+          name="inner_label"
+          inner-label="Inner Label"
+          value="${
+            config.innerLabel
+          }">
         </tangy-input>
         <tangy-input
           name="allowed_pattern"
@@ -113,33 +85,6 @@ class TangyTextWidget extends TangyBaseWidget {
           hint-text="Optional Javascript RegExp pattern to validate text (e.g. minimum length of 5 characters would be [a-zA-Z]{5,})
           value="${config.allowedPattern}">
         </tangy-input>
-        <tangy-input
-          name="tangy_if"
-          inner-label="Show if"
-          hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
-          value="${config.tangyIf.replace(/"/g, '&quot;')}">
-        </tangy-input>
-        <tangy-input 
-          name="valid_if"
-          inner-label="Valid if"
-          hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
-          value="${config.validIf.replace(/"/g, '&quot;')}">
-        </tangy-input>
-        <tangy-checkbox
-          name="required" 
-          ${config.required ? 'value="on"' : ''}>
-          Required
-        </tangy-checkbox>
-        <tangy-checkbox
-          name="disabled" 
-          ${config.disabled ? 'value="on"' : ''}>
-          Disabled
-        </tangy-checkbox>
-        <tangy-checkbox
-          name="hidden"
-          ${config.hidden ? 'value="on"' : ''}>
-          Hidden
-        </tangy-checkbox>
       </tangy-form-item>
     </tangy-form>
     `;
@@ -148,35 +93,13 @@ class TangyTextWidget extends TangyBaseWidget {
   onSubmit(config, formEl) {
     return {
       ...config,
-      name: formEl.response.items[0].inputs.find(input => input.name === 'name')
-        .value,
-      label: formEl.response.items[0].inputs.find(
-        input => input.name === 'label'
+      ...this.onSubmitCommonAttributes(config, formEl),
+      ...this.onSubmitLabelAttributes(config, formEl),
+      innerLabel: formEl.response.items[0].inputs.find(
+        input => input.name === 'inner_label'
       ).value,
-      hintText: formEl.values.hintText,
-      required:
-        formEl.response.items[0].inputs.find(input => input.name === 'required')
-          .value === 'on'
-          ? true
-          : false,
-      hidden:
-        formEl.response.items[0].inputs.find(input => input.name === 'hidden')
-          .value === 'on'
-          ? true
-          : false,
-      disabled:
-        formEl.response.items[0].inputs.find(input => input.name === 'disabled')
-          .value === 'on'
-          ? true
-          : false,
       allowedPattern: formEl.response.items[0].inputs.find(
         input => input.name === 'allowed_pattern'
-      ).value,
-      validIf: formEl.response.items[0].inputs.find(
-        input => input.name === 'valid_if'
-      ).value,
-      tangyIf: formEl.response.items[0].inputs.find(
-        input => input.name === 'tangy_if'
       ).value
     };
   }

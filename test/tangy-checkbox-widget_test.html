@@ -21,12 +21,11 @@
         <tangy-checkbox-widget>
           <tangy-checkbox
             name="input1"
-            label="Input 1"
             required
             hidden
             disabled
             tangy-if="console.log('test')"
-          </tangy-checkbox>
+          >Input 1</tangy-checkbox>
         </tangy-checkbox-widget>
       </template>
     </test-fixture>
@@ -45,7 +44,7 @@
           assert.equal(element._config.hasOwnProperty('disabled'), true)
           assert.equal(element._config.hasOwnProperty('hidden'), true)
           assert.equal(element._config.hasOwnProperty('label'), true)
-          assert.equal(element._config.hasOwnProperty('tangyIf'), true)
+          assert.equal(element._config.hasOwnProperty('showIf'), true)
         })
         test('should resume', () => {
           const element = fixture('ResumeFixture')
@@ -54,7 +53,7 @@
           assert.equal(element._config.required, true)
           assert.equal(element._config.hidden, true)
           assert.equal(element._config.disabled, true)
-          assert.equal(element._config.tangyIf, `console.log('test')`)
+          assert.equal(element._config.showIf, `console.log('test')`)
         })
         test('should resume and save with edits', () => {
           const element = fixture('ResumeFixture')

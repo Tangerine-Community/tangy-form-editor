@@ -44,7 +44,7 @@
           assert.equal(element._config.hasOwnProperty('disabled'), true)
           assert.equal(element._config.hasOwnProperty('hidden'), true)
           assert.equal(element._config.hasOwnProperty('label'), true)
-          assert.equal(element._config.hasOwnProperty('tangyIf'), true)
+          assert.equal(element._config.hasOwnProperty('showIf'), true)
           assert.equal(element._config.hasOwnProperty('allowedPattern'), true)
           assert.equal(element._config.hasOwnProperty('min'), true)
           assert.equal(element._config.hasOwnProperty('max'), true)
@@ -57,7 +57,7 @@
           assert.equal(element._config.required, true)
           assert.equal(element._config.hidden, true)
           assert.equal(element._config.disabled, true)
-          assert.equal(element._config.tangyIf, `console.log('test')`)
+          assert.equal(element._config.showIf, `console.log('test')`)
           assert.equal(element._config.type, `text`)
         })
         test('should resume and save with edits', () => {

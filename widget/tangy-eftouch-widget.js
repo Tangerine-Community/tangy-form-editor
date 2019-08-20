@@ -13,7 +13,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
 
   get defaultConfig() {
     return {
-      name: '',
+      ...this.defaultConfigCommonAttributes(),
       label: '',
       optionsMarkup: '',
       openSound: '',
@@ -24,11 +24,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       warningMessage: '',
       warningTime: '',
       timeLimit: '',
-      tangyIf: '',
-      validIf: '',
       autoProgress: false,
-      required: false,
-      hidden: false,
       multiSelect: false,
       requiredCorrect: false,
       ifIncorrectThenHighlightCorrect: false,
@@ -40,18 +36,13 @@ class TangyEftouchWidget extends TangyBaseWidget {
     return {
       ...config,
       ...element.getProps(),
+      ...this.upcastCommonAttributes(config, element),
       ...{
         multiSelect: element.hasAttribute('multi-select'),
         requiredCorrect: element.hasAttribute('required-correct'),
         ifIncorrectThenHighlightCorrect: element.hasAttribute('if-incorrect-then-highlight-correct'),
         noCorrections: element.hasAttribute('no-corrections'),
         openSound: element.hasAttribute('open-sound') ? element.getAttribute('open-sound') : '',
-        tangyIf: element.hasAttribute('tangy-if')
-          ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
-          : '',
-        validIf: element.hasAttribute('valid-if')
-          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
-          : '',
         optionsMarkup: element.innerHTML
       }
     };
@@ -60,7 +51,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
   downcast(config) {
     return `
       <tangy-eftouch
-        name="${config.name}"
+        ${this.downcastCommonAttributes(config)}
         label="${config.label}"
         open-sound="${config.openSound}"
         input-sound="${config.inputSound}"
@@ -70,11 +61,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
         warning-message="${config.warningMessage}"
         warning-time="${config.warningTime}"
         time-limit="${config.timeLimit}"
-        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
-        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.autoProgress ? 'auto-progress' : ''}
-        ${config.required ? 'required' : ''}
-        ${config.hidden ? 'hidden' : ''}
         ${config.multiSelect ? 'multi-select' : ''}
         ${config.requiredCorrect ? 'required-correct' : ''}
         ${config.ifIncorrectThenHighlightCorrect ? 'if-incorrect-then-highlight-correct' : ''}
@@ -112,34 +99,13 @@ class TangyEftouchWidget extends TangyBaseWidget {
           margin: 0px 0px 0px 10px;
         }
         </style>
-          <tangy-input
-            name="name"
-            valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
-            inner-label="Variable name"
-            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
-            value="${
-            config.name
-            }"
-            required>
-          </tangy-input>
+          ${this.renderEditCommonAttributes(config)}
           <tangy-input
             name="label"
             inner-label="Label"
             value="${
               config.label
             }">
-          </tangy-input>
-          <tangy-input
-            name="tangy_if"
-            inner-label="Show if"
-            hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
-            value="${config.tangyIf.replace(/"/g, '&quot;')}">
-          </tangy-input>
-          <tangy-input
-            name="valid_if"
-            inner-label="Valid if"
-            hint-text="Enter any conditional validation logic."
-            value="${config.validIf.replace(/"/g, '&quot;')}">
           </tangy-input>
           <label for="open-sound">Open sound</label>
           <file-list-select name="open-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
@@ -171,12 +137,6 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-checkbox name="auto-progress" ${
             config.autoProgress ? 'value="on"' : ''
           }>auto-progress</tangy-checkbox>
-          <tangy-checkbox name="required" ${
-            config.required ? 'value="on"' : ''
-          }>Required</tangy-checkbox>
-          <tangy-checkbox name="hidden" ${
-            config.hidden ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
           <tangy-checkbox name="multi-select" ${
             config.multiSelect ? 'value="on"' : ''
           }>multi-select</tangy-checkbox>
@@ -200,7 +160,6 @@ class TangyEftouchWidget extends TangyBaseWidget {
 
   renderPrint(config) {
     return `
-   
     <table>
     <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
     <tr><td><strong>Variable Label:</strong></td><td>${config.label}</td></tr>
@@ -233,10 +192,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
     <hr/>
     `;
   }
+
   onSubmit(config, formEl) {
     return {
       ...config,
-      name: formEl.values.name,
+      ...this.onSubmitCommonAttributes(config, formEl),
       label: formEl.values.label,
       inputSound: formEl.querySelector('tangy-form-item').querySelector('[name=input-sound]').value,
       transitionDelay: formEl.values['transition-delay'],
@@ -246,20 +206,12 @@ class TangyEftouchWidget extends TangyBaseWidget {
       warningTime: formEl.values['warning-time'],
       timeLimit: formEl.values['time-limit'],
       autoProgress: formEl.values['auto-progress'] === 'on' ? true : false,
-      required: formEl.values.required === 'on' ? true : false,
-      hidden: formEl.values.hidden === 'on' ? true : false,
       openSound: formEl.querySelector('tangy-form-item').querySelector('[name=open-sound]').value,
       multiSelect: formEl.values['multi-select'] === 'on' ? true : false,
       requiredCorrect: formEl.values['required-correct'] === 'on' ? true : false,
       ifIncorrectThenHighlightCorrect: formEl.values['if-incorrect-then-highlight-correct'] === 'on' ? true : false,
       noCorrections: formEl.values['no-corrections'] === 'on' ? true : false,
-      optionsMarkup: formEl.values['options-markup'],
-      tangyIf: formEl.response.items[0].inputs.find(
-        input => input.name === 'tangy_if'
-      ).value,
-      validIf: formEl.response.items[0].inputs.find(
-        input => input.name === 'valid_if'
-      ).value
+      optionsMarkup: formEl.values['options-markup']
     };
   }
 }

@@ -45,36 +45,260 @@ class TangyBaseWidget extends PolymerElement {
 
   get defaultConfig() {
     return {
-      name: '...',
+      ...this.defaultConfigCommonAttributes(),
+      ...this.defaultConfigLabelAttributes()
     }
   }
 
-  // Convert this.innerHTML to configuration.
-  upcast(config, element) {
-    return { ...config, name: element.getAttribute('name') }
+  defaultConfigCommonAttributes() {
+    return {
+      name: '',
+      class: '',
+      style: '',
+      required: false,
+      disabled: false,
+      hidden: false,
+      showIf: '',
+      validIf: ''
+    }
   }
 
+  defaultConfigLabelAttributes() {
+    return {
+      label: '',
+      hintText: '',
+      errorMessage: ''
+    }
+  }
+
+
+  upcast(config, element) {
+    return { 
+      ...config,
+      ...this.upcastCommonAttributes(config, element),
+      ...this.upcastLabelAttributes(config, element),
+      ...this.getProps()
+    }
+  }
+
+  upcastCommonAttributes(config, element) {
+    return {
+      ...{
+        name: element.hasAttribute('name')
+          ? element.getAttribute('name')
+          : '',
+        class: element.hasAttribute('class')
+          ? element.getAttribute('class')
+          : '',
+        style: element.hasAttribute('style')
+          ? element.getAttribute('style')
+          : '',
+        required: element.hasAttribute('required') ? true : false,
+        hidden: element.hasAttribute('hidden') ? true : false,
+        disabled: element.hasAttribute('disabled') ? true : false,
+        showIf: (
+          element.hasAttribute('show-if')
+            ? element.getAttribute('show-if')
+            : element.hasAttribute('tangy-if')
+              ? element.getAttribute('tangy-if')
+              : ''
+          ).replace(/&quot;/g, '"'),
+        validIf: element.hasAttribute('valid-if')
+          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
+          : ''
+      }
+    }
+  }
+
+  upcastLabelAttributes(config, element) {
+    return {
+      label: element.hasAttribute('label')
+        ? element.getAttribute('label')
+        : '',
+      errorMessage: element.hasAttribute('error-message')
+        ? element.getAttribute('error-message')
+        : '',
+      hintText: element.hasAttribute('hint-text')
+        ? element.getAttribute('hint-text')
+        : ''
+    }
+  }
   // Convert configuration to HTML.
   downcast(config) {
-    return `<tangy-base name="${config.name}"></tangy-base>`
+    return `<tangy-base 
+        ${this.downcastCommonAttributes(config)}
+        ${this.downcastLabelAttributes(config)}
+      ></tangy-base>`
+  }
+
+  downcastCommonAttributes(config) {
+    return `
+      name="${config.name}"
+      class="${config.class}"
+      style="${config.style}"
+      ${config.showIf === "" ? "" : `tangy-if="${config.showIf.replace(/"/g, '&quot;')}"`}
+      ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
+      ${config.required ? 'required' : ''}
+      ${config.disabled ? 'disabled' : ''}
+      ${config.hidden ? 'hidden' : ''}
+  `
+  }
+
+   downcastLabelAttributes(config) {
+    return `
+      label="${config.label}"
+      error-message="${config.errorMessage}"
+      invalid-message="${config.errorMessage}"
+      hint-text="${config.hintText}"
+  `
   }
   
   // Return markup for use when in info mode.
   renderInfo(config) {
+    return `${this.renderInfoCommonAttributes(config)}`
+  }
+
+  renderInfoCommonAttributes(config) {
     return `Name: ${config.name}`
   }
 
   // Return markup for use when in edit mode.
-  renderEdit(config, formEl) {
-    formEl.innerHTML = `<input name="${config.name}>`
-    return formEl
+  renderEdit(config) {
+    return `
+      <tangy-form id="form">
+        <tangy-form-item id='item'>
+          ${this.renderEditCommonAttributes(config)}
+          ${this.renderEditLabelAttributes(config)}
+        </tangy-form-item>
+      </tangy-form>
+    `
   }
 
+  renderEditCommonAttributes(config) {
+    return `
+      <tangy-input 
+        name="name" 
+        valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" 
+        inner-label="Variable name"
+        value="${config.name}"
+        hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+        required>
+      </tangy-input>
+      <tangy-input 
+        name="class" 
+        inner-label="CSS Class"
+        value="${config.class}"
+        hint-text="Enter CSS classes this element may belong to."
+        >
+      </tangy-input>
+      <tangy-input
+        name="style"
+        inner-label="CSS Style"
+        hint-text="Enter CSS for this element."
+        value="${config.style.replace(/"/g, '&quot;')}">
+      </tangy-input>
+      <tangy-input
+        name="show_if"
+        inner-label="Show if"
+        hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
+        value="${config.showIf.replace(/"/g, '&quot;')}">
+      </tangy-input>
+      <tangy-input 
+        name="valid_if"
+        inner-label="Valid if"
+        hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
+        value="${config.validIf.replace(/"/g, '&quot;')}">
+      </tangy-input>
+      <tangy-checkbox
+        name="required" 
+        ${config.required ? 'value="on"' : ''}>
+        Required
+      </tangy-checkbox>
+      <tangy-checkbox
+        name="disabled" 
+        ${config.disabled ? 'value="on"' : ''}>
+        Disabled
+      </tangy-checkbox>
+      <tangy-checkbox
+        name="hidden"
+        ${config.hidden ? 'value="on"' : ''}>
+        Hidden
+      </tangy-checkbox>
+    `
+  }
+
+  renderEditLabelAttributes(config) {
+    return `
+      <tangy-input
+        name="label"
+        inner-label="Label"
+        value="${
+          config.label
+        }">
+      </tangy-input>
+      <tangy-input
+        name="hint-text"
+        inner-label="Hint text"
+        value="${
+          config.hintText
+        }">
+      </tangy-input>
+      <tangy-input
+        name="error-message"
+        inner-label="Error message"
+        value="${
+          config.errorMessage
+        }">
+      </tangy-input>
+    `
+  }
   // On save of edit form, return updated _config.
   onSubmit(config, formEl) {
-    return { ...config, name: formEl.querySelector([name=base]).value }
+    return { 
+      ...this.onSubmitCommonAttributes(config, formEl),
+      ...this.onSubmitLabelAttributes(config, formEl)
+    }
   }
 
+  onSubmitCommonAttributes(config, formEl) {
+    return { 
+      name: formEl.response.items[0].inputs.find(input => input.name === 'name').value,
+      style: formEl.response.items[0].inputs.find(input => input.name === 'style').value,
+      class: formEl.response.items[0].inputs.find(input => input.name === 'class').value,
+      required:
+        formEl.response.items[0].inputs.find(input => input.name === 'required')
+          .value === 'on'
+          ? true
+          : false,
+      hidden:
+        formEl.response.items[0].inputs.find(input => input.name === 'hidden')
+          .value === 'on'
+          ? true
+          : false,
+      disabled:
+        formEl.response.items[0].inputs.find(input => input.name === 'disabled')
+          .value === 'on'
+          ? true
+          : false,
+      validIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'valid_if'
+      ).value,
+      showIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'show_if'
+      ).value
+    }
+  }
+
+  onSubmitLabelAttributes(config, formEl) {
+    return { 
+      label: formEl.response.items[0].inputs.find(input => input.name === 'label')
+        .value,
+       errorMessage: formEl.response.items[0].inputs.find(input => input.name === 'error-message')
+        .value,
+       hintText: formEl.response.items[0].inputs.find(input => input.name === 'hint-text')
+        .value
+    }
+  }
   editResponse(config) {
     return false
   }
