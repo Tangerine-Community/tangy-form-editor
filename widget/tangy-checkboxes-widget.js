@@ -8,7 +8,7 @@ import { TangyBaseWidget } from '../tangy-base-widget.js';
 class TangyCheckboxesWidget extends TangyBaseWidget {
   
   get claimElement() {
-    return 'tangy-checkboxes';
+    return 'tangy-checkboxes'
   }
 
   get defaultConfig() {
@@ -16,7 +16,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       ...this.defaultConfigCommonAttributes(),
       ...this.defaultConfigLabelAttributes(),
       options: []
-    };
+    }
   }
 
   upcast(config, element) {
@@ -27,9 +27,9 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
         return {
           value: option.getAttribute('value'),
           label: option.innerHTML
-        };
+        }
       })
-    };
+    }
   }
 
   downcast(config) {
@@ -42,7 +42,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
           <option value="${option.value}">${option.label}</option>
         `).join('')}
       </tangy-checkboxes>
-    `;
+    `
   }
 
   renderPrint(config) {
@@ -61,7 +61,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       <tr><td><strong>Options:</strong></td><td><ul>${keyValuePairs}</ul></td></tr>
     </table>
     <hr/>
-    `;
+    `
   }
 
   renderInfo(config) {
@@ -96,7 +96,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
           </template>
         </tangy-form-item>
       </tangy-form>
-    `;
+    `
   }
 
   onSubmit(config, formEl) {
@@ -105,10 +105,10 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       ...this.onSubmitLabelAttributes(config, formEl),
       options: formEl.values.options.map(item =>
         item.reduce((acc, input) => {
-          return { ...acc, [input.name]: input.value };
+          return { ...acc, [input.name]: input.value }
         }, {})
       )
-    };
+    }
   }
 
 }
