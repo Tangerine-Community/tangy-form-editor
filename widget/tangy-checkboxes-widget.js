@@ -20,7 +20,6 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
     return {
       ...this.upcastCommonAttributes(config, element),
       ...this.upcastLabelAttributes(config, element),
