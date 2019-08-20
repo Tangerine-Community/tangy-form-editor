@@ -45,7 +45,8 @@ class TangyBaseWidget extends PolymerElement {
 
   get defaultConfig() {
     return {
-      ...this.defaultConfigCommonAttributes()
+      ...this.defaultConfigCommonAttributes(),
+      ...this.defaultConfigLabelAttributes()
     }
   }
 
@@ -71,11 +72,12 @@ class TangyBaseWidget extends PolymerElement {
   }
 
 
-  // Convert this.innerHTML to configuration.
   upcast(config, element) {
     return { 
       ...config,
-      ...this.upcastCommonAttributes()
+      ...this.upcastCommonAttributes(config, element),
+      ...this.upcastLabelAttributes(config, element),
+      ...this.getProps()
     }
   }
 
@@ -91,6 +93,9 @@ class TangyBaseWidget extends PolymerElement {
         style: element.hasAttribute('style')
           ? element.getAttribute('style')
           : '',
+        required: element.hasAttribute('required') ? true : false,
+        hidden: element.hasAttribute('hidden') ? true : false,
+        disabled: element.hasAttribute('disabled') ? true : false,
         showIf: (
           element.hasAttribute('show-if')
             ? element.getAttribute('show-if')
@@ -120,7 +125,10 @@ class TangyBaseWidget extends PolymerElement {
   }
   // Convert configuration to HTML.
   downcast(config) {
-    return `<tangy-base ${this.downcastCommonAttributes(config)}></tangy-base>`
+    return `<tangy-base 
+        ${this.downcastCommonAttributes(config)}
+        ${this.downcastLabelAttributes(config)}
+      ></tangy-base>`
   }
 
   downcastCommonAttributes(config) {
@@ -157,11 +165,11 @@ class TangyBaseWidget extends PolymerElement {
 
   // Return markup for use when in edit mode.
   renderEdit(config) {
-    return `<h2>Add Text Input</h2>
+    return `
       <tangy-form id="form">
         <tangy-form-item id='item'>
           ${this.renderEditCommonAttributes(config)}
-          ...custom attributes here...
+          ${this.renderEditLabelAttributes(config)}
         </tangy-form-item>
       </tangy-form>
     `
@@ -212,7 +220,6 @@ class TangyBaseWidget extends PolymerElement {
       <tangy-input
         name="label"
         inner-label="Label"
-        hint-text="Enter the Question or Statement Text"
         value="${
           config.label
         }">
@@ -236,8 +243,8 @@ class TangyBaseWidget extends PolymerElement {
   // On save of edit form, return updated _config.
   onSubmit(config, formEl) {
     return { 
-      ...config, 
-      ...this.onSubmitCommonAttributes(config, formEl)
+      ...this.onSubmitCommonAttributes(config, formEl),
+      ...this.onSubmitLabelAttributes(config, formEl)
     }
   }
 
