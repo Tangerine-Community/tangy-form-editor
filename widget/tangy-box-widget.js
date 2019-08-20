@@ -17,7 +17,6 @@ class TangyBoxWidget extends TangyBaseWidget {
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyBox.props thus won't get picked up by TangyBox.getProps().
     return {...config,
       ...this.upcastCommonAttributes(config, element),
       htmlCode: element.innerHTML
