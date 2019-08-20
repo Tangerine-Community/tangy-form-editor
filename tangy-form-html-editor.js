@@ -67,6 +67,7 @@ class TangyFormHtmlEditor extends PolymerElement {
     this.$.container.innerHTML = `
       <div style="text-align: center">
       <h2 style="text-align: left">Form HTML Editor</h2>
+      <p style="color:red">Carefully back up current HTML before editing</p>
       <paper-card style="text-align: left; margin: 0 auto; width:100%; max-width: 650px;">
         <div class="card-content">
           <slot></slot>
