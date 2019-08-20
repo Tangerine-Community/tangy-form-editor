@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v6.1.0
+- New email input option.
+- Fix issue causing tangy-if and valid-if logic to be lost on GPS inputs [#62](https://github.com/Tangerine-Community/tangy-form-editor/pull/62) 
+- New widgets to support additional inputs are now easier to write and maintain with the addition of attribute helper API [#64](https://github.com/Tangerine-Community/tangy-form-editor/pull/64)
+
 ## v6.0.0
 - Upgrade to tangy-form v4.0.0 which includes breaking changes for form content. See details in the [tangy-form CHANGELOG](https://github.com/Tangerine-Community/tangy-form/blob/master/CHANGELOG.md#v400).
 
