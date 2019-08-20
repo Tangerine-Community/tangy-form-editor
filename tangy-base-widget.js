@@ -11,6 +11,64 @@ const MODE_PRINT = 'MODE_PRINT'
 class TangyBaseWidget extends PolymerElement {
 
   /*
+   * Implement API.
+   */
+
+  get claimElement() {
+    return 'tangy-base'
+  }
+
+  get defaultConfig() {
+    return {
+      ...this.defaultConfigCommonAttributes(),
+      ...this.defaultConfigLabelAttributes()
+    }
+  }
+
+  upcast(config, element) {
+    return { 
+      ...config,
+      ...this.upcastCommonAttributes(config, element),
+      ...this.upcastLabelAttributes(config, element),
+      ...this.getProps()
+    }
+  }
+
+  // Convert configuration to HTML.
+  downcast(config) {
+    return `<tangy-base 
+        ${this.downcastCommonAttributes(config)}
+        ${this.downcastLabelAttributes(config)}
+      ></tangy-base>`
+  }
+
+  
+  // Return markup for use when in info mode.
+  renderInfo(config) {
+    return `${this.renderInfoCommonAttributes(config)}`
+  }
+
+  // Return markup for use when in edit mode.
+  renderEdit(config) {
+    return `
+      <tangy-form id="form">
+        <tangy-form-item id='item'>
+          ${this.renderEditCommonAttributes(config)}
+          ${this.renderEditLabelAttributes(config)}
+        </tangy-form-item>
+      </tangy-form>
+    `
+  }
+
+  // On save of edit form, return updated _config.
+  onSubmit(config, formEl) {
+    return { 
+      ...this.onSubmitCommonAttributes(config, formEl),
+      ...this.onSubmitLabelAttributes(config, formEl)
+    }
+  }
+
+  /*
    * Public API.
    */
 
@@ -35,20 +93,9 @@ class TangyBaseWidget extends PolymerElement {
   }
   */
 
-  /*
-   * Implement API.
+  /* 
+   * Helpers.
    */
-
-  get claimElement() {
-    return 'tangy-base'
-  }
-
-  get defaultConfig() {
-    return {
-      ...this.defaultConfigCommonAttributes(),
-      ...this.defaultConfigLabelAttributes()
-    }
-  }
 
   defaultConfigCommonAttributes() {
     return {
@@ -68,16 +115,6 @@ class TangyBaseWidget extends PolymerElement {
       label: '',
       hintText: '',
       errorMessage: ''
-    }
-  }
-
-
-  upcast(config, element) {
-    return { 
-      ...config,
-      ...this.upcastCommonAttributes(config, element),
-      ...this.upcastLabelAttributes(config, element),
-      ...this.getProps()
     }
   }
 
@@ -123,13 +160,6 @@ class TangyBaseWidget extends PolymerElement {
         : ''
     }
   }
-  // Convert configuration to HTML.
-  downcast(config) {
-    return `<tangy-base 
-        ${this.downcastCommonAttributes(config)}
-        ${this.downcastLabelAttributes(config)}
-      ></tangy-base>`
-  }
 
   downcastCommonAttributes(config) {
     return `
@@ -145,33 +175,16 @@ class TangyBaseWidget extends PolymerElement {
   }
 
    downcastLabelAttributes(config) {
-    return `
-      label="${config.label}"
-      error-message="${config.errorMessage}"
-      invalid-message="${config.errorMessage}"
-      hint-text="${config.hintText}"
-  `
-  }
-  
-  // Return markup for use when in info mode.
-  renderInfo(config) {
-    return `${this.renderInfoCommonAttributes(config)}`
+     return `
+       label="${config.label}"
+       error-message="${config.errorMessage}"
+       invalid-message="${config.errorMessage}"
+       hint-text="${config.hintText}"
+     `
   }
 
   renderInfoCommonAttributes(config) {
     return `Name: ${config.name}`
-  }
-
-  // Return markup for use when in edit mode.
-  renderEdit(config) {
-    return `
-      <tangy-form id="form">
-        <tangy-form-item id='item'>
-          ${this.renderEditCommonAttributes(config)}
-          ${this.renderEditLabelAttributes(config)}
-        </tangy-form-item>
-      </tangy-form>
-    `
   }
 
   renderEditCommonAttributes(config) {
@@ -252,13 +265,6 @@ class TangyBaseWidget extends PolymerElement {
       </tangy-input>
     `
   }
-  // On save of edit form, return updated _config.
-  onSubmit(config, formEl) {
-    return { 
-      ...this.onSubmitCommonAttributes(config, formEl),
-      ...this.onSubmitLabelAttributes(config, formEl)
-    }
-  }
 
   onSubmitCommonAttributes(config, formEl) {
     return { 
@@ -299,6 +305,8 @@ class TangyBaseWidget extends PolymerElement {
         .value
     }
   }
+
+  // @Deprecated
   editResponse(config) {
     return false
   }
