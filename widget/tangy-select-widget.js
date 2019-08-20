@@ -6,73 +6,51 @@ import 'tangy-form/input/tangy-input.js';
 import { TangyBaseWidget } from '../tangy-base-widget.js';
 
 class TangySelectWidget extends TangyBaseWidget {
+
   get claimElement() {
-    return 'tangy-select';
+    return 'tangy-select'
   }
 
   get defaultConfig() {
     return {
-      name: '',
-      label: '',
-      hintText: '',
-      options: [],
-      required: false,
-      disabled: false,
-      hidden: false,
-      tangyIf: '',
-      validIf: ''
-    };
+      ...this.defaultConfigCommonAttributes(),
+      ...this.defaultConfigLabelAttributes(),
+      options: []
+    }
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyInput.props thus won't get picked up by TangyInput.getProps().
     return {
-      ...config,
-      ...element.getProps(),
+      ...this.upcastCommonAttributes(config, element),
+      ...this.upcastLabelAttributes(config, element),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
           value: option.getAttribute('value'),
           label: option.innerHTML
-        };
-      }),
-      tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
-        : '',
-      validIf: element.hasAttribute('valid-if')
-        ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
-        : ''
-    };
+        }
+      })
+    }
   }
 
   downcast(config) {
     return `
       <tangy-select
-        name="${config.name}"
-        label="${config.label}"
-        hint-text="${config.hintText}"
-        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
-        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
-        ${config.required ? 'required' : ''}
-        ${config.disabled ? 'disabled' : ''}
-        ${config.hidden ? 'hidden' : ''}
+        ${this.downcastCommonAttributes(config)}
+        ${this.downcastLabelAttributes(config)}
       >
-       ${config.options
-         .map(
-           option => `
-         <option value="${option.value}">${option.label}</option>
-      `
-         )
-         .join('')}
+        ${config.options.map(option => `
+          <option value="${option.value}">${option.label}</option>
+        `).join('')}
       </tangy-select>
-    `;
+    `
   }
+
   renderPrint(config) {
     let keyValuePairs = '';
     config.options.map(option => {
       keyValuePairs += `<li>${option.value}: ${option.label}</li>`;
     });
     return `
-   
     <table>
       <tr><td><strong>Prompt:</strong></td><td>${config.label}</td></tr>
       <tr><td><strong>Secondary Label:</strong></td><td>${
@@ -88,6 +66,7 @@ class TangySelectWidget extends TangyBaseWidget {
     <hr/>
     `;
   }
+
   renderInfo(config) {
     const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>looks_one</mwc-icon><span>`
     const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
@@ -95,127 +74,46 @@ class TangySelectWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `<h2>Add Dropdown</h2>
-    <tangy-form id="tangy-select">
-      <tangy-form-item id="tangy-select">
-        <template type="tangy-form-item">
-          <tangy-input
-            name="name"
-            valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
-            inner-label="Variable name"
-            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
-            value="${
-              config.name
-            }"
-            required>
-          </tangy-input>
-          <tangy-input
-            name="label"
-            inner-label="Label"
-            hint-text="Enter the Question or Statement Text"
-            value="${
-              config.label
-            }">
-          </tangy-input>
-          <tangy-input name="hintText" inner-label="Hint Text" value="${
-            config.hintText
-          }"></tangy-input>
-          <tangy-input
-            name="tangy_if"
-            inner-label="Show if"
-            hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
-            value="${config.tangyIf.replace(/"/g, '&quot;')}">
-          </tangy-input>
-          <tangy-input
-            name="valid_if"
-            label="Valid if"
-            hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
-            value="${config.validIf.replace(/"/g, '&quot;')}">
-          </tangy-input>
-          <tangy-checkbox name="required" ${
-            config.required ? 'value="on"' : ''
-          }>Required</tangy-checkbox>
-          <tangy-checkbox name="disabled" ${
-            config.disabled ? 'value="on"' : ''
-          }>Disabled</tangy-checkbox>
-          <tangy-checkbox name="hidden" ${
-            config.hidden ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
-          <tangy-list name="options">
-            <template type="tangy-list/new-item">
-              <tangy-input name="value" hint-text="Enter the variable name of this drop-down option." allowed-pattern="[a-zA-Z0-9\-_]" inner-label="Value" type="text"></tangy-input>
-              <tangy-input name="label" hint-text="Enter the label for this drop-down option." label="Label" type="text"></tangy-input>
-            </template>
-            ${
-              config.options.length > 0
-                ? `
-            <template type="tangy-list/initial-items">
-              ${config.options
-                .map(
-                  option => `
-                <tangy-list-item>
-                  <tangy-input hint-text="Enter the variable name of this drop-down option." name="value" allowed-pattern="[a-zA-Z0-9\-_]" label="Value" type="text" value="${
-                    option.value
-                  }"></tangy-input>
-                  <tangy-input hint-text="Enter the label for this drop-down option." name="label" label="Label" type="text" value="${
-                    option.label
-                  }"></tangy-input>
-                </tangy-list-item>
-              `
-                )
-                .join('')}
-            </template>
-            `
-                : ''
-            }
-          </tangy-list>
-        </template>
-      </tangy-form-item>
-    </tangy-form>
-    `;
-  }
-
-  editResponse(config) {
-    return {
-      form: {
-        complete: false
-      },
-      items: [
-        {
-          id: 'tangy-select',
-          inputs: [
-            {
-              name: 'name',
-              value: config.name
-            },
-            {
-              name: 'label',
-              value: config.label
-            }
-          ]
-        }
-      ]
-    };
+    return `
+      <tangy-form id="tangy-select">
+        <tangy-form-item id="tangy-select">
+          <template>
+            ${this.renderEditCommonAttributes(config)}
+            ${this.renderEditLabelAttributes(config)}
+            <tangy-list name="options">
+              <template type="tangy-list/new-item">
+                <tangy-input name="value" hint-text="Enter the variable name of this drop-down option." allowed-pattern="[a-zA-Z0-9\-_]" inner-label="Value" type="text"></tangy-input>
+                <tangy-input name="label" hint-text="Enter the label for this drop-down option." label="Label" type="text"></tangy-input>
+              </template>
+              ${config.options.length > 0 ? `
+                <template type="tangy-list/initial-items">
+                  ${config.options.map(option => `
+                    <tangy-list-item>
+                      <tangy-input hint-text="Enter the variable name of this drop-down option." name="value" allowed-pattern="[a-zA-Z0-9\-_]" label="Value" type="text" value="${option.value}"></tangy-input>
+                      <tangy-input hint-text="Enter the label for this drop-down option." name="label" label="Label" type="text" value="${option.label}"></tangy-input>
+                    </tangy-list-item>  
+                  `).join('')}
+                </template>
+              `: ''}
+            </tangy-list>
+          </template>
+        </tangy-form-item>
+      </tangy-form>
+    `
   }
 
   onSubmit(config, formEl) {
     return {
-      ...config,
-      name: formEl.values.name,
-      label: formEl.values.label,
-      tangyIf: formEl.values.tangy_if,
-      validIf: formEl.values.valid_if,
-      required: formEl.values.required === 'on' ? true : false,
-      hintText: formEl.values.hintText,
-      hidden: formEl.values.hidden === 'on' ? true : false,
-      disabled: formEl.values.disabled === 'on' ? true : false,
+      ...this.onSubmitCommonAttributes(config, formEl),
+      ...this.onSubmitLabelAttributes(config, formEl),
       options: formEl.values.options.map(item =>
         item.reduce((acc, input) => {
-          return { ...acc, [input.name]: input.value };
+          return { ...acc, [input.name]: input.value }
         }, {})
       )
-    };
+    }
   }
+
 }
 
 window.customElements.define('tangy-select-widget', TangySelectWidget);
