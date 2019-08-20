@@ -136,8 +136,6 @@ class TangyBaseWidget extends PolymerElement {
       name="${config.name}"
       class="${config.class}"
       style="${config.style}"
-      error-message="${config.errorMessage}"
-      invalid-message="${config.errorMessage}"
       ${config.showIf === "" ? "" : `tangy-if="${config.showIf.replace(/"/g, '&quot;')}"`}
       ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
       ${config.required ? 'required' : ''}
@@ -150,6 +148,7 @@ class TangyBaseWidget extends PolymerElement {
     return `
       label="${config.label}"
       error-message="${config.errorMessage}"
+      invalid-message="${config.errorMessage}"
       hint-text="${config.hintText}"
   `
   }
@@ -184,6 +183,19 @@ class TangyBaseWidget extends PolymerElement {
         value="${config.name}"
         hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
         required>
+      </tangy-input>
+      <tangy-input 
+        name="class" 
+        inner-label="CSS Class"
+        value="${config.class}"
+        hint-text="Enter CSS classes this element may belong to."
+        >
+      </tangy-input>
+      <tangy-input
+        name="style"
+        inner-label="CSS Style"
+        hint-text="Enter CSS for this element."
+        value="${config.style.replace(/"/g, '&quot;')}">
       </tangy-input>
       <tangy-input
         name="show_if"
@@ -250,8 +262,9 @@ class TangyBaseWidget extends PolymerElement {
 
   onSubmitCommonAttributes(config, formEl) {
     return { 
-      name: formEl.response.items[0].inputs.find(input => input.name === 'name')
-        .value,
+      name: formEl.response.items[0].inputs.find(input => input.name === 'name').value,
+      style: formEl.response.items[0].inputs.find(input => input.name === 'style').value,
+      class: formEl.response.items[0].inputs.find(input => input.name === 'class').value,
       required:
         formEl.response.items[0].inputs.find(input => input.name === 'required')
           .value === 'on'
