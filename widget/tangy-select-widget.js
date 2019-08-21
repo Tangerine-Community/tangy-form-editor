@@ -53,9 +53,6 @@ class TangySelectWidget extends TangyBaseWidget {
     return `
     <table>
       <tr><td><strong>Prompt:</strong></td><td>${config.label}</td></tr>
-      <tr><td><strong>Secondary Label:</strong></td><td>${
-        config.secondaryLabel
-      }</td></tr>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
       <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
