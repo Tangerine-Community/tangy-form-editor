@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.2.0
+- Added autoStop input for untimed-grid-widget. [#65](https://github.com/Tangerine-Community/tangy-form-editor/pull/65)
+- Removed display of secondaryLabel in renderPrint(). [#67](https://github.com/Tangerine-Community/tangy-form-editor/pull/67) There was an non-breaking API change in tangy-form - secondaryLabel changed to optionSelectLabel in tangy-select. 
+
 ## v6.1.0
 - New email input option.
 - Fix issue causing tangy-if and valid-if logic to be lost on GPS inputs [#62](https://github.com/Tangerine-Community/tangy-form-editor/pull/62) 
