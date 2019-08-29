@@ -324,7 +324,7 @@ class TangyFormEditor extends PolymerElement {
           <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${
             state.form.fullscreen ? 'checked' : ''
           }>${t('Enable fullscreen mode')}</paper-checkbox>
-          <paper-input label="Clicks to exit fullscreen mode" id="exit-clicks-input" value="${
+          <paper-input style="margin: 15px;" label="${t('Clicks to exit fullscreen mode')}" id="exit-clicks-input" value="${
           state.form.exitClicks}"></paper-input>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
@@ -534,7 +534,7 @@ class TangyFormEditor extends PolymerElement {
 
   onFullscreenCheckboxClick() {
     const exitClicksEl = this.$.container.querySelector('#exit-clicks-input')
-    if (!state.form.fullscreen) {
+    if (!this.store.getState().form.fullscreen) {
       exitClicksEl.style.display = 'block';
     } else {
       exitClicksEl.style.display = 'none';
