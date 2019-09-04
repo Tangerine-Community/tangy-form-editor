@@ -7,7 +7,7 @@
     "test": "./node_modules/.bin/polymer test -l chrome"
   },
   "dependencies": {
-    "@material/mwc-button": "^0.4.0",
+    "@material/mwc-button": "^0.8.0",
     "@material/mwc-fab": "^0.3.4",
     "@material/mwc-icon": "^0.3.4",
     "@polymer/paper-toggle-button": "^3.0.0-pre.21",
