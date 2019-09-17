@@ -13,23 +13,17 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
 
   get defaultConfig() {
     return {
-      name: '',
+      ...this.defaultConfigCommonAttributes(),
       hintText: '',
       columns: 4,
       options: [],
-      required: false,
-      disabled: false,
-      hidden: false,
       rowMarkers: false,
-      tangyIf: '',
-      validIf: '',
       optionFontSize: '',
       autoStop: ''
     };
   }
 
   upcast(config, element) {
-    // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyTimed.props thus won't get picked up by TangyTimed.getProps().
     return {
       ...config,
       ...element.getProps(),
@@ -39,27 +33,17 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
           label: option.innerHTML
         };
       }),
-      tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
-        : '',
-      validIf: element.hasAttribute('valid-if')
-        ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
-        : ''
+      ...this.upcastCommonAttributes(config, element)
     };
   }
 
   downcast(config) {
     return `
       <tangy-untimed-grid
-        name="${config.name}"
+        ${this.downcastCommonAttributes(config)}
         hint-text="${config.hintText}"
         columns="${config.columns}"
         ${config.rowMarkers ? 'row-markers' : ''}
-        ${config.required ? 'required' : ''}
-        ${config.disabled ? 'disabled' : ''}
-        ${config.hidden ? 'hidden' : ''}
-        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
-        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.optionFontSize ? `option-font-size="${config.optionFontSize}"` : ``}
         ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
 
@@ -108,15 +92,11 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `<h2>Add Untimed Grid</h2>
+    return `
     <tangy-form id="tangy-untimed-grid">
       <tangy-form-item id="tangy-untimed-grid">
         <template type="tangy-form-item">
-          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z]{1,}[a-zA-Z0-9\_]{1,}$/)"
-            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), and numbers (0-9)."
-            inner-label="Variable name" value="${
-              config.name
-            }" required></tangy-input>
+          ${this.renderEditCommonAttributes(config)}
           <tangy-input name="columns" type="number" inner-label="Number of columns" value="${
             config.columns
           }"></tangy-input>
@@ -126,21 +106,10 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
           <tangy-input name="autoStop" inner-label="Auto Stop" value="${
             config.autoStop ? config.autoStop : ''
           }"></tangy-input>
-          <tangy-input name="tangy_if" inner-label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
-          <tangy-input name="valid_if" inner-label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
           <tangy-checkbox name="rowMarkers" ${
             config.rowMarkers ? 'value="on"' : ''
           }>Mark entire rows</tangy-checkbox>
-          <tangy-checkbox name="required" ${
-            config.required ? 'value="on"' : ''
-          }>Required</tangy-checkbox>
-          <tangy-checkbox name="disabled" ${
-            config.disabled ? 'value="on"' : ''
-          }>Disabled</tangy-checkbox>
-          <tangy-checkbox name="hidden" ${
-            config.hidden ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
-          <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
+         <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
           config.optionFontSize
           }"></tangy-input>
           <tangy-input name="options"
@@ -154,42 +123,14 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
     `;
   }
 
-  editResponse(config) {
-    return {
-      form: {
-        complete: false
-      },
-      items: [
-        {
-          id: 'tangy-timed',
-          inputs: [
-            {
-              name: 'name',
-              value: config.name
-            },
-            {
-              name: 'label',
-              value: config.label
-            }
-          ]
-        }
-      ]
-    };
-  }
-
   onSubmit(config, formEl) {
     return {
       ...config,
-      name: formEl.values.name,
+      ...this.onSubmitCommonAttributes(config, formEl),
       autoStop: formEl.values.autoStop,
       hintText: formEl.values.hintText,
       columns: formEl.values.columns,
       rowMarkers: formEl.values.rowMarkers === 'on' ? true : false,
-      required: formEl.values.required === 'on' ? true : false,
-      hidden: formEl.values.hidden === 'on' ? true : false,
-      disabled: formEl.values.disabled === 'on' ? true : false,
-      tangyIf: formEl.values.tangy_if,
-      validIf: formEl.values.valid_if,
       optionFontSize: formEl.values.optionFontSize,
       options: formEl.values.options.split(' ').map((item, i) => {
         return { value: i+1, label: item };
