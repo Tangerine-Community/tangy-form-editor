@@ -12,7 +12,8 @@ class TangyQrWidget extends TangyBaseWidget {
 
   get defaultConfig() {
     return {
-      ...this.defaultConfigCommonAttributes()
+      ...this.defaultConfigCommonAttributes(),
+      hideOutput: false
     };
   }
 
@@ -26,6 +27,7 @@ class TangyQrWidget extends TangyBaseWidget {
     return `
       <tangy-qr 
         ${this.downcastCommonAttributes(config)}
+        ${config.hideOutput ? 'hide-output' : ''}
       >
       </tangy-qr>
     `;
@@ -54,6 +56,7 @@ class TangyQrWidget extends TangyBaseWidget {
       <tangy-form id="tangy-qr">
         <tangy-form-item>
           ${this.renderEditCommonAttributes(config)}
+          <tangy-checkbox name="hide-output" help-text="Hide the data output scanned from the QR code. This may be useful if you are using a format such as JSON and parsing it out into other items.">Hide output</tangy-checkbox>
         </tangy-form-item>
       </tangy-form>
     `;
@@ -62,6 +65,7 @@ class TangyQrWidget extends TangyBaseWidget {
   onSubmit(config, formEl) {
     return {
       ...this.onSubmitCommonAttributes(config, formEl),
+      hideInput: formEl.values['hide-output']
     }
   }
 
