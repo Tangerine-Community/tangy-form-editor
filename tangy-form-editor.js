@@ -150,6 +150,9 @@ class TangyFormEditor extends PolymerElement {
         on-open="
           ${state.form.onOpen}
         "
+        exit-clicks="
+          ${state.form.exitClicks}
+        "
         on-change="
           ${state.form.onChange}
         "
@@ -210,6 +213,9 @@ class TangyFormEditor extends PolymerElement {
          {
            title: template.content.querySelector('tangy-form').getAttribute('title'),
            fullscreen: template.content.querySelector('tangy-form').hasAttribute('fullscreen'),
+           exitClicks: template.content.querySelector('tangy-form').hasAttribute('exit-clicks')
+            ? template.content.querySelector('tangy-form').getAttribute('exit-clicks')
+            : '',
            onOpen: template.content.querySelector('tangy-form').hasAttribute('on-open')
             ? template.content.querySelector('tangy-form').getAttribute('on-open')
             : '',
@@ -318,6 +324,8 @@ class TangyFormEditor extends PolymerElement {
           <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${
             state.form.fullscreen ? 'checked' : ''
           }>${t('Enable fullscreen mode')}</paper-checkbox>
+          <paper-input style="margin: 15px;" label="${t('Clicks to exit fullscreen mode')}" id="exit-clicks-input" value="${
+          state.form.exitClicks}"></paper-input>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-submit logic" id="on-submit-editor"></paper-expansion-panel>
@@ -404,6 +412,9 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelector('#fullscreen-checkbox')
         .addEventListener('click', this.onFullscreenCheckboxClick.bind(this))
+      this.$.container
+        .querySelector('#exit-clicks-input')
+        .addEventListener('change', this.onExitClicksInput.bind(this))
       this.$.container
         .querySelector('sortable-list')
         .addEventListener('sort-finish', this.onSortFinish.bind(this))
@@ -522,7 +533,20 @@ class TangyFormEditor extends PolymerElement {
   }
 
   onFullscreenCheckboxClick() {
+    const exitClicksEl = this.$.container.querySelector('#exit-clicks-input')
+    if (!this.store.getState().form.fullscreen) {
+      exitClicksEl.style.display = 'block';
+    } else {
+      exitClicksEl.style.display = 'none';
+    }
     this.store.dispatch({type: 'TOGGLE_FULLSCREEN'})
+  }
+
+  onExitClicksInput(event) {
+    this.store.dispatch({
+      type: 'EXIT_FULLSCREEN_CLICKS',
+      payload: this.$.container.querySelector('#exit-clicks-input').value
+    })
   }
 
   onSortFinish(event) {

@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## v6.3.0
+- Added support for modifying `exit-clicks` attribute on tangy-form; this is used in conjunction with fullscreen mode.
 
 ## v6.2.1
 - Bump `tangy-form` version to `v4.1.1` for API change in tangy-select, EFTouch auto-progress work, and tangy-select test regression fix.
