@@ -112,8 +112,8 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
     <tangy-form id="tangy-untimed-grid">
       <tangy-form-item id="tangy-untimed-grid">
         <template type="tangy-form-item">
-          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" 
-            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z]{1,}[a-zA-Z0-9\_]{1,}$/)"
+            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), and numbers (0-9)."
             inner-label="Variable name" value="${
               config.name
             }" required></tangy-input>

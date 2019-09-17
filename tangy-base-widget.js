@@ -191,10 +191,10 @@ class TangyBaseWidget extends PolymerElement {
     return `
       <tangy-input 
         name="name" 
-        valid-if="input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)" 
+        valid-if="input.value.match(/^[a-zA-Z]{1,}[a-zA-Z0-9\_]{1,}$/)" 
         inner-label="Variable name"
         value="${config.name}"
-        hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+        hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), and numbers (0-9)."
         required>
       </tangy-input>
       <tangy-input 
