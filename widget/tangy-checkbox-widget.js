@@ -12,7 +12,11 @@ class TangyCheckboxWidget extends TangyBaseWidget {
     return { 
       ...this.upcastCommonAttributes(config, element),
       ...this.upcastLabelAttributes(config, element),
-      label: element.innerHTML
+      label: element.innerHTML 
+        ? element.innerHTML 
+        : this.upcastLabelAttributes(config, element).label
+          ? this.upcastLabelAttributes(config, element).label
+          : ''
     }
   }
 
@@ -21,7 +25,7 @@ class TangyCheckboxWidget extends TangyBaseWidget {
       <tangy-checkbox 
         ${this.downcastCommonAttributes(config)}
         ${this.downcastLabelAttributes(config)}
-      >${config.label}</tangy-checkbox>
+      ></tangy-checkbox>
     `
   }
   
