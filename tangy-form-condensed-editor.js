@@ -23,6 +23,7 @@ import './widget/tangy-consent-widget.js'
 import './widget/tangy-untimed-grid-widget.js'
 import './widget/tangy-acasi-widget.js'
 import './widget/tangy-partial-date-widget.js'
+import './widget/tangy-signature-widget.js'
 
 /**
  * `tangy-form-item-editor`

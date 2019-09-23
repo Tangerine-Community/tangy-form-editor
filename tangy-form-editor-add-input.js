@@ -85,6 +85,7 @@ class TangyFormEditorAddInput extends PolymerElement {
           <h4>Misc</h4>
           <div class="element-list">
             <mwc-button icon="image" on-click="addThis"><span id="tangy-image-widget">Image</span></mwc-button><br>
+            <mwc-button icon="brush" on-click="addThis"><span id="tangy-signature-widget">Signature</span></mwc-button><br>
             <mwc-button icon="code" on-click="addThis"><span id="tangy-box-widget">HTML content container</span></mwc-button><br>
             <mwc-button icon="attach_money" on-click="addThis"><span id="tangy-template-widget">HTML template</span></mwc-button><br>
             <mwc-button icon="filter_center_focus" on-click="addThis"><span id="tangy-qr-widget">QR Code Scanner</span></mwc-button><br>
