@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.3.1
+- Fix issue causing a checkbox to have a blank label if not placing label inline.
+
 ## v6.3.0
 - Added input for entering exitClicks on tangy-form; this is used in conjunction with fullscreen mode.
 
