@@ -166,11 +166,12 @@ class TangyFormEditor extends PolymerElement {
             item => `
           <tangy-form-item id="${item.id}" 
             title="${item.title}"
-            ${item.hideBackButton ? ` hide-back-button` : ''}${
-              item.summary ? ` summary` : ``
-            }${item.hideBackButton ? ` hide-back-button` : ``}${
-              item.rightToLeft ? ` right-to-left` : ''
-            }
+            ${item.hideBackButton ? ` hide-back-button` : ''}
+            ${item.hideNextButton ? ` hide-next-button` : ``}
+            ${item.hideNavIcons ? ` hide-nav-labels` : ``}
+            ${item.hideNavIcons ? ` hide-nav-labels` : ``}
+            ${item.summary ? ` summary` : ``}
+            ${item.rightToLeft ? ` right-to-left` : ''}
             on-open="
               ${item.onOpen}
             "
