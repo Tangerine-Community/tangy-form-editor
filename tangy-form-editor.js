@@ -1,6 +1,9 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/sortable-list/sortable-list.js'
 import '@polymer/paper-toggle-button/paper-toggle-button.js'
+import '@material/mwc-fab'
+import '@material/mwc-icon/mwc-icon-font.js';
+import "@material/mwc-icon"
 import 'juicy-ace-editor/juicy-ace-editor-module.js'
 import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
 import { tangyFormEditorReducer } from './tangy-form-editor-reducer.js'

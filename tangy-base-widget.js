@@ -1,8 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
 import '@polymer/paper-card/paper-card.js'
 import '@polymer/paper-button/paper-button.js'
-import {Fab} from '@material/mwc-fab'
-import {Icon} from "@material/mwc-icon"
 
 const MODE_INFO = 'MODE_INFO'
 const MODE_EDIT = 'MODE_EDIT'
