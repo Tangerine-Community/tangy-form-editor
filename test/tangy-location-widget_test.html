@@ -57,7 +57,7 @@
           element.shadowRoot.querySelector('#edit-button').click()
           element
             .shadowRoot.querySelector('tangy-form-item')
-            .querySelector('[name=name]').value = 'location-test'
+            .querySelector('[name=name]').value = 'location_test'
           element
             .shadowRoot.querySelector('tangy-form-item')
             .querySelector('[name=required]').value = ''
@@ -65,7 +65,7 @@
             .shadowRoot.querySelector('tangy-form-item')
             .querySelector('[name=meta-data-template]').value = 'Test 2'
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
-          assert.equal(element._config.name, 'location-test')
+          assert.equal(element._config.name, 'location_test')
           assert.equal(element._config.required, false)
           assert.equal(element._config.metaDataTemplate.includes('Test 2'), true)
         })
