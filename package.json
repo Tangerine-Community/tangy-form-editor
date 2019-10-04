@@ -4,6 +4,7 @@
   "version": "6.3.0",
   "scripts": {
     "start": "./node_modules/.bin/polymer serve",
+    "build": "webpack",
     "test": "./node_modules/.bin/polymer test -l chrome"
   },
   "dependencies": {
@@ -25,7 +26,9 @@
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "polymer-cli": "^1.9.2",
-    "wct-browser-legacy": "^1.0.0"
+    "wct-browser-legacy": "^1.0.0",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
   },
   "repository": {
     "type": "git",
