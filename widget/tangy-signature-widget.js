@@ -1,19 +1,18 @@
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-button/paper-button.js';
-import 'tangy-form/input/tangy-qr.js';
+import 'tangy-form/input/tangy-signature.js';
 import 'tangy-form/input/tangy-checkbox.js';
 import { TangyBaseWidget } from '../tangy-base-widget.js';
 
-class TangyQrWidget extends TangyBaseWidget {
+class TangySignatureWidget extends TangyBaseWidget {
 
   get claimElement() {
-    return 'tangy-qr';
+    return 'tangy-signature';
   }
 
   get defaultConfig() {
     return {
-      ...this.defaultConfigCommonAttributes(),
-      hideOutput: false
+      ...this.defaultConfigCommonAttributes()
     };
   }
 
@@ -25,11 +24,10 @@ class TangyQrWidget extends TangyBaseWidget {
 
   downcast(config) {
     return `
-      <tangy-qr 
+      <tangy-signature 
         ${this.downcastCommonAttributes(config)}
-        ${config.hideOutput ? 'hide-output' : ''}
       >
-      </tangy-qr>
+      </tangy-signature>
     `;
   }
 
@@ -46,17 +44,16 @@ class TangyQrWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>filter_center_focus</mwc-icon><span>`
+    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>brush</mwc-icon><span>`
     const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
     return `${icon} ${name} ${this.downcast(config)}`;
   }
 
   renderEdit(config) {
     return `
-      <tangy-form id="tangy-qr">
+      <tangy-form id="tangy-signature">
         <tangy-form-item>
           ${this.renderEditCommonAttributes(config)}
-          <tangy-checkbox name="hide-output" help-text="Hide the data output scanned from the QR code. This may be useful if you are using a format such as JSON and parsing it out into other items.">Hide output</tangy-checkbox>
         </tangy-form-item>
       </tangy-form>
     `;
@@ -64,16 +61,15 @@ class TangyQrWidget extends TangyBaseWidget {
 
   onSubmit(config, formEl) {
     return {
-      ...this.onSubmitCommonAttributes(config, formEl),
-      hideInput: formEl.values['hide-output']
+      ...this.onSubmitCommonAttributes(config, formEl)
     }
   }
 
 }
 
-window.customElements.define('tangy-qr-widget', TangyQrWidget);
+window.customElements.define('tangy-signature-widget', TangySignatureWidget);
 window.tangyFormEditorWidgets.define(
-  'tangy-qr-widget',
-  'tangy-qr',
-  TangyQrWidget
+  'tangy-signature-widget',
+  'tangy-signature',
+  TangySignatureWidget
 );

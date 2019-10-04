@@ -57,8 +57,8 @@ class TangyImageWidget extends TangyBaseWidget {
       <tangy-form-item>
         <tangy-input 
           name="name" 
-          valid-if="input.value && input.value.match(/^[a-zA-Z].{1,}[a-zA-Z0-9\-_]$/)"
-          hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), dash (-), and numbers (0-9)."
+          valid-if="input.value && input.value.match(/^[a-zA-Z]{1,}[a-zA-Z0-9\_]{1,}$/)"
+          hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), and numbers (0-9)."
           inner-label="Enter the variable name you would like displayed on all data outputs (e.g. employee_id)."
           value="${config.name}" 
           required>

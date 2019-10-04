@@ -1,10 +1,18 @@
 # CHANGELOG
 
+## v6.4.0
+- Features
+  - Support for new elements and attributes in `tangy-form` v4.3.0. https://github.com/Tangerine-Community/tangy-form/blob/master/CHANGELOG.md#v430
+- Fixes
+  - Fix regex to allow for only valid variable names. 2 or more characters, begin with alpha, no spaces, periods, allow _ no dash
+    - Issue: https://github.com/Tangerine-Community/Tangerine/issues/1566, https://github.com/Tangerine-Community/Tangerine/issues/1558, https://github.com/Tangerine-Community/Tangerine/issues/1461
+    - PR: https://github.com/Tangerine-Community/tangy-form-editor/pull/77
+
 ## v6.3.1
 - Fix issue causing a checkbox to have a blank label if not placing label inline.
 
 ## v6.3.0
-- Added input for entering exitClicks on tangy-form; this is used in conjunction with fullscreen mode.
+- Added support for modifying `exit-clicks` attribute on tangy-form; this is used in conjunction with fullscreen mode.
 
 ## v6.2.1
 - Bump `tangy-form` version to `v4.1.1` for API change in tangy-select, EFTouch auto-progress work, and tangy-select test regression fix.

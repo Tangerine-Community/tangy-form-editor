@@ -125,7 +125,10 @@ class TangyFormItemEditor extends PolymerElement {
             <p>Item id: ${this.item.id}</p>
             <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></p>
             <p><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></p>
+            <p><paper-checkbox id="hide-next-button-checkbox" ${this.item.hideNextButton ? 'checked' : ''}>${t('Hide the next button')}</paper-checkbox></p>
             <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>${t('right-to-left orientation')}</paper-checkbox></p>
+            <p><paper-checkbox id="hide-nav-labels-checkbox" ${this.item.hideNavLabels ? 'checked' : ''}>${t('Hide navigation labels')}</paper-checkbox></p>
+            <p><paper-checkbox id="hide-nav-icons-checkbox" ${this.item.hideNavIcons ? 'checked' : ''}>${t('Hide navigation icons')}</paper-checkbox></p>
             <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
             <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
             ${this.categories ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>' : ''}
@@ -136,7 +139,10 @@ class TangyFormItemEditor extends PolymerElement {
             ${this.item.title}<br/>
             <p><paper-checkbox disabled id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></p>
             <p><paper-checkbox disabled id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></p>
+            <p><paper-checkbox disabled id="hide-next-button-checkbox" ${this.item.hideNextButton ? 'checked' : ''}>${t('Hide the next button')}</paper-checkbox></p>
             <p><paper-checkbox disabled id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
+            <p><paper-checkbox disabled id="hide-nav-labels-checkbox" ${this.item.hideNavLabels ? 'checked' : ''}>${t('Hide navigation labels')}</paper-checkbox></p>
+            <p><paper-checkbox disabled id="hide-nav-icons-checkbox" ${this.item.hideNavIcons ? 'checked' : ''}>${t('Hide navigation icons')}</paper-checkbox></p>
             <p><paper-input disabled type="number" id="incorrectThreshold" value="${this.item.incorrectThreshold}" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
             </div>
         </div>
@@ -234,6 +240,9 @@ class TangyFormItemEditor extends PolymerElement {
         incorrectThreshold: this.$.container.querySelector('#incorrectThreshold').value,
         summary: this.$.container.querySelector('#summary-checkbox').checked,
         hideBackButton: this.$.container.querySelector('#hide-back-button-checkbox').checked,
+        hideNextButton: this.$.container.querySelector('#hide-next-button-checkbox').checked,
+        hideNavLabels: this.$.container.querySelector('#hide-nav-labels-checkbox').checked,
+        hideNavIcons: this.$.container.querySelector('#hide-nav-icons-checkbox').checked,
         rightToLeft: this.$.container.querySelector('#right-to-left-checkbox').checked,
         template: templateEl.innerHTML
     })}))

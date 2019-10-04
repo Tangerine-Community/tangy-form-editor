@@ -5,12 +5,29 @@
 [Check out the demo on Glitch](https://tangy-form-editor.glitch.me/)
 
 ## Install
-Global dependencies: redux, js-beautify
+
+Add the following global dependencies to your HTML.
+```
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.4/redux.js"></script>
+  <script src="https://unpkg.com/js-beautify/js/lib/beautify-html.js"></script>
+  <script src="https://unpkg.com/tangy-form@latest/dist/bundle.js" type="module"></script>
+  <script src="https://unpkg.com/tangy-form-editor@latest/dist/bundle.js" type="module"></script>
+```
+
+### Advanced: Using a bundler
+For apps using a bundler, install using NPM and then import into your app.
 ```
 npm install --save tangy-form-editor
 ```
 
-If you are using a bundler, you have to copy an ace build to your root directory in order to get syntax highlighting. In an `angular-cli` project (as of Angular 4) you can do this by adding the following `assets` entry to your apps build target.
+```
+import `tangy-form-editor/tangy-form-editor.js`
+```
+
+You have to copy an ace build to your root directory in order to get syntax highlighting. In an `angular-cli` project (as of Angular 4) you can do this by adding the following `assets` entry to your apps build target.
 ```
   { "glob": "**/*", "input": "../node_modules/ace-builds/src-noconflict/", "output": "./" },
 ```

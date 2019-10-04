@@ -1,6 +1,8 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/sortable-list/sortable-list.js'
 import '@polymer/paper-toggle-button/paper-toggle-button.js'
+import '@material/mwc-fab'
+import "@material/mwc-icon"
 import 'juicy-ace-editor/juicy-ace-editor-module.js'
 import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
 import { tangyFormEditorReducer } from './tangy-form-editor-reducer.js'
@@ -30,6 +32,7 @@ import 'tangy-form/input/tangy-eftouch.js';
 import 'tangy-form/input/tangy-photo-capture.js';
 import 'tangy-form/input/tangy-qr.js';
 import 'tangy-form/input/tangy-consent.js';
+import 'tangy-form/input/tangy-signature.js';
 
 /**
  * `tangy-form-editor`
@@ -165,11 +168,12 @@ class TangyFormEditor extends PolymerElement {
             item => `
           <tangy-form-item id="${item.id}" 
             title="${item.title}"
-            ${item.hideBackButton ? ` hide-back-button` : ''}${
-              item.summary ? ` summary` : ``
-            }${item.hideBackButton ? ` hide-back-button` : ``}${
-              item.rightToLeft ? ` right-to-left` : ''
-            }
+            ${item.hideBackButton ? ` hide-back-button` : ''}
+            ${item.hideNextButton ? ` hide-next-button` : ``}
+            ${item.hideNavLabels ? ` hide-nav-labels` : ``}
+            ${item.hideNavIcons ? ` hide-nav-icons` : ``}
+            ${item.summary ? ` summary` : ``}
+            ${item.rightToLeft ? ` right-to-left` : ''}
             on-open="
               ${item.onOpen}
             "
