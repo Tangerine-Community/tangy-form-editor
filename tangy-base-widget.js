@@ -110,6 +110,7 @@ class TangyBaseWidget extends PolymerElement {
 
   defaultConfigLabelAttributes() {
     return {
+      questionNumber: '',
       label: '',
       hintText: '',
       errorMessage: ''
@@ -147,6 +148,9 @@ class TangyBaseWidget extends PolymerElement {
 
   upcastLabelAttributes(config, element) {
     return {
+      questionNumber: element.hasAttribute('question-number')
+        ? element.getAttribute('question-number')
+        : '',
       label: element.hasAttribute('label')
         ? element.getAttribute('label')
         : '',
@@ -174,6 +178,7 @@ class TangyBaseWidget extends PolymerElement {
 
    downcastLabelAttributes(config) {
      return `
+       question-number="${config.questionNumber}"
        label="${config.label}"
        error-message="${config.errorMessage}"
        invalid-message="${config.errorMessage}"
@@ -241,6 +246,13 @@ class TangyBaseWidget extends PolymerElement {
   renderEditLabelAttributes(config) {
     return `
       <tangy-input
+        name="question-number"
+        inner-label="Question number"
+        value="${
+          config.questionNumber
+        }">
+      </tangy-input>
+      <tangy-input
         name="label"
         inner-label="Label"
         value="${
@@ -295,6 +307,8 @@ class TangyBaseWidget extends PolymerElement {
 
   onSubmitLabelAttributes(config, formEl) {
     return { 
+      questionNumber: formEl.response.items[0].inputs.find(input => input.name === 'question-number')
+        .value,
       label: formEl.response.items[0].inputs.find(input => input.name === 'label')
         .value,
        errorMessage: formEl.response.items[0].inputs.find(input => input.name === 'error-message')
