@@ -56,8 +56,8 @@ class TangyFormEditorAddInput extends PolymerElement {
         <div>
           <h4>Inputs</h4>
           <div class="element-list">
-            <mwc-button icon="date_range" on-click="addThis" id="tangy-date-widget">Date</mwc-button><br>
-            <mwc-button icon="calendar_today" on-click="addThis" id="tangy-partial-date-widget">Partial Date</mwc-button><br>
+            <mwc-button icon="calendar_today" on-click="addThis" id="tangy-date-widget">Date</mwc-button><br>
+            <mwc-button icon="date_range" on-click="addThis" id="tangy-partial-date-widget">Partial Date</mwc-button><br>
             <mwc-button icon="text_fields" on-click="addThis" id="tangy-text-widget">Text</mwc-button><br>
             <mwc-button icon="timer" on-click="addThis" id="tangy-time-widget">Time</mwc-button><br>
             <mwc-button icon="looks_one" on-click="addThis" id="tangy-number-widget">Number</mwc-button><br>
