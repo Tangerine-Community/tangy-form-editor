@@ -106,6 +106,15 @@
           element.$.container.querySelector('.save-form').click()
         });
 
+        test('should update form level exit-clicks', () => {
+          const element = fixture('TestFixture');
+          element.shadowRoot.querySelector('#main-expansion-panel').opened = true
+          element.shadowRoot.querySelector('#on-submit-editor').opened = true
+          element.shadowRoot.querySelector('#exit-clicks-input').value = '2'
+          element.shadowRoot.querySelector('.save-form').click()
+          assert.equal(element.formHtml.includes(`exit-clicks="2"`), true) 
+        })
+
         test('should update form level on-submit logic', () => {
           const element = fixture('TestFixture');
           element.shadowRoot.querySelector('#main-expansion-panel').opened = true
