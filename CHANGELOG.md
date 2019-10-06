@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v6.4.1
+- Fix strange spacing for tangy partial date icon by switching icons.
+- Add missing support for common label attribute of question-number.
+- Fix saving of "exit clicks" setting.
+
 ## v6.4.0
 - Features
   - Support for new elements and attributes in `tangy-form` v4.3.0. https://github.com/Tangerine-Community/tangy-form/blob/master/CHANGELOG.md#v430
