@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.4.2
+- Upgrade tangy-form to v4.3.2.
+
 ## v6.4.1
 - Fix strange spacing for tangy partial date icon by switching icons.
 - Add missing support for common label attribute of question-number.
