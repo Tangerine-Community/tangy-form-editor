@@ -207,6 +207,8 @@ class TangyFormEditor extends PolymerElement {
         summary: el.hasAttribute('summary'),
         rightToLeft: el.hasAttribute('right-to-left'),
         incorrectThreshold: el.hasAttribute('incorrect-threshold'),
+        hideNavIcons: el.hasAttribute('hide-nav-icons'),
+        hideNavLabels: el.hasAttribute('hide-nav-labels'),
         hideBackButton: el.hasAttribute('hide-back-button'),
         hideNextButton: el.hasAttribute('hide-next-button')
       }
