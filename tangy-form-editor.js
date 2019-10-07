@@ -205,7 +205,8 @@ class TangyFormEditor extends PolymerElement {
         category: el.hasAttribute('category') ? el.getAttribute('category') : '',
         summary: el.hasAttribute('summary'),
         rightToLeft: el.hasAttribute('right-to-left'),
-        hideBackButton: el.hasAttribute('hide-back-button')
+        hideBackButton: el.hasAttribute('hide-back-button'),
+        hideNextButton: el.hasAttribute('hide-next-button')
       }
     )))
     let formJson = Object.assign({}, this.formJson, {
