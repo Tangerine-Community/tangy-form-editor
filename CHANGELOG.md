@@ -1,5 +1,6 @@
 # CHANGELOG
 
+
 ## v6.5.0
 - New "Capture Item at" setting in tangy-timed. https://github.com/Tangerine-Community/tangy-form-editor/pull/85
 - Upgrade to tangy-form v4.3.3. https://github.com/Tangerine-Community/tangy-form/releases/tag/v4.3.3
