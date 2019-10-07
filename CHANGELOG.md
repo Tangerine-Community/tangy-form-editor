@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.5.4
+- Fix resuming the use of incorrect-threhold attribute on tangy-form-item.
+- Bump tangy-form to v4.3.4.
+
 ## v6.5.3
 - Fix broken resuming of hide-next-button on item.
 - Fix rendering and upcasting of tangy-form-item's incorrect-threshold attribute.
