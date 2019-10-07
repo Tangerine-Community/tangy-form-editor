@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.5.3
+- Fix broken resuming of hide-next-button on item.
+- Fix rendering and upcasting of tangy-form-item's incorrect-threshold attribute.
+
 ## v6.5.2
 - Fix missing build.
 
