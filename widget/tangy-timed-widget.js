@@ -23,6 +23,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       disabled: false,
       hidden: false,
       rowMarkers: false,
+      captureItemAt: '',
       tangyIf: '',
       validIf: '',
       optionFontSize: ''
@@ -58,6 +59,7 @@ class TangyTimedWidget extends TangyBaseWidget {
         columns="${config.columns}"
         ${config.duration ? `duration="${config.duration}"` : ``}
         ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
+        ${config.captureItemAt ? `capture-item-at="${config.captureItemAt}"` : ``}
         ${config.rowMarkers ? 'row-markers' : ''}
         ${config.showLabels ? 'show-labels' : ''}
         ${config.required ? 'required' : ''}
@@ -90,6 +92,7 @@ class TangyTimedWidget extends TangyBaseWidget {
     <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
     <tr><td><strong>Duration:</strong></td><td>${config.duration}</td></tr>
     <tr><td><strong>AutoStop:</strong></td><td>${config.autoStop}</td></tr>
+    <tr><td><strong>Capture Item At:</strong></td><td>${config.captureItemAt}</td></tr>
     <tr><td><strong>Mode:</strong></td><td>${config.mode}</td></tr>
     <tr><td><strong>Columns:</strong></td><td>${config.columns}</td></tr>
     <tr><td><strong>Show Labels:</strong></td><td>${
@@ -126,6 +129,9 @@ class TangyTimedWidget extends TangyBaseWidget {
           }"></tangy-input>
           <tangy-input name="hintText" inner-label="Hint Text" value="${
             config.hintText
+          }"></tangy-input>
+          <tangy-input name="captureItemAt" inner-label="Capture Item at" hint-text="The number of seconds to ask data collector what item was last attempted" value="${
+            config.captureItemAt ? config.captureItemAt : ''
           }"></tangy-input>
           <tangy-input name="autoStop" inner-label="Auto Stop" value="${
             config.autoStop ? config.autoStop : ''
@@ -192,6 +198,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       ...config,
       name: formEl.values.name,
       autoStop: formEl.values.autoStop,
+      captureItemAt: formEl.values.captureItemAt,
       duration: formEl.values.duration,
       hintText: formEl.values.hintText,
       columns: formEl.values.columns,
