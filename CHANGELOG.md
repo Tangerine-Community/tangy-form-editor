@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.5.2
+- Fix missing build.
+
 ## v6.5.1
 - Fix missing build.
 

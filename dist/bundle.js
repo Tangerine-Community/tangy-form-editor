@@ -5893,6 +5893,9 @@ const Ue=s.a`<iron-iconset-svg name="editor" size="24">
       .text-outer {
         position: relative;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .text-inner {
         /*
