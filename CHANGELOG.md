@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.5.5
+- Upgrade tangy-form to v4.3.6.
+
 ## v6.5.4
 - Fix resuming the use of incorrect-threhold attribute on tangy-form-item.
 - Bump tangy-form to v4.3.4.
