@@ -1,6 +1,6 @@
 # \<tangy-form-editor\>
 
-[Build Status](https://travis-ci.org/Tangerine-Community/tangy-form-editor.svg?branch=master)](https://travis-ci.org/Tangerine-Community/tangy-form-editor)
+[![Build Status](https://travis-ci.org/Tangerine-Community/tangy-form-editor.svg?branch=master)](https://travis-ci.org/Tangerine-Community/tangy-form-editor)
 
 The `<tangy-form-editor>` element is a Web Component for editing the contents a `<tangy-form>`. Just place `<tangy-form-editor>` tags around your `<tangy-form>` and the editor enables.
 
