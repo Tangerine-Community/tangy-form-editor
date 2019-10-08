@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.5.7
+- Upgrade tangy-form to v4.3.7.
+
 ## v6.5.6
 - Upgrade tangy-form to v4.3.6.
 
