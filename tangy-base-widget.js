@@ -113,7 +113,7 @@ class TangyBaseWidget extends PolymerElement {
       questionNumber: '',
       label: '',
       hintText: '',
-      errorMessage: ''
+      errorText: ''
     }
   }
 
@@ -154,8 +154,8 @@ class TangyBaseWidget extends PolymerElement {
       label: element.hasAttribute('label')
         ? element.getAttribute('label')
         : '',
-      errorMessage: element.hasAttribute('error-message')
-        ? element.getAttribute('error-message')
+      errorText: element.hasAttribute('error-text')
+        ? element.getAttribute('error-text')
         : '',
       hintText: element.hasAttribute('hint-text')
         ? element.getAttribute('hint-text')
@@ -180,8 +180,7 @@ class TangyBaseWidget extends PolymerElement {
      return `
        question-number="${config.questionNumber}"
        label="${config.label}"
-       error-message="${config.errorMessage}"
-       invalid-message="${config.errorMessage}"
+       error-text="${config.errorText}"
        hint-text="${config.hintText}"
      `
   }
@@ -267,10 +266,10 @@ class TangyBaseWidget extends PolymerElement {
         }">
       </tangy-input>
       <tangy-input
-        name="error-message"
-        inner-label="Error message"
+        name="error-text"
+        inner-label="Error text"
         value="${
-          config.errorMessage
+          config.errorText
         }">
       </tangy-input>
     `
@@ -311,7 +310,7 @@ class TangyBaseWidget extends PolymerElement {
         .value,
       label: formEl.response.items[0].inputs.find(input => input.name === 'label')
         .value,
-       errorMessage: formEl.response.items[0].inputs.find(input => input.name === 'error-message')
+       errorText: formEl.response.items[0].inputs.find(input => input.name === 'error-text')
         .value,
        hintText: formEl.response.items[0].inputs.find(input => input.name === 'hint-text')
         .value

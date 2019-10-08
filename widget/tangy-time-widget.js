@@ -44,7 +44,7 @@ class TangyTimeWidget extends TangyBaseWidget {
       <tr><td><strong>Hint:</strong></td><td>${config.hint}</td></tr>
       <tr><td><strong>Type:</strong></td><td>${config.type}</td></tr>
       <tr><td><strong>Error Message:</strong></td><td>${
-        config.errorMessage
+        config.errorText
       }</td></tr>
       <tr><td><strong>Private:</strong></td><td>${config.private}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>

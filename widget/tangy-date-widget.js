@@ -43,7 +43,7 @@ class TangyDateWidget extends TangyBaseWidget {
         <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
         <tr><td><strong>Type:</strong></td><td>${config.type}</td></tr>
         <tr><td><strong>Error Message:</strong></td><td>${
-          config.errorMessage
+          config.errorText
         }</td></tr>
         <tr><td><strong>Allowed Pattern:</strong></td><td>${
           config.allowedPattern
