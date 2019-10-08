@@ -1,10 +1,13 @@
 # CHANGELOG
 
+## v6.5.6
+- Upgrade tangy-form to v4.3.6.
+
 ## v6.5.5
 - Fix common label attribute error-text by removing error-message and invalid-message usage.
 
 ## v6.5.4
-- Fix resuming the use of incorrect-threhold attribute on tangy-form-item.
+- Fix resuming the use of incorrect-threshold attribute on tangy-form-item.
 - Bump tangy-form to v4.3.4.
 
 ## v6.5.3
