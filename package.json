@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@material/mwc-button": "^0.9.1",
-    "@material/mwc-fab": "^0.9.1",
+    "@material/mwc-fab": "^0.10.0",
     "@material/mwc-icon": "^0.9.1",
     "@polymer/paper-toggle-button": "^3.0.0-pre.21",
     "@polymer/polymer": "^3.0.0",
