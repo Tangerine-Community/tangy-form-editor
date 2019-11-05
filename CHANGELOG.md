@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.7.2
+- Fix broken allowed-pattern setting in text, number, and acasi widgets.
+  - Issue: https://github.com/Tangerine-Community/Tangerine/issues/1770
+
 ## v6.7.1
 - Fix broken allowed-pattern and inner-label attribute settings in tangy-text-widget.
   - Issue: https://github.com/Tangerine-Community/Tangerine/issues/1770
