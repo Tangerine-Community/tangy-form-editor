@@ -105,7 +105,7 @@ class TangyAcasiWidget extends TangyBaseWidget {
         <tangy-input
           name="allowed_pattern"
           inner-label="Allowed pattern"
-          hint-text="Optional Javascript RegExp pattern to validate text (e.g. minimum length of 5 characters would be [a-zA-Z]{5,})
+          hint-text="Optional Javascript RegExp pattern to validate text (e.g. minimum length of 5 characters would be [a-zA-Z]{5,})"
           value="${config.allowedPattern}">
         </tangy-input>
         <h2>Media Elements</h2>

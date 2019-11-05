@@ -82,7 +82,7 @@ class TangyTextWidget extends TangyBaseWidget {
         <tangy-input
           name="allowed-pattern"
           inner-label="Allowed pattern"
-          hint-text="Optional Javascript RegExp pattern to validate text (e.g. minimum length of 5 characters would be [a-zA-Z]{5,})
+          hint-text="Optional Javascript RegExp pattern to validate text (e.g. minimum length of 5 characters would be [a-zA-Z]{5,})"
           value="${config.allowedPattern}">
         </tangy-input>
       </tangy-form-item>
