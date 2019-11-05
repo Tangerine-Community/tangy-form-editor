@@ -78,14 +78,14 @@ class TangyNumberWidget extends TangyBaseWidget {
         ${this.renderEditCommonAttributes(config)}
         ${this.renderEditLabelAttributes(config)}
         <tangy-input
-          name="inner_label"
+          name="inner-label"
           inner-label="Inner Label"
           value="${
             config.innerLabel
           }">
         </tangy-input>
         <tangy-input
-          name="allowed_pattern"
+          name="allowed-pattern"
           inner-label="Allowed pattern"
           hint-text="Optional Javascript RegExp pattern to validate text (e.g. minimum length of 5 characters would be [a-zA-Z]{5,})
           value="${
@@ -123,10 +123,10 @@ class TangyNumberWidget extends TangyBaseWidget {
       min: formEl.values.min,
       max: formEl.values.max,
       innerLabel: formEl.response.items[0].inputs.find(
-        input => input.name === 'inner_label'
+        input => input.name === 'inner-label'
       ).value,
       allowedPattern: formEl.response.items[0].inputs.find(
-        input => input.name === 'allowed_pattern'
+        input => input.name === 'allowed-pattern'
       ).value
     }
   }
