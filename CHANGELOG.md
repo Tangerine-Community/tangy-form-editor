@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.7.1
+- Fix broken allowed-pattern and inner-label attribute settings in tangy-text-widget.
+  - Issue: https://github.com/Tangerine-Community/Tangerine/issues/1770
+
 ## v6.7.0
 - Bump tangy-form to v4.5.0
 
