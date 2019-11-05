@@ -25,6 +25,7 @@
             required
             hidden
             disabled
+            allowed-pattern="[0-2]"
             tangy-if="console.log('test')"
             type="text">
           </tangy-input>
@@ -69,12 +70,20 @@
             .querySelector('[name=label]').value = 'New label'
           element
             .shadowRoot.querySelector('tangy-form-item')
+            .querySelector('[name=inner-label]').value = 'Inner label test'
+          element
+            .shadowRoot.querySelector('tangy-form-item')
+            .querySelector('[name=allowed-pattern]').value = '[0-2]'
+          element
+            .shadowRoot.querySelector('tangy-form-item')
             .querySelector('[name=required]').value = ''
           element
             .shadowRoot.querySelector('tangy-form-item')
             .querySelector('[name=required]').setAttribute('value','')
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.label, 'New label')
+          assert.equal(element._config.allowedPattern, '[0-2]')
+          assert.equal(element._config.innerLabel, 'Inner label test')
           assert.equal(element._config.required, false)
         })
         test('should show print view', () => {
