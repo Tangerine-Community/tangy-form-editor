@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.8.0
+- Bump tangy-form to v4.6.0
+
 ## v6.7.2
 - Fix broken allowed-pattern setting in text, number, and acasi widgets.
   - Issue: https://github.com/Tangerine-Community/Tangerine/issues/1770
