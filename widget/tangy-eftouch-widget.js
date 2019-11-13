@@ -30,7 +30,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       multiSelect: '',
       requiredCorrect: false,
       ifIncorrectThenHighlightCorrect: false,
-      noCorrections: false
+      disableAfterSelection: false
     };
   }
 
@@ -46,7 +46,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
         goNextOnSelection: element.hasAttribute('go-next-on-selection') ? true : false,
         goNextOnTimeLimit: element.hasAttribute('go-next-on-time-limit'),
         incorrectMessage: element.hasAttribute('incorrect-message') ? element.getAttribute('incorrect-message') : '',
-        noCorrections: element.hasAttribute('no-corrections'),
+        disableAfterSelection: element.hasAttribute('disable-after-selection'),
         openSound: element.hasAttribute('open-sound') ? element.getAttribute('open-sound') : '',
         optionsMarkup: element.innerHTML
       }
@@ -72,7 +72,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
         ${config.multiSelect ? `multi-select="${config.multiSelect}"` : ''}
         ${config.requiredCorrect ? 'required-correct' : ''}
         ${config.ifIncorrectThenHighlightCorrect ? 'if-incorrect-then-highlight-correct' : ''}
-        ${config.noCorrections ? 'no-corrections' : ''}
+        ${config.disableAfterSelection ? 'disable-after-selection' : ''}
       >
         ${config.optionsMarkup}
       </tangy-eftouch>
@@ -167,9 +167,13 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-checkbox name="if-incorrect-then-highlight-correct" ${
             config.ifIncorrectThenHighlightCorrect ? 'value="on"' : ''
           }>If incorrect selection, then highlight correct answers.</tangy-checkbox>
-          <tangy-checkbox name="no-corrections" ${
-            config.noCorrections ? 'value="on"' : ''
-          }>No corrections allowed</tangy-checkbox>
+          <tangy-checkbox 
+            name="disable-after-selection"
+            ${config.disableAfterSelection ? 'value="on"' : ''}
+            hint-text="When used with multi-select, the number of selections are still limited by the setting on multi-select, but changing selection is not allowed."
+          >
+            Disable after selection
+          </tangy-checkbox>
           <tangy-eftouch-widget-layout files-endpoint="${this.getAttribute('files-endpoint')}" name="options-markup">
             ${config.optionsMarkup}
           </tangy-eftouch-widget-layout>
@@ -239,7 +243,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       multiSelect: formEl.values['multi-select'],
       requiredCorrect: formEl.values['required-correct'] === 'on' ? true : false,
       ifIncorrectThenHighlightCorrect: formEl.values['if-incorrect-then-highlight-correct'] === 'on' ? true : false,
-      noCorrections: formEl.values['no-corrections'] === 'on' ? true : false,
+      disableAfterSelection: formEl.values['disable-after-selection'] === 'on' ? true : false,
       optionsMarkup: formEl.values['options-markup']
     };
   }
