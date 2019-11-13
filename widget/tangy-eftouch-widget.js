@@ -24,10 +24,10 @@ class TangyEftouchWidget extends TangyBaseWidget {
       warningMessage: '',
       warningTime: '',
       timeLimit: '',
-      goNextOnSelection: '',
+      goNextOnSelection: false,
       goNextOnTimeLimit: false,
       incorrectMessage: '',
-      multiSelect: false,
+      multiSelect: '',
       requiredCorrect: false,
       ifIncorrectThenHighlightCorrect: false,
       noCorrections: false
@@ -40,10 +40,10 @@ class TangyEftouchWidget extends TangyBaseWidget {
       ...element.getProps(),
       ...this.upcastCommonAttributes(config, element),
       ...{
-        multiSelect: element.hasAttribute('multi-select'),
+        multiSelect: element.hasAttribute('multi-select') ? element.getAttribute('multi-select') : '',
         requiredCorrect: element.hasAttribute('required-correct'),
         ifIncorrectThenHighlightCorrect: element.hasAttribute('if-incorrect-then-highlight-correct'),
-        goNextOnSelection: element.hasAttribute('go-next-on-selection') ? element.getAttribute('go-next-on-selection') : '',
+        goNextOnSelection: element.hasAttribute('go-next-on-selection') ? true : false,
         goNextOnTimeLimit: element.hasAttribute('go-next-on-time-limit'),
         incorrectMessage: element.hasAttribute('incorrect-message') ? element.getAttribute('incorrect-message') : '',
         noCorrections: element.hasAttribute('no-corrections'),
@@ -68,8 +68,8 @@ class TangyEftouchWidget extends TangyBaseWidget {
         time-limit="${config.timeLimit}"
         incorrect-message="${config.incorrectMessage}"
         ${config.goNextOnTimeLimit ? 'go-next-on-time-limit' : ''}
-        ${config.goNextOnSelection ? `go-next-on-selection="${config.goNextOnSelection}"` : ''}
-        ${config.multiSelect ? 'multi-select' : ''}
+        ${config.goNextOnSelection ? `go-next-on-selection` : ''}
+        ${config.multiSelect ? `multi-select="${config.multiSelect}"` : ''}
         ${config.requiredCorrect ? 'required-correct' : ''}
         ${config.ifIncorrectThenHighlightCorrect ? 'if-incorrect-then-highlight-correct' : ''}
         ${config.noCorrections ? 'no-corrections' : ''}
@@ -144,15 +144,23 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-input name="time-limit" inner-label=' ' label="Time limit" value="${
             config.timeLimit
           }"></tangy-input>
-          <tangy-input name="go-next-on-selection" inner-label=' ' label="Go next on selection" hint-text="Leave blank to disable, otherwise enter a number for the number of selections. Most likely this will be just 1." value="${
-            config.goNextOnSelection
-          }"></tangy-input>
+          <tangy-input 
+            name="multi-select" 
+            inner-label=' ' 
+            label="Multi select" 
+            value="${config.multiSelect}"
+            hint-text="Enter the number of options the user is allowed to select."
+          ></tangy-input>
+          <tangy-checkbox 
+            name="go-next-on-selection" 
+            ${config.goNextOnSelection ? 'value="on"' : ''}
+            hint-text="If used with multi-select, the transition will occur when the number of allowed selections is reached."
+          >
+            Go next on selection
+          </tangy-checkbox>
           <tangy-checkbox name="go-next-on-time-limit" ${
             config.goNextOnTimeLimit ? 'value="on"' : ''
           }>Go next on time limit</tangy-checkbox>
-          <tangy-checkbox name="multi-select" ${
-            config.multiSelect ? 'value="on"' : ''
-          }>multi-select</tangy-checkbox>
           <tangy-checkbox name="required-correct" ${
             config.requiredCorrect ? 'value="on"' : ''
           }>Required correct</tangy-checkbox>
@@ -225,10 +233,10 @@ class TangyEftouchWidget extends TangyBaseWidget {
       warningMessage: formEl.values['warning-message'],
       warningTime: formEl.values['warning-time'],
       timeLimit: formEl.values['time-limit'],
-      goNextOnSelection: formEl.values['go-next-on-selection'],
+      goNextOnSelection: formEl.values['go-next-on-selection'] === 'on' ? true : false,
       goNextOnTimeLimit: formEl.values['go-next-on-time-limit'] === 'on' ? true : false,
       openSound: formEl.querySelector('tangy-form-item').querySelector('[name=open-sound]').value,
-      multiSelect: formEl.values['multi-select'] === 'on' ? true : false,
+      multiSelect: formEl.values['multi-select'],
       requiredCorrect: formEl.values['required-correct'] === 'on' ? true : false,
       ifIncorrectThenHighlightCorrect: formEl.values['if-incorrect-then-highlight-correct'] === 'on' ? true : false,
       noCorrections: formEl.values['no-corrections'] === 'on' ? true : false,
