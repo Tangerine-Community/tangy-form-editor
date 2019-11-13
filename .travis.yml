@@ -14,15 +14,16 @@ addons:
 cache:
   directories:
     - node_modules
+services:
+  - xvfb
 before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
   - npm install -g polymer-cli
 install:
   - npm install 
 script:
-  - npm run test 
+  - polymer test -l chrome 
 notifications:
   webhooks:
     on_success: change
