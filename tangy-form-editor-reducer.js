@@ -20,7 +20,8 @@ const tangyFormEditorReducer = function (state = initialState, action) {
   var newState
   var itemIndex 
   switch(action.type) {
-
+    case 'WARN':
+      return Object.assign({}, state, {warningMessage: action.payload} )
     case 'FORM_OPEN':
       return Object.assign({}, initialState, action.payload )
     case 'FORM_PRINT':

@@ -61,6 +61,16 @@ class TangyFormEditor extends PolymerElement {
         :host(:not([show-preview])) #form-preview {
           display: none;
         }
+        :host([has-warning]) #warning {
+          visibility: visible;
+          background: #ffffed;
+          border: solid 5px yellow;
+          padding: 15px;
+          margin: 5px;
+        }
+        :host(:not([has-warning])) #warning {
+          visibility: hidden;
+        }
         paper-input {
           --paper-input-container-underline-focus: {
             border-color:var(--accent-color);
@@ -110,6 +120,7 @@ class TangyFormEditor extends PolymerElement {
         }
         
       </style>
+      <div id="warning"></div>
       <!-- FORM ITEM LISTING -->
       <div id="container"></div>
       <div id="editor-region">
@@ -264,6 +275,13 @@ class TangyFormEditor extends PolymerElement {
   }
 
   render(state) {
+    if (state.warningMessage) {
+      this.$.warning.innerHTML = state.warningMessage
+      this.setAttribute('has-warning', '')
+    } else {
+      this.$.warning.innerHTML = '' 
+      this.removeAttribute('has-warning')
+    }
     if (state.print) {
       this.$.container.innerHTML = `
         <h1>${state.form.title}</h1> 
@@ -438,9 +456,6 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelector('.save-form')
         .addEventListener('click', this.onSaveFormClick.bind(this))
-
-
-
       this.$.container
         .querySelector('.item-create')
         .addEventListener('click', this.onItemCreateClick.bind(this))
@@ -493,6 +508,12 @@ class TangyFormEditor extends PolymerElement {
     }))
   }
 
+  dispatchSaveEvent() {
+    this.dispatchEvent(new CustomEvent('tangy-form-editor-save', {
+      detail: this.formHtml
+    }))
+  }
+
   onItemEditorSave(event) {
     this.store.dispatch({type: 'ITEM_UPDATE', payload: event.detail})
     this.dispatchChangeEvent()
@@ -504,6 +525,20 @@ class TangyFormEditor extends PolymerElement {
     if (typeof categoryEl !== 'undefined' && categoryEl !== null) {
       categoryValue = categoryEl.value
     }
+    const duplicateVariableNames = this.findDuplicateVariableNames()
+    if (duplicateVariableNames.length > 0) {
+      this.store.dispatch({
+        type: 'WARN',
+        payload: `
+          <b>WARNING</b> Duplicate variables names detected: 
+            ${
+              duplicateVariableNames.length === 1 
+                ? duplicateVariableNames[0]
+                : duplicateVariableNames.join(', ')
+            }
+        `
+      })
+    }
     this.store.dispatch({type: 'FORM_UPDATE', payload: {
       title: this.shadowRoot.querySelector('#form-title').value,
       exitClicks: this.$.container.querySelector('#exit-clicks-input').value,
@@ -514,6 +549,7 @@ class TangyFormEditor extends PolymerElement {
       category: categoryValue
     }})
     this.dispatchChangeEvent()
+    this.dispatchSaveEvent()
   }
 
   onItemEditorCancel(event) {
@@ -562,9 +598,31 @@ class TangyFormEditor extends PolymerElement {
       payload: event.target.dataset.itemId
     })
   }
+
   onClickAdvancedSettings(){
     this.$.container.querySelector('#main-expansion-panel').opened=!this.$.container.querySelector('#main-expansion-panel').opened; 
   }
+
+  findDuplicateVariableNames() {
+    const containerEl = document.createElement('div')
+    document.body.appendChild(containerEl)
+    containerEl.innerHTML = this.formHtml
+    const tangyFormEl = containerEl.querySelector('tangy-form')
+    const meta = tangyFormEl.getMeta()
+    const variablesInfo = meta.items.reduce((variablesInfo, item) => {
+      for (let input of item.inputs) {
+        if (variablesInfo.names.includes(input.name)) {
+          variablesInfo.duplicateNames.push(input.name)
+        } else {
+          variablesInfo.names.push(input.name)
+        }
+      }
+      return variablesInfo
+    }, { names: [], duplicateNames: [] })
+    containerEl.remove()
+    return variablesInfo.duplicateNames
+  }
+
 }
 
 window.customElements.define('tangy-form-editor', TangyFormEditor);
