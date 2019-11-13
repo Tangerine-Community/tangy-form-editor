@@ -29,6 +29,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       incorrectMessage: '',
       multiSelect: '',
       requiredCorrect: false,
+      requiredAll: false,
       ifIncorrectThenHighlightCorrect: false,
       disableAfterSelection: false
     };
@@ -42,6 +43,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       ...{
         multiSelect: element.hasAttribute('multi-select') ? element.getAttribute('multi-select') : '',
         requiredCorrect: element.hasAttribute('required-correct'),
+        requiredAll: element.hasAttribute('required-all'),
         ifIncorrectThenHighlightCorrect: element.hasAttribute('if-incorrect-then-highlight-correct'),
         goNextOnSelection: element.hasAttribute('go-next-on-selection') ? true : false,
         goNextOnTimeLimit: element.hasAttribute('go-next-on-time-limit'),
@@ -71,6 +73,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
         ${config.goNextOnSelection ? `go-next-on-selection` : ''}
         ${config.multiSelect ? `multi-select="${config.multiSelect}"` : ''}
         ${config.requiredCorrect ? 'required-correct' : ''}
+        ${config.requiredAll ? 'required-all' : ''}
         ${config.ifIncorrectThenHighlightCorrect ? 'if-incorrect-then-highlight-correct' : ''}
         ${config.disableAfterSelection ? 'disable-after-selection' : ''}
       >
@@ -164,6 +167,14 @@ class TangyEftouchWidget extends TangyBaseWidget {
           <tangy-checkbox name="required-correct" ${
             config.requiredCorrect ? 'value="on"' : ''
           }>Required correct</tangy-checkbox>
+          <tangy-checkbox 
+            name="required-all"
+            ${config.requiredAll ? 'value="on"' : ''}
+            hint-text="You may need to use this when using multi-select. The regular required attribute when used with multi-select will only require just one value selected. This attribute however will require the number of selections stated in your multi-select setting."
+          }>
+            Required all
+          </tangy-checkbox>
+ 
           <tangy-checkbox name="if-incorrect-then-highlight-correct" ${
             config.ifIncorrectThenHighlightCorrect ? 'value="on"' : ''
           }>If incorrect selection, then highlight correct answers.</tangy-checkbox>
@@ -214,6 +225,12 @@ class TangyEftouchWidget extends TangyBaseWidget {
       <tr><td><strong>Go next on selection:</strong></td><td>${
         config.goNextOnSelection
       }</td></tr>
+      <tr><td><strong>Required correct:</strong></td><td>${
+        config.requiredCorrect
+      }</td></tr>
+      <tr><td><strong>Required all:</strong></td><td>${
+        config.requiredAll
+      }</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
       <tr><td><strong>Options Markup:</strong></td><td><ul>${
@@ -242,6 +259,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       openSound: formEl.querySelector('tangy-form-item').querySelector('[name=open-sound]').value,
       multiSelect: formEl.values['multi-select'],
       requiredCorrect: formEl.values['required-correct'] === 'on' ? true : false,
+      requiredAll: formEl.values['required-all'] === 'on' ? true : false,
       ifIncorrectThenHighlightCorrect: formEl.values['if-incorrect-then-highlight-correct'] === 'on' ? true : false,
       disableAfterSelection: formEl.values['disable-after-selection'] === 'on' ? true : false,
       optionsMarkup: formEl.values['options-markup']
