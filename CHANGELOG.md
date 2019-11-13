@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v6.9.0
+- Add support for detecting duplicate variable names on form save.
+- When a user clicks the top level "save" button, a new `tangy-form-editor-save` event dispatches.
+- Add support for EFtouch required-all attribute.
+- Refactor EFtouch no-corrections to be disable-after-selection.
+- Refactor EFtouch multi-select and go-next-on-selection for new API.
+
 ## v6.8.1
 - Bump tangy-form to v4.6.1
 
