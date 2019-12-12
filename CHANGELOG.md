@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.9.1
+- Bump tangy-form to v4.6.2.
+
 ## v6.9.0
 - Add support for detecting duplicate variable names on form save.
 - When a user clicks the top level "save" button, a new `tangy-form-editor-save` event dispatches.
