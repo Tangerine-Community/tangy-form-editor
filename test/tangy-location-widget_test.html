@@ -19,7 +19,7 @@
     <test-fixture id="ResumeFixture">
       <template>
         <tangy-location-widget>
-          <tangy-location name="location" show-levels="county,subcounty" show-meta-data>
+          <tangy-location label="Label example" name="location" show-levels="county,subcounty" show-meta-data>
             Test template... level: ${node.level}
           </tangy-location>
         </tangy-location-widget>
@@ -46,6 +46,7 @@
         test('should resume', () => {
           const element = fixture('ResumeFixture')
           assert.equal(element._config.name, 'location')
+          assert.equal(element._config.label, 'Label example')
           assert.equal(element._config.required, false)
           assert.equal(element._config.hidden, false)
           assert.equal(element._config.disabled, false)
@@ -60,12 +61,16 @@
             .querySelector('[name=name]').value = 'location_test'
           element
             .shadowRoot.querySelector('tangy-form-item')
+            .querySelector('[name=label]').value = 'Label example 2'
+          element
+            .shadowRoot.querySelector('tangy-form-item')
             .querySelector('[name=required]').value = ''
           element
             .shadowRoot.querySelector('tangy-form-item')
             .querySelector('[name=meta-data-template]').value = 'Test 2'
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.name, 'location_test')
+          assert.equal(element._config.label, 'Label example 2')
           assert.equal(element._config.required, false)
           assert.equal(element._config.metaDataTemplate.includes('Test 2'), true)
         })

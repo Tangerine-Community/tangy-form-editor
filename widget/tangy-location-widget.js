@@ -12,7 +12,7 @@ class TangyLocationWidget extends TangyBaseWidget {
   get defaultConfig() {
     return {
       ...this.defaultConfigCommonAttributes(),
-      hintText: '',
+      ...this.defaultConfigLabelAttributes(),
       showMetaData: false,
       metaDataTemplate: '',
       filterByGlobal: false,
@@ -25,6 +25,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       ...config,
       ...element.getProps(),
       ...this.upcastCommonAttributes(config, element),
+      ...this.upcastLabelAttributes(config, element),
       metaDataTemplate: element.innerHTML
     }
   }
@@ -33,9 +34,9 @@ class TangyLocationWidget extends TangyBaseWidget {
     return `
       <tangy-location 
         ${this.downcastCommonAttributes(config)}
-        hint-text="${config.hintText}"
-        ${config.filterByGlobal ? 'filter-by-global' : ''}
+        ${this.downcastLabelAttributes(config)}
         show-levels="${config.showLevels}"
+        ${config.filterByGlobal ? 'filter-by-global' : ''}
         ${config.showMetaData ? 'show-meta-data' : ''}
       >
         ${config.metaDataTemplate}
@@ -50,6 +51,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         config.showLevels
       }</td></tr>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
+      <tr><td><strong>Label:</strong></td><td>${config.label}</td></tr>
       <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
@@ -70,9 +72,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       <tangy-form id="tangy-location">
         <tangy-form-item>
           ${this.renderEditCommonAttributes(config)}
-          <tangy-input name="hintText" inner-label="Hint Text" value="${
-            config.hintText
-          }"></tangy-input>
+          ${this.renderEditLabelAttributes(config)}
           <tangy-checkbox name="filterByGlobal" ${
             config.filterByGlobal ? 'value="on"' : ''
           }>Filter by locations in the user profile?</tangy-checkbox>
@@ -94,7 +94,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     return {
       ...config,
       ...this.onSubmitCommonAttributes(config, formEl),
-      hintText: formEl.values.hintText,
+      ...this.onSubmitLabelAttributes(config, formEl),
       filterByGlobal: formEl.response.items[0].inputs.find(
         input => input.name === 'filterByGlobal'
       ).value === 'on'
