@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.10.1
+- Bump tangy-form to v4.7.1.
+
 ## v6.10.0
 - Add support for editing labels on location elements.
 - Bump tangy-form to v4.7.0.
