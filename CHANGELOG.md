@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v6.11.0
+- Bump tangy-form to v4.9.0
+- Add support for editing input skip-if attribute.
+- Add support for editing mutually-exclusive attribute on tangy-checkboxes options.
+
 ## v6.10.1
 - Bump tangy-form to v4.7.1.
 
