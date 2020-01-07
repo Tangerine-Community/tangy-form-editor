@@ -104,6 +104,7 @@ class TangyBaseWidget extends PolymerElement {
       disabled: false,
       hidden: false,
       showIf: '',
+      skipIf: '',
       validIf: ''
     }
   }
@@ -139,6 +140,9 @@ class TangyBaseWidget extends PolymerElement {
               ? element.getAttribute('tangy-if')
               : ''
           ).replace(/&quot;/g, '"'),
+        skipIf: element.hasAttribute('skip-if')
+          ? element.getAttribute('skip-if').replace(/&quot;/g, '"')
+          : '',
         validIf: element.hasAttribute('valid-if')
           ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
           : ''
@@ -170,6 +174,7 @@ class TangyBaseWidget extends PolymerElement {
       style="${config.style}"
       ${config.showIf === "" ? "" : `tangy-if="${config.showIf.replace(/"/g, '&quot;')}"`}
       ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
+      ${config.skipIf === "" ? "" : `skip-if="${config.skipIf.replace(/"/g, '&quot;')}"`}
       ${config.required ? 'required' : ''}
       ${config.disabled ? 'disabled' : ''}
       ${config.hidden ? 'hidden' : ''}
@@ -223,6 +228,12 @@ class TangyBaseWidget extends PolymerElement {
         inner-label="Valid if"
         hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
         value="${config.validIf.replace(/"/g, '&quot;')}">
+      </tangy-input>
+      <tangy-input 
+        name="skip_if"
+        inner-label="Skip if"
+        hint-text="Enter logic for whether or not this should be skipped. (e.g. input.value.length > 5)"
+        value="${config.skipIf.replace(/"/g, '&quot;')}">
       </tangy-input>
       <tangy-checkbox
         name="required" 
@@ -297,6 +308,9 @@ class TangyBaseWidget extends PolymerElement {
           : false,
       validIf: formEl.response.items[0].inputs.find(
         input => input.name === 'valid_if'
+      ).value,
+      skipIf: formEl.response.items[0].inputs.find(
+        input => input.name === 'skip_if'
       ).value,
       showIf: formEl.response.items[0].inputs.find(
         input => input.name === 'show_if'
