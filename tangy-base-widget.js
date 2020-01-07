@@ -217,10 +217,16 @@ class TangyBaseWidget extends PolymerElement {
         hint-text="Enter CSS for this element."
         value="${config.style.replace(/"/g, '&quot;')}">
       </tangy-input>
+      <tangy-input 
+        name="skip_if"
+        inner-label="Skip if"
+        hint-text="Enter logic for whether or not this should be skipped. Values entered while shown will not persist after hiding (e.g. getValue('should_proceed') === '')"
+        value="${config.skipIf.replace(/"/g, '&quot;')}">
+      </tangy-input>
       <tangy-input
         name="show_if"
         inner-label="Show if"
-        hint-text="Enter any conditional display logic. (e.g. getValue('isEmployee') === true)"
+        hint-text="Enter any conditional display logic. Values that users enter while shown will persist after hiding. (e.g. getValue('isEmployee') === true)"
         value="${config.showIf.replace(/"/g, '&quot;')}">
       </tangy-input>
       <tangy-input 
@@ -228,12 +234,6 @@ class TangyBaseWidget extends PolymerElement {
         inner-label="Valid if"
         hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
         value="${config.validIf.replace(/"/g, '&quot;')}">
-      </tangy-input>
-      <tangy-input 
-        name="skip_if"
-        inner-label="Skip if"
-        hint-text="Enter logic for whether or not this should be skipped. (e.g. input.value.length > 5)"
-        value="${config.skipIf.replace(/"/g, '&quot;')}">
       </tangy-input>
       <tangy-checkbox
         name="required" 
