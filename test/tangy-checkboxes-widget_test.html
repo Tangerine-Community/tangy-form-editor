@@ -70,10 +70,20 @@
             .querySelector('[name=required]').setAttribute('value','')
           element.shadowRoot.querySelector('tangy-form-item').querySelector('tangy-list').shadowRoot.querySelector('.add-another').click()
           assert(element.shadowRoot.querySelector('tangy-form-item').querySelector('tangy-list').shadowRoot.querySelectorAll('tangy-list-item').length, 7)
+          element.shadowRoot.querySelector('tangy-form-item').querySelector('tangy-list').shadowRoot
+            .querySelectorAll('tangy-list-item')[6].querySelector('[name=label]').value = 'None of the above'
+          element.shadowRoot.querySelector('tangy-form-item').querySelector('tangy-list').shadowRoot
+            .querySelectorAll('tangy-list-item')[6].querySelector('[name=value]').value = 'na'
+          element.shadowRoot.querySelector('tangy-form-item').querySelector('tangy-list').shadowRoot
+            .querySelectorAll('tangy-list-item')[6].querySelector('[name=mutuallyExclusive]').value = 'on'
           element.shadowRoot.querySelector('tangy-form-item').clickedComplete()
           assert.equal(element._config.label, 'New label')
           assert.equal(element._config.options.length, 7)
           assert.equal(element._config.required, false)
+          assert.equal(element.querySelector('tangy-checkboxes').querySelectorAll('option')[5].hasAttribute('mutually-exclusive'), false)
+          assert.equal(element.querySelector('tangy-checkboxes').querySelectorAll('option')[6].innerHTML.includes('None of the above'), true)
+          assert.equal(element.querySelector('tangy-checkboxes').querySelectorAll('option')[6].getAttribute('value'), 'na')
+          assert.equal(element.querySelector('tangy-checkboxes').querySelectorAll('option')[6].hasAttribute('mutually-exclusive'), true)
           assert.equal(!!element.markup, true)
         })
       })

@@ -26,7 +26,8 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       options: [...element.querySelectorAll('option')].map(option => {
         return {
           value: option.getAttribute('value'),
-          label: option.innerHTML
+          label: option.innerHTML,
+          mutuallyExclusive: option.hasAttribute('mutually-exclusive')
         }
       })
     }
@@ -39,7 +40,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
         ${this.downcastLabelAttributes(config)}
       >
         ${config.options.map(option => `
-          <option value="${option.value}">${option.label}</option>
+          <option value="${option.value}" ${option.mutuallyExclusive ? 'mutually-exclusive' : ''}>${option.label}</option>
         `).join('')}
       </tangy-checkboxes>
     `
@@ -81,6 +82,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
               <template type="tangy-list/new-item">
                 <tangy-input name="value" allowed-pattern="[a-zA-Z0-9\-_]" inner-label="Value" hint-text="Enter the variable value if checkbox is chosen" type="text"></tangy-input>
                 <tangy-input name="label" inner-label="Label" hint-text="Enter the display label of the checkbox" type="text"></tangy-input>
+                <tangy-checkbox name="mutuallyExclusive" hint-text="This option is mutually exlusive from the other options. If enabled, when this option is selected all other selections will be undone.">Mutually exlusive</tangy-checkbox>
               </template>
               ${config.options.length > 0 ? `
                 <template type="tangy-list/initial-items">
@@ -88,6 +90,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
                     <tangy-list-item>
                       <tangy-input name="value" allowed-pattern="[a-zA-Z0-9\-_]" inner-label="Value" hint-text="Enter the variable value if checkbox is chosen" type="text" value="${option.value}"></tangy-input>
                       <tangy-input name="label" hint-text="Enter the display label of the checkbox" inner-label="Label" type="text" value="${option.label}"></tangy-input>
+                      <tangy-checkbox name="mutuallyExclusive" value="${option.mutuallyExclusive ? 'on' : ''}" hint-text="This option is mutually exlusive from the other options. If enabled, when this option is selected all other selections will be undone.">Mutually exlusive</tangy-checkbox>
                     </tangy-list-item>  
                   `).join('')}
                 </template>
@@ -100,7 +103,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
   }
 
   onSubmit(config, formEl) {
-    return {
+    const data = {
       ...this.onSubmitCommonAttributes(config, formEl),
       ...this.onSubmitLabelAttributes(config, formEl),
       options: formEl.values.options.map(item =>
@@ -109,6 +112,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
         }, {})
       )
     }
+    return data
   }
 
 }
