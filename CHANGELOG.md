@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.11.1
+- Bump tangy-form to correct version, v4.10.2
+
 ## v6.11.0
 - Bump tangy-form to v4.9.0
 - Add support for editing input skip-if attribute.
