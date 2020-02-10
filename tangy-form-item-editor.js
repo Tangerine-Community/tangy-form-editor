@@ -33,7 +33,9 @@ class TangyFormItemEditor extends PolymerElement {
         border-radius: 5px 5px 0px 0px
       }
       #edit-button{
-        margin-right:10px;
+        /*margin-right:10px;*/
+        margin-left: inherit;
+        margin-top: .5em;
         cursor: pointer;
       }
       paper-card {
@@ -71,6 +73,43 @@ class TangyFormItemEditor extends PolymerElement {
         font-weight: 500;
         height: 2rem;
       }
+      .flexbox-horizontal-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: flex-start;
+        flex-wrap:wrap;
+      }
+       .flexbox-horizontal-container div {
+        margin-right: 1em;
+      }
+      .section-actions-container{
+        display: flex; 
+        justify-content: space-between;
+      }
+      .section-actions{
+        margin-top: 1rem;
+      }
+      .section-container{
+        display: flex; 
+        justify-content: left;
+        width: 60%
+      }
+      .title-container{
+        width: 60%
+      }
+      .edit-paper-button {
+        min-width: auto;
+      }
+      #item-info {
+        display:none;
+      }
+      #edit-button-close {
+        margin-right: .5em;
+      }
+      tangy-input {
+      margin:0px;
+      }
     </style>
     <div id="container"></div> 
     <slot></slot>
@@ -102,49 +141,51 @@ class TangyFormItemEditor extends PolymerElement {
 
   render() {
     this.$.container.innerHTML = `
-      <div>
-        <div>
+      <div class="section-actions-container">
+        <div class="section-container">
+          <div class="title-container">
+            <paper-input id="itemTitle" value="${this.item.title}" label="Section Title" always-float-label></paper-input>
+          </div>
+          <div id="edit-button">
+              <paper-button raised class="edit-paper-button"><iron-icon icon="settings"></iron-icon></paper-button>
+          </div>
+        </div>
+        <span class="section-actions">
           <paper-button id="back-to-forms" 
             class="tangy-action-buttons">
             <iron-icon icon="arrow-back"></iron-icon>
-            ${t('Back')}
+            ${t('Sections')}
           </paper-button>
-        </div>
-        
+        </span>
       </div>
       <paper-card id="item-info" class="gray-background">
         <div class="card-header">
           <span class="span-spacer"><iron-icon id="item-icon" icon="icons:assignment"></iron-icon></span>
           <span class="span-spacer">${this.item.id}</span>
           <span class="tangy-spacer span-spacer">${t('Item Details')}</span>
-          <span id="edit-button"><iron-icon icon="create"></iron-icon></span>
+          <span id="edit-button-close"><iron-icon icon="close"></iron-icon></span>
         </div>
         <div class="card-content">
           <div id="details-content-edit">
             <paper-input id="itemTitle" value="${this.item.title}" label="title" always-float-label></paper-input>
             <p>Item id: ${this.item.id}</p>
-            <p><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></p>
-            <p><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></p>
-            <p><paper-checkbox id="hide-next-button-checkbox" ${this.item.hideNextButton ? 'checked' : ''}>${t('Hide the next button')}</paper-checkbox></p>
-            <p><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>${t('right-to-left orientation')}</paper-checkbox></p>
-            <p><paper-checkbox id="hide-nav-labels-checkbox" ${this.item.hideNavLabels ? 'checked' : ''}>${t('Hide navigation labels')}</paper-checkbox></p>
-            <p><paper-checkbox id="hide-nav-icons-checkbox" ${this.item.hideNavIcons ? 'checked' : ''}>${t('Hide navigation icons')}</paper-checkbox></p>
+            
+            <div class="flexbox-horizontal-container">
+            <div><paper-checkbox id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></div>
+            <div><paper-checkbox id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></div>
+            <div><paper-checkbox id="hide-next-button-checkbox" ${this.item.hideNextButton ? 'checked' : ''}>${t('Hide the next button')}</paper-checkbox></div>
+            <div><paper-checkbox id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>${t('right-to-left orientation')}</paper-checkbox></div>
+            <div><paper-checkbox id="hide-nav-labels-checkbox" ${this.item.hideNavLabels ? 'checked' : ''}>${t('Hide navigation labels')}</paper-checkbox></div>
+            <div><paper-checkbox id="hide-nav-icons-checkbox" ${this.item.hideNavIcons ? 'checked' : ''}>${t('Hide navigation icons')}</paper-checkbox></div>
+            </div>
+            <div><paper-input type="number" id="incorrectThreshold" value="${this.item.incorrectThreshold}" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
+            <label id="hintText">Currently limited to radio-buttons; disables remaining questions when threshold of incorrect answers is reached.</label></div>
             <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
             <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
             ${this.categories ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>' : ''}
-            <p><paper-input type="number" id="incorrectThreshold" value="${this.item.incorrectThreshold}" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
-            <label id="hintText">Currently limited to radio-buttons; disables remaining questions when threshold of incorrect answers is reached.</label></p>
+            
           </div>
-          <div id="details-content-view">
-            ${this.item.title}<br/>
-            <p><paper-checkbox disabled id="summary-checkbox" ${this.item.summary ? 'checked' : ''}>${t('Show this item in the summary at the end')}</paper-checkbox></p>
-            <p><paper-checkbox disabled id="hide-back-button-checkbox" ${this.item.hideBackButton ? 'checked' : ''}>${t('Hide the back button')}</paper-checkbox></p>
-            <p><paper-checkbox disabled id="hide-next-button-checkbox" ${this.item.hideNextButton ? 'checked' : ''}>${t('Hide the next button')}</paper-checkbox></p>
-            <p><paper-checkbox disabled id="right-to-left-checkbox" ${this.item.rightToLeft ? 'checked' : ''}>right-to-left orientation</paper-checkbox></p>
-            <p><paper-checkbox disabled id="hide-nav-labels-checkbox" ${this.item.hideNavLabels ? 'checked' : ''}>${t('Hide navigation labels')}</paper-checkbox></p>
-            <p><paper-checkbox disabled id="hide-nav-icons-checkbox" ${this.item.hideNavIcons ? 'checked' : ''}>${t('Hide navigation icons')}</paper-checkbox></p>
-            <p><paper-input disabled type="number" id="incorrectThreshold" value="${this.item.incorrectThreshold}" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
-            </div>
+
         </div>
         <div id="details-content-edit-actions" class="card-actions-edit">
           <paper-button class="tangy-action-buttons" id="save" style="float:right" role="button" tabindex="0" animated="" elevation="0">${t('Submit')}</paper-button>
@@ -159,16 +200,17 @@ class TangyFormItemEditor extends PolymerElement {
       </div>
     `
     if (!this.edit) {
-      this.$.container.querySelector('#details-content-edit').style = 'display:none'
-      this.$.container.querySelector('#details-content-edit-actions').style = 'display:none'
+      this.$.container.querySelector('#item-info').style = 'display:none';
     } else {
-      this.$.container.querySelector('#details-content-view').style = 'display:none'
+      this.$.container.querySelector('#item-info').style = 'display:block';
+      // this.$.container.querySelector('#details-content-view').style = 'display:none'
       // this.$.container.querySelector('#details-content-view-actions').style = 'display:none'
       // this.$.container.querySelector('#details-card').style = "display:block"
 
     }
     this.$.container.querySelector('#back-to-forms').addEventListener('click', this.onBackToForms.bind(this))
     this.$.container.querySelector('#edit-button').addEventListener('click', this._onEditClick.bind(this))
+    this.$.container.querySelector('#edit-button-close').addEventListener('click', this._onEditClick.bind(this))
 
     // on-open-editor
     let onOpenEditorEl = document.createElement('juicy-ace-editor')
@@ -250,7 +292,18 @@ class TangyFormItemEditor extends PolymerElement {
 
   _onEditClick() {
     // this.dispatchEvent(new CustomEvent('edit-input', {bubbles: true}))
-    this.edit = true
+    // this.edit = true
+    if (this.edit) {
+      this.edit = false
+    } else {
+      this.edit = true
+    }
+    this.render()
+  }
+
+  _onEditHideClick() {
+    // this.dispatchEvent(new CustomEvent('edit-input', {bubbles: true}))
+    this.edit = false
     this.render()
   }
 
