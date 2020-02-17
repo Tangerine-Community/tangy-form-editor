@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v6.12.0
+- Add support for modifying form level "record first open times" on items.
+- Bump tangy-form to v4.11.0
+
 ## v6.11.2
 - Bump tangy-form to v4.10.4
 
