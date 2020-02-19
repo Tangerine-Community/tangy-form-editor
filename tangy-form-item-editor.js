@@ -89,6 +89,11 @@ class TangyFormItemEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true
       },
+      hideSkipIf: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
       filesEndpoint: {
         type: String,
         value: ''
@@ -151,7 +156,7 @@ class TangyFormItemEditor extends PolymerElement {
         </div>
       </paper-card>
         
-     <tangy-form-condensed-editor files-endpoint="${this.filesEndpoint}">
+     <tangy-form-condensed-editor files-endpoint="${this.filesEndpoint}" ${this.hideSkipIf ? `hide-skip-if` : ''}>
         <template>
           ${this.item.template}
         </template>

@@ -101,9 +101,63 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="ShowSkipIfFixture">
+      <template>
+        <tangy-form-editor>
+          <template>
+            <tangy-form id="field-demo" title="Field Demo" on-submit="1+1">
+              <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
+                <template>
+                  <tangy-input name="text_input_1" label="What is your first name?" type="text"></tangy-input>
+                </template>
+              </tangy-form-item>
+            </tangy-form>
+          </template>
+        </tangy-form-editor>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="HideSkipIfFixture">
+      <template>
+        <tangy-form-editor hide-skip-if>
+          <template>
+            <tangy-form id="field-demo" title="Field Demo" on-submit="1+1">
+              <tangy-form-item id="text_inputs_1" title="Text Inputs 1">
+                <template>
+                  <tangy-input name="text_input_1" label="What is your first name?" type="text"></tangy-input>
+                </template>
+              </tangy-form-item>
+            </tangy-form>
+          </template>
+        </tangy-form-editor>
+      </template>
+    </test-fixture>
+
+
+
 
     <script type="module">
       suite('tangy-form-editor', () => {
+
+        test('should have skip-if editor when not using hide-skip-if', () => {
+          const element = fixture('ShowSkipIfFixture');
+          element.shadowRoot.querySelector('[icon="editor:mode-edit"]').click()
+          element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('[icon=create]').click()
+          assert.equal(
+            !!element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('[name="skip_if"]'),
+            true
+          )
+        })
+
+        test('should not skip-if editor when using hide-skip-if', () => {
+          const element = fixture('HideSkipIfFixture');
+          element.shadowRoot.querySelector('[icon="editor:mode-edit"]').click()
+          element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('[icon=create]').click()
+          assert.equal(
+            !!element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('[name="skip_if"]'),
+            false 
+          )
+        })
 
         test('should find duplicate variable names', () => {
           const element = fixture('DuplicateVariableNamesFixture');
