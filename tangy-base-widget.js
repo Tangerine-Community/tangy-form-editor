@@ -217,12 +217,14 @@ class TangyBaseWidget extends PolymerElement {
         hint-text="Enter CSS for this element."
         value="${config.style.replace(/"/g, '&quot;')}">
       </tangy-input>
-      <tangy-input 
-        name="skip_if"
-        inner-label="Skip if"
-        hint-text="Enter logic for whether or not this should be skipped. Values entered while shown will not persist after hiding (e.g. getValue('should_proceed') === '')"
-        value="${config.skipIf.replace(/"/g, '&quot;')}">
-      </tangy-input>
+      ${!this.hasAttribute('hide-skip-if') ? `
+        <tangy-input 
+          name="skip_if"
+          inner-label="Skip if"
+          hint-text="Enter logic for whether or not this should be skipped. Values entered while shown will not persist after hiding (e.g. getValue('should_proceed') === '')"
+          value="${config.skipIf.replace(/"/g, '&quot;')}">
+        </tangy-input>
+      `:''}
       <tangy-input
         name="show_if"
         inner-label="Show if"
@@ -309,9 +311,11 @@ class TangyBaseWidget extends PolymerElement {
       validIf: formEl.response.items[0].inputs.find(
         input => input.name === 'valid_if'
       ).value,
-      skipIf: formEl.response.items[0].inputs.find(
-        input => input.name === 'skip_if'
-      ).value,
+      skipIf: !this.hasAttribute('hide-skip-if')
+        ? formEl.response.items[0].inputs.find(
+            input => input.name === 'skip_if'
+          ).value
+        : '',
       showIf: formEl.response.items[0].inputs.find(
         input => input.name === 'show_if'
       ).value

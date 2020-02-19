@@ -55,6 +55,11 @@ class TangyFormCondensedEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true
       },
+      hideSkipIf: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
       filesEndpoint: {
         type: String,
         value: ''
@@ -86,6 +91,7 @@ class TangyFormCondensedEditor extends PolymerElement {
           widgetEl.setAttribute('widget', '')
           widgetEl.setAttribute('mode', this.print ? 'MODE_PRINT' : 'MODE_INFO')
           widgetEl.setAttribute('files-endpoint', this.filesEndpoint)
+          if (this.hideSkipIf) widgetEl.setAttribute('hide-skip-if', '')
           wrap(childNode, widgetEl)
         }
       }

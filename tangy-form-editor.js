@@ -137,6 +137,11 @@ class TangyFormEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true
       },
+      hideSkipIf: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
       showPreview: {
         type: Boolean,
         value: false,
@@ -487,7 +492,11 @@ class TangyFormEditor extends PolymerElement {
     } else if (state.openItem !== '') {
       this.$.container.innerHTML = ''
       this.innerHTML = `
-        <tangy-form-item-editor files-endpoint="${this.filesEndpoint}"></tangy-form-item-editor>
+        <tangy-form-item-editor
+          files-endpoint="${this.filesEndpoint}" 
+          ${this.hideSkipIf ? `hide-skip-if` : ''}
+        >
+        </tangy-form-item-editor>
       `
       this.querySelector('tangy-form-item-editor').categories = this.categories
       this.querySelector('tangy-form-item-editor').item = state.items.find(item => item.id === state.openItem)
