@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.12.1
+- In some situations such as a tabs implementation, the `<tangy-form-editor>` element may "connect" to the DOM more than once causing errors. We now only instantiate when the ready hook is called which ensures this only happens once thus fixing situations such as tabs where this element is used.
+
 ## v6.12.0
 - Add support for modifying form level "record first open times" on items.
 - Bump tangy-form to v4.11.0
