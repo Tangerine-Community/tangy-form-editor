@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.13.0
+- Add support for hiding the `skip-if` editors by adding a `hide-skip-if` attribute to `<tangy-form-editor>`. This is a convenience for projects that want to opt-in to using `skip-if`. https://github.com/Tangerine-Community/tangy-form-editor/pull/106 
+
 ## v6.12.1
 - In some situations such as a tabs implementation, the `<tangy-form-editor>` element may "connect" to the DOM more than once causing errors. We now only instantiate when the ready hook is called which ensures this only happens once thus fixing situations such as tabs where this element is used.
 
