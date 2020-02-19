@@ -255,8 +255,8 @@ class TangyFormEditor extends PolymerElement {
     this.store.dispatch({type: 'FORM_OPEN', payload: formJson})
   }
 
-  connectedCallback() {
-    super.connectedCallback();
+  ready() {
+    super.ready();
     this.store = Redux.createStore(
       tangyFormEditorReducer,
       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
