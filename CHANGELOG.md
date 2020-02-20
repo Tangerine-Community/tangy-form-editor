@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.13.1
+- Bump tangy-form to v4.11.1
+
 ## v6.13.0
 - Add support for hiding the `skip-if` editors by adding a `hide-skip-if` attribute to `<tangy-form-editor>`. This is a convenience for projects that want to opt-in to using `skip-if`. https://github.com/Tangerine-Community/tangy-form-editor/pull/106 
 
