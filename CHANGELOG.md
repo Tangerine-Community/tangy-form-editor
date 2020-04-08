@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.13.5
+- Bumpt tangy-form to v4.11.5 to fix build errors related to underscore.
+
 ## v6.13.4
 - Bump tangy-form to v4.11.3
 
