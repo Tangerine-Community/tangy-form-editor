@@ -11,7 +11,7 @@
     "@material/mwc-button": "^0.9.1",
     "@material/mwc-fab": "^0.9.1",
     "@material/mwc-icon": "^0.9.1",
-    "@polymer/paper-toggle-button": "^3.0.0-pre.21",
+    "@polymer/paper-toggle-button": "^3.0.1",
     "@polymer/polymer": "^3.0.0",
     "@polymer/sortable-list": "git://github.com/DrNiels/sortable-list.git#polymer-3",
     "dr-niels-paper-expansion-panel": "git://github.com/DrNiels/paper-expansion-panel.git#master",
