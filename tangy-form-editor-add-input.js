@@ -56,12 +56,28 @@ class TangyFormEditorAddInput extends PolymerElement {
         <div>
           <h4>Inputs</h4>
           <div class="element-list">
-            <mwc-button icon="calendar_today" on-click="addThis" id="tangy-date-widget">Date</mwc-button><br>
-            <mwc-button icon="date_range" on-click="addThis" id="tangy-partial-date-widget">Partial Date</mwc-button><br>
             <mwc-button icon="text_fields" on-click="addThis" id="tangy-text-widget">Text</mwc-button><br>
-            <mwc-button icon="timer" on-click="addThis" id="tangy-time-widget">Time</mwc-button><br>
             <mwc-button icon="looks_one" on-click="addThis" id="tangy-number-widget">Number</mwc-button><br>
             <mwc-button icon="email" on-click="addThis" id="tangy-email-widget">Email</mwc-button><br>
+          </div>
+          <h4>Date/Time</h4>
+          <div class="element-list">
+            <mwc-button icon="calendar_today" on-click="addThis" id="tangy-date-widget">Date</mwc-button><br>
+            <mwc-button icon="date_range" on-click="addThis" id="tangy-partial-date-widget">Partial Date</mwc-button><br>
+            <mwc-button icon="timer" on-click="addThis" id="tangy-time-widget">Time</mwc-button><br>
+          </div>
+        </div>
+        <div>
+          <h4>Lists</h4>
+          <div class="element-list">
+            <mwc-button icon="check_box_outline_blank" on-click="addThis" id="tangy-checkboxes-widget">Checkbox Group</mwc-button><br>
+            <mwc-button icon="radio_button_unchecked" on-click="addThis" id="tangy-radio-buttons-widget">Radio Buttons</mwc-button><br>
+            <mwc-button icon="arrow_drop_down_circle" on-click="addThis" id="tangy-select-widget">Dropdown (select)</mwc-button><br>
+          </div>
+          <h4>Boolean</h4>
+          <div class="element-list">
+            <mwc-button icon="check_box" on-click="addThis" id="tangy-checkbox-widget">Checkbox</mwc-button><br>        
+            <mwc-button icon="toggle_on" on-click="addThis" id="tangy-toggle-widget">Toggle Button</mwc-button><br>          
           </div>
         </div>
         <div>
@@ -70,30 +86,23 @@ class TangyFormEditorAddInput extends PolymerElement {
               <mwc-button icon="add_location" on-click="addThis" id="tangy-gps-widget">GPS</mwc-button><br>
               <mwc-button icon="location_city" on-click="addThis" id="tangy-location-widget">Location</mwc-button>
           </div>
-        </div>
-        <div>
-          <h4>Lists</h4>
-          <div class="element-list">
-              <mwc-button icon="check_box" on-click="addThis" id="tangy-checkbox-widget">Checkbox</mwc-button><br>
-              <mwc-button icon="check_box_outline_blank" on-click="addThis" id="tangy-checkboxes-widget">Checkbox Group</mwc-button><br>
-              <mwc-button icon="arrow_drop_down_circle" on-click="addThis" id="tangy-select-widget">Dropdown (select)</mwc-button><br>
-              <mwc-button icon="radio_button_unchecked" on-click="addThis" id="tangy-radio-buttons-widget">Radio Buttons</mwc-button><br>
-
-              </div>
-        </div>
-        <div>
-          <h4>Misc</h4>
+          <h4>Content Display</h4>
           <div class="element-list">
             <mwc-button icon="image" on-click="addThis" id="tangy-image-widget">Image</mwc-button><br>
-            <mwc-button icon="brush" on-click="addThis" id="tangy-signature-widget">Signature</mwc-button><br>
             <mwc-button icon="code" on-click="addThis" id="tangy-box-widget">HTML content container</mwc-button><br>
             <mwc-button icon="attach_money" on-click="addThis" id="tangy-template-widget">HTML template</mwc-button><br>
+          </div>
+        </div>
+        <div>
+          <h4>Specialty</h4>
+          <div class="element-list">
+            <mwc-button icon="brush" on-click="addThis" id="tangy-signature-widget">Signature</mwc-button><br>
+            <mwc-button icon="thumbs_up_down"on-click="addThis" id="tangy-consent-widget" >Consent</mwc-button><br>
             <mwc-button icon="filter_center_focus" on-click="addThis" id="tangy-qr-widget">QR Code Scanner</mwc-button><br>
             <mwc-button icon="question_answer" on-click="addThis" id="tangy-eftouch-widget">EF Touch</mwc-button><br>
             <mwc-button icon="speaker" on-click="addThis" id="tangy-acasi-widget">Acasi</mwc-button><br>
             <mwc-button icon="av_timer"on-click="addThis" id="tangy-timed-widget" >Timed Grid</mwc-button><br>
             <mwc-button icon="grid_on"on-click="addThis" id="tangy-untimed-grid-widget" >Untimed Grid</mwc-button><br>
-            <mwc-button icon="thumbs_up_down"on-click="addThis" id="tangy-consent-widget" >Consent</mwc-button><br>
           </div>
         </div>
       </div>
