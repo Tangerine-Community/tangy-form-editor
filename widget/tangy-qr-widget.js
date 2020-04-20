@@ -1,33 +1,44 @@
-import '@polymer/paper-card/paper-card.js';
-import '@polymer/paper-button/paper-button.js';
-import 'tangy-form/input/tangy-qr.js';
-import 'tangy-form/input/tangy-checkbox.js';
-import { TangyBaseWidget } from '../tangy-base-widget.js';
+import "@polymer/paper-card/paper-card.js";
+import "@polymer/paper-button/paper-button.js";
+import "tangy-form/input/tangy-qr.js";
+import "tangy-form/input/tangy-checkbox.js";
+import { TangyBaseWidget } from "../tangy-base-widget.js";
 
 class TangyQrWidget extends TangyBaseWidget {
-
   get claimElement() {
-    return 'tangy-qr';
+    return "tangy-qr";
   }
 
   get defaultConfig() {
     return {
-      ...this.defaultConfigCommonAttributes(),
-      hideOutput: false
+      ...this.defaultConfigCoreAttributes(),
+      ...this.defaultConfigConditionalAttributes(),
+      ...this.defaultConfigValidationAttributes(),
+      ...this.defaultConfigAdvancedAttributes(),
+      ...this.defaultConfigUnimplementedAttributes(),
+      hideOutput: false,
     };
   }
 
   upcast(config, element) {
     return {
-      ...this.upcastCommonAttributes(config, element)
+      ...this.upcastCoreAttributes(config, element),
+      ...this.upcastConditionalAttributes(config, element),
+      ...this.upcastValidationAttributes(config, element),
+      ...this.upcastAdvancedAttributes(config, element),
+      ...this.upcastUnimplementedAttributes(config, element),
     };
   }
 
   downcast(config) {
     return `
       <tangy-qr 
-        ${this.downcastCommonAttributes(config)}
-        ${config.hideOutput ? 'hide-output' : ''}
+        ${this.downcastCoreAttributes(config)}
+        ${this.downcastConditionalAttributes(config)}
+        ${this.downcastValidationAttributes(config)}
+        ${this.downcastAdvancedAttributes(config)}
+        ${this.downcastUnimplementedAttributes(config)}
+        ${config.hideOutput ? "hide-output" : ""}
       >
       </tangy-qr>
     `;
@@ -46,17 +57,44 @@ class TangyQrWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>filter_center_focus</mwc-icon><span>`
-    const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
+    const icon = (this.shadowRoot.querySelector(
+      "#icon"
+    ).innerHTML = `<span class="header-text"><mwc-icon>filter_center_focus</mwc-icon><span>`);
+    const name = (this.shadowRoot.querySelector(
+      "#name"
+    ).innerHTML = `<span class="header-text">${config.name}</span>`);
     return `${icon} ${name} ${this.downcast(config)}`;
   }
 
   renderEdit(config) {
+    const action = config.name ? "Edit" : "Add";
     return `
+      <h2>${action} Text Input</h2>
       <tangy-form id="tangy-qr">
         <tangy-form-item>
-          ${this.renderEditCommonAttributes(config)}
-          <tangy-checkbox name="hide-output" help-text="Hide the data output scanned from the QR code. This may be useful if you are using a format such as JSON and parsing it out into other items.">Hide output</tangy-checkbox>
+          <template>
+            <paper-tabs selected="0">
+                <paper-tab>General</paper-tab>
+                <paper-tab>Conditional Display</paper-tab>
+                <paper-tab>Validation</paper-tab>
+                <paper-tab>Advanced</paper-tab>
+            </paper-tabs>
+            <iron-pages selected="">
+                <div>
+                  ${this.renderEditCoreAttributes(config)}
+                  <tangy-checkbox name="hide-output" help-text="Hide the data output scanned from the QR code. This may be useful if you are using a format such as JSON and parsing it out into other items.">Hide output</tangy-checkbox>
+                </div>
+                <div>
+                  ${this.renderEditConditionalAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditValidationAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditAdvancedAttributes(config)}
+                </div>
+            </iron-pages>
+          </template>
         </tangy-form-item>
       </tangy-form>
     `;
@@ -64,16 +102,18 @@ class TangyQrWidget extends TangyBaseWidget {
 
   onSubmit(config, formEl) {
     return {
-      ...this.onSubmitCommonAttributes(config, formEl),
-      hideInput: formEl.values['hide-output']
-    }
+      ...this.onSubmitCoreAttributes(config, formEl),
+      ...this.onSubmitConditionalAttributes(config, formEl),
+      ...this.onSubmitValidationAttributes(config, formEl),
+      ...this.onSubmitAdvancedAttributes(config, formEl),
+      hideInput: formEl.values["hide-output"],
+    };
   }
-
 }
 
-window.customElements.define('tangy-qr-widget', TangyQrWidget);
+window.customElements.define("tangy-qr-widget", TangyQrWidget);
 window.tangyFormEditorWidgets.define(
-  'tangy-qr-widget',
-  'tangy-qr',
+  "tangy-qr-widget",
+  "tangy-qr",
   TangyQrWidget
 );

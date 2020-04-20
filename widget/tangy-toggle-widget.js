@@ -1,6 +1,9 @@
 import "@polymer/paper-card/paper-card.js";
 import "@polymer/paper-button/paper-button.js";
 import "@polymer/paper-toggle-button/paper-toggle-button.js";
+import "@polymer/paper-tabs/paper-tabs.js";
+import "@polymer/paper-tabs/paper-tab.js";
+import "@polymer/iron-pages/iron-pages.js";
 import "tangy-form/input/tangy-select.js";
 import { TangyBaseWidget } from "../tangy-base-widget.js";
 class TangyToggleWidget extends TangyBaseWidget {
@@ -8,14 +11,29 @@ class TangyToggleWidget extends TangyBaseWidget {
     return "tangy-toggle";
   }
 
+  get defaultConfig() {
+    return {
+      ...this.defaultConfigCoreAttributes(),
+      ...this.defaultConfigQuestionAttributes(),
+      ...this.defaultConfigConditionalAttributes(),
+      ...this.defaultConfigValidationAttributes(),
+      ...this.defaultConfigAdvancedAttributes(),
+      ...this.defaultConfigUnimplementedAttributes(),
+    };
+  }
+
   upcast(config, element) {
     return {
-      ...this.upcastCommonAttributes(config, element),
-      ...this.upcastLabelAttributes(config, element),
+      ...this.upcastCoreAttributes(config, element),
+      ...this.upcastQuestionAttributes(config, element),
+      ...this.upcastConditionalAttributes(config, element),
+      ...this.upcastValidationAttributes(config, element),
+      ...this.upcastAdvancedAttributes(config, element),
+      ...this.upcastUnimplementedAttributes(config, element),
       label: element.innerHTML
         ? element.innerHTML
-        : this.upcastLabelAttributes(config, element).label
-        ? this.upcastLabelAttributes(config, element).label
+        : this.upcastQuestionAttributes(config, element).label
+        ? this.upcastQuestionAttributes(config, element).label
         : "",
     };
   }
@@ -23,8 +41,12 @@ class TangyToggleWidget extends TangyBaseWidget {
   downcast(config) {
     return `
       <tangy-toggle 
-        ${this.downcastCommonAttributes(config)}
-        ${this.downcastLabelAttributes(config)}
+        ${this.downcastCoreAttributes(config)}
+        ${this.downcastQuestionAttributes(config)}
+        ${this.downcastConditionalAttributes(config)}
+        ${this.downcastValidationAttributes(config)}
+        ${this.downcastAdvancedAttributes(config)}
+        ${this.downcastUnimplementedAttributes(config)}
       ></tangy-toggle>
     `;
   }
@@ -37,6 +59,40 @@ class TangyToggleWidget extends TangyBaseWidget {
       "#name"
     ).innerHTML = `<span class="header-text">${config.name}</span>`);
     return `${icon} ${name} ${this.downcast(config)}`;
+  }
+
+  renderEdit(config) {
+    const action = config.name ? "Edit" : "Add";
+    return `
+      <h2>${action} Toggle Button</h2>
+      <tangy-form id="tangy-toggle">
+        <tangy-form-item>
+          <template>
+            <paper-tabs selected="0">
+                <paper-tab>Question</paper-tab>
+                <paper-tab>Conditional Display</paper-tab>
+                <paper-tab>Validation</paper-tab>
+                <paper-tab>Advanced</paper-tab>
+            </paper-tabs>
+            <iron-pages selected="">
+                <div>
+                  ${this.renderEditCoreAttributes(config)}
+                  ${this.renderEditQuestionAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditConditionalAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditValidationAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditAdvancedAttributes(config)}
+                </div>
+            </iron-pages>
+          </template>
+        </tangy-form-item>
+      </tangy-form>
+    `;
   }
 }
 

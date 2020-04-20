@@ -1,35 +1,46 @@
-import '@polymer/paper-card/paper-card.js';
-import '@polymer/paper-button/paper-button.js';
-import 'tangy-form/input/tangy-select.js';
-import { TangyBaseWidget } from '../tangy-base-widget.js';
+import "@polymer/paper-card/paper-card.js";
+import "@polymer/paper-button/paper-button.js";
+import "tangy-form/input/tangy-select.js";
+import { TangyBaseWidget } from "../tangy-base-widget.js";
 
 class TangyDateWidget extends TangyBaseWidget {
-
   get claimElement() {
-    return 'tangy-input[type=date]';
+    return "tangy-input[type=date]";
   }
 
   get defaultConfig() {
     return {
-      type: 'date',
-      ...this.defaultConfigCommonAttributes(),
-      ...this.defaultConfigLabelAttributes()
+      type: "date",
+      ...this.defaultConfigCoreAttributes(),
+      ...this.defaultConfigQuestionAttributes(),
+      ...this.defaultConfigConditionalAttributes(),
+      ...this.defaultConfigValidationAttributes(),
+      ...this.defaultConfigAdvancedAttributes(),
+      ...this.defaultConfigUnimplementedAttributes(),
     };
   }
 
   upcast(config, element) {
     return {
-      ...this.upcastCommonAttributes(config, element),
-      ...this.upcastLabelAttributes(config, element),
-      ...element.getProps()
+      ...this.upcastCoreAttributes(config, element),
+      ...this.upcastQuestionAttributes(config, element),
+      ...this.upcastConditionalAttributes(config, element),
+      ...this.upcastValidationAttributes(config, element),
+      ...this.upcastAdvancedAttributes(config, element),
+      ...this.upcastUnimplementedAttributes(config, element),
+      ...element.getProps(),
     };
   }
 
   downcast(config) {
     return `
       <tangy-input 
-        ${this.downcastCommonAttributes(config)}
-        ${this.downcastLabelAttributes(config)}
+        ${this.downcastCoreAttributes(config)}
+        ${this.downcastQuestionAttributes(config)}
+        ${this.downcastConditionalAttributes(config)}
+        ${this.downcastValidationAttributes(config)}
+        ${this.downcastAdvancedAttributes(config)}
+        ${this.downcastUnimplementedAttributes(config)}
         type="date"
       ></tangy-input>
     `;
@@ -42,12 +53,8 @@ class TangyDateWidget extends TangyBaseWidget {
         <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
         <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
         <tr><td><strong>Type:</strong></td><td>${config.type}</td></tr>
-        <tr><td><strong>Error Message:</strong></td><td>${
-          config.errorText
-        }</td></tr>
-        <tr><td><strong>Allowed Pattern:</strong></td><td>${
-          config.allowedPattern
-        }</td></tr>
+        <tr><td><strong>Error Message:</strong></td><td>${config.errorText}</td></tr>
+        <tr><td><strong>Allowed Pattern:</strong></td><td>${config.allowedPattern}</td></tr>
         <tr><td><strong>Min:</strong></td><td>${config.min}</td></tr>
         <tr><td><strong> Max:</strong></td><td>${config.max}</td></tr>
         <tr><td><strong>Private:</strong></td><td>${config.private}</td></tr>
@@ -60,17 +67,44 @@ class TangyDateWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    const icon = this.shadowRoot.querySelector('#icon').innerHTML=`<span class="header-text"><mwc-icon>calendar_today</mwc-icon><span>`
-    const name = this.shadowRoot.querySelector('#name').innerHTML=`<span class="header-text">${config.name}</span>`
+    const icon = (this.shadowRoot.querySelector(
+      "#icon"
+    ).innerHTML = `<span class="header-text"><mwc-icon>calendar_today</mwc-icon><span>`);
+    const name = (this.shadowRoot.querySelector(
+      "#name"
+    ).innerHTML = `<span class="header-text">${config.name}</span>`);
     return `${icon} ${name} ${this.downcast(config)}`;
   }
 
   renderEdit(config) {
+    const action = config.name ? "Edit" : "Add";
     return `
+      <h2>${action} Date</h2>
       <tangy-form id="tangy-date-widget">
         <tangy-form-item>
-          ${this.renderEditCommonAttributes(config)}
-          ${this.renderEditLabelAttributes(config)}
+          <template>
+            <paper-tabs selected="0">
+                <paper-tab>Question</paper-tab>
+                <paper-tab>Conditional Display</paper-tab>
+                <paper-tab>Validation</paper-tab>
+                <paper-tab>Advanced</paper-tab>
+            </paper-tabs>
+            <iron-pages selected="">
+                <div>
+                  ${this.renderEditCoreAttributes(config)}
+                  ${this.renderEditQuestionAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditConditionalAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditValidationAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditAdvancedAttributes(config)}
+                </div>
+            </iron-pages>
+          </template>
         </tangy-form-item>
       </tangy-form>
     `;
@@ -78,16 +112,18 @@ class TangyDateWidget extends TangyBaseWidget {
 
   onSubmit(config, formEl) {
     return {
-      ...this.onSubmitCommonAttributes(config, formEl),
-      ...this.onSubmitLabelAttributes(config, formEl)
+      ...this.onSubmitCoreAttributes(config, formEl),
+      ...this.onSubmitQuestionAttributes(config, formEl),
+      ...this.onSubmitConditionalAttributes(config, formEl),
+      ...this.onSubmitValidationAttributes(config, formEl),
+      ...this.onSubmitAdvancedAttributes(config, formEl),
     };
   }
-
 }
 
-window.customElements.define('tangy-date-widget', TangyDateWidget);
+window.customElements.define("tangy-date-widget", TangyDateWidget);
 window.tangyFormEditorWidgets.define(
-  'tangy-date-widget',
-  'tangy-input[type=date]',
+  "tangy-date-widget",
+  "tangy-input[type=date]",
   TangyDateWidget
 );

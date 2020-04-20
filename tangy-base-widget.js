@@ -1,69 +1,104 @@
-import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
-import '@polymer/paper-card/paper-card.js'
-import '@polymer/paper-button/paper-button.js'
+import { html, PolymerElement } from "@polymer/polymer/polymer-element.js";
+import "@polymer/paper-card/paper-card.js";
+import "@polymer/paper-button/paper-button.js";
 
-const MODE_INFO = 'MODE_INFO'
-const MODE_EDIT = 'MODE_EDIT'
-const MODE_PRINT = 'MODE_PRINT'
+const MODE_INFO = "MODE_INFO";
+const MODE_EDIT = "MODE_EDIT";
+const MODE_PRINT = "MODE_PRINT";
 
 class TangyBaseWidget extends PolymerElement {
-
   /*
    * Implement API.
    */
 
   get claimElement() {
-    return 'tangy-base'
+    return "tangy-base";
   }
 
   get defaultConfig() {
     return {
-      ...this.defaultConfigCommonAttributes(),
-      ...this.defaultConfigLabelAttributes()
-    }
+      ...this.defaultConfigCoreAttributes(),
+      ...this.defaultConfigQuestionAttributes(),
+      ...this.defaultConfigConditionalAttributes(),
+      ...this.defaultConfigValidationAttributes(),
+      ...this.defaultConfigAdvancedAttributes(),
+      ...this.defaultConfigUnimplementedAttributes(),
+    };
   }
 
   upcast(config, element) {
-    return { 
+    return {
       ...config,
-      ...this.upcastCommonAttributes(config, element),
-      ...this.upcastLabelAttributes(config, element),
-      ...this.getProps()
-    }
+      ...this.upcastCoreAttributes(config, element),
+      ...this.upcastQuestionAttributes(config, element),
+      ...this.upcastConditionalAttributes(config, element),
+      ...this.upcastValidationAttributes(config, element),
+      ...this.upcastAdvancedAttributes(config, element),
+      ...this.upcastUnimplementedAttributes(config, element),
+      ...this.getProps(),
+    };
   }
 
   // Convert configuration to HTML.
   downcast(config) {
     return `<tangy-base 
-        ${this.downcastCommonAttributes(config)}
-        ${this.downcastLabelAttributes(config)}
-      ></tangy-base>`
+        ${this.downcastCoreAttributes(config)}
+        ${this.downcastQuestionAttributes(config)}
+        ${this.downcastConditionalAttributes(config)}
+        ${this.downcastValidationAttributes(config)}
+        ${this.downcastAdvancedAttributes(config)}
+        ${this.downcastUnimplementedAttributes(config)}
+      ></tangy-base>`;
   }
 
-  
   // Return markup for use when in info mode.
   renderInfo(config) {
-    return `${this.renderInfoCommonAttributes(config)}`
+    return `${this.renderInfoCommonAttributes(config)}`;
   }
 
   // Return markup for use when in edit mode.
   renderEdit(config) {
     return `
-      <tangy-form id="form">
-        <tangy-form-item id='item'>
-          ${this.renderEditCommonAttributes(config)}
-          ${this.renderEditLabelAttributes(config)}
+      <tangy-form id="tangy-input">
+        <tangy-form-item>
+          <template>
+            <paper-tabs selected="0">
+                <paper-tab>Question</paper-tab>
+                <paper-tab>Conditional Display</paper-tab>
+                <paper-tab>Validation</paper-tab>
+                <paper-tab>Advanced</paper-tab>
+            </paper-tabs>
+            <iron-pages selected="">
+                <div>
+                  ${this.renderEditCoreAttributes(config)}
+                  ${this.renderEditQuestionAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditConditionalAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditValidationAttributes(config)}
+                </div>
+                <div>
+                  ${this.renderEditAdvancedAttributes(config)}
+                </div>
+            </iron-pages>
+          </template>
         </tangy-form-item>
       </tangy-form>
-    `
+    `;
   }
 
   // On save of edit form, return updated _config.
   onSubmit(config, formEl) {
-    return { 
-      ...this.onSubmitCommonAttributes(config, formEl),
-      ...this.onSubmitLabelAttributes(config, formEl)
-    }
+    return {
+      ...this.onSubmitCoreAttributes(config, formEl),
+      ...this.onSubmitQuestionAttributes(config, formEl),
+      ...this.onSubmitConditionalAttributes(config, formEl),
+      ...this.onSubmitValidationAttributes(config, formEl),
+      ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
+    };
   }
 
   /*
@@ -71,17 +106,17 @@ class TangyBaseWidget extends PolymerElement {
    */
 
   set markup(markup) {
-    this.innerHTML = markup
+    this.innerHTML = markup;
     if (!this.querySelector(this.claimElement)) {
-      this.innerHTML = this.downcast(this.defaultConfig)
+      this.innerHTML = this.downcast(this.defaultConfig);
     }
-    this._element = this.querySelector(this.claimElement)
-    this._config = {...this.defaultConfig}
-    this._config = this.upcast(this._config, this._element)
+    this._element = this.querySelector(this.claimElement);
+    this._config = { ...this.defaultConfig };
+    this._config = this.upcast(this._config, this._element);
   }
 
   get markup() {
-    return this.downcast(this._config)
+    return this.downcast(this._config);
   }
 
   // Need it?
@@ -91,119 +126,271 @@ class TangyBaseWidget extends PolymerElement {
   }
   */
 
-  /* 
+  /*
    * Helpers.
    */
-
-  defaultConfigCommonAttributes() {
+  // ****************************  Begin Config Attributes ****************************
+  defaultConfigCoreAttributes() {
     return {
-      name: '',
-      class: '',
-      style: '',
+      name: "",
       required: false,
       disabled: false,
       hidden: false,
-      showIf: '',
-      skipIf: '',
-      validIf: ''
-    }
+    };
   }
 
-  defaultConfigLabelAttributes() {
+  defaultConfigQuestionAttributes() {
     return {
-      questionNumber: '',
-      label: '',
-      hintText: '',
-      errorText: ''
-    }
+      questionNumber: "",
+      label: "",
+      hintText: "",
+    };
   }
 
-  upcastCommonAttributes(config, element) {
+  defaultConfigConditionalAttributes() {
     return {
-      ...{
-        name: element.hasAttribute('name')
-          ? element.getAttribute('name')
-          : '',
-        class: element.hasAttribute('class')
-          ? element.getAttribute('class')
-          : '',
-        style: element.hasAttribute('style')
-          ? element.getAttribute('style')
-          : '',
-        required: element.hasAttribute('required') ? true : false,
-        hidden: element.hasAttribute('hidden') ? true : false,
-        disabled: element.hasAttribute('disabled') ? true : false,
-        showIf: (
-          element.hasAttribute('show-if')
-            ? element.getAttribute('show-if')
-            : element.hasAttribute('tangy-if')
-              ? element.getAttribute('tangy-if')
-              : ''
-          ).replace(/&quot;/g, '"'),
-        skipIf: element.hasAttribute('skip-if')
-          ? element.getAttribute('skip-if').replace(/&quot;/g, '"')
-          : '',
-        validIf: element.hasAttribute('valid-if')
-          ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
-          : ''
-      }
-    }
+      showIf: "",
+      skipIf: "",
+    };
   }
 
-  upcastLabelAttributes(config, element) {
+  defaultConfigValidationAttributes() {
     return {
-      questionNumber: element.hasAttribute('question-number')
-        ? element.getAttribute('question-number')
-        : '',
-      label: element.hasAttribute('label')
-        ? element.getAttribute('label')
-        : '',
-      errorText: element.hasAttribute('error-text')
-        ? element.getAttribute('error-text')
-        : '',
-      hintText: element.hasAttribute('hint-text')
-        ? element.getAttribute('hint-text')
-        : ''
-    }
+      validIf: "",
+      errorText: "",
+    };
   }
 
-  downcastCommonAttributes(config) {
+  defaultConfigAdvancedAttributes() {
+    return {
+      class: "",
+      style: "",
+    };
+  }
+
+  defaultConfigUnimplementedAttributes() {
+    return {};
+  }
+
+  // ****************************  Begin Upcast Attributes ****************************
+  upcastCoreAttributes(config, element) {
+    return {
+      name: element.hasAttribute("name") ? element.getAttribute("name") : "",
+      required: element.hasAttribute("required") ? true : false,
+      hidden: element.hasAttribute("hidden") ? true : false,
+      disabled: element.hasAttribute("disabled") ? true : false,
+    };
+  }
+
+  upcastQuestionAttributes(config, element) {
+    return {
+      questionNumber: element.hasAttribute("question-number")
+        ? element.getAttribute("question-number")
+        : "",
+      label: element.hasAttribute("label") ? element.getAttribute("label") : "",
+      hintText: element.hasAttribute("hint-text")
+        ? element.getAttribute("hint-text")
+        : "",
+    };
+  }
+
+  upcastConditionalAttributes(config, element) {
+    return {
+      showIf: (element.hasAttribute("show-if")
+        ? element.getAttribute("show-if")
+        : element.hasAttribute("tangy-if")
+        ? element.getAttribute("tangy-if")
+        : ""
+      ).replace(/&quot;/g, '"'),
+      skipIf: element.hasAttribute("skip-if")
+        ? element.getAttribute("skip-if").replace(/&quot;/g, '"')
+        : "",
+    };
+  }
+
+  upcastValidationAttributes(config, element) {
+    return {
+      validIf: element.hasAttribute("valid-if")
+        ? element.getAttribute("valid-if").replace(/&quot;/g, '"')
+        : "",
+      errorText: element.hasAttribute("error-text")
+        ? element.getAttribute("error-text")
+        : "",
+    };
+  }
+
+  upcastAdvancedAttributes(config, element) {
+    return {
+      class: element.hasAttribute("class") ? element.getAttribute("class") : "",
+      style: element.hasAttribute("style") ? element.getAttribute("style") : "",
+    };
+  }
+
+  upcastUnimplementedAttributes(config, element) {
+    return {};
+  }
+
+  // ****************************  Begin Downcast Attributes ****************************
+  downcastCoreAttributes(config) {
     return `
       name="${config.name}"
+      ${config.required ? "required" : ""}
+      ${config.disabled ? "disabled" : ""}
+      ${config.hidden ? "hidden" : ""}
+    `;
+  }
+
+  downcastQuestionAttributes(config) {
+    return `
+      question-number="${config.questionNumber}"
+      label="${config.label}"
+      hint-text="${config.hintText}"
+    `;
+  }
+
+  downcastConditionalAttributes(config) {
+    return `
+      ${
+        config.showIf === ""
+          ? ""
+          : `tangy-if="${config.showIf.replace(/"/g, "&quot;")}"`
+      }
+      ${
+        config.skipIf === ""
+          ? ""
+          : `skip-if="${config.skipIf.replace(/"/g, "&quot;")}"`
+      }
+    `;
+  }
+
+  downcastValidationAttributes(config) {
+    return `
+      ${
+        config.validIf === ""
+          ? ""
+          : `valid-if="${config.validIf.replace(/"/g, "&quot;")}"`
+      }
+      error-text="${config.errorText}"
+    `;
+  }
+
+  downcastAdvancedAttributes(config) {
+    return `
       class="${config.class}"
       style="${config.style}"
-      ${config.showIf === "" ? "" : `tangy-if="${config.showIf.replace(/"/g, '&quot;')}"`}
-      ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
-      ${config.skipIf === "" ? "" : `skip-if="${config.skipIf.replace(/"/g, '&quot;')}"`}
-      ${config.required ? 'required' : ''}
-      ${config.disabled ? 'disabled' : ''}
-      ${config.hidden ? 'hidden' : ''}
-  `
+    `;
   }
 
-   downcastLabelAttributes(config) {
-     return `
-       question-number="${config.questionNumber}"
-       label="${config.label}"
-       error-text="${config.errorText}"
-       hint-text="${config.hintText}"
-     `
+  downcastUnimplementedAttributes(config) {
+    return ``;
   }
 
+  // ****************************  Begin Render Info Attributes ****************************
   renderInfoCommonAttributes(config) {
-    return `Name: ${config.name}`
+    return `Name: ${config.name}`;
   }
 
-  renderEditCommonAttributes(config) {
+  // ****************************  Begin Render Edit Attributes ****************************
+  renderEditCoreAttributes(config) {
+    return `
+      <div class="grid-container">
+
+        <!-- columns should be the immediate child of a .row -->
+        <div class="grid-row">
+          <div class="nine columns">
+            <tangy-input 
+              name="name" 
+              valid-if="input.value.match(/^[a-zA-Z]{1,}[a-zA-Z0-9\_]{1,}$/)" 
+              inner-label="Variable name"
+              value="${config.name}"
+              hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), and numbers (0-9)."
+              required>
+            </tangy-input>
+          </div>
+          <div class="three columns">
+            <h3>Properties</h3>
+            <tangy-checkbox
+              name="required" 
+              ${config.required ? 'value="on"' : ""}>
+              Required
+            </tangy-checkbox>
+            <tangy-checkbox
+              name="disabled" 
+              ${config.disabled ? 'value="on"' : ""}>
+              Disabled
+            </tangy-checkbox>
+            <tangy-checkbox
+              name="hidden"
+              ${config.hidden ? 'value="on"' : ""}>
+              Hidden
+            </tangy-checkbox>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  renderEditQuestionAttributes(config) {
+    return `
+      <tangy-input
+        name="question-number"
+        inner-label="Question number"
+        value="${config.questionNumber}">
+      </tangy-input>
+      <tangy-input
+        name="label"
+        inner-label="Label"
+        value="${config.label}">
+      </tangy-input>
+      <tangy-input
+        name="hint-text"
+        inner-label="Hint text"
+        value="${config.hintText}">
+      </tangy-input>
+    `;
+  }
+
+  renderEditConditionalAttributes(config) {
+    return `
+      ${
+        !this.hasAttribute("hide-skip-if")
+          ? `
+        <tangy-input 
+          name="skip_if"
+          inner-label="Skip if"
+          hint-text="Enter logic for whether or not this should be skipped. Values entered while shown will not persist after hiding (e.g. getValue('should_proceed') === '')"
+          value="${config.skipIf.replace(/"/g, "&quot;")}">
+        </tangy-input>
+      `
+          : ""
+      }
+      <tangy-input
+        name="show_if"
+        inner-label="Show if"
+        hint-text="Enter any conditional display logic. Values that users enter while shown will persist after hiding. (e.g. getValue('isEmployee') === true)"
+        value="${config.showIf.replace(/"/g, "&quot;")}">
+      </tangy-input>
+    `;
+  }
+
+  renderEditValidationAttributes(config) {
     return `
       <tangy-input 
-        name="name" 
-        valid-if="input.value.match(/^[a-zA-Z]{1,}[a-zA-Z0-9\_]{1,}$/)" 
-        inner-label="Variable name"
-        value="${config.name}"
-        hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), and numbers (0-9)."
-        required>
+        name="valid_if"
+        inner-label="Valid if"
+        hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
+        value="${config.validIf.replace(/"/g, "&quot;")}">
       </tangy-input>
+      <tangy-input
+        name="error-text"
+        inner-label="Error text"
+        value="${config.errorText}">
+      </tangy-input>
+    `;
+  }
+
+  renderEditAdvancedAttributes(config) {
+    return `
       <tangy-input 
         name="class" 
         inner-label="CSS Class"
@@ -215,135 +402,97 @@ class TangyBaseWidget extends PolymerElement {
         name="style"
         inner-label="CSS Style"
         hint-text="Enter CSS for this element."
-        value="${config.style.replace(/"/g, '&quot;')}">
+        value="${config.style.replace(/"/g, "&quot;")}">
       </tangy-input>
-      ${!this.hasAttribute('hide-skip-if') ? `
-        <tangy-input 
-          name="skip_if"
-          inner-label="Skip if"
-          hint-text="Enter logic for whether or not this should be skipped. Values entered while shown will not persist after hiding (e.g. getValue('should_proceed') === '')"
-          value="${config.skipIf.replace(/"/g, '&quot;')}">
-        </tangy-input>
-      `:''}
-      <tangy-input
-        name="show_if"
-        inner-label="Show if"
-        hint-text="Enter any conditional display logic. Values that users enter while shown will persist after hiding. (e.g. getValue('isEmployee') === true)"
-        value="${config.showIf.replace(/"/g, '&quot;')}">
-      </tangy-input>
-      <tangy-input 
-        name="valid_if"
-        inner-label="Valid if"
-        hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
-        value="${config.validIf.replace(/"/g, '&quot;')}">
-      </tangy-input>
-      <tangy-checkbox
-        name="required" 
-        ${config.required ? 'value="on"' : ''}>
-        Required
-      </tangy-checkbox>
-      <tangy-checkbox
-        name="disabled" 
-        ${config.disabled ? 'value="on"' : ''}>
-        Disabled
-      </tangy-checkbox>
-      <tangy-checkbox
-        name="hidden"
-        ${config.hidden ? 'value="on"' : ''}>
-        Hidden
-      </tangy-checkbox>
-    `
+    `;
   }
 
-  renderEditLabelAttributes(config) {
-    return `
-      <tangy-input
-        name="question-number"
-        inner-label="Question number"
-        value="${
-          config.questionNumber
-        }">
-      </tangy-input>
-      <tangy-input
-        name="label"
-        inner-label="Label"
-        value="${
-          config.label
-        }">
-      </tangy-input>
-      <tangy-input
-        name="hint-text"
-        inner-label="Hint text"
-        value="${
-          config.hintText
-        }">
-      </tangy-input>
-      <tangy-input
-        name="error-text"
-        inner-label="Error text"
-        value="${
-          config.errorText
-        }">
-      </tangy-input>
-    `
-  }
-
-  onSubmitCommonAttributes(config, formEl) {
-    return { 
-      name: formEl.response.items[0].inputs.find(input => input.name === 'name').value,
-      style: formEl.response.items[0].inputs.find(input => input.name === 'style').value,
-      class: formEl.response.items[0].inputs.find(input => input.name === 'class').value,
+  // ****************************  Begin On Submit Attributes ****************************
+  onSubmitCoreAttributes(config, formEl) {
+    return {
+      name: formEl.response.items[0].inputs.find(
+        (input) => input.name === "name"
+      ).value,
       required:
-        formEl.response.items[0].inputs.find(input => input.name === 'required')
-          .value === 'on'
+        formEl.response.items[0].inputs.find(
+          (input) => input.name === "required"
+        ).value === "on"
           ? true
           : false,
       hidden:
-        formEl.response.items[0].inputs.find(input => input.name === 'hidden')
-          .value === 'on'
+        formEl.response.items[0].inputs.find((input) => input.name === "hidden")
+          .value === "on"
           ? true
           : false,
       disabled:
-        formEl.response.items[0].inputs.find(input => input.name === 'disabled')
-          .value === 'on'
+        formEl.response.items[0].inputs.find(
+          (input) => input.name === "disabled"
+        ).value === "on"
           ? true
           : false,
-      validIf: formEl.response.items[0].inputs.find(
-        input => input.name === 'valid_if'
-      ).value,
-      skipIf: !this.hasAttribute('hide-skip-if')
-        ? formEl.response.items[0].inputs.find(
-            input => input.name === 'skip_if'
-          ).value
-        : '',
-      showIf: formEl.response.items[0].inputs.find(
-        input => input.name === 'show_if'
-      ).value
-    }
+    };
   }
 
-  onSubmitLabelAttributes(config, formEl) {
-    return { 
-      questionNumber: formEl.response.items[0].inputs.find(input => input.name === 'question-number')
-        .value,
-      label: formEl.response.items[0].inputs.find(input => input.name === 'label')
-        .value,
-       errorText: formEl.response.items[0].inputs.find(input => input.name === 'error-text')
-        .value,
-       hintText: formEl.response.items[0].inputs.find(input => input.name === 'hint-text')
-        .value
-    }
+  onSubmitQuestionAttributes(config, formEl) {
+    return {
+      questionNumber: formEl.response.items[0].inputs.find(
+        (input) => input.name === "question-number"
+      ).value,
+      label: formEl.response.items[0].inputs.find(
+        (input) => input.name === "label"
+      ).value,
+      hintText: formEl.response.items[0].inputs.find(
+        (input) => input.name === "hint-text"
+      ).value,
+    };
+  }
+
+  onSubmitConditionalAttributes(config, formEl) {
+    return {
+      skipIf: !this.hasAttribute("hide-skip-if")
+        ? formEl.response.items[0].inputs.find(
+            (input) => input.name === "skip_if"
+          ).value
+        : "",
+      showIf: formEl.response.items[0].inputs.find(
+        (input) => input.name === "show_if"
+      ).value,
+    };
+  }
+
+  onSubmitValidationAttributes(config, formEl) {
+    return {
+      validIf: formEl.response.items[0].inputs.find(
+        (input) => input.name === "valid_if"
+      ).value,
+      errorText: formEl.response.items[0].inputs.find(
+        (input) => input.name === "error-text"
+      ).value,
+    };
+  }
+
+  onSubmitAdvancedAttributes(config, formEl) {
+    return {
+      style: formEl.response.items[0].inputs.find(
+        (input) => input.name === "style"
+      ).value,
+      class: formEl.response.items[0].inputs.find(
+        (input) => input.name === "class"
+      ).value,
+    };
+  }
+
+  onSubmitUnimplementedAttributes(config, formEl) {
+    return {};
   }
 
   // @Deprecated
   editResponse(config) {
-    return false
+    return false;
   }
 
   // ?? So we can do event listeners on dynamic items?? Could also make form components for things like <tangy-list>.
-  afterRenderEdit() {
-
-  }
+  afterRenderEdit() {}
 
   /*
    * PolymerElement usage.
@@ -357,58 +506,58 @@ class TangyBaseWidget extends PolymerElement {
           width: 100%;
           cursor: move;
         }
-        
+
         paper-button {
           background: var(--accent-color);
-          color:var(--accent-text-color);
-          margin-top:10px;
+          color: var(--accent-text-color);
+          margin-top: 10px;
         }
-        
-        :host([mode='MODE_EDIT']) paper-card {
-            background-color: lightgrey;
+
+        :host([mode="MODE_EDIT"]) paper-card {
+          background-color: lightgrey;
         }
-        .tangy-spacer{
+        .tangy-spacer {
           flex: 1 1 auto;
         }
-        .span-spacer{
-          margin-left:10px;
+        .span-spacer {
+          margin-left: 10px;
         }
-        .card-header{
-          display:flex;
+        .card-header {
+          display: flex;
           height: 20px;
-          height:34px;
-          padding-top:10px;
-          background:var(--lighter-accent-color);
-          color:var(--accent-text-color);
-          border-radius: 5px 5px 0px 0px
+          height: 34px;
+          padding-top: 10px;
+          background: var(--lighter-accent-color);
+          color: var(--accent-text-color);
+          border-radius: 5px 5px 0px 0px;
         }
         paper-card {
-          text-align: left; 
-          width:98%;
+          text-align: left;
+          width: 98%;
           margin: 30px 0px 0px;
         }
-  
+
         .card-content {
           text-align: left;
           padding: 15px;
         }
-        
+
         .card-actions {
-           border-top: none;
+          border-top: none;
         }
         .card-actions-edit {
-          margin-top:3em;
-          margin-right:3em;
+          margin-top: 3em;
+          margin-right: 3em;
           margin-bottom: 100px;
         }
-        
+
         .card-actions-edit paper-button {
-          float:right;
+          float: right;
           line-height: 1em;
           background: var(--accent-color);
         }
-        
-        .tangy-action-buttons{
+
+        .tangy-action-buttons {
           color: var(--accent-text-color);
           background-color: var(--accent-color);
           font-size: 12px;
@@ -416,8 +565,8 @@ class TangyBaseWidget extends PolymerElement {
           height: 2rem;
         }
 
-        .action-buttons{
-          margin-right:10px;
+        .action-buttons {
+          margin-right: 10px;
           cursor: pointer;
         }
 
@@ -427,28 +576,155 @@ class TangyBaseWidget extends PolymerElement {
         :host(:not([mode="MODE_PRINT"])) #print-container {
           display: none;
         }
-        span span .header-text, #container span mwc-icon{
-          display:none;
+        span span .header-text,
+        #container span mwc-icon {
+          display: none;
         }
+
+        tangy-form-item {
+          --tangy-form-item--paper-card-content--padding: 0px;
+          --tangy-form-item--paper-card--header: {
+            display: none;
+          }
+        }
+        paper-tabs {
+          --paper-tabs-selection-bar-color: var(--primary-color-dark);
+          background-color: var(--primary-color-lighter);
+          color: #fff;
+          --paper-tabs-selection-bar: {
+            border-bottom: 4px solid
+              var(--paper-tabs-selection-bar-color, var(--paper-yellow-a100));
+          }
+        }
+
+        iron-pages > div {
+          padding: 0px 10px;
+        }
+
+        .m-y-25 {
+          margin: 0;
+        }
+
+        /* Grid
+        –––––––––––––––––––––––––––––––––––––––––––––––––– */
+        .grid-container {
+          position: relative;
+          width: 100%;
+          max-width: 960px;
+          margin: 0 0;
+          padding: 0 0;
+          box-sizing: border-box; }
+        .column,
+        .columns {
+          width: 100%;
+          float: left;
+          box-sizing: border-box; }
+
+        /* For devices larger than 400px */
+        @media (min-width: 400px) {
+          .grid-container {
+            width: 100%;
+            padding: 0; }
+        }
+
+        /* For devices larger than 550px */
+        @media (min-width: 550px) {
+          .grid-container {
+            width: 100%; }
+          .column,
+          .columns {
+            margin-left: 4%; }
+          .column:first-child,
+          .columns:first-child {
+            margin-left: 0; }
+
+          .one.column,
+          .one.columns                    { width: 4.66666666667%; }
+          .two.columns                    { width: 13.3333333333%; }
+          .three.columns                  { width: 22%;            }
+          .four.columns                   { width: 30.6666666667%; }
+          .five.columns                   { width: 39.3333333333%; }
+          .six.columns                    { width: 48%;            }
+          .seven.columns                  { width: 56.6666666667%; }
+          .eight.columns                  { width: 65.3333333333%; }
+          .nine.columns                   { width: 74.0%;          }
+          .ten.columns                    { width: 82.6666666667%; }
+          .eleven.columns                 { width: 91.3333333333%; }
+          .twelve.columns                 { width: 100%; margin-left: 0; }
+
+          .one-third.column               { width: 30.6666666667%; }
+          .two-thirds.column              { width: 65.3333333333%; }
+
+          .one-half.column                { width: 48%; }
+
+          /* Offsets */
+          .offset-by-one.column,
+          .offset-by-one.columns          { margin-left: 8.66666666667%; }
+          .offset-by-two.column,
+          .offset-by-two.columns          { margin-left: 17.3333333333%; }
+          .offset-by-three.column,
+          .offset-by-three.columns        { margin-left: 26%;            }
+          .offset-by-four.column,
+          .offset-by-four.columns         { margin-left: 34.6666666667%; }
+          .offset-by-five.column,
+          .offset-by-five.columns         { margin-left: 43.3333333333%; }
+          .offset-by-six.column,
+          .offset-by-six.columns          { margin-left: 52%;            }
+          .offset-by-seven.column,
+          .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+          .offset-by-eight.column,
+          .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+          .offset-by-nine.column,
+          .offset-by-nine.columns         { margin-left: 78.0%;          }
+          .offset-by-ten.column,
+          .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+          .offset-by-eleven.column,
+          .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+          .offset-by-one-third.column,
+          .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+          .offset-by-two-thirds.column,
+          .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+          .offset-by-one-half.column,
+          .offset-by-one-half.columns     { margin-left: 52%; }
+
+          /* Self Clearing Goodness */
+        .grid-container:after,
+        .grid-row:after {
+          content: "";
+          display: table;
+          clear: both; }
       </style>
 
       <paper-card id="info-edit-card">
-        <div class="card-header" >
+        <div class="card-header">
           <span class="span-spacer" id="icon"></span>
           <span class="span-spacer tangy-spacer" id="name"></span>
-          <span id="edit-button" class="action-buttons" on-click="_onEditClick"><iron-icon icon="create"></iron-icon></span>
-          <span id="copy-button" class="action-buttons" on-click="_onCopyClick"><iron-icon icon="content-copy"></iron-icon></span>
-          <span id="remove-button" class="action-buttons" on-click="_onRemoveClick"><iron-icon icon="delete"></iron-icon></span>
+          <span id="edit-button" class="action-buttons" on-click="_onEditClick"
+            ><iron-icon icon="create"></iron-icon
+          ></span>
+          <span id="copy-button" class="action-buttons" on-click="_onCopyClick"
+            ><iron-icon icon="content-copy"></iron-icon
+          ></span>
+          <span
+            id="remove-button"
+            class="action-buttons"
+            on-click="_onRemoveClick"
+            ><iron-icon icon="delete"></iron-icon
+          ></span>
         </div>
         <div class="card-content" id="container"></div>
-        
       </paper-card>
-      <paper-button id="add-button" 
-            class="tangy-action-buttons" on-click="_onAddClick">
-            <iron-icon icon="add"></iron-icon>
-            Insert Here
-          </paper-button>
-     
+      <paper-button
+        id="add-button"
+        class="tangy-action-buttons"
+        on-click="_onAddClick"
+      >
+        <iron-icon icon="add"></iron-icon>
+        Insert Here
+      </paper-button>
+
       <span id="print-container"></span>
     `;
   }
@@ -457,44 +733,44 @@ class TangyBaseWidget extends PolymerElement {
     return {
       name: {
         type: String,
-        value: ''
+        value: "",
       },
       widget: {
         type: Boolean,
         value: true,
-        reflectToAttribute: true
+        reflectToAttribute: true,
       },
       mode: {
         type: String,
         value: MODE_INFO,
-        observer: '_render',
-        reflectToAttribute: true
+        observer: "_render",
+        reflectToAttribute: true,
       },
       _config: {
         type: Object,
         value: {},
-        observer: '_render',
-        reflectToAttribute: true
-      }
+        observer: "_render",
+        reflectToAttribute: true,
+      },
       // sparkle: {
       //   type: String,
       //   value: '',
       //   observer: '_sparkler',
       //   reflectToAttribute: true
       // },
-    }
+    };
   }
 
   constructor() {
-    super()
-    this._config = this.defaultConfig
+    super();
+    this._config = this.defaultConfig;
   }
 
   connectedCallback() {
-    super.connectedCallback()
-    this.markup = this.innerHTML
+    super.connectedCallback();
+    this.markup = this.innerHTML;
     // A useful selector from higher in the DOM.
-    this.widget = true
+    this.widget = true;
   }
 
   /*
@@ -504,75 +780,97 @@ class TangyBaseWidget extends PolymerElement {
   // Proxy for render to the #container element.
   _render() {
     if (this.mode === MODE_EDIT) {
-      this.shadowRoot.querySelector('#container').innerHTML = this.renderEdit(this._config)
+      this.shadowRoot.querySelector("#container").innerHTML = `
+        
+        ${this.renderEdit(this._config)}
+        `;
+
       if (this.editResponse(this._config)) {
         this.shadowRoot
-          .querySelector('#container')
-          .querySelector('tangy-form')
-          .response = this.editResponse(this._config)
+          .querySelector("#container")
+          .querySelector("tangy-form").response = this.editResponse(
+          this._config
+        );
       } else {
         this.shadowRoot
-          .querySelector('#container')
-          .querySelector('tangy-form')
-          .newResponse()
+          .querySelector("#container")
+          .querySelector("tangy-form")
+          .newResponse();
       }
+
+      if (this.shadowRoot.querySelector("paper-tabs")) {
+        this.shadowRoot
+          .querySelector("paper-tabs")
+          .addEventListener("click", (event) => {
+            this.shadowRoot.querySelector(
+              "iron-pages"
+            ).selected = this.shadowRoot.querySelector("paper-tabs").selected;
+          });
+      }
+
       this.shadowRoot
-        .querySelector('#container')
-        .querySelector('tangy-form')
-        .addEventListener('submit', (event) => this._onSubmit())
+        .querySelector("#container")
+        .querySelector("tangy-form")
+        .addEventListener("submit", (event) => this._onSubmit());
     } else if (this.mode === MODE_INFO) {
-      this.shadowRoot.querySelector('#container').innerHTML = this.renderInfo(this._config)
+      this.shadowRoot.querySelector("#container").innerHTML = this.renderInfo(
+        this._config
+      );
     } else if (this.mode === MODE_PRINT) {
       // Make implementing renderPrint optional.
-      this.shadowRoot.querySelector('#container').innerHTML = `` 
-      this.shadowRoot.querySelector('#print-container').innerHTML = this.renderPrint 
+      this.shadowRoot.querySelector("#container").innerHTML = ``;
+      this.shadowRoot.querySelector("#print-container").innerHTML = this
+        .renderPrint
         ? this.renderPrint(this._config)
-        : this.renderInfo(this._config)
+        : this.renderInfo(this._config);
     }
   }
 
   _sparkler() {
-    console.log("sparkler: ")
-    console.log("sparkler: " + this.sparkle)
-    if ( this.sparkle !=='') {
-      console.log("sparkler me now: " + this.sparkle)
+    console.log("sparkler: ");
+    console.log("sparkler: " + this.sparkle);
+    if (this.sparkle !== "") {
+      console.log("sparkler me now: " + this.sparkle);
     }
   }
 
   _onSubmit() {
-    this.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
-    this._config = this.onSubmit(this._config, this.shadowRoot.querySelector('tangy-form'))
-    this.innerHTML = this.downcast(this._config)
-    this.dispatchEvent(new CustomEvent('submit-input', {bubbles: true}))
-    this.mode = MODE_INFO
-    // this.shadowRoot.querySelector('.card-content').style.backgroundColor = "lightblue";
-    // this.shadowRoot.querySelector('#container').style = 'background-color:lightblue';
-
-    // this.updateStyles({
-    //   '--special-bgcolor': 'blue',
-    // });
-    // this.updateStyles({'--paper-toolbar-background': '#ed0'});
-    this.sparkle = "now"
+    this.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest",
+    });
+    this._config = this.onSubmit(
+      this._config,
+      this.shadowRoot.querySelector("tangy-form")
+    );
+    this.innerHTML = this.downcast(this._config);
+    this.dispatchEvent(new CustomEvent("submit-input", { bubbles: true }));
+    this.mode = MODE_INFO;
+    this.sparkle = "now";
   }
 
   _onRemoveClick() {
-    this.remove()
+    this.remove();
   }
 
   _onEditClick() {
-    this.dispatchEvent(new CustomEvent('edit-input', {bubbles: true}))
-    this.mode = MODE_EDIT
+    this.dispatchEvent(new CustomEvent("edit-input", { bubbles: true }));
+    this.mode = MODE_EDIT;
   }
 
   _onAddClick() {
-    let addInputEl = this.parentElement.querySelector("tangy-form-editor-add-input");
-    !addInputEl? this.dispatchEvent(new CustomEvent('add-input', {bubbles: true})):this.parentElement.removeChild(addInputEl)
+    let addInputEl = this.parentElement.querySelector(
+      "tangy-form-editor-add-input"
+    );
+    !addInputEl
+      ? this.dispatchEvent(new CustomEvent("add-input", { bubbles: true }))
+      : this.parentElement.removeChild(addInputEl);
   }
 
   _onCopyClick() {
-    this.dispatchEvent(new CustomEvent('copy-input', {bubbles: true}))
+    this.dispatchEvent(new CustomEvent("copy-input", { bubbles: true }));
   }
-
 }
 
-export { TangyBaseWidget }
+export { TangyBaseWidget };

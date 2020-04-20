@@ -21,6 +21,7 @@ import 'tangy-form/input/tangy-box.js';
 import 'tangy-form/input/tangy-input.js';
 import 'tangy-form/input/tangy-timed.js';
 import 'tangy-form/input/tangy-untimed-grid.js';
+//import 'tangy-form/input/tangy-toggle.js';
 import 'tangy-form/input/tangy-checkbox.js';
 import 'tangy-form/input/tangy-checkboxes.js';
 import 'tangy-form/input/tangy-radio-buttons.js';
@@ -46,6 +47,14 @@ class TangyFormEditor extends PolymerElement {
   static get template() {
     return html`
       <style>
+        tangy-form-item {
+          --tangy-firm-item--display: none;
+        }
+
+        tangy-input {
+          background-color: #aaa
+        }
+
         :host {
           display: block;
           color: var(--primary-text-color);
