@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.13.6
+- Fix issue on some implementations causing form titles to not save when duplicate variables are detected.
+
 ## v6.13.5
 - Bumpt tangy-form to v4.11.5 to fix build errors related to underscore.
 
