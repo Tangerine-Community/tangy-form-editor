@@ -539,6 +539,16 @@ class TangyFormEditor extends PolymerElement {
     if (typeof categoryEl !== 'undefined' && categoryEl !== null) {
       categoryValue = categoryEl.value
     }
+    this.store.dispatch({type: 'FORM_UPDATE', payload: {
+      title: this.shadowRoot.querySelector('#form-title').value,
+      exitClicks: this.$.container.querySelector('#exit-clicks-input').value,
+      fullscreen: this.$.container.querySelector('#fullscreen-checkbox').hasAttribute('checked'),
+      recordItemFirstOpenTimes: this.$.container.querySelector('#record-item-first-open-times-checkbox').hasAttribute('checked'),
+      onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      onSubmit: this.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      category: categoryValue
+    }})
     const duplicateVariableNames = this.findDuplicateVariableNames()
     if (duplicateVariableNames.length > 0) {
       this.store.dispatch({
@@ -553,16 +563,6 @@ class TangyFormEditor extends PolymerElement {
         `
       })
     }
-    this.store.dispatch({type: 'FORM_UPDATE', payload: {
-      title: this.shadowRoot.querySelector('#form-title').value,
-      exitClicks: this.$.container.querySelector('#exit-clicks-input').value,
-      fullscreen: this.$.container.querySelector('#fullscreen-checkbox').hasAttribute('checked'),
-      recordItemFirstOpenTimes: this.$.container.querySelector('#record-item-first-open-times-checkbox').hasAttribute('checked'),
-      onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
-      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
-      onSubmit: this.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
-      category: categoryValue
-    }})
     this.dispatchChangeEvent()
     this.dispatchSaveEvent()
   }
