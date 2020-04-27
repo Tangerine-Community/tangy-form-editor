@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.14.0
+- Bump tangy-form to v4.12.0. This enables sortable tangy-list which gives us sortable radiobutton and checkbox group options.
+
 ## v6.13.6
 - Fix issue on some implementations causing form titles to not save when duplicate variables are detected.
 
