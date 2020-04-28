@@ -13,7 +13,7 @@
     "@material/mwc-icon": "^0.9.1",
     "@polymer/paper-toggle-button": "^3.0.0-pre.21",
     "@polymer/polymer": "^3.0.0",
-    "@polymer/sortable-list": "git://github.com/DrNiels/sortable-list.git#polymer-3",
+    "@polymer/sortable-list": "git://github.com/DrNiels/sortable-list.git#master",
     "dr-niels-paper-expansion-panel": "git://github.com/DrNiels/paper-expansion-panel.git#master",
     "file-list-component": "^1.4.0",
     "js-beautify": "^1.7.5",
