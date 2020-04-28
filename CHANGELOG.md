@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.14.1
+- Bump tangy-form to v4.12.1.
+
 ## v6.14.0
 - Bump tangy-form to v4.12.0. This enables sortable tangy-list which gives us sortable radiobutton and checkbox group options.
 
