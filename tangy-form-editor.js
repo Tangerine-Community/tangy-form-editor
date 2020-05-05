@@ -1,5 +1,4 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/sortable-list/sortable-list.js'
 import '@polymer/paper-toggle-button/paper-toggle-button.js'
 import '@material/mwc-fab'
 import "@material/mwc-icon"

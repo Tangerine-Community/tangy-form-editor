@@ -1,5 +1,4 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
-import '@polymer/sortable-list/sortable-list.js'
 import {Fab} from '@material/mwc-fab'
 import './tangy-form-editor-add-input.js'
 import './widget/tangy-text-widget.js'

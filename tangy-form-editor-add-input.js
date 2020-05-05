@@ -1,5 +1,4 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
-import '@polymer/sortable-list/sortable-list.js'
 import {Button} from "@material/mwc-button"
 
 /**
