@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.14.3
+- Bump tangy-form to 4.12.2 for more support in building sortable list.
+
 ## v6.14.2
 - Removed @polymer/sortable-list dependency, which is already provided by tangy-form.
 
