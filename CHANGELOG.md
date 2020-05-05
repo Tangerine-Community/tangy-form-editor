@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.14.4
+- Upgrade tangy-form to v4.12.3 to fix https://github.com/Tangerine-Community/Tangerine/issues/2090
+
 ## v6.14.3
 - Bump tangy-form to 4.12.2 for more support in building sortable list.
 
