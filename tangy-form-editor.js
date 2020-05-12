@@ -1,39 +1,38 @@
-import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
-import '@polymer/sortable-list/sortable-list.js'
-import '@polymer/paper-toggle-button/paper-toggle-button.js'
-import '@material/mwc-fab'
-import "@material/mwc-icon"
-import 'juicy-ace-editor/juicy-ace-editor-module.js'
-import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
-import { tangyFormEditorReducer } from './tangy-form-editor-reducer.js'
-import './tangy-form-item-editor.js'
-import './tangy-form-html-editor.js'
-import './tangy-code.js'
-import 'tangy-translate'
-import 'file-list-component/file-list.js'
-import 'file-list-component/file-list-http.js'
-import 'file-list-component/file-list-select.js'
-
+import { html, PolymerElement } from "@polymer/polymer/polymer-element.js";
+import "@polymer/sortable-list/sortable-list.js";
+import "@polymer/paper-toggle-button/paper-toggle-button.js";
+import "@material/mwc-fab";
+import "@material/mwc-icon";
+import "juicy-ace-editor/juicy-ace-editor-module.js";
+import "dr-niels-paper-expansion-panel/paper-expansion-panel.js";
+import { tangyFormEditorReducer } from "./tangy-form-editor-reducer.js";
+import "./tangy-form-item-editor.js";
+import "./tangy-form-html-editor.js";
+import "./tangy-code.js";
+import "tangy-translate";
+import "file-list-component/file-list.js";
+import "file-list-component/file-list-http.js";
+import "file-list-component/file-list-select.js";
 
 //   <!-- Tangy Elements -->
-import 'tangy-form/tangy-form.js';
-import 'tangy-form/input/tangy-box.js';
-import 'tangy-form/input/tangy-input.js';
-import 'tangy-form/input/tangy-timed.js';
-import 'tangy-form/input/tangy-untimed-grid.js';
-//import 'tangy-form/input/tangy-toggle.js';
-import 'tangy-form/input/tangy-checkbox.js';
-import 'tangy-form/input/tangy-checkboxes.js';
-import 'tangy-form/input/tangy-radio-buttons.js';
-import 'tangy-form/input/tangy-select.js';
-import 'tangy-form/input/tangy-location.js';
-import 'tangy-form/input/tangy-gps.js';
-import 'tangy-form/input/tangy-acasi.js';
-import 'tangy-form/input/tangy-eftouch.js';
-import 'tangy-form/input/tangy-photo-capture.js';
-import 'tangy-form/input/tangy-qr.js';
-import 'tangy-form/input/tangy-consent.js';
-import 'tangy-form/input/tangy-signature.js';
+import "tangy-form/tangy-form.js";
+import "tangy-form/input/tangy-box.js";
+import "tangy-form/input/tangy-input.js";
+import "tangy-form/input/tangy-timed.js";
+import "tangy-form/input/tangy-untimed-grid.js";
+import "tangy-form/input/tangy-toggle.js";
+import "tangy-form/input/tangy-checkbox.js";
+import "tangy-form/input/tangy-checkboxes.js";
+import "tangy-form/input/tangy-radio-buttons.js";
+import "tangy-form/input/tangy-select.js";
+import "tangy-form/input/tangy-location.js";
+import "tangy-form/input/tangy-gps.js";
+import "tangy-form/input/tangy-acasi.js";
+import "tangy-form/input/tangy-eftouch.js";
+import "tangy-form/input/tangy-photo-capture.js";
+import "tangy-form/input/tangy-qr.js";
+import "tangy-form/input/tangy-consent.js";
+import "tangy-form/input/tangy-signature.js";
 
 /**
  * `tangy-form-editor`
@@ -52,14 +51,13 @@ class TangyFormEditor extends PolymerElement {
         }
 
         tangy-input {
-          background-color: #aaa
+          background-color: #aaa;
         }
 
         :host {
           display: block;
           color: var(--primary-text-color);
           font-size: medium;
-          
         }
         :host([show-preview]) .show-preview {
           display: none;
@@ -82,52 +80,51 @@ class TangyFormEditor extends PolymerElement {
         }
         paper-input {
           --paper-input-container-underline-focus: {
-            border-color:var(--accent-color);
-          } 
+            border-color: var(--accent-color);
+          }
         }
         .rightCategories {
           margin-left: 2em;
         }
-        .tangy-spacer{
+        .tangy-spacer {
           flex: 1 1 auto;
         }
-        .sortable{
-          display:inline-flex;
+        .sortable {
+          display: inline-flex;
           cursor: move;
-           margin-left: 4px;
-           margin-bottom: 10px;
-           width:100%;
+          margin-left: 4px;
+          margin-bottom: 10px;
+          width: 100%;
         }
-        .list-item-text{
+        .list-item-text {
           padding-top: 0.9rem;
           font-size: 128%;
-          font-weight: bold
+          font-weight: bold;
         }
-        .tangy-icons{
-          background-color:var(--accent-text-color);
-          color:var(--lighter-accent-color);
+        .tangy-icons {
+          background-color: var(--accent-text-color);
+          color: var(--lighter-accent-color);
         }
-        .tangy-action-buttons{
+        .tangy-action-buttons {
           color: var(--accent-text-color);
           background-color: var(--accent-color);
           font-size: 12px;
           font-weight: 500;
           height: 2rem;
         }
-        paper-icon-button{
+        paper-icon-button {
           margin-top: 0.4rem;
         }
-        .form-actions-container{
-          display: flex; 
+        .form-actions-container {
+          display: flex;
           justify-content: space-between;
         }
-        .form-actions{
+        .form-actions {
           margin-top: 1rem;
         }
         sortable-list {
           width: 100%;
         }
-        
       </style>
       <div id="warning"></div>
       <!-- FORM ITEM LISTING -->
