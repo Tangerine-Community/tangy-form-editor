@@ -1,7 +1,7 @@
 {
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
-  "version": "6.13.5",
+  "version": "6.14.4",
   "scripts": {
     "start": "./node_modules/.bin/polymer serve",
     "build": "webpack",
@@ -15,20 +15,18 @@
     "@polymer/paper-tabs": "^3.1.0",
     "@polymer/paper-toggle-button": "^3.0.1",
     "@polymer/polymer": "^3.0.0",
-    "@polymer/sortable-list": "git://github.com/DrNiels/sortable-list.git#polymer-3",
     "dr-niels-paper-expansion-panel": "git://github.com/DrNiels/paper-expansion-panel.git#master",
     "file-list-component": "^1.4.0",
     "js-beautify": "^1.7.5",
     "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
-    "tangy-form": "4.11.5",
+    "tangy-form": "4.12.3",
     "tangy-translate": "^1.0.0"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "polymer-cli": "^1.9.2",
-    "wct-browser-legacy": "^1.0.0",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
   },

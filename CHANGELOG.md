@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v6.14.4
+- Upgrade tangy-form to v4.12.3 to fix https://github.com/Tangerine-Community/Tangerine/issues/2090
+
+## v6.14.3
+- Bump tangy-form to 4.12.2 for more support in building sortable list.
+
+## v6.14.2
+- Removed @polymer/sortable-list dependency, which is already provided by tangy-form.
+
+## v6.14.1
+- Bump tangy-form to v4.12.1.
+
+## v6.14.0
+- Bump tangy-form to v4.12.0. This enables sortable tangy-list which gives us sortable radiobutton and checkbox group options.
+
+## v6.13.6
+- Fix issue on some implementations causing form titles to not save when duplicate variables are detected.
+
 ## v6.13.5
 - Bumpt tangy-form to v4.11.5 to fix build errors related to underscore.
 

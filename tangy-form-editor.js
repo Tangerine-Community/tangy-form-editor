@@ -1,18 +1,18 @@
-import { html, PolymerElement } from "@polymer/polymer/polymer-element.js";
-import "@polymer/sortable-list/sortable-list.js";
-import "@polymer/paper-toggle-button/paper-toggle-button.js";
-import "@material/mwc-fab";
-import "@material/mwc-icon";
-import "juicy-ace-editor/juicy-ace-editor-module.js";
-import "dr-niels-paper-expansion-panel/paper-expansion-panel.js";
-import { tangyFormEditorReducer } from "./tangy-form-editor-reducer.js";
-import "./tangy-form-item-editor.js";
-import "./tangy-form-html-editor.js";
-import "./tangy-code.js";
-import "tangy-translate";
-import "file-list-component/file-list.js";
-import "file-list-component/file-list-http.js";
-import "file-list-component/file-list-select.js";
+import { html, PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@polymer/paper-toggle-button/paper-toggle-button.js'
+import '@material/mwc-fab'
+import "@material/mwc-icon"
+import 'juicy-ace-editor/juicy-ace-editor-module.js'
+import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
+import { tangyFormEditorReducer } from './tangy-form-editor-reducer.js'
+import './tangy-form-item-editor.js'
+import './tangy-form-html-editor.js'
+import './tangy-code.js'
+import 'tangy-translate'
+import 'file-list-component/file-list.js'
+import 'file-list-component/file-list-http.js'
+import 'file-list-component/file-list-select.js'
+
 
 //   <!-- Tangy Elements -->
 import "tangy-form/tangy-form.js";
@@ -545,6 +545,16 @@ class TangyFormEditor extends PolymerElement {
     if (typeof categoryEl !== 'undefined' && categoryEl !== null) {
       categoryValue = categoryEl.value
     }
+    this.store.dispatch({type: 'FORM_UPDATE', payload: {
+      title: this.shadowRoot.querySelector('#form-title').value,
+      exitClicks: this.$.container.querySelector('#exit-clicks-input').value,
+      fullscreen: this.$.container.querySelector('#fullscreen-checkbox').hasAttribute('checked'),
+      recordItemFirstOpenTimes: this.$.container.querySelector('#record-item-first-open-times-checkbox').hasAttribute('checked'),
+      onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      onSubmit: this.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      category: categoryValue
+    }})
     const duplicateVariableNames = this.findDuplicateVariableNames()
     if (duplicateVariableNames.length > 0) {
       this.store.dispatch({
@@ -559,16 +569,6 @@ class TangyFormEditor extends PolymerElement {
         `
       })
     }
-    this.store.dispatch({type: 'FORM_UPDATE', payload: {
-      title: this.shadowRoot.querySelector('#form-title').value,
-      exitClicks: this.$.container.querySelector('#exit-clicks-input').value,
-      fullscreen: this.$.container.querySelector('#fullscreen-checkbox').hasAttribute('checked'),
-      recordItemFirstOpenTimes: this.$.container.querySelector('#record-item-first-open-times-checkbox').hasAttribute('checked'),
-      onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
-      onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
-      onSubmit: this.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
-      category: categoryValue
-    }})
     this.dispatchChangeEvent()
     this.dispatchSaveEvent()
   }

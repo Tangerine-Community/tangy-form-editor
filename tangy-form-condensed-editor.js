@@ -1,30 +1,28 @@
-import { html, PolymerElement } from "@polymer/polymer/polymer-element.js";
-import "@polymer/sortable-list/sortable-list.js";
-import { Fab } from "@material/mwc-fab";
-import "./tangy-form-editor-add-input.js";
-import "./widget/tangy-text-widget.js";
-import "./widget/tangy-number-widget.js";
-import "./widget/tangy-eftouch-widget.js";
-import "./widget/tangy-toggle-widget.js";
-import "./widget/tangy-checkbox-widget.js";
-import "./widget/tangy-checkboxes-widget.js";
-import "./widget/tangy-timed-widget.js";
-import "./widget/tangy-radio-buttons-widget.js";
-import "./widget/tangy-select-widget.js";
-import "./widget/tangy-gps-widget.js";
-import "./widget/tangy-location-widget.js";
-import "./widget/tangy-date-widget.js";
-import "./widget/tangy-time-widget.js";
-import "./widget/tangy-image-widget.js";
-import "./widget/tangy-box-widget.js";
-import "./widget/tangy-template-widget.js";
-import "./widget/tangy-email-widget.js";
-import "./widget/tangy-qr-widget.js";
-import "./widget/tangy-consent-widget.js";
-import "./widget/tangy-untimed-grid-widget.js";
-import "./widget/tangy-acasi-widget.js";
-import "./widget/tangy-partial-date-widget.js";
-import "./widget/tangy-signature-widget.js";
+import {html, PolymerElement} from '@polymer/polymer/polymer-element.js'
+import {Fab} from '@material/mwc-fab'
+import './tangy-form-editor-add-input.js'
+import './widget/tangy-text-widget.js'
+import './widget/tangy-number-widget.js'
+import './widget/tangy-eftouch-widget.js'
+import './widget/tangy-checkbox-widget.js'
+import './widget/tangy-checkboxes-widget.js'
+import './widget/tangy-timed-widget.js'
+import './widget/tangy-radio-buttons-widget.js'
+import './widget/tangy-select-widget.js'
+import './widget/tangy-gps-widget.js'
+import './widget/tangy-location-widget.js'
+import './widget/tangy-date-widget.js'
+import './widget/tangy-time-widget.js'
+import './widget/tangy-image-widget.js'
+import './widget/tangy-box-widget.js'
+import './widget/tangy-template-widget.js'
+import './widget/tangy-email-widget.js'
+import './widget/tangy-qr-widget.js'
+import './widget/tangy-consent-widget.js'
+import './widget/tangy-untimed-grid-widget.js'
+import './widget/tangy-acasi-widget.js'
+import './widget/tangy-partial-date-widget.js'
+import './widget/tangy-signature-widget.js'
 
 /**
  * `tangy-form-item-editor`
