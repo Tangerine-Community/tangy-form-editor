@@ -97,7 +97,6 @@ class TangyBaseWidget extends PolymerElement {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
-      ...this.onSubmitUnimplementedAttributes(config, formEl),
     };
   }
 
@@ -133,7 +132,7 @@ class TangyBaseWidget extends PolymerElement {
   defaultConfigCoreAttributes() {
     return {
       name: "",
-      required: false,
+      required: true,
       disabled: false,
       hidden: false,
     };
@@ -158,6 +157,8 @@ class TangyBaseWidget extends PolymerElement {
     return {
       validIf: "",
       errorText: "",
+      warnIf: "",
+      warnText: "",
     };
   }
 
@@ -169,7 +170,11 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   defaultConfigUnimplementedAttributes() {
-    return {};
+    return {
+      dontSkipIf: "",
+      discrepancyIf: "",
+      discrepancyText: "",
+    };
   }
 
   // ****************************  Begin Upcast Attributes ****************************
@@ -184,13 +189,9 @@ class TangyBaseWidget extends PolymerElement {
 
   upcastQuestionAttributes(config, element) {
     return {
-      questionNumber: element.hasAttribute("question-number")
-        ? element.getAttribute("question-number")
-        : "",
+      questionNumber: element.hasAttribute("question-number") ? element.getAttribute("question-number") : "",
       label: element.hasAttribute("label") ? element.getAttribute("label") : "",
-      hintText: element.hasAttribute("hint-text")
-        ? element.getAttribute("hint-text")
-        : "",
+      hintText: element.hasAttribute("hint-text") ? element.getAttribute("hint-text") : "",
     };
   }
 
@@ -202,20 +203,16 @@ class TangyBaseWidget extends PolymerElement {
         ? element.getAttribute("tangy-if")
         : ""
       ).replace(/&quot;/g, '"'),
-      skipIf: element.hasAttribute("skip-if")
-        ? element.getAttribute("skip-if").replace(/&quot;/g, '"')
-        : "",
+      skipIf: element.hasAttribute("skip-if")? element.getAttribute("skip-if").replace(/&quot;/g, '"') : "",
     };
   }
 
   upcastValidationAttributes(config, element) {
     return {
-      validIf: element.hasAttribute("valid-if")
-        ? element.getAttribute("valid-if").replace(/&quot;/g, '"')
-        : "",
-      errorText: element.hasAttribute("error-text")
-        ? element.getAttribute("error-text")
-        : "",
+      validIf: element.hasAttribute("valid-if") ? element.getAttribute("valid-if").replace(/&quot;/g, '"') : "",
+      errorText: element.hasAttribute("error-text") ? element.getAttribute("error-text") : "",
+      warnIf: element.hasAttribute("warn-if") ? element.getAttribute("warn-if").replace(/&quot;/g, '"') : "",
+      warnText: element.hasAttribute("warn-text") ? element.getAttribute("warn-text") : "",
     };
   }
 
@@ -227,7 +224,11 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   upcastUnimplementedAttributes(config, element) {
-    return {};
+    return {
+      dontSkipIf: element.hasAttribute("dont-skip-if") ? element.getAttribute("dont-skip-if").replace(/&quot;/g, '"') : "",
+      discrepancyIf: element.hasAttribute("discrepancy-if") ? element.getAttribute("discrepancy-if").replace(/&quot;/g, '"') : "",
+      discrepancyText: element.hasAttribute("discrepancy-text") ? element.getAttribute("discrepancy-text") : "",
+    };
   }
 
   // ****************************  Begin Downcast Attributes ****************************
@@ -250,27 +251,17 @@ class TangyBaseWidget extends PolymerElement {
 
   downcastConditionalAttributes(config) {
     return `
-      ${
-        config.showIf === ""
-          ? ""
-          : `tangy-if="${config.showIf.replace(/"/g, "&quot;")}"`
-      }
-      ${
-        config.skipIf === ""
-          ? ""
-          : `skip-if="${config.skipIf.replace(/"/g, "&quot;")}"`
-      }
+      ${ config.showIf === "" ? "" : `tangy-if="${config.showIf.replace(/"/g, "&quot;")}"` }
+      ${ config.skipIf === "" ? "" : `skip-if="${config.skipIf.replace(/"/g, "&quot;")}"` }
     `;
   }
 
   downcastValidationAttributes(config) {
     return `
-      ${
-        config.validIf === ""
-          ? ""
-          : `valid-if="${config.validIf.replace(/"/g, "&quot;")}"`
-      }
+      ${ config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, "&quot;")}"` }
       error-text="${config.errorText}"
+      ${ config.warnIf === "" ? "" : `warn-if="${config.warnIf.replace(/"/g, "&quot;")}"` }
+      warn-text="${config.warnText}"
     `;
   }
 
@@ -282,7 +273,11 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   downcastUnimplementedAttributes(config) {
-    return ``;
+    return `
+      ${ config.dontSkipIf === "" ? "" : `dont-skip-if="${config.dontSkipIf.replace(/"/g, "&quot;")}"` }
+      ${ config.discrepancyIf === "" ? "" : `discrepancy-if="${config.discrepancyIf.replace(/"/g, "&quot;")}"` }
+      ${ config.discrepancyText === "" ? "" : `disprepancy-text="${config.discrepancyText}"` }
+    `;
   }
 
   // ****************************  Begin Render Info Attributes ****************************
@@ -291,7 +286,7 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   // ****************************  Begin Render Edit Attributes ****************************
-  renderEditCoreAttributes(config) {
+  renderEditCoreAttributes( config, showRequired = true, showHidden = true, showDisabled = true ) {
     return `
       <div class="grid-container">
 
@@ -304,26 +299,45 @@ class TangyBaseWidget extends PolymerElement {
               inner-label="Variable name"
               value="${config.name}"
               hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), and numbers (0-9)."
+              error-text="You must define a variable name"
               required>
             </tangy-input>
           </div>
           <div class="three columns">
             <h3>Properties</h3>
-            <tangy-checkbox
-              name="required" 
-              ${config.required ? 'value="on"' : ""}>
-              Required
-            </tangy-checkbox>
-            <tangy-checkbox
-              name="disabled" 
-              ${config.disabled ? 'value="on"' : ""}>
-              Disabled
-            </tangy-checkbox>
-            <tangy-checkbox
-              name="hidden"
-              ${config.hidden ? 'value="on"' : ""}>
-              Hidden
-            </tangy-checkbox>
+            ${
+              showRequired
+                ? `
+                <tangy-toggle
+                  name="required" 
+                  ${config.required ? 'value="on"' : ""}>
+                  Required
+                </tangy-toggle>
+                `
+                : ""
+            }
+            ${
+              showHidden
+                ? `
+                <tangy-toggle
+                  name="hidden"
+                  ${config.hidden ? 'value="on"' : ""}>
+                  Hidden
+                </tangy-toggle>
+                `
+                : ""
+            }
+            ${
+              showDisabled
+                ? `
+                <tangy-toggle
+                  name="disabled" 
+                  ${config.disabled ? 'value="on"' : ""}>
+                  Disabled
+                </tangy-toggle>
+                `
+                : ""
+            }
           </div>
         </div>
       </div>
@@ -375,6 +389,22 @@ class TangyBaseWidget extends PolymerElement {
 
   renderEditValidationAttributes(config) {
     return `
+      <h3>Warning Validation</h3>
+      <p>Use warning validation if you would like to alert the user to a possible data problem but <strong>would not</strong> like to stop them from proceeding with the form.</p>
+      <tangy-input 
+        name="warn_if"
+        inner-label="Warn if"
+        hint-text="Enter any conditional validation logic. (e.g. input.value.length > 5)"
+        value="${config.warnIf.replace(/"/g, "&quot;")}">
+      </tangy-input>
+      <tangy-input
+        name="warn-text"
+        inner-label="Warning text"
+        value="${config.warnText}">
+      </tangy-input>
+
+      <h3>Error Validation</h3>
+      <p>Use error validation if you would like to check for serious data problems. The user <strong>will not</strong> be able to proceed with the form until these errors are corrected.</p>
       <tangy-input 
         name="valid_if"
         inner-label="Valid if"
@@ -408,28 +438,32 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   // ****************************  Begin On Submit Attributes ****************************
-  onSubmitCoreAttributes(config, formEl) {
+  onSubmitCoreAttributes( config, formEl, showRequired = true, showHidden = true, showDisabled = true ) {
     return {
       name: formEl.response.items[0].inputs.find(
         (input) => input.name === "name"
       ).value,
-      required:
-        formEl.response.items[0].inputs.find(
-          (input) => input.name === "required"
-        ).value === "on"
+      required: showRequired
+        ? formEl.response.items[0].inputs.find(
+            (input) => input.name === "required"
+          ).value === "on"
           ? true
-          : false,
-      hidden:
-        formEl.response.items[0].inputs.find((input) => input.name === "hidden")
-          .value === "on"
+          : false
+        : false,
+      hidden: showHidden
+        ? formEl.response.items[0].inputs.find(
+            (input) => input.name === "hidden"
+          ).value === "on"
           ? true
-          : false,
-      disabled:
-        formEl.response.items[0].inputs.find(
-          (input) => input.name === "disabled"
-        ).value === "on"
+          : false
+        : false,
+      disabled: showDisabled
+        ? formEl.response.items[0].inputs.find(
+            (input) => input.name === "disabled"
+          ).value === "on"
           ? true
-          : false,
+          : false
+        : false,
     };
   }
 
@@ -468,6 +502,12 @@ class TangyBaseWidget extends PolymerElement {
       errorText: formEl.response.items[0].inputs.find(
         (input) => input.name === "error-text"
       ).value,
+      warnIf: formEl.response.items[0].inputs.find(
+        (input) => input.name === "warn_if"
+      ).value,
+      warnText: formEl.response.items[0].inputs.find(
+        (input) => input.name === "warn-text"
+      ).value,
     };
   }
 
@@ -483,7 +523,11 @@ class TangyBaseWidget extends PolymerElement {
   }
 
   onSubmitUnimplementedAttributes(config, formEl) {
-    return {};
+    return {
+      dontSkipIf: config.dontSkipIf ? config.dontSkipIf : "",
+      discrepancyIf: config.discrepancyIf ? config.discrepancyIf : "",
+      discrepancyText: config.discrepancyText ? config.discrepancyText : "",
+    };
   }
 
   // @Deprecated
@@ -601,8 +645,8 @@ class TangyBaseWidget extends PolymerElement {
           padding: 0px 10px;
         }
 
-        .m-y-25 {
-          margin: 0;
+        tangy-input {
+          --tangy-form-widget--margin: 0;
         }
 
         /* Grid

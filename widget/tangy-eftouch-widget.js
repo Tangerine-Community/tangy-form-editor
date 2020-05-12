@@ -13,25 +13,29 @@ class TangyEftouchWidget extends TangyBaseWidget {
 
   get defaultConfig() {
     return {
-      ...this.defaultConfigCommonAttributes(),
-      label: '',
-      optionsMarkup: '',
-      openSound: '',
-      inputSound: '',
-      transitionSound: '',
-      transitionDelay: '',
-      transitionMessage: '',
-      warningMessage: '',
-      warningTime: '',
-      timeLimit: '',
+      ...this.defaultConfigCoreAttributes(),
+      ...this.defaultConfigConditionalAttributes(),
+      ...this.defaultConfigValidationAttributes(),
+      ...this.defaultConfigAdvancedAttributes(),
+      ...this.defaultConfigUnimplementedAttributes(),
+      label: "",
+      optionsMarkup: "",
+      openSound: "",
+      inputSound: "",
+      transitionSound: "",
+      transitionDelay: "",
+      transitionMessage: "",
+      warningMessage: "",
+      warningTime: "",
+      timeLimit: "",
       goNextOnSelection: false,
       goNextOnTimeLimit: false,
-      incorrectMessage: '',
-      multiSelect: '',
+      incorrectMessage: "",
+      multiSelect: "",
       requiredCorrect: false,
       requiredAll: false,
       ifIncorrectThenHighlightCorrect: false,
-      disableAfterSelection: false
+      disableAfterSelection: false,
     };
   }
 
@@ -39,7 +43,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
     return {
       ...config,
       ...element.getProps(),
-      ...this.upcastCommonAttributes(config, element),
+      ...this.upcastCoreAttributes(config, element),
+      ...this.upcastConditionalAttributes(config, element),
+      ...this.upcastValidationAttributes(config, element),
+      ...this.upcastAdvancedAttributes(config, element),
+      ...this.upcastUnimplementedAttributes(config, element),
       ...{
         multiSelect: element.hasAttribute('multi-select') ? element.getAttribute('multi-select') : '',
         requiredCorrect: element.hasAttribute('required-correct'),
@@ -58,7 +66,11 @@ class TangyEftouchWidget extends TangyBaseWidget {
   downcast(config) {
     return `
       <tangy-eftouch
-        ${this.downcastCommonAttributes(config)}
+        ${this.downcastCoreAttributes(config)}
+        ${this.downcastConditionalAttributes(config)}
+        ${this.downcastValidationAttributes(config)}
+        ${this.downcastAdvancedAttributes(config)}
+        ${this.downcastUnimplementedAttributes(config)}
         label="${config.label}"
         open-sound="${config.openSound}"
         input-sound="${config.inputSound}"
@@ -92,102 +104,126 @@ class TangyEftouchWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
+    const action = config.name ? "Edit" : "Add";
     return `
+    <h2>${action} EF Touch</h2>
     <tangy-form id="tangy-eftouch">
-      <tangy-form-item id="tangy-eftouch">
-        <template type="tangy-form-item">
+      <tangy-form-item>
         <style>
-        label {
-          margin: 15px 0px 5px 15px;
-          display: block;
-          width: 100%;
-          color: #333;
-          font-weight: heavy;
-          font-size: 1.2em;
-        }
-        file-list-select {
-          margin: 0px 0px 0px 10px;
-        }
+          label {
+            margin: 15px 0px 5px 15px;
+            display: block;
+            width: 100%;
+            color: #333;
+            font-weight: heavy;
+            font-size: 1.2em;
+          }
+          file-list-select {
+            margin: 0px 0px 0px 10px;
+          }
         </style>
-          ${this.renderEditCommonAttributes(config)}
-          <tangy-input
-            name="label"
-            inner-label=' ' label="Label"
-            value="${
-              config.label
-            }">
-          </tangy-input>
-          <label for="open-sound">Open sound</label>
-          <file-list-select name="open-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
-            config.openSound ? config.openSound : ''
-          }"></file-list-select>
-          <label for="input-sound">Input sound</label>
-          <file-list-select name="input-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
-            config.inputSound ? config.inputSound : ''
-          }"></file-list-select>
-          <label for="transition-sound">Transition sounds</label>
-          <file-list-select name="transition-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
-            config.transitionSound ? config.transitionSound : ''
-          }"></file-list-select>
-          <tangy-input name="transition-delay" inner-label=' ' label="Transition delay" value="${
-            config.transitionDelay
-          }" type="number"></tangy-input>
-          <tangy-input name="transition-message" inner-label=' ' label="Transition message" value="${
-            config.transitionMessage
-          }"></tangy-input>
-          <tangy-input name="warning-time" inner-label=' ' label="Warning time" value="${
-            config.warningTime
-          }"></tangy-input>
-          <tangy-input name="warning-message" inner-label=' ' label="Warning message" value="${
-            config.warningMessage
-          }"></tangy-input>
-          <tangy-input name="incorrect-message" inner-label=' ' label="Incorrect message" value="${
-            config.incorrectMessage
-          }"></tangy-input>
-          <tangy-input name="time-limit" inner-label=' ' label="Time limit" value="${
-            config.timeLimit
-          }"></tangy-input>
-          <tangy-input 
-            name="multi-select" 
-            inner-label=' ' 
-            label="Multi select" 
-            value="${config.multiSelect}"
-            hint-text="Enter the number of options the user is allowed to select."
-          ></tangy-input>
-          <tangy-checkbox 
-            name="go-next-on-selection" 
-            ${config.goNextOnSelection ? 'value="on"' : ''}
-            hint-text="If used with multi-select, the transition will occur when the number of allowed selections is reached."
-          >
-            Go next on selection
-          </tangy-checkbox>
-          <tangy-checkbox name="go-next-on-time-limit" ${
-            config.goNextOnTimeLimit ? 'value="on"' : ''
-          }>Go next on time limit</tangy-checkbox>
-          <tangy-checkbox name="required-correct" ${
-            config.requiredCorrect ? 'value="on"' : ''
-          }>Required correct</tangy-checkbox>
-          <tangy-checkbox 
-            name="required-all"
-            ${config.requiredAll ? 'value="on"' : ''}
-            hint-text="You may need to use this when using multi-select. The regular required attribute when used with multi-select will only require just one value selected. This attribute however will require the number of selections stated in your multi-select setting."
-          }>
-            Required all
-          </tangy-checkbox>
- 
-          <tangy-checkbox name="if-incorrect-then-highlight-correct" ${
-            config.ifIncorrectThenHighlightCorrect ? 'value="on"' : ''
-          }>If incorrect selection, then highlight correct answers.</tangy-checkbox>
-          <tangy-checkbox 
-            name="disable-after-selection"
-            ${config.disableAfterSelection ? 'value="on"' : ''}
-            hint-text="When used with multi-select, the number of selections are still limited by the setting on multi-select, but changing selection is not allowed."
-          >
-            Disable after selection
-          </tangy-checkbox>
-          <tangy-eftouch-widget-layout files-endpoint="${this.getAttribute('files-endpoint')}" name="options-markup">
-            ${config.optionsMarkup}
-          </tangy-eftouch-widget-layout>
+        <template>
+          <paper-tabs selected="0">
+              <paper-tab>Question</paper-tab>
+              <paper-tab>Conditional Display</paper-tab>
+              <paper-tab>Validation</paper-tab>
+              <paper-tab>Advanced</paper-tab>
+          </paper-tabs>
+          <iron-pages selected="">
+              <div>
+                ${this.renderEditCoreAttributes(config)}
+                <tangy-input
+                  name="label"
+                  inner-label=' ' label="Label"
+                  value="${
+                    config.label
+                  }">
+                </tangy-input>
+                <label for="open-sound">Open sound</label>
+                <file-list-select name="open-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
+                  config.openSound ? config.openSound : ''
+                }"></file-list-select>
+                <label for="input-sound">Input sound</label>
+                <file-list-select name="input-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
+                  config.inputSound ? config.inputSound : ''
+                }"></file-list-select>
+                <label for="transition-sound">Transition sounds</label>
+                <file-list-select name="transition-sound" endpoint="${this.getAttribute('files-endpoint')}" value="${
+                  config.transitionSound ? config.transitionSound : ''
+                }"></file-list-select>
+                <tangy-input name="transition-delay" inner-label=' ' label="Transition delay" value="${
+                  config.transitionDelay
+                }" type="number"></tangy-input>
+                <tangy-input name="transition-message" inner-label=' ' label="Transition message" value="${
+                  config.transitionMessage
+                }"></tangy-input>
+                <tangy-input name="warning-time" inner-label=' ' label="Warning time" value="${
+                  config.warningTime
+                }"></tangy-input>
+                <tangy-input name="warning-message" inner-label=' ' label="Warning message" value="${
+                  config.warningMessage
+                }"></tangy-input>
+                <tangy-input name="incorrect-message" inner-label=' ' label="Incorrect message" value="${
+                  config.incorrectMessage
+                }"></tangy-input>
+                <tangy-input name="time-limit" inner-label=' ' label="Time limit" value="${
+                  config.timeLimit
+                }"></tangy-input>
+                <tangy-input 
+                  name="multi-select" 
+                  inner-label=' ' 
+                  label="Multi select" 
+                  value="${config.multiSelect}"
+                  hint-text="Enter the number of options the user is allowed to select."
+                ></tangy-input>
+                <tangy-checkbox 
+                  name="go-next-on-selection" 
+                  ${config.goNextOnSelection ? 'value="on"' : ''}
+                  hint-text="If used with multi-select, the transition will occur when the number of allowed selections is reached."
+                >
+                  Go next on selection
+                </tangy-checkbox>
+                <tangy-checkbox name="go-next-on-time-limit" ${
+                  config.goNextOnTimeLimit ? 'value="on"' : ''
+                }>Go next on time limit</tangy-checkbox>
+                <tangy-checkbox name="required-correct" ${
+                  config.requiredCorrect ? 'value="on"' : ''
+                }>Required correct</tangy-checkbox>
+                <tangy-checkbox 
+                  name="required-all"
+                  ${config.requiredAll ? 'value="on"' : ''}
+                  hint-text="You may need to use this when using multi-select. The regular required attribute when used with multi-select will only require just one value selected. This attribute however will require the number of selections stated in your multi-select setting."
+                }>
+                  Required all
+                </tangy-checkbox>
+       
+                <tangy-checkbox name="if-incorrect-then-highlight-correct" ${
+                  config.ifIncorrectThenHighlightCorrect ? 'value="on"' : ''
+                }>If incorrect selection, then highlight correct answers.</tangy-checkbox>
+                <tangy-checkbox 
+                  name="disable-after-selection"
+                  ${config.disableAfterSelection ? 'value="on"' : ''}
+                  hint-text="When used with multi-select, the number of selections are still limited by the setting on multi-select, but changing selection is not allowed."
+                >
+                  Disable after selection
+                </tangy-checkbox>
+                <tangy-eftouch-widget-layout files-endpoint="${this.getAttribute('files-endpoint')}" name="options-markup">
+                  ${config.optionsMarkup}
+                </tangy-eftouch-widget-layout>
+              </div>
+              <div>
+                ${this.renderEditConditionalAttributes(config)}
+              </div>
+              <div>
+                ${this.renderEditValidationAttributes(config)}
+              </div>
+              <div>
+                ${this.renderEditAdvancedAttributes(config)}
+              </div>
+          </iron-pages>
+        </template>
+      </tangy-form-item>
+    </tangy-form>
         </template>
       </tangy-form-item>
     </tangy-form>
@@ -244,7 +280,10 @@ class TangyEftouchWidget extends TangyBaseWidget {
   onSubmit(config, formEl) {
     return {
       ...config,
-      ...this.onSubmitCommonAttributes(config, formEl),
+      ...this.onSubmitCoreAttributes(config, formEl),
+      ...this.onSubmitConditionalAttributes(config, formEl),
+      ...this.onSubmitValidationAttributes(config, formEl),
+      ...this.onSubmitAdvancedAttributes(config, formEl),
       label: formEl.values.label,
       inputSound: formEl.querySelector('tangy-form-item').querySelector('[name=input-sound]').value,
       transitionDelay: formEl.values['transition-delay'],

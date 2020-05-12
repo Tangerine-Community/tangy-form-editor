@@ -13,7 +13,11 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
 
   get defaultConfig() {
     return {
-      ...this.defaultConfigCommonAttributes(),
+      ...this.defaultConfigCoreAttributes(),
+      ...this.defaultConfigConditionalAttributes(),
+      ...this.defaultConfigValidationAttributes(),
+      ...this.defaultConfigAdvancedAttributes(),
+      ...this.defaultConfigUnimplementedAttributes(),
       hintText: '',
       columns: 4,
       options: [],
@@ -26,6 +30,11 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
   upcast(config, element) {
     return {
       ...config,
+      ...this.upcastCoreAttributes(config, element),
+      ...this.upcastConditionalAttributes(config, element),
+      ...this.upcastValidationAttributes(config, element),
+      ...this.upcastAdvancedAttributes(config, element),
+      ...this.upcastUnimplementedAttributes(config, element),
       ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
@@ -33,20 +42,22 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
           label: option.innerHTML
         };
       }),
-      ...this.upcastCommonAttributes(config, element)
     };
   }
 
   downcast(config) {
     return `
       <tangy-untimed-grid
-        ${this.downcastCommonAttributes(config)}
+        ${this.downcastCoreAttributes(config)}
+        ${this.downcastConditionalAttributes(config)}
+        ${this.downcastValidationAttributes(config)}
+        ${this.downcastAdvancedAttributes(config)}
+        ${this.downcastUnimplementedAttributes(config)}
         hint-text="${config.hintText}"
         columns="${config.columns}"
         ${config.rowMarkers ? 'row-markers' : ''}
         ${config.optionFontSize ? `option-font-size="${config.optionFontSize}"` : ``}
         ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
-
       >
       ${config.options
         .map(
@@ -92,31 +103,52 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
+    const action = config.name ? "Edit" : "Add";
     return `
+    <h2>${action} Untimed Timed Grid</h2>
     <tangy-form id="tangy-untimed-grid">
-      <tangy-form-item id="tangy-untimed-grid">
-        <template type="tangy-form-item">
-          ${this.renderEditCommonAttributes(config)}
-          <tangy-input name="columns" type="number" inner-label="Number of columns" value="${
-            config.columns
-          }"></tangy-input>
-          <tangy-input name="hintText" inner-label="Hint Text" value="${
-            config.hintText
-          }"></tangy-input>
-          <tangy-input name="autoStop" inner-label="Auto Stop" value="${
-            config.autoStop ? config.autoStop : ''
-          }"></tangy-input>
-          <tangy-checkbox name="rowMarkers" ${
-            config.rowMarkers ? 'value="on"' : ''
-          }>Mark entire rows</tangy-checkbox>
-         <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
-          config.optionFontSize
-          }"></tangy-input>
-          <tangy-input name="options"
-            hint-text="Enter the options to be displayed for the grid separated by spaces."
-            inner-label="Options (Each option separated by a space)" value="${config.options
-            .map(option => `${option.label}`)
-            .join(' ')}"></tangy-input>
+      <tangy-form-item>
+        <template>
+          <paper-tabs selected="0">
+              <paper-tab>Question</paper-tab>
+              <paper-tab>Conditional Display</paper-tab>
+              <paper-tab>Validation</paper-tab>
+              <paper-tab>Advanced</paper-tab>
+          </paper-tabs>
+          <iron-pages selected="">
+              <div>
+                ${this.renderEditCoreAttributes(config)}
+                <tangy-input name="columns" type="number" inner-label="Number of columns" value="${
+                  config.columns
+                }"></tangy-input>
+                <tangy-input name="hintText" inner-label="Hint Text" value="${
+                  config.hintText
+                }"></tangy-input>
+                <tangy-input name="autoStop" inner-label="Auto Stop" value="${
+                  config.autoStop ? config.autoStop : ''
+                }"></tangy-input>
+                <tangy-checkbox name="rowMarkers" ${
+                  config.rowMarkers ? 'value="on"' : ''
+                }>Mark entire rows</tangy-checkbox>
+               <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
+                config.optionFontSize
+                }"></tangy-input>
+                <tangy-input name="options"
+                  hint-text="Enter the options to be displayed for the grid separated by spaces."
+                  inner-label="Options (Each option separated by a space)" value="${config.options
+                  .map(option => `${option.label}`)
+                  .join(' ')}"></tangy-input>
+              </div>
+              <div>
+                ${this.renderEditConditionalAttributes(config)}
+              </div>
+              <div>
+                ${this.renderEditValidationAttributes(config)}
+              </div>
+              <div>
+                ${this.renderEditAdvancedAttributes(config)}
+              </div>
+          </iron-pages>
         </template>
       </tangy-form-item>
     </tangy-form>
@@ -126,11 +158,14 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
   onSubmit(config, formEl) {
     return {
       ...config,
-      ...this.onSubmitCommonAttributes(config, formEl),
+      ...this.onSubmitCoreAttributes(config, formEl),
       autoStop: formEl.values.autoStop,
       hintText: formEl.values.hintText,
       columns: formEl.values.columns,
       rowMarkers: formEl.values.rowMarkers === 'on' ? true : false,
+      ...this.onSubmitConditionalAttributes(config, formEl),
+      ...this.onSubmitValidationAttributes(config, formEl),
+      ...this.onSubmitAdvancedAttributes(config, formEl),
       optionFontSize: formEl.values.optionFontSize,
       options: formEl.values.options.split(' ').map((item, i) => {
         return { value: i+1, label: item };

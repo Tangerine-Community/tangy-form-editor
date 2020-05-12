@@ -13,15 +13,16 @@ class TangyTimedWidget extends TangyBaseWidget {
 
   get defaultConfig() {
     return {
-      name: '',
+      ...this.defaultConfigCoreAttributes(),
+      ...this.defaultConfigConditionalAttributes(),
+      ...this.defaultConfigValidationAttributes(),
+      ...this.defaultConfigAdvancedAttributes(),
+      ...this.defaultConfigUnimplementedAttributes(),
       hintText: '',
       autoStop: '',
       columns: 4,
       options: [],
       showLabels: true,
-      required: false,
-      disabled: false,
-      hidden: false,
       rowMarkers: false,
       captureItemAt: '',
       tangyIf: '',
@@ -34,6 +35,11 @@ class TangyTimedWidget extends TangyBaseWidget {
     // @TODO We have to do that final thing for tangyIf because it's not declared a prop in TangyTimed.props thus won't get picked up by TangyTimed.getProps().
     return {
       ...config,
+      ...this.upcastCoreAttributes(config, element),
+      ...this.upcastConditionalAttributes(config, element),
+      ...this.upcastValidationAttributes(config, element),
+      ...this.upcastAdvancedAttributes(config, element),
+      ...this.upcastUnimplementedAttributes(config, element),
       ...element.getProps(),
       options: [...element.querySelectorAll('option')].map(option => {
         return {
@@ -42,31 +48,24 @@ class TangyTimedWidget extends TangyBaseWidget {
         };
       }),
       showLabels: element.hasAttribute('show-labels'),
-      tangyIf: element.hasAttribute('tangy-if')
-        ? element.getAttribute('tangy-if').replace(/&quot;/g, '"')
-        : '',
-      validIf: element.hasAttribute('valid-if')
-        ? element.getAttribute('valid-if').replace(/&quot;/g, '"')
-        : ''
     };
   }
 
   downcast(config) {
     return `
       <tangy-timed
-        name="${config.name}"
         hint-text="${config.hintText}"
         columns="${config.columns}"
+        ${this.downcastCoreAttributes(config)}
+        ${this.downcastConditionalAttributes(config)}
+        ${this.downcastValidationAttributes(config)}
+        ${this.downcastAdvancedAttributes(config)}
+        ${this.downcastUnimplementedAttributes(config)}
         ${config.duration ? `duration="${config.duration}"` : ``}
         ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
         ${config.captureItemAt ? `capture-item-at="${config.captureItemAt}"` : ``}
         ${config.rowMarkers ? 'row-markers' : ''}
         ${config.showLabels ? 'show-labels' : ''}
-        ${config.required ? 'required' : ''}
-        ${config.disabled ? 'disabled' : ''}
-        ${config.hidden ? 'hidden' : ''}
-        ${config.tangyIf === "" ? "" : `tangy-if="${config.tangyIf.replace(/"/g, '&quot;')}"`}
-        ${config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, '&quot;')}"`}
         ${config.optionFontSize ? `option-font-size="${config.optionFontSize}"` : ``}
       >
       ${config.options
@@ -115,55 +114,61 @@ class TangyTimedWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
-    return `<h2>Add Timed Grid</h2>
+    const action = config.name ? "Edit" : "Add";
+    return `
+    <h2>${action} Timed Grid</h2>
     <tangy-form id="tangy-timed">
-      <tangy-form-item id="tangy-timed">
-        <template type="tangy-form-item">
-          <tangy-input name="name" valid-if="input.value.match(/^[a-zA-Z]{1,}[a-zA-Z0-9\_]{1,}$/)" 
-            hint-text="Enter the variable name that you would like displayed on all data outputs. Valid variable names start with a letter (a-z) with proceeding characters consisting of letters (a-z), underscore (_), and numbers (0-9)."
-            inner-label="Variable name" value="${
-              config.name
-            }" required></tangy-input>
-          <tangy-input name="columns" type="number" inner-label="Number of columns" value="${
-            config.columns
-          }"></tangy-input>
-          <tangy-input name="hintText" inner-label="Hint Text" value="${
-            config.hintText
-          }"></tangy-input>
-          <tangy-input name="captureItemAt" inner-label="Capture Item at" hint-text="The number of seconds to ask data collector what item was last attempted" value="${
-            config.captureItemAt ? config.captureItemAt : ''
-          }"></tangy-input>
-          <tangy-input name="autoStop" inner-label="Auto Stop" value="${
-            config.autoStop ? config.autoStop : ''
-          }"></tangy-input>
-          <tangy-input name="tangy_if" inner-label="Show if" value="${config.tangyIf.replace(/"/g, '&quot;')}"></tangy-input>
-          <tangy-input name="valid_if" inner-label="Valid if" value="${config.validIf.replace(/"/g, '&quot;')}"></tangy-input>
-          <tangy-checkbox name="showLabels" ${
-            config.showLabels ? 'value="on"' : ''
-          }>Show text labels on the control buttons</tangy-checkbox>
-          <tangy-checkbox name="rowMarkers" ${
-            config.rowMarkers ? 'value="on"' : ''
-          }>Mark entire rows</tangy-checkbox>
-          <tangy-checkbox name="required" ${
-            config.required ? 'value="on"' : ''
-          }>Required</tangy-checkbox>
-          <tangy-checkbox name="disabled" ${
-            config.disabled ? 'value="on"' : ''
-          }>Disabled</tangy-checkbox>
-          <tangy-checkbox name="hidden" ${
-            config.hidden ? 'value="on"' : ''
-          }>Hidden</tangy-checkbox>
-          <tangy-input name="duration" hint-text="Enter the time limit for this grid." inner-label="Duration in seconds" value="${
-            config.duration
-          }"></tangy-input>
-          <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
-            config.optionFontSize
-          }"></tangy-input>
-          <tangy-input name="options"
-            hint-text="Enter the options to be displayed for the grid separated by spaces."
-            inner-label="Options (Each option separated by a space)" value="${config.options
-            .map(option => `${option.label}`)
-            .join(' ')}"></tangy-input>
+      <tangy-form-item>
+        <template>
+          <paper-tabs selected="0">
+              <paper-tab>Question</paper-tab>
+              <paper-tab>Conditional Display</paper-tab>
+              <paper-tab>Validation</paper-tab>
+              <paper-tab>Advanced</paper-tab>
+          </paper-tabs>
+          <iron-pages selected="">
+              <div>
+                ${this.renderEditCoreAttributes(config)}
+                <tangy-input name="columns" type="number" inner-label="Number of columns" value="${
+                  config.columns
+                }"></tangy-input>
+                <tangy-input name="hintText" inner-label="Hint Text" value="${
+                  config.hintText
+                }"></tangy-input>
+                <tangy-input name="captureItemAt" inner-label="Capture Item at" hint-text="The number of seconds to ask data collector what item was last attempted" value="${
+                  config.captureItemAt ? config.captureItemAt : ''
+                }"></tangy-input>
+                <tangy-input name="autoStop" inner-label="Auto Stop" value="${
+                  config.autoStop ? config.autoStop : ''
+                }"></tangy-input>
+                <tangy-toggle name="showLabels" ${
+                  config.showLabels ? 'value="on"' : ''
+                }>Show text labels on the control buttons</tangy-toggle>
+                <tangy-toggle name="rowMarkers" ${
+                  config.rowMarkers ? 'value="on"' : ''
+                }>Mark entire rows</tangy-toggle>
+                <tangy-input name="duration" hint-text="Enter the time limit for this grid." inner-label="Duration in seconds" value="${
+                  config.duration
+                }"></tangy-input>
+                <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
+                  config.optionFontSize
+                }"></tangy-input>
+                <tangy-input name="options"
+                  hint-text="Enter the options to be displayed for the grid separated by spaces."
+                  inner-label="Options (Each option separated by a space)" value="${config.options
+                  .map(option => `${option.label}`)
+                  .join(' ')}"></tangy-input>
+              </div>
+              <div>
+                ${this.renderEditConditionalAttributes(config)}
+              </div>
+              <div>
+                ${this.renderEditValidationAttributes(config)}
+              </div>
+              <div>
+                ${this.renderEditAdvancedAttributes(config)}
+              </div>
+          </iron-pages>
         </template>
       </tangy-form-item>
     </tangy-form>
@@ -196,7 +201,7 @@ class TangyTimedWidget extends TangyBaseWidget {
   onSubmit(config, formEl) {
     return {
       ...config,
-      name: formEl.values.name,
+      ...this.onSubmitCoreAttributes(config, formEl),
       autoStop: formEl.values.autoStop,
       captureItemAt: formEl.values.captureItemAt,
       duration: formEl.values.duration,
@@ -204,11 +209,9 @@ class TangyTimedWidget extends TangyBaseWidget {
       columns: formEl.values.columns,
       rowMarkers: formEl.values.rowMarkers === 'on' ? true : false,
       showLabels: formEl.values.showLabels === 'on' ? true : false,
-      required: formEl.values.required === 'on' ? true : false,
-      hidden: formEl.values.hidden === 'on' ? true : false,
-      disabled: formEl.values.disabled === 'on' ? true : false,
-      tangyIf: formEl.values.tangy_if,
-      validIf: formEl.values.valid_if,
+      ...this.onSubmitConditionalAttributes(config, formEl),
+      ...this.onSubmitValidationAttributes(config, formEl),
+      ...this.onSubmitAdvancedAttributes(config, formEl),
       optionFontSize: formEl.values.optionFontSize,
       options: formEl.values.options.split(' ').map((item, i) => {
         return { value: i+1, label: item };
