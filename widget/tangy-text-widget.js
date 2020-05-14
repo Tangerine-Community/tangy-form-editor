@@ -90,7 +90,7 @@ class TangyTextWidget extends TangyBaseWidget {
                 <paper-tab>Validation</paper-tab>
                 <paper-tab>Advanced</paper-tab>
             </paper-tabs>
-            <iron-pages selected="">
+            <iron-pages selected="0">
                 <div>
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
