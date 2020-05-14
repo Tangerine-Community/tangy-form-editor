@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v6.15.2
+- Bump tangy-form to v4.14.1. 
+
 ## v6.15.1
 - Bump tangy-form to v4.13.1. 
 
