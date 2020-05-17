@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v6.15.2
+- Bump tangy-form to v4.14.1. 
+
+## v6.15.1
+- Bump tangy-form to v4.13.1. 
+
+## v6.15.0
+- Upgrade tangy-form to v4.13.0.
+
 ## v6.14.4
 - Upgrade tangy-form to v4.12.3 to fix https://github.com/Tangerine-Community/Tangerine/issues/2090
 
