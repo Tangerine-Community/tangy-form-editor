@@ -56,7 +56,7 @@
 
                 <tangy-form-item id="text_and_number" title="Text and Number inputs">
                   <template>
-                    <tangy-input type="text" name="is_text" label="This is text"></tangy-input>
+                    <tangy-input type="text" name="is_text" label="This is text" dont-skip-if="example==1" discrepancy-if="example==1" discrepancy-text="this is a descrpency"></tangy-input>
                     <tangy-input type="number" name="is_number" label="This is a number"></tangy-input>
                   </template>
                 </tangy-form-item>
@@ -200,7 +200,7 @@
                 <tangy-form-item id="gps_item" title="GPS and Location">
                   <template>
                     Your GPS Coordinates:
-                    <tangy-gps name="gps-coords"></tangy-gps>
+                    <tangy-gps name="gps_coords"></tangy-gps>
                     <tangy-location  label="Select your school" name="location" show-levels="county,school"></tangy-location>
                   </template>
                 </tangy-form-item>
@@ -487,6 +487,110 @@
                                  name="pq2"
                                  touchsrc="../demo/assets/sounds/never_Eng.mp3,../demo/assets/sounds/once_Eng.mp3,../demo/assets/sounds/fewtimes_Eng.mp3,../demo/assets/sounds/manytimes_Eng.mp3,../demo/assets/sounds/noresponse_Eng.mp3"
                                  transitionsrc="../demo/assets/sounds/swish.mp3"></tangy-acasi>
+                  </template>
+                </tangy-form-item>
+                <tangy-form-item id="tangy_image_item" 
+                  title="Image"
+                  incorrect-threshold="undefined"
+                        on-open="
+                          
+                        "
+                        on-change="
+                          
+                        "
+                        category="
+                          null
+                        "
+                >
+                  <template>
+                    
+                  <div name="image_test_1" class="tangy-image" style="text-align:center">
+                    <img src="assets/images/cow.png" width="50%">
+                  </div>
+          
+                  </template>
+                </tangy-form-item>
+        
+                <tangy-form-item id="section_b44ee7bbd6a54a3abd5e43df3a2bb478" 
+                  title="QR Widget"
+                  
+                  
+                  
+                  
+                  
+                  
+                   incorrect-threshold="undefined"
+                  on-open="
+                    
+                  "
+                  on-change="
+                    
+                  "
+                  category="
+                    null
+                  "
+                >
+                  <template>
+                    
+            <tangy-qr name="qr_1" required="" error-text="" warn-text="" class="" style="">
+            </tangy-qr>
+    
+            <tangy-qr name="qr_2" required="" question-number="1. " label="Scan the QR Code" hint-text="this should be the patient label" error-text="" warn-text="" class="" style="">
+            </tangy-qr>
+          
+                  </template>
+                </tangy-form-item>
+        
+                <tangy-form-item id="section_c36670a716254c3aaf8164452176986f" 
+                  title="Signture"
+                  
+                  
+                  
+                  
+                  
+                  
+                   incorrect-threshold="undefined"
+                  on-open="
+                    
+                  "
+                  on-change="
+                    
+                  "
+                  category="
+                    null
+                  "
+                >
+                  <template>
+                    
+            <tangy-signature name="sig_1" required="" question-number="1. " label="Capture the signature here" hint-text="sign the box and click the accept button" error-text="" warn-text="" class="" style="">
+            </tangy-signature>
+          
+                  </template>
+                </tangy-form-item>
+        
+                <tangy-form-item id="section_fc87d2196fb6484d8087c2b4d6460992" 
+                  title="Toggle"
+                  
+                  
+                  
+                  
+                  
+                  
+                   incorrect-threshold="undefined"
+                  on-open="
+                    
+                  "
+                  on-change="
+                    
+                  "
+                  category="
+                    null
+                  "
+                >
+                  <template>
+                    
+            <tangy-toggle name="toggle_1" required="" question-number="1. " label="Tangy Toggle?" hint-text="hinting some more" error-text="" warn-text="" class="" style=""></tangy-toggle>
+          
                   </template>
                 </tangy-form-item>
 

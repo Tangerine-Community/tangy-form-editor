@@ -15,11 +15,6 @@ class TangyCheckboxWidget extends TangyBaseWidget {
       ...this.upcastValidationAttributes(config, element),
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
-      label: element.innerHTML
-        ? element.innerHTML
-        : this.upcastQuestionAttributes(config, element).label
-        ? this.upcastQuestionAttributes(config, element).label
-        : "",
     };
   }
 

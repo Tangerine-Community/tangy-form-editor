@@ -12,6 +12,7 @@ class TangyImageWidget extends TangyBaseWidget {
     return {
       ...this.defaultConfigCoreAttributes(),
       ...this.defaultConfigConditionalAttributes(),
+      ...this.defaultConfigUnimplementedAttributes(),
       src: "",
       width: "50%",
     };
@@ -23,6 +24,7 @@ class TangyImageWidget extends TangyBaseWidget {
       ...config,
       ...this.upcastCoreAttributes(config, element),
       ...this.upcastConditionalAttributes(config, element),
+      ...this.upcastUnimplementedAttributes(config, element),
       src: element.querySelector("img").getAttribute("src"),
       width: element.querySelector("img").getAttribute("width"),
     };
@@ -36,6 +38,7 @@ class TangyImageWidget extends TangyBaseWidget {
         style="text-align:center"
         ${this.downcastCoreAttributes(config)}
         ${this.downcastConditionalAttributes(config)}
+        ${this.downcastUnimplementedAttributes(config)}
       >
         <img src="${config.src}" width="${config.width}">
       </div>
@@ -99,6 +102,7 @@ class TangyImageWidget extends TangyBaseWidget {
       ...config,
       ...this.onSubmitCoreAttributes(config, formEl, false, true, false),
       ...this.onSubmitConditionalAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       width: formEl.response.items[0].inputs.find(
         (input) => input.name === "width"
       ).value,

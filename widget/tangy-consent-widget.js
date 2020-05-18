@@ -116,6 +116,7 @@ class TangyConsentWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       prompt: formEl.response.items[0].inputs.find(
         (input) => input.name === "prompt"
       ).value,

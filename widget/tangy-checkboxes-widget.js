@@ -167,6 +167,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       options: formEl.values.options.map((item) =>
         item.reduce((acc, input) => {
           return { ...acc, [input.name]: input.value };

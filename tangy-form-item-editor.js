@@ -129,11 +129,6 @@ class TangyFormItemEditor extends PolymerElement {
               this.item.title
             }" label="title" always-float-label></paper-input>
             <p>Item id: ${this.item.id}</p>
-            <p><paper-toggle-button id="summary-toggle" ${
-              this.item.summary ? "checked" : ""
-            }>${t(
-      "Show this item in the summary at the end"
-    )}</paper-toggle-button></p>
             <p><paper-checkbox id="summary-checkbox" ${
               this.item.summary ? "checked" : ""
             }>${t(

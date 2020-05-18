@@ -196,6 +196,7 @@ class TangyAcasiWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       allowedPattern: formEl.response.items[0].inputs.find(
         (input) => input.name === "allowed_pattern"
       ).value,

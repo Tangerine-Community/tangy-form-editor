@@ -117,6 +117,7 @@ class TangyDateWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
     };
   }
 }

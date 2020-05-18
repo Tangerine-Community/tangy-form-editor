@@ -121,8 +121,9 @@ class TangyEmailWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       innerLabel: formEl.response.items[0].inputs.find(
-        (input) => input.name === "inner_label"
+        (input) => input.name === "inner-label"
       ).value,
     };
   }

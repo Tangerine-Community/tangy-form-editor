@@ -97,6 +97,7 @@ class TangyBaseWidget extends PolymerElement {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
     };
   }
 
@@ -274,32 +275,16 @@ class TangyBaseWidget extends PolymerElement {
 
   downcastConditionalAttributes(config) {
     return `
-      ${
-        config.showIf === ""
-          ? ""
-          : `tangy-if="${config.showIf.replace(/"/g, "&quot;")}"`
-      }
-      ${
-        config.skipIf === ""
-          ? ""
-          : `skip-if="${config.skipIf.replace(/"/g, "&quot;")}"`
-      }
+      ${ config.showIf === "" ? "" : `tangy-if="${config.showIf.replace(/"/g, "&quot;")}"` }
+      ${ config.skipIf === "" ? "" : `skip-if="${config.skipIf.replace(/"/g, "&quot;")}"` }
     `;
   }
 
   downcastValidationAttributes(config) {
     return `
-      ${
-        config.validIf === ""
-          ? ""
-          : `valid-if="${config.validIf.replace(/"/g, "&quot;")}"`
-      }
+      ${ config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, "&quot;")}"` }
       error-text="${config.errorText}"
-      ${
-        config.warnIf === ""
-          ? ""
-          : `warn-if="${config.warnIf.replace(/"/g, "&quot;")}"`
-      }
+      ${ config.warnIf === "" ? "" : `warn-if="${config.warnIf.replace(/"/g, "&quot;")}"` }
       warn-text="${config.warnText}"
     `;
   }
@@ -313,21 +298,9 @@ class TangyBaseWidget extends PolymerElement {
 
   downcastUnimplementedAttributes(config) {
     return `
-      ${
-        config.dontSkipIf === ""
-          ? ""
-          : `dont-skip-if="${config.dontSkipIf.replace(/"/g, "&quot;")}"`
-      }
-      ${
-        config.discrepancyIf === ""
-          ? ""
-          : `discrepancy-if="${config.discrepancyIf.replace(/"/g, "&quot;")}"`
-      }
-      ${
-        config.discrepancyText === ""
-          ? ""
-          : `disprepancy-text="${config.discrepancyText}"`
-      }
+      ${ (!config.dontSkipIf || config.dontSkipIf === "") ? "" : `dont-skip-if="${config.dontSkipIf.replace(/"/g, "&quot;")}"` }
+      ${ (!config.discrepancyIf || config.discrepancyIf === "") ? "" : `discrepancy-if="${config.discrepancyIf.replace(/"/g, "&quot;")}"` }
+      ${ (!config.discrepancyText || config.discrepancyText === "") ? "" : `discrepancy-text="${config.discrepancyText}"` }
     `;
   }
 
@@ -401,7 +374,7 @@ class TangyBaseWidget extends PolymerElement {
                 ? `
                 <tangy-toggle
                   name="identifier" 
-                  ${config.disabled ? 'value="on"' : ""}>
+                  ${config.identifier ? 'value="on"' : ""}>
                   Is Identifier (PII/PHI)
                 </tangy-toggle>
                 `
@@ -415,6 +388,7 @@ class TangyBaseWidget extends PolymerElement {
 
   renderEditQuestionAttributes(config) {
     return `
+      <h3>Question Details</h3>
       <tangy-input
         name="question-number"
         inner-label="Question number"
@@ -435,6 +409,7 @@ class TangyBaseWidget extends PolymerElement {
 
   renderEditConditionalAttributes(config) {
     return `
+      <h3>Conditional Display Logic</h3>
       ${
         !this.hasAttribute("hide-skip-if")
           ? `
@@ -490,6 +465,7 @@ class TangyBaseWidget extends PolymerElement {
 
   renderEditAdvancedAttributes(config) {
     return `
+      <h3>Advanced Settings</h3>
       <tangy-input 
         name="class" 
         inner-label="CSS Class"

@@ -208,6 +208,7 @@ class TangyPartialDateWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       disallowFutureDate:
         formEl.values["disallow-future-date"] === "on" ? true : false,
       allowUnknownDay:
