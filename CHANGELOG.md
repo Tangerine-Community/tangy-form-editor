@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v7.0.0
+- Add support for additional attributes to downcast and upcast, including ones that are unimplemented in the editor UI. Examples include `discrepancy-if`, `discrepancy-text`, `dont-show-if`.
+- Major refactor of UI when editing in widgets. Now features a tabbed interface separating functional areas into categories of "question", "conditional display", "validation", and "advanced".
+- Support for editing now consistent labels/questions number/etc as of tangy-form v4.15.0.
+- Bump tangy-form to v4.15.0.
+
 ## v6.15.2
 - Bump tangy-form to v4.14.1. 
 
