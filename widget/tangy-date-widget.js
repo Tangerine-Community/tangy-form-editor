@@ -69,7 +69,7 @@ class TangyDateWidget extends TangyBaseWidget {
   renderInfo(config) {
     const icon = (this.shadowRoot.querySelector(
       "#icon"
-    ).innerHTML = `<span class="header-text"><mwc-icon>calendar_today</mwc-icon><span>`);
+    ).innerHTML = `<span class="header-text"><mwc-icon>event</mwc-icon><span>`);
     const name = (this.shadowRoot.querySelector(
       "#name"
     ).innerHTML = `<span class="header-text">${config.name}</span>`);
