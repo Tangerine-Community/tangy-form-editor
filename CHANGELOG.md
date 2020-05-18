@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.0.1
+- Replace use of bug prone `calendar_today` icon with event icon.
+
 ## v7.0.0
 - Add support for additional attributes to downcast and upcast, including ones that are unimplemented in the editor UI. Examples include `discrepancy-if`, `discrepancy-text`, `dont-show-if`.
 - Major refactor of UI when editing in widgets. Now features a tabbed interface separating functional areas into categories of "question", "conditional display", "validation", and "advanced".
