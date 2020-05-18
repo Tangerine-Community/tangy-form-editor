@@ -16,7 +16,6 @@ class TangyGpsWidget extends TangyBaseWidget {
       ...this.defaultConfigValidationAttributes(),
       ...this.defaultConfigAdvancedAttributes(),
       ...this.defaultConfigUnimplementedAttributes(),
-      hintText: "",
     };
   }
 
@@ -40,7 +39,6 @@ class TangyGpsWidget extends TangyBaseWidget {
         ${this.downcastValidationAttributes(config)}
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
-        hint-text="${config.hintText}"
       ></tangy-gps>
     `;
   }
@@ -65,19 +63,15 @@ class TangyGpsWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    const icon = (this.shadowRoot.querySelector(
-      "#icon"
-    ).innerHTML = `<span class="header-text"><mwc-icon>add_location</mwc-icon><span>`);
-    const name = (this.shadowRoot.querySelector(
-      "#name"
-    ).innerHTML = `<span class="header-text">${config.name}</span>`);
+    const icon = (this.shadowRoot.querySelector("#icon").innerHTML = `<span class="header-text"><mwc-icon>add_location</mwc-icon><span>`);
+    const name = (this.shadowRoot.querySelector("#name").innerHTML = `<span class="header-text">${config.name}</span>`);
     return `${icon} ${name} ${this.downcast(config)}`;
   }
 
   renderEdit(config) {
     const action = config.name ? "Edit" : "Add";
     return `
-      <h2>${action} Text Input</h2>
+      <h2>${action} GPS Input</h2>
       <tangy-form id="tangy-gps">
         <tangy-form-item>
           <template>

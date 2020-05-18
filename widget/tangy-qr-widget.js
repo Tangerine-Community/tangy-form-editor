@@ -12,6 +12,7 @@ class TangyQrWidget extends TangyBaseWidget {
   get defaultConfig() {
     return {
       ...this.defaultConfigCoreAttributes(),
+      ...this.defaultConfigQuestionAttributes(),
       ...this.defaultConfigConditionalAttributes(),
       ...this.defaultConfigValidationAttributes(),
       ...this.defaultConfigAdvancedAttributes(),
@@ -23,6 +24,7 @@ class TangyQrWidget extends TangyBaseWidget {
   upcast(config, element) {
     return {
       ...this.upcastCoreAttributes(config, element),
+      ...this.upcastQuestionAttributes(config, element),
       ...this.upcastConditionalAttributes(config, element),
       ...this.upcastValidationAttributes(config, element),
       ...this.upcastAdvancedAttributes(config, element),
@@ -34,6 +36,7 @@ class TangyQrWidget extends TangyBaseWidget {
     return `
       <tangy-qr 
         ${this.downcastCoreAttributes(config)}
+        ${this.downcastQuestionAttributes(config)}
         ${this.downcastConditionalAttributes(config)}
         ${this.downcastValidationAttributes(config)}
         ${this.downcastAdvancedAttributes(config)}
@@ -82,6 +85,7 @@ class TangyQrWidget extends TangyBaseWidget {
             <iron-pages selected="">
                 <div>
                   ${this.renderEditCoreAttributes(config)}
+                  ${this.renderEditQuestionAttributes(config)}
                   <tangy-checkbox name="hide-output" help-text="Hide the data output scanned from the QR code. This may be useful if you are using a format such as JSON and parsing it out into other items.">Hide output</tangy-checkbox>
                 </div>
                 <div>
@@ -103,9 +107,11 @@ class TangyQrWidget extends TangyBaseWidget {
   onSubmit(config, formEl) {
     return {
       ...this.onSubmitCoreAttributes(config, formEl),
+      ...this.onSubmitQuestionAttributes(config, formEl),
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       hideInput: formEl.values["hide-output"],
     };
   }

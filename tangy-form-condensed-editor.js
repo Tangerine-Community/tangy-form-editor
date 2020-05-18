@@ -23,6 +23,7 @@ import './widget/tangy-untimed-grid-widget.js'
 import './widget/tangy-acasi-widget.js'
 import './widget/tangy-partial-date-widget.js'
 import './widget/tangy-signature-widget.js'
+import './widget/tangy-toggle-widget.js'
 
 /**
  * `tangy-form-item-editor`
@@ -129,6 +130,10 @@ class TangyFormCondensedEditor extends PolymerElement {
           font-size: 12px;
           font-weight: 500;
           height: 2rem;
+        }
+
+        tangy-form-editor-add-input {
+          width: 100%;
         }
 
         /* Grid

@@ -99,17 +99,18 @@ class TangyTextWidget extends TangyBaseWidget {
                     inner-label="Inner Label"
                     value="${config.innerLabel}">
                   </tangy-input>
+                </div>
+                <div>
+                  ${this.renderEditConditionalAttributes(config)}
+                </div>
+                <div>
+                  <h3>Question Validation Options</h3>
                   <tangy-input
                     name="allowed-pattern"
                     inner-label="Allowed pattern"
                     hint-text="Optional Javascript RegExp pattern to validate text (e.g. minimum length of 5 characters would be [a-zA-Z]{5,})"
                     value="${config.allowedPattern}">
                   </tangy-input>
-                </div>
-                <div>
-                  ${this.renderEditConditionalAttributes(config)}
-                </div>
-                <div>
                   ${this.renderEditValidationAttributes(config)}
                 </div>
                 <div>

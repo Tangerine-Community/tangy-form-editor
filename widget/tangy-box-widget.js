@@ -65,6 +65,7 @@ class TangyBoxWidget extends TangyBaseWidget {
             <iron-pages selected="">
                 <div>
                   ${this.renderEditCoreAttributes(config)}
+                  <h3>Template HTML</h3>
                   <tangy-code mode="ace/mode/html" name="htmlCode" height="600" required>${
                     config.htmlCode
                   }</tangy-code>
@@ -87,6 +88,7 @@ class TangyBoxWidget extends TangyBaseWidget {
       ...this.onSubmitCoreAttributes(config, formEl),
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       htmlCode: formEl.response.items[0].inputs.find(
         (input) => input.name === "htmlCode"
       ).value,

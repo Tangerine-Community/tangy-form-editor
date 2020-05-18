@@ -284,6 +284,7 @@ class TangyEftouchWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       label: formEl.values.label,
       inputSound: formEl.querySelector('tangy-form-item').querySelector('[name=input-sound]').value,
       transitionDelay: formEl.values['transition-delay'],

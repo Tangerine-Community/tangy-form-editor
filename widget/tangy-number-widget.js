@@ -110,6 +110,7 @@ class TangyNumberWidget extends TangyBaseWidget {
                   ${this.renderEditConditionalAttributes(config)}
                 </div>
                 <div>
+                  <h3>Question Validation Options</h3>
                   <tangy-input
                     name="allowed-pattern"
                     inner-label="Allowed pattern"
@@ -150,6 +151,7 @@ class TangyNumberWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       min: formEl.values.min,
       max: formEl.values.max,
       innerLabel: formEl.response.items[0].inputs.find(

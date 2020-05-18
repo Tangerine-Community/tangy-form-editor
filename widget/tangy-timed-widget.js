@@ -129,6 +129,7 @@ class TangyTimedWidget extends TangyBaseWidget {
           <iron-pages selected="">
               <div>
                 ${this.renderEditCoreAttributes(config)}
+                <h3>Question Details</h3>
                 <tangy-input name="columns" type="number" inner-label="Number of columns" value="${
                   config.columns
                 }"></tangy-input>
@@ -212,6 +213,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
+      ...this.onSubmitUnimplementedAttributes(config, formEl),
       optionFontSize: formEl.values.optionFontSize,
       options: formEl.values.options.split(' ').map((item, i) => {
         return { value: i+1, label: item };
