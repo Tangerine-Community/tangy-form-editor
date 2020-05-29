@@ -47,14 +47,6 @@ class TangyFormEditor extends PolymerElement {
   static get template() {
     return html`
       <style>
-        tangy-form-item {
-          --tangy-firm-item--display: none;
-        }
-
-        tangy-input {
-          background-color: #aaa;
-        }
-
         :host {
           display: block;
           color: var(--primary-text-color);
