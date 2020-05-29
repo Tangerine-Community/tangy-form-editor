@@ -152,7 +152,15 @@
         test('should not skip-if editor when using hide-skip-if', () => {
           const element = fixture('HideSkipIfFixture');
           element.shadowRoot.querySelector('[icon="editor:mode-edit"]').click()
+          // Make sure editing something doesn't have it.
           element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('[icon=create]').click()
+          assert.equal(
+            !!element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('[name="skip_if"]'),
+            false 
+          )
+          // Make sure adding something doesn't have it.
+          element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('#add-button').click()
+          element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('tangy-form-editor-add-input').shadowRoot.querySelector('#tangy-text-widget').click()
           assert.equal(
             !!element.querySelector('tangy-form-item-editor').shadowRoot.querySelector('tangy-form-condensed-editor').shadowRoot.querySelector('tangy-text-widget').shadowRoot.querySelector('[name="skip_if"]'),
             false 

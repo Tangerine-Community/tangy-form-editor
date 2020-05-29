@@ -120,6 +120,7 @@ class TangyFormEditorAddInput extends PolymerElement {
     const wrapperEl = document.createElement(event.target.id)
     wrapperEl.setAttribute('mode', 'MODE_EDIT')
     wrapperEl.setAttribute('files-endpoint', this.getAttribute('files-endpoint'))
+    if (this.hasAttribute('hide-skip-if')) wrapperEl.setAttribute('hide-skip-if', '')
     this.after(wrapperEl)
     setTimeout(() => {
         wrapperEl.scrollIntoView({ behavior: 'smooth', block: 'start', inline: "nearest"})

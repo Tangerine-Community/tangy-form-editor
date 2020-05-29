@@ -251,6 +251,7 @@ class TangyFormCondensedEditor extends PolymerElement {
     }
     const addInputEl = document.createElement("tangy-form-editor-add-input");
     addInputEl.setAttribute("files-endpoint", this.filesEndpoint);
+    if (this.hasAttribute('hide-skip-if')) addInputEl.setAttribute('hide-skip-if', '')
     if (insertAfterEl) {
       insertAfterEl.after(addInputEl);
     } else {
