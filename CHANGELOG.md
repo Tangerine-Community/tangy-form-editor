@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.0.3
+- Bump tangy-form to v4.16.0, which provides support for 'identifier' property on all tangy-form inputs.
+
 ## v7.0.2
 - Fix background coloring of tangy-input https://github.com/Tangerine-Community/Tangerine/issues/2157 
 - Fix use of hide-skip-if causing skip-if editor to be shown when adding an input https://github.com/Tangerine-Community/Tangerine/issues/2158
