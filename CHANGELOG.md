@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.1.0
+- Bump tangy-form to v4.17.3 for new APIs related to getting and setting data.
+- Implement github actions for publishing to NPM. Note updates to RELEASE-INSTRUCTIONS.md.
+
 ## v7.0.3
 - Bump tangy-form to v4.16.0, which provides support for 'identifier' property on all tangy-form inputs.
 
