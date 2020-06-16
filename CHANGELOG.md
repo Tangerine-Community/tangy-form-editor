@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.1.1
+- Fix node package info for supporting releases from Github Actions.
+
 ## v7.1.0
 - Bump tangy-form to v4.17.3 for new APIs related to getting and setting data.
 - Implement github actions for publishing to NPM. Note updates to RELEASE-INSTRUCTIONS.md.
