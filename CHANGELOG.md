@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.1.2
+- Bump tangy-form to v4.17.5
+
 ## v7.1.1
 - Fix node package info for supporting releases from Github Actions.
 
