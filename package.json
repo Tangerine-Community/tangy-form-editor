@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
-    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "@webcomponents/webcomponentsjs": "^2.4.4",
     "polymer-cli": "^1.9.2",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
