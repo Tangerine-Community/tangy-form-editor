@@ -411,7 +411,7 @@ class TangyBaseWidget extends PolymerElement {
     return `
       <h3>Conditional Display Logic</h3>
       ${
-        !this.hasAttribute("hide-skip-if")
+        config.skipIf || !this.hasAttribute("hide-skip-if")
           ? `
         <tangy-input 
           name="skip_if"
@@ -422,12 +422,18 @@ class TangyBaseWidget extends PolymerElement {
       `
           : ""
       }
+      ${
+        config.showIf || !this.hasAttribute("hide-show-if")
+          ? `
       <tangy-input
         name="show_if"
         inner-label="Show if"
         hint-text="Enter any conditional display logic. Values that users enter while shown will persist after hiding. (e.g. getValue('isEmployee') === true)"
         value="${config.showIf.replace(/"/g, "&quot;")}">
       </tangy-input>
+      `
+          : ""
+      }
     `;
   }
 
@@ -542,14 +548,16 @@ class TangyBaseWidget extends PolymerElement {
 
   onSubmitConditionalAttributes(config, formEl) {
     return {
-      skipIf: !this.hasAttribute("hide-skip-if")
+      skipIf: formEl.response.items[0].inputs.find((input) => input.name === "skip_if")
         ? formEl.response.items[0].inputs.find(
             (input) => input.name === "skip_if"
           ).value
-        : "",
-      showIf: formEl.response.items[0].inputs.find(
-        (input) => input.name === "show_if"
-      ).value,
+        : '',
+      showIf: formEl.response.items[0].inputs.find((input) => input.name === "show_if")
+        ? formEl.response.items[0].inputs.find(
+          (input) => input.name === "show_if"
+        ).value
+        : ''
     };
   }
 

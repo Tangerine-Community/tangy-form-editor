@@ -54,6 +54,11 @@ class TangyFormCondensedEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true,
       },
+      hideShowIf: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true,
+      },
       hideSkipIf: {
         type: Boolean,
         value: false,
@@ -101,6 +106,7 @@ class TangyFormCondensedEditor extends PolymerElement {
           );
           widgetEl.setAttribute("files-endpoint", this.filesEndpoint);
           if (this.hideSkipIf) widgetEl.setAttribute("hide-skip-if", "");
+          if (this.hideShowIf) widgetEl.setAttribute("hide-show-if", "");
           wrap(childNode, widgetEl);
         }
       }
@@ -252,6 +258,7 @@ class TangyFormCondensedEditor extends PolymerElement {
     const addInputEl = document.createElement("tangy-form-editor-add-input");
     addInputEl.setAttribute("files-endpoint", this.filesEndpoint);
     if (this.hasAttribute('hide-skip-if')) addInputEl.setAttribute('hide-skip-if', '')
+    if (this.hasAttribute('hide-show-if')) addInputEl.setAttribute('hide-show-if', '')
     if (insertAfterEl) {
       insertAfterEl.after(addInputEl);
     } else {

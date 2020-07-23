@@ -136,6 +136,11 @@ class TangyFormEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true
       },
+      hideShowIf: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
       hideSkipIf: {
         type: Boolean,
         value: false,
@@ -494,6 +499,7 @@ class TangyFormEditor extends PolymerElement {
         <tangy-form-item-editor
           files-endpoint="${this.filesEndpoint}" 
           ${this.hideSkipIf ? `hide-skip-if` : ''}
+          ${this.hideShowIf ? `hide-show-if` : ''}
         >
         </tangy-form-item-editor>
       `
