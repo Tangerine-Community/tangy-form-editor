@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.2.0
+- Bump tangy-form to v4.17.7.
+- Add support for hide-show-if, but add functionality to show-if and skip-if editors if there is already logic on the form. 
+
 ## v7.1.3
 - Bump tangy-form to v4.17.6
 
