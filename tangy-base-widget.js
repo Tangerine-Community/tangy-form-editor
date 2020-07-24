@@ -207,8 +207,8 @@ class TangyBaseWidget extends PolymerElement {
       showIf: (element.hasAttribute("show-if")
         ? element.getAttribute("show-if")
         : element.hasAttribute("tangy-if")
-        ? element.getAttribute("tangy-if")
-        : ""
+          ? element.getAttribute("tangy-if")
+          : ""
       ).replace(/&quot;/g, '"'),
       skipIf: element.hasAttribute("skip-if")
         ? element.getAttribute("skip-if").replace(/&quot;/g, '"')
@@ -275,7 +275,7 @@ class TangyBaseWidget extends PolymerElement {
 
   downcastConditionalAttributes(config) {
     return `
-      ${ config.showIf === "" ? "" : `tangy-if="${config.showIf.replace(/"/g, "&quot;")}"` }
+      ${ config.showIf === "" ? "" : `show-if="${config.showIf.replace(/"/g, "&quot;")}"` }
       ${ config.skipIf === "" ? "" : `skip-if="${config.skipIf.replace(/"/g, "&quot;")}"` }
     `;
   }
