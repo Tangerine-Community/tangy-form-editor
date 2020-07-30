@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.2.2
+- Bump tangy-form to v4.17.9.
+
 ## v7.2.1
 - Refactor showIf downcast to write show-if, not tangy-if. 
 - Bump tangy-form to v4.17.8.
