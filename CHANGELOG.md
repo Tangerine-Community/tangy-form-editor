@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.3.0
+- Bump tangy-form to v4.18.0.
+- Add tangy-gate widget to support the new `<tangy-gate>` input.
+
 ## v7.2.5
 - fix issue with package-lock.json. Minor doc update.
 
