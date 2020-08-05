@@ -32,6 +32,7 @@ import "tangy-form/input/tangy-acasi.js";
 import "tangy-form/input/tangy-eftouch.js";
 import "tangy-form/input/tangy-photo-capture.js";
 import "tangy-form/input/tangy-qr.js";
+import "tangy-form/input/tangy-gate.js";
 import "tangy-form/input/tangy-consent.js";
 import "tangy-form/input/tangy-signature.js";
 
