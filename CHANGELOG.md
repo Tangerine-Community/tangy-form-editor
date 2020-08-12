@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.4.0
+- Allow for duplication of entire section #142
+
 ## v7.3.0
 - Bump tangy-form to v4.18.0.
 - Add tangy-gate widget to support the new `<tangy-gate>` input.
