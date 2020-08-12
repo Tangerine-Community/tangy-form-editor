@@ -1,5 +1,7 @@
 /* jshint esversion: 6 */
 
+import { t } from "tangy-form/util/t"
+
 const initialState = {
   openItem: '',
   form: {},
@@ -44,8 +46,16 @@ const tangyFormEditorReducer = function (state = initialState, action) {
       newState.items[itemIndex] = action.payload
       return newState
     case 'ITEM_DELETE':
-      itemIndex = state.items.findIndex(item => item.id === action.payload.id)
       newState = Object.assign({}, state, { items: [...state.items.filter(item => item.id !== action.payload)]})
+      return newState
+    case 'ITEM_COPY':
+      itemIndex = state.items.findIndex(item => item.id === action.payload)
+      let item = state.items.find(item => item.id === action.payload)
+      const template = document.createRange().createContextualFragment(item.template).querySelectorAll('*')
+      template.forEach(e=>e.setAttribute('name',`copy_of_${e.name}`))
+      const templateHtml = Array.from(template).reduce((acc,curr)=>acc+(curr.outerHTML||curr.nodeValue),"")
+      item = {...item, id:`copy_of_${item.id}`, title:`${t('Copy of')} ${item.title}`, template: templateHtml}
+      newState = Object.assign({}, state, { items: [...state.items.slice(0,itemIndex+1),item,...state.items.slice(itemIndex+1)]})
       return newState
     case 'SORT_ITEMS':
       return Object.assign({}, state, { 

@@ -397,6 +397,13 @@ class TangyFormEditor extends PolymerElement {
                 }</span>
                 
                 <span>
+                <a
+                  class="tangy-icons item-copy"
+                  data-item-id="${item.id}"
+                >
+                  <paper-icon-button data-item-id="${
+                    item.id
+                  }" icon="icons:content-copy"></paper-icon-button></a>
                 <a class="tangy-icons item-edit"
                   data-item-id="${item.id}"
                 >
@@ -459,6 +466,9 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelectorAll('.item-edit')
         .forEach(item => item.addEventListener('click', this.onItemEditClick.bind(this)))
+      this.$.container
+        .querySelectorAll('.item-copy')
+        .forEach(item => item.addEventListener('click', this.onItemCopyClick.bind(this)))
       this.$.container
         .querySelectorAll('.item-delete')
         .forEach(item => item.addEventListener('click', this.onItemDeleteClick.bind(this)))
@@ -607,6 +617,12 @@ class TangyFormEditor extends PolymerElement {
   onItemEditClick(event) {
     this.store.dispatch({
       type: 'ITEM_OPEN',
+      payload: event.target.dataset.itemId
+    })
+  }
+  onItemCopyClick(event) {
+    this.store.dispatch({
+      type: 'ITEM_COPY',
       payload: event.target.dataset.itemId
     })
   }
