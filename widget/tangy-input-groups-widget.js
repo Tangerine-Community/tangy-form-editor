@@ -9,7 +9,7 @@ class TangyInputGroupsWidget extends TangyBaseWidget {
 
   upcast(config, element) {
     return {
-      template: element._template,
+      template: element._template || '',
       ...this.upcastCoreAttributes(config, element),
       ...this.upcastQuestionAttributes(config, element),
       ...this.upcastConditionalAttributes(config, element),
@@ -47,7 +47,7 @@ class TangyInputGroupsWidget extends TangyBaseWidget {
   renderEdit(config) {
     const action = config.name ? "Edit" : "Add";
     return `
-      <h2>${action} Checkbox</h2>
+      <h2>${action} Repeatable HTML Group</h2>
       <tangy-form id="tangy-toggle">
         <tangy-form-item>
           <template>
@@ -59,8 +59,14 @@ class TangyInputGroupsWidget extends TangyBaseWidget {
             </paper-tabs>
             <iron-pages selected="">
                 <div>
-                  ${this.renderEditCoreAttributes(config)}
-                  <tangy-input name="template" label="Template: Enter question markup below" inner-label=" " value='${config.template}'></tangy-input>
+                  <tangy-input 
+                    name="name" 
+                    label="Namespace"
+                    hint-text="This is like a variable name, but it's the variable name that all children inputs will be namespaced with."
+                    inner-label=" "
+                    ${config.name ? `value='${config.name}'` : ''}
+                  ></tangy-input>
+                  <tangy-input name="template" label="Template: Enter question markup below" inner-label=" " ${config.template ? `value='${config.template}'` : ''}></tangy-input>
                 </div>
                 <div>
                   ${this.renderEditQuestionAttributes(config)}
@@ -83,15 +89,13 @@ class TangyInputGroupsWidget extends TangyBaseWidget {
 
   onSubmit(config, formEl) {
     return {
-      ...this.onSubmitCoreAttributes(config, formEl),
       ...this.onSubmitQuestionAttributes(config, formEl),
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
-      template: formEl.response.items[0].inputs.find(
-          (input) => input.name === "template"
-        ).value
+      template: formEl.response.items[0].inputs.find((input) => input.name === "template").value,
+      name: formEl.response.items[0].inputs.find((input) => input.name === "name").value,
     };
   }
 
