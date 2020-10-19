@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.5.1
+- Fix icon for repeatable html section.
+
 ## v7.5.0
 - Add support for editing <tangy-input-groups> to provide a repeatable section in a form https://github.com/Tangerine-Community/tangy-form-editor/pull/148
 
