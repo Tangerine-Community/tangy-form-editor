@@ -1,7 +1,7 @@
 {
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
-  "version": "7.5.1",
+  "version": "7.5.2",
   "scripts": {
     "start": "./node_modules/.bin/polymer serve",
     "build": "webpack",
