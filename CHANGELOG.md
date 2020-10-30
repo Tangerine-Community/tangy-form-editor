@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.5.2
+- Bump tangy-form to v4.20.1.
+
 ## v7.5.1
 - Fix icon for repeatable html section.
 
