@@ -62,6 +62,8 @@ class TangyInputGroupsWidget extends TangyBaseWidget {
                   <tangy-input 
                     name="name" 
                     label="Namespace"
+                    valid-if="input.value.match(/^[a-zA-Z]{1,}[a-zA-Z0-9\_]{1,}$/)" 
+                    required
                     hint-text="This is like a variable name, but it's the variable name that all children inputs will be namespaced with."
                     inner-label=" "
                     ${config.name ? `value='${config.name}'` : ''}
