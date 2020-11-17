@@ -29,7 +29,7 @@ class TangyInputGroupsWidget extends TangyBaseWidget {
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
       >
-        ${config.template}
+        ${config.template || ''}
       </tangy-input-groups>
     `;
   }
@@ -68,7 +68,7 @@ class TangyInputGroupsWidget extends TangyBaseWidget {
                     inner-label=" "
                     ${config.name ? `value='${config.name}'` : ''}
                   ></tangy-input>
-                  <tangy-input name="template" label="Template: Enter question markup below" inner-label=" " ${config.template ? `value='${config.template}'` : ''}></tangy-input>
+                  <tangy-input name="template" label="Template: Enter question markup below" inner-label=" " ${config.template ? `value='${config.template}'` : `value=''`}></tangy-input>
                 </div>
                 <div>
                   ${this.renderEditQuestionAttributes(config)}
@@ -96,8 +96,8 @@ class TangyInputGroupsWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
-      template: formEl.response.items[0].inputs.find((input) => input.name === "template").value,
-      name: formEl.response.items[0].inputs.find((input) => input.name === "name").value,
+      template: formEl.response.items[0].inputs.find((input) => input.name === "template").value || '',
+      name: formEl.response.items[0].inputs.find((input) => input.name === "name").value || '',
     };
   }
 
