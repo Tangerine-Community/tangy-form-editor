@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.5.3
+- Make Repeatable Group namespace required and validate it. 
+- Ensure Repeatable Group template does not start out as "undefined". 
+
 ## v7.5.2
 - Bump tangy-form to v4.20.1.
 
