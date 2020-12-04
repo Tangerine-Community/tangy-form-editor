@@ -24,6 +24,7 @@ import './widget/tangy-consent-widget.js'
 import './widget/tangy-untimed-grid-widget.js'
 import './widget/tangy-acasi-widget.js'
 import './widget/tangy-partial-date-widget.js'
+import './widget/tangy-ethio-date-widget.js'
 import './widget/tangy-signature-widget.js'
 import './widget/tangy-toggle-widget.js'
 
