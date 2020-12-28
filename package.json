@@ -28,7 +28,7 @@
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "polymer-cli": "^1.9.2",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^4.3.0"
   },
   "repository": {
     "type": "git",
