@@ -20,7 +20,7 @@
     "js-beautify": "^1.7.5",
     "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
-    "tangy-form": "^4.21.1",
+    "tangy-form": "git://github.com/tangerine-community/tangy-form.git#feature/fix-on-open-not-running-after-unlock",
     "tangy-translate": "^1.0.0"
   },
   "devDependencies": {
