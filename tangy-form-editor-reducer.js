@@ -54,7 +54,7 @@ const tangyFormEditorReducer = function (state = initialState, action) {
       const template = document.createRange().createContextualFragment(item.template).querySelectorAll('*')
       template.forEach(e=>e.setAttribute('name',`copy_of_${e.name}`))
       const templateHtml = Array.from(template).reduce((acc,curr)=>acc+(curr.outerHTML||curr.nodeValue),"")
-      item = {...item, id:`copy_of_${item.id}`, title:`${t('Copy of')} ${item.title}`, template: templateHtml}
+      item = {...item, id:`copy_of_${item.id}_${UUID()}`, title:`${t('Copy of')} ${item.title}`, template: templateHtml}
       newState = Object.assign({}, state, { items: [...state.items.slice(0,itemIndex+1),item,...state.items.slice(itemIndex+1)]})
       return newState
     case 'SORT_ITEMS':
