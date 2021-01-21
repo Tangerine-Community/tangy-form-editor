@@ -51,8 +51,9 @@ const tangyFormEditorReducer = function (state = initialState, action) {
     case 'ITEM_COPY':
       itemIndex = state.items.findIndex(item => item.id === action.payload)
       let item = state.items.find(item => item.id === action.payload)
-      const template = document.createRange().createContextualFragment(item.template).querySelectorAll('*')
-      template.forEach(e=>e.setAttribute('name',`copy_of_${e.name}`))
+      console.log(item.template)
+      const template = document.createRange().createContextualFragment(item.template).querySelectorAll(':scope > *')
+      template.forEach(e=>e.name&&e.setAttribute('name',`copy_of_${e.name}_${UUID()}`))
       const templateHtml = Array.from(template).reduce((acc,curr)=>acc+(curr.outerHTML||curr.nodeValue),"")
       item = {...item, id:`copy_of_${item.id}_${UUID()}`, title:`${t('Copy of')} ${item.title}`, template: templateHtml}
       newState = Object.assign({}, state, { items: [...state.items.slice(0,itemIndex+1),item,...state.items.slice(itemIndex+1)]})
