@@ -51,7 +51,31 @@ const tangyFormEditorReducer = function (state = initialState, action) {
     case 'ITEM_COPY':
       itemIndex = state.items.findIndex(item => item.id === action.payload)
       let item = state.items.find(item => item.id === action.payload)
+      const section = document.createRange().createContextualFragment(item.template)
+      let renamedSection = document.createDocumentFragment()
+      const processChild = (child) => {
+        if (child.firstElementChild) {
+          console.log(child.tagName + " name: " + child.name + " has children.");
+          processChild(child.children)
+          // some elements - like TANGY-CHECKBOXES - have firstElementChild but it's just an array of options (HTMLCollection)
+          // so - if TANGY-CHECKBOXES - rename and copy to the renamedSection
+        } else {
+          let length = HTMLCollection.prototype.isPrototypeOf(child) ? " length: " + child.length : ""
+          console.log(child.tagName + " name: " + child.name + " I am :" + child.toString() + length);
+          // if anything other than an element like TANGY-CHECKBOXES, rename and copy to renamedSection.
+          // if it's the options (HTMLCollection) from  TANGY-CHECKBOXES, don't copy to renamedSection.
+        }
+      }
+
+
+      for (let i = 0; i < section.children.length; i++) {
+        processChild(section.children[i])
+      }
       const template = document.createRange().createContextualFragment(item.template).querySelectorAll('*')
+      // const template = node.querySelectorAll('*')
+
+      // const range = document.createRange();
+      // range.selectNodeContents(item.template);
       template.forEach(e=>e.setAttribute('name',`copy_of_${e.name}`))
       const templateHtml = Array.from(template).reduce((acc,curr)=>acc+(curr.outerHTML||curr.nodeValue),"")
       item = {...item, id:`copy_of_${item.id}`, title:`${t('Copy of')} ${item.title}`, template: templateHtml}
