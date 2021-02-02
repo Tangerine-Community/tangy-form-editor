@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.6.3
+- fix issue with package-lock.json.
+
 ## v7.6.2
 - Bump tangy-form to v4.21.2.
 
