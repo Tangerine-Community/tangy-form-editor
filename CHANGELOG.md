@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.6.4
+- Improve functionality of `duplicate entire section` - PR: [173](https://github.com/Tangerine-Community/tangy-form-editor/pull/173)
+
 ## v7.6.3
 - fix issue with package-lock.json.
 
