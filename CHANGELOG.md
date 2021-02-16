@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.6.5
+- Bump tangy-form to v4.21.3.
+
 ## v7.6.4
 - Improve functionality of `duplicate entire section` - PR: [173](https://github.com/Tangerine-Community/tangy-form-editor/pull/173)
 
