@@ -176,6 +176,7 @@ class TangyFormEditor extends PolymerElement {
           ${state.form.onOpen}
         "
         exit-clicks="${state.form.exitClicks}"
+        random-sequences="${state.form.randomSequences}"
         on-change="
           ${state.form.onChange}
         "
@@ -245,6 +246,9 @@ class TangyFormEditor extends PolymerElement {
            recordItemFirstOpenTimes: template.content.querySelector('tangy-form').hasAttribute('record-item-first-open-times'),
            exitClicks: template.content.querySelector('tangy-form').hasAttribute('exit-clicks')
             ? template.content.querySelector('tangy-form').getAttribute('exit-clicks')
+            : '',
+           randomSequences: template.content.querySelector('tangy-form').hasAttribute('random-sequences')
+            ? template.content.querySelector('tangy-form').getAttribute('random-sequences')
             : '',
            onOpen: template.content.querySelector('tangy-form').hasAttribute('on-open')
             ? template.content.querySelector('tangy-form').getAttribute('on-open')
@@ -370,6 +374,12 @@ class TangyFormEditor extends PolymerElement {
             id="exit-clicks-input" 
             value="${state.form.exitClicks}"
           ></paper-input>
+          <paper-textarea 
+            style="margin: 15px;"
+            label="${t('Random Sequences')}"
+            id="random-sequences" 
+            value="${state.form.randomSequences}"
+          ></paper-textarea>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-submit logic" id="on-submit-editor"></paper-expansion-panel>
@@ -378,7 +388,7 @@ class TangyFormEditor extends PolymerElement {
         <sortable-list >
         ${state.items
           .map(
-            item => `
+            (item, index) => `
           <paper-card
             class="sortable"
             data-item-id="${item.id}"
@@ -392,7 +402,7 @@ class TangyFormEditor extends PolymerElement {
                   }" icon="icons:reorder"></paper-icon-button></span>
                   </span>
             
-                <span class="tangy-spacer list-item-text">${
+                <span class="tangy-spacer list-item-text">${index+1+'. '+
                   item.title
                 }</span>
                 
@@ -558,6 +568,7 @@ class TangyFormEditor extends PolymerElement {
     this.store.dispatch({type: 'FORM_UPDATE', payload: {
       title: this.shadowRoot.querySelector('#form-title').value,
       exitClicks: this.$.container.querySelector('#exit-clicks-input').value,
+      randomSequences: this.$.container.querySelector('#random-sequences').value,
       fullscreen: this.$.container.querySelector('#fullscreen-checkbox').hasAttribute('checked'),
       recordItemFirstOpenTimes: this.$.container.querySelector('#record-item-first-open-times-checkbox').hasAttribute('checked'),
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
