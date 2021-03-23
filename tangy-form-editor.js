@@ -176,7 +176,7 @@ class TangyFormEditor extends PolymerElement {
           ${state.form.onOpen}
         "
         exit-clicks="${state.form.exitClicks}"
-        random-sequences="${state.form.randomSequences}"
+        cycle-sequences="${state.form.cycleSequences}"
         on-change="
           ${state.form.onChange}
         "
@@ -247,8 +247,8 @@ class TangyFormEditor extends PolymerElement {
            exitClicks: template.content.querySelector('tangy-form').hasAttribute('exit-clicks')
             ? template.content.querySelector('tangy-form').getAttribute('exit-clicks')
             : '',
-           randomSequences: template.content.querySelector('tangy-form').hasAttribute('random-sequences')
-            ? template.content.querySelector('tangy-form').getAttribute('random-sequences')
+           cycleSequences: template.content.querySelector('tangy-form').hasAttribute('cycle-sequences')
+            ? template.content.querySelector('tangy-form').getAttribute('cycle-sequences')
             : '',
            onOpen: template.content.querySelector('tangy-form').hasAttribute('on-open')
             ? template.content.querySelector('tangy-form').getAttribute('on-open')
@@ -376,9 +376,11 @@ class TangyFormEditor extends PolymerElement {
           ></paper-input>
           <paper-textarea 
             style="margin: 15px;"
-            label="${t('Random Sequences')}"
-            id="random-sequences" 
-            value="${state.form.randomSequences}"
+            label="${t('Cycle Sequences')}"
+            placeholder="${t('This is a list of acceptable orders of sections, which will be selected each time an assessment is run.\n Section indicies are separated by commas, new lines separate sequences. Once the full list of sequences is executed it will start back from the first line')}"
+            id="cycle-sequences" 
+            rows="5"
+            value="${state.form.cycleSequences}"
           ></paper-textarea>
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
@@ -568,7 +570,7 @@ class TangyFormEditor extends PolymerElement {
     this.store.dispatch({type: 'FORM_UPDATE', payload: {
       title: this.shadowRoot.querySelector('#form-title').value,
       exitClicks: this.$.container.querySelector('#exit-clicks-input').value,
-      randomSequences: this.$.container.querySelector('#random-sequences').value,
+      cycleSequences: this.$.container.querySelector('#cycle-sequences').value,
       fullscreen: this.$.container.querySelector('#fullscreen-checkbox').hasAttribute('checked'),
       recordItemFirstOpenTimes: this.$.container.querySelector('#record-item-first-open-times-checkbox').hasAttribute('checked'),
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
