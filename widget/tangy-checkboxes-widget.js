@@ -115,7 +115,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
                     <template type="tangy-list/new-item">
                       <tangy-input name="value" allowed-pattern="[a-zA-Z0-9\-_]" inner-label="Value" hint-text="Enter the variable value if checkbox is chosen" type="text"></tangy-input>
                       <tangy-input name="label" inner-label="Label" hint-text="Enter the display label of the checkbox" type="text"></tangy-input>
-                      <tangy-checkbox name="mutuallyExclusive" hint-text="This option is mutually exlusive from the other options. If enabled, when this option is selected all other selections will be undone.">Mutually exlusive</tangy-checkbox>
+                      <tangy-checkbox name="mutuallyExclusive" hint-text="This option is mutually exclusive from the other options. If enabled, when this option is selected all other selections will be undone.">Mutually exlusive</tangy-checkbox>
                     </template>
                     ${
                       config.options.length > 0
@@ -129,11 +129,16 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
                               option.value
                             }"></tangy-input>
                             <tangy-input name="label" hint-text="Enter the display label of the checkbox" inner-label="Label" type="text" value="${
-                              option.label
+                              option.label.
+                              replace(/&/g, "&amp;")
+                              .replace(/</g, "&lt;")
+                              .replace(/>/g, "&gt;")
+                              .replace(/"/g, "&quot;")
+                              .replace(/'/g, "&#039;")
                             }"></tangy-input>
                             <tangy-checkbox name="mutuallyExclusive" value="${
                               option.mutuallyExclusive ? "on" : ""
-                            }" hint-text="This option is mutually exlusive from the other options. If enabled, when this option is selected all other selections will be undone.">Mutually exlusive</tangy-checkbox>
+                            }" hint-text="This option is mutually exclusive from the other options. If enabled, when this option is selected all other selections will be undone.">Mutually exlusive</tangy-checkbox>
                           </tangy-list-item>  
                         `
                           )
