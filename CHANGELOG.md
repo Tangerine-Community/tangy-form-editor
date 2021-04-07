@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v7.7.0
+- Add validation to ensure captureItemAt is less than duration( Tangerine-Community/Tangerine#2294) - https://github.com/Tangerine-Community/tangy-form-editor/pull/181
+- Labels for checkboxes and radio buttons should allow for HTML markup - https://github.com/Tangerine-Community/tangy-form-editor/pull/178
+- Allow for setting cycle-sequences(Tangerine-Community/Tangerine#1603) - Part of Tangerine-Community/tangy-form#212
+
+
 ## v7.6.8
 - Fix bump tangy-form to v4.23.3.
 
