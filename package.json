@@ -18,7 +18,7 @@
     "dr-niels-paper-expansion-panel": "^1.1.2",
     "file-list-component": "^1.4.0",
     "js-beautify": "^1.7.5",
-    "juicy-ace-editor": "git+https://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
+    "juicy-ace-editor": "Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
     "tangy-form": "^4.24.0",
     "tangy-translate": "^1.0.0"
