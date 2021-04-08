@@ -1,6 +1,9 @@
 # CHANGELOG
 
 
+## v7.7.2
+- Changed package urls for juicy-ace-editor and dr-niels-paper-expansion-panel to fix caused issue in GH Actions for npm ci
+
 ## v7.7.1
 - Changed protocol to git+https in package.json to fix caused issue in GH Actions for npm ci
 
