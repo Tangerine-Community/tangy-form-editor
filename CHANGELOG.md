@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## v7.7.3
+- Switched to juicy-ace-editor-es6 to work around GH Action issues.
 
 ## v7.7.2
 - Changed package urls for juicy-ace-editor and dr-niels-paper-expansion-panel to fix caused issue in GH Actions for npm ci
