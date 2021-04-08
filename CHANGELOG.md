@@ -1,5 +1,9 @@
 # CHANGELOG
 
+
+## v7.7.1
+- Changed protocol to git+https in package.json to fix caused issue in GH Actions for npm ci
+
 ## v7.7.0
 - Add validation to ensure captureItemAt is less than duration( Tangerine-Community/Tangerine#2294) - https://github.com/Tangerine-Community/tangy-form-editor/pull/181
 - Labels for checkboxes and radio buttons should allow for HTML markup - https://github.com/Tangerine-Community/tangy-form-editor/pull/178
