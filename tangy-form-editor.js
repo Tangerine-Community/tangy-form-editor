@@ -3,7 +3,7 @@ import '@polymer/paper-toggle-button/paper-toggle-button.js'
 import '@polymer/iron-pages/iron-pages.js';
 import '@material/mwc-fab'
 import "@material/mwc-icon"
-import 'juicy-ace-editor-es6/juicy-ace-editor-module.js'
+import 'juicy-ace-editor/juicy-ace-editor-module.js'
 import 'dr-niels-paper-expansion-panel/paper-expansion-panel.js'
 import { tangyFormEditorReducer } from './tangy-form-editor-reducer.js'
 import './tangy-form-item-editor.js'
