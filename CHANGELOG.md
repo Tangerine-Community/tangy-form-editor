@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.7.4
+- Reverted package choices for dr-niels-paper-expansion-panel and juicy-ace-edito to see if config change to GH Action workflow will use older url's.
+
 ## v7.7.3
 - Switched to juicy-ace-editor-es6 to work around GH Action issues.
 
