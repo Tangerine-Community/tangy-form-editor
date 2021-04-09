@@ -8,7 +8,7 @@
     "test": "./node_modules/.bin/polymer test -l chrome"
   },
   "dependencies": {
-    "@material/mwc-button": "^0.9.1",
+    "@material/mwc-button": "^0.20.0",
     "@material/mwc-fab": "^0.9.1",
     "@material/mwc-icon": "^0.9.1",
     "@polymer/iron-pages": "^3.0.1",
