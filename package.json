@@ -1,7 +1,7 @@
 {
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
-  "version": "7.7.5",
+  "version": "7.8.0",
   "scripts": {
     "start": "./node_modules/.bin/polymer serve",
     "build": "webpack",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@material/mwc-button": "^0.21.0",
-    "@material/mwc-fab": "^0.9.1",
+    "@material/mwc-fab": "^0.21.0",
     "@material/mwc-icon": "^0.9.1",
     "@polymer/iron-pages": "^3.0.1",
     "@polymer/paper-tabs": "^3.1.0",
@@ -27,8 +27,8 @@
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "polymer-cli": "^1.9.2",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0"
   },
   "repository": {
     "type": "git",
