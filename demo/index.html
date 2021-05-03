@@ -32,6 +32,7 @@
                 console.log("populating window.translation.")
                 window.translation = json
               })
+      window.example = 1
     </script>
 
     <script type="module" src="../tangy-form-editor.js"></script>
@@ -56,7 +57,7 @@
 
                 <tangy-form-item id="text_and_number" title="Text and Number inputs">
                   <template>
-                    <tangy-input type="text" name="is_text" label="This is text" dont-skip-if="example==1" discrepancy-if="example==1" discrepancy-text="this is a descrpency"></tangy-input>
+                    <tangy-input type="text" name="is_text" label="This is text" dont-skip-if="example==1" discrepancy-if="example==1" discrepancy-text="this is a discrepancy"></tangy-input>
                     <tangy-input type="number" name="is_number" label="This is a number"></tangy-input>
                   </template>
                 </tangy-form-item>
