@@ -18,6 +18,7 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
       ...this.defaultConfigAdvancedAttributes(),
       ...this.defaultConfigUnimplementedAttributes(),
       hideOutput: false,
+      maxSizeInKb: 512
     };
   }
 
@@ -29,6 +30,8 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
       ...this.upcastValidationAttributes(config, element),
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
+      ...element.getProps(),
+      hideOutput: element.hasAttribute('hide-output'),
     };
   }
 
@@ -41,7 +44,8 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
         ${this.downcastValidationAttributes(config)}
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
-        ${config.hideOutput ? "hide-output" : ""}
+        ${config.hideOutput ? 'hide-output' : ""}
+        ${config.maxSizeInKb ? `max-size-in-kb="${config.maxSizeInKb}"` : ""}
       >
       </tangy-photo-capture>
     `;
@@ -54,6 +58,8 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
+      <tr><td><strong>HideOutput:</strong></td><td>${config.hideOutput}</td></tr>
+      <tr><td><strong>maxSizeInKb:</strong></td><td>${config.maxSizeInKb}</td></tr>
     </table>
     <hr/>
     `;
@@ -71,9 +77,10 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
   }
 
   renderEdit(config) {
+    console.log(config)
     const action = config.name ? "Edit" : "Add";
     return `
-      <h2>${action} Text Input</h2>
+      <h2>${action} Photo Capture</h2>
       <tangy-form id="tangy-photo-capture">
         <tangy-form-item>
           <template>
@@ -87,7 +94,12 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
                 <div>
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
-                  <tangy-checkbox name="hide-output" help-text="Hide the data output scanned from the QR code. This may be useful if you are using a format such as JSON and parsing it out into other items.">Hide output</tangy-checkbox>
+                  <tangy-input name="max-size-in-kb" type="number" inner-label="Maximum size in kb" value="${
+                      config.maxSizeInKb
+                  }"></tangy-input>
+                  <tangy-toggle name="hideOutput" help-text="Hide the data output scanned from the Photo Capture widget. This may be useful if you are using a format such as JSON and parsing it out into other items." ${
+        config.hideOutput ? 'value="on"' : ''
+    }>Hide output</tangy-toggle>
                 </div>
                 <div>
                   ${this.renderEditConditionalAttributes(config)}
@@ -113,7 +125,8 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
-      hideInput: formEl.values["hide-output"],
+      hideOutput: formEl.values.hideOutput === 'on' ? true : false,
+      maxSizeInKb: formEl.values["max-size-in-kb"]
     };
   }
 }

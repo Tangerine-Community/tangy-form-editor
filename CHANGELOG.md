@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v7.8.0
+
+* Added support for editing the  `tangy-photo-capture` component, which saves data as `jpeg` with `base64` encoding.
+* It attempts to take the picture with the highest possible quality and then resizes it with best practice resizing algorithms (using the built-in canvas resizer is poor quality). By default, it tries to keep the size below 256kb, but this can be changed to any arbitrary size using the max-size-in-kb attribute.
+  **Example**
+```html
+ <template>
+    <tangy-photo-capture name="test-photo" max-size-in-kb='128'></tangy-photo-capture>
+</template>
+```
+
 ## v7.7.5
 - Reverted juicy-ace-editor import
 

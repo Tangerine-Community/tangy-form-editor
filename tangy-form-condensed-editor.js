@@ -26,6 +26,7 @@ import './widget/tangy-acasi-widget.js'
 import './widget/tangy-partial-date-widget.js'
 import './widget/tangy-signature-widget.js'
 import './widget/tangy-toggle-widget.js'
+import './widget/tangy-photo-capture-widget'
 
 /**
  * `tangy-form-item-editor`
