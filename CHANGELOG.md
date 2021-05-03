@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.8.2
+- Added photo capture widget to add input selector UI
+
 ## v7.8.1
 - Updated dependencies based on Dependabot advice.
 
