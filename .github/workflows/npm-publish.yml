@@ -9,21 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 15
-      - run: npm install
-      - run: npm run build
-
-  publish-npm:
-    needs: build
+  build-and-publish-npm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,6 +18,8 @@ jobs:
           node-version: 15
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - run: npm install
+      - run: npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
