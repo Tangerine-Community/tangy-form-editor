@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.8.4
+- Combine build and publish actions into one so result of build is published.
+
 ## v7.8.3
 - Fix bundled builds of tangy-form-editor that are built and published by github actions. Looks like the bundle has been stuck back in June 2020.
 
