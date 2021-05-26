@@ -1,5 +1,43 @@
 # CHANGELOG
 
+## v7.8.2
+- Added photo capture widget to add input selector UI
+
+## v7.8.1
+- Updated dependencies based on Dependabot advice.
+
+## v7.8.0
+
+-  Added support for editing the  `tangy-photo-capture` component, which saves data as `jpeg` with `base64` encoding.
+-  It attempts to take the picture with the highest possible quality and then resizes it with best practice resizing algorithms (using the built-in canvas resizer is poor quality). By default, it tries to keep the size below 256kb, but this can be changed to any arbitrary size using the max-size-in-kb attribute.
+  **Example**
+```html
+ <template>
+    <tangy-photo-capture name="test-photo" max-size-in-kb='128'></tangy-photo-capture>
+</template>
+```
+
+## v7.7.5
+- Reverted juicy-ace-editor import
+
+## v7.7.4
+- Reverted package choices for dr-niels-paper-expansion-panel and juicy-ace-edito to see if config change to GH Action workflow will use older url's.
+
+## v7.7.3
+- Switched to juicy-ace-editor-es6 to work around GH Action issues.
+
+## v7.7.2
+- Changed package urls for juicy-ace-editor and dr-niels-paper-expansion-panel to fix caused issue in GH Actions for npm ci
+
+## v7.7.1
+- Changed protocol to git+https in package.json to fix caused issue in GH Actions for npm ci
+
+## v7.7.0
+- Add validation to ensure captureItemAt is less than duration( Tangerine-Community/Tangerine#2294) - https://github.com/Tangerine-Community/tangy-form-editor/pull/181
+- Labels for checkboxes and radio buttons should allow for HTML markup - https://github.com/Tangerine-Community/tangy-form-editor/pull/178
+- Allow for setting cycle-sequences(Tangerine-Community/Tangerine#1603) - Part of Tangerine-Community/tangy-form#212
+
+
 ## v7.6.8
 - Fix bump tangy-form to v4.23.3.
 

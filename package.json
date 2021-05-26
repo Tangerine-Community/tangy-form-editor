@@ -1,16 +1,16 @@
 {
   "name": "tangy-form-editor",
   "main": "tangy-form-editor.js",
-  "version": "7.6.8",
+  "version": "7.8.2",
   "scripts": {
     "start": "./node_modules/.bin/polymer serve",
     "build": "webpack",
     "test": "./node_modules/.bin/polymer test -l chrome"
   },
   "dependencies": {
-    "@material/mwc-button": "^0.9.1",
-    "@material/mwc-fab": "^0.9.1",
-    "@material/mwc-icon": "^0.9.1",
+    "@material/mwc-button": "^0.21.0",
+    "@material/mwc-fab": "^0.21.0",
+    "@material/mwc-icon": "^0.21.0",
     "@polymer/iron-pages": "^3.0.1",
     "@polymer/paper-tabs": "^3.1.0",
     "@polymer/paper-toggle-button": "^3.0.1",
@@ -20,15 +20,15 @@
     "js-beautify": "^1.7.5",
     "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
-    "tangy-form": "^4.23.3",
+    "tangy-form": "^4.25.0",
     "tangy-translate": "^1.0.0"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "polymer-cli": "^1.9.2",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0"
   },
   "repository": {
     "type": "git",

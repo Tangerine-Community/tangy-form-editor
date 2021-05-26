@@ -137,6 +137,11 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
                           }"></tangy-input>
                           <tangy-input name="label" hint-text="Enter the display label of the radio button" inner-label="Label" type="text" value="${
                             option.label
+                            .replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(/"/g, "&quot;")
+                            .replace(/'/g, "&#039;")
                           }"></tangy-input>
                           <tangy-checkbox name="correct" hint-text="Select if this is the correct answer."  label="Correct"  value="${
                             option.correct ? "on" : ""

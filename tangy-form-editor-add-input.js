@@ -88,6 +88,7 @@ class TangyFormEditorAddInput extends PolymerElement {
           <h4>Content Display</h4>
           <div class="element-list">
             <mwc-button icon="image" on-click="addThis" id="tangy-image-widget">Image</mwc-button><br>
+            <mwc-button icon="photo" on-click="addThis" id="tangy-photo-capture-widget">Photo Capture</mwc-button><br>
             <mwc-button icon="code" on-click="addThis" id="tangy-box-widget">HTML content container</mwc-button><br>
             <mwc-button icon="attach_money" on-click="addThis" id="tangy-template-widget">HTML template</mwc-button><br>
             <mwc-button icon="repeat" on-click="addThis" id="tangy-input-groups-widget">Repeatable HTML Group</mwc-button><br>

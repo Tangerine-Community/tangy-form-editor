@@ -136,7 +136,7 @@ class TangyTimedWidget extends TangyBaseWidget {
                 <tangy-input name="hintText" inner-label="Hint Text" value="${
                   config.hintText
                 }"></tangy-input>
-                <tangy-input name="captureItemAt" inner-label="Capture Item at" hint-text="The number of seconds to ask data collector what item was last attempted" value="${
+                <tangy-input name="captureItemAt" valid-if="getValue('duration')>getValue('captureItemAt')" error-text="Value of 'Capture item At' must be less than the value of 'Duration'" inner-label="Capture Item at" hint-text="The number of seconds to ask data collector what item was last attempted" value="${
                   config.captureItemAt ? config.captureItemAt : ''
                 }"></tangy-input>
                 <tangy-input name="autoStop" inner-label="Auto Stop" value="${
@@ -148,7 +148,7 @@ class TangyTimedWidget extends TangyBaseWidget {
                 <tangy-toggle name="rowMarkers" ${
                   config.rowMarkers ? 'value="on"' : ''
                 }>Mark entire rows</tangy-toggle>
-                <tangy-input name="duration" hint-text="Enter the time limit for this grid." inner-label="Duration in seconds" value="${
+                <tangy-input name="duration"  hint-text="Enter the time limit for this grid." inner-label="Duration in seconds" value="${
                   config.duration
                 }"></tangy-input>
                 <tangy-input name="optionFontSize" hint-text="Enter the font size for the buttons on this grid (default is 0.7)." inner-label="Button font size (optional)" value="${
