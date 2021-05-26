@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.8.3
+- Fix bundled builds of tangy-form-editor that are built and published by github actions. Looks like the bundle has been stuck back in June 2020.
+
 ## v7.8.2
 - Added photo capture widget to add input selector UI
 
