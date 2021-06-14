@@ -20,15 +20,15 @@
     "js-beautify": "^1.7.5",
     "juicy-ace-editor": "git://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.0.0",
-    "tangy-form": "^4.25.0",
+    "tangy-form": "^4.25.4",
     "tangy-translate": "^1.0.0"
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "polymer-cli": "^1.9.2",
-    "webpack": "^5.36.2",
-    "webpack-cli": "^4.6.0"
+    "webpack": "4.44.2",
+    "webpack-cli": "4.7.0"
   },
   "repository": {
     "type": "git",
