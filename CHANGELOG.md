@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.8.5
+- Fix issues w/ es6 module used in tangy-form. PR: [#213](https://github.com/Tangerine-Community/tangy-form-editor/pull/213)
+
 ## v7.8.4
 - Combine build and publish actions into one so result of build is published.
 
