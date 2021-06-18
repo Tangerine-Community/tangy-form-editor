@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.8.7
+- Added warning for tangy-photo-capture input.
+
 ## v7.8.6
 - Bump tangy-form to 4.25.9
 

@@ -81,6 +81,10 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
     const action = config.name ? "Edit" : "Add";
     return `
       <h2>${action} Photo Capture</h2>
+      <h3><span style="color:red">Warning!</span> This input is a new feature and has not been tested on many different Android versions. We have tested 
+      on a small number of tablets running Android 9 and 10. It is currently preset to use the rear camera only. 
+      Also be aware that using photo capture on a tablet has an impact on sync time. 
+      Image data is large and can cause a significant delay when uploading to the server.</h3>
       <tangy-form id="tangy-photo-capture">
         <tangy-form-item>
           <template>
