@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.8.6
+- Bump tangy-form to 4.25.9
+
 ## v7.8.5
 - Fix issues w/ es6 module used in tangy-form. PR: [#213](https://github.com/Tangerine-Community/tangy-form-editor/pull/213)
 
