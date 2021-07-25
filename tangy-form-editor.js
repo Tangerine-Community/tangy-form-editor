@@ -377,7 +377,7 @@ class TangyFormEditor extends PolymerElement {
           <paper-textarea 
             style="margin: 15px;"
             label="${t('Cycle Sequences')}"
-            placeholder="${t('This is a list of acceptable orders of sections, which will be selected each time an assessment is run.\n Section indicies are separated by commas, new lines separate sequences. Once the full list of sequences is executed it will start back from the first line')}"
+            placeholder="${t('This is a list of acceptable orders of sections(i.e from 1 to the length of the items), which will be selected each time an assessment is run.\n Section indices are separated by commas, new lines separate sequences. Once the full list of sequences is executed it will start back from the first line. Example sequences is 1,2,3,4\n4,1,2,3 ')}"
             id="cycle-sequences" 
             rows="5"
             value="${state.form.cycleSequences}"
