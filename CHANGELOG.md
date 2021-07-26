@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.8.8
+- Added instructions for using Cycle Sequences. PR: [#231](https://github.com/Tangerine-Community/tangy-form-editor/pull/231)
+
 ## v7.8.7
 - Added warning for tangy-photo-capture input.
 
