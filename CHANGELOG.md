@@ -3,6 +3,20 @@
 ## v7.9.0
 - Bump tangy-form to v4.27.0
 
+## v7.8.8
+- Added instructions for using Cycle Sequences. PR: [#231](https://github.com/Tangerine-Community/tangy-form-editor/pull/231)
+- Bump tangy-form to 4.25.11
+
+## v7.8.7
+- Added warning for tangy-photo-capture input.
+
+## v7.8.6
+- Bump tangy-form to 4.25.9
+
+## v7.8.5
+- Fix issues w/ es6 module used in tangy-form. PR: [#213](https://github.com/Tangerine-Community/tangy-form-editor/pull/213)
+>>>>>>> origin/master
+
 ## v7.8.4
 - Combine build and publish actions into one so result of build is published.
 
