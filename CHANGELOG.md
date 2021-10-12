@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.9.2
+- NPM build error fix.
+
 ## v7.9.1
 - Rerelease due to merge conflict issue.
 
