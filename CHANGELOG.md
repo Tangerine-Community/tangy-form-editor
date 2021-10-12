@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.9.1
+- Rerelease due to merge conflict issue.
+
 ## v7.9.0
 - Bump tangy-form to v4.27.0
 
@@ -15,7 +18,6 @@
 
 ## v7.8.5
 - Fix issues w/ es6 module used in tangy-form. PR: [#213](https://github.com/Tangerine-Community/tangy-form-editor/pull/213)
->>>>>>> origin/master
 
 ## v7.8.4
 - Combine build and publish actions into one so result of build is published.
