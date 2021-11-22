@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.9.3
+- Implement support for on-resubmit logic in tangy-form so that it won't be removed when edited: [#3017](https://github.com/Tangerine-Community/Tangerine/issues/3017)
+- Update tangy-form to 4.28.0
+
 ## v7.9.2
 - NPM build error fix.
 
