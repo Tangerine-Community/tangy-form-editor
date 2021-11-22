@@ -183,6 +183,9 @@ class TangyFormEditor extends PolymerElement {
         on-submit="
           ${state.form.onSubmit}
         "
+        on-resubmit="
+          ${state.form.onResubmit}
+        "
       >
         ${state.items
           .map(
@@ -258,6 +261,9 @@ class TangyFormEditor extends PolymerElement {
              : '',
           onSubmit: template.content.querySelector('tangy-form').hasAttribute('on-submit')
              ? template.content.querySelector('tangy-form').getAttribute('on-submit')
+             : '',
+          onResubmit: template.content.querySelector('tangy-form').hasAttribute('on-resubmit')
+             ? template.content.querySelector('tangy-form').getAttribute('on-resubmit')
              : '',
            category: template.content.querySelector('tangy-form').hasAttribute('category')
             ? template.content.querySelector('tangy-form').getAttribute('category')
@@ -377,7 +383,7 @@ class TangyFormEditor extends PolymerElement {
           <paper-textarea 
             style="margin: 15px;"
             label="${t('Cycle Sequences')}"
-            placeholder="${t('This is a list of acceptable orders of sections, which will be selected each time an assessment is run.\n Section indicies are separated by commas, new lines separate sequences. Once the full list of sequences is executed it will start back from the first line')}"
+            placeholder="${t('This is a list of acceptable orders of sections(i.e from 1 to the length of the items), which will be selected each time an assessment is run.\n Section indices are separated by commas, new lines separate sequences. Once the full list of sequences is executed it will start back from the first line. Example sequences is 1,2,3,4\n4,1,2,3 ')}"
             id="cycle-sequences" 
             rows="5"
             value="${state.form.cycleSequences}"
@@ -385,6 +391,7 @@ class TangyFormEditor extends PolymerElement {
           <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
           <paper-expansion-panel header="on-submit logic" id="on-submit-editor"></paper-expansion-panel>
+          <paper-expansion-panel header="on-resubmit logic" id="on-resubmit-editor"></paper-expansion-panel>
         </paper-expansion-panel>
         
         <sortable-list >
@@ -467,6 +474,12 @@ class TangyFormEditor extends PolymerElement {
       onSubmitEditorEl.style.height = `${window.innerHeight*.6}px`
       onSubmitEditorEl.addEventListener('change', _ => _.stopPropagation())
       this.shadowRoot.querySelector('#on-submit-editor').appendChild(onSubmitEditorEl)
+      let onResubmitEditorEl = document.createElement('juicy-ace-editor')
+      onResubmitEditorEl.setAttribute('mode', 'ace/mode/javascript')
+      onResubmitEditorEl.value = state.form.onResubmit  ? state.form.onResubmit.replace(/&#34;/g, '"') : ''
+      onResubmitEditorEl.style.height = `${window.innerHeight*.6}px`
+      onResubmitEditorEl.addEventListener('change', _ => _.stopPropagation())
+      this.shadowRoot.querySelector('#on-resubmit-editor').appendChild(onResubmitEditorEl)
 
       // Bind event listeners.
       this.$.container
@@ -576,6 +589,7 @@ class TangyFormEditor extends PolymerElement {
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onSubmit: this.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
+      onResubmit: this.shadowRoot.querySelector('#on-resubmit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       category: categoryValue
     }})
     const duplicateVariableNames = this.findDuplicateVariableNames()
