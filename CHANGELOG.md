@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v7.9.4
+## v7.9.5
 - Bump tangy-form to v4.28.2.
 
 ## v7.9.4
