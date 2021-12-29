@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.9.7
+- Fix breaking builds on Github Action by replacing dependency protocol of `git://` with `https://`.
+
 ## v7.9.6
 - Fix validation logic when editing timed grids https://github.com/Tangerine-Community/Tangerine/issues/3130
 - Bump tangy-form to v4.28.3.
