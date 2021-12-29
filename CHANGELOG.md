@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.9.6
+- Fix validation logic when editing timed grids https://github.com/Tangerine-Community/Tangerine/issues/3130
+- Bump tangy-form to v4.28.3.
+
 ## v7.9.5
 - Bump tangy-form to v4.28.2.
 
