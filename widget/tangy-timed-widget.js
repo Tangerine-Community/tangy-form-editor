@@ -136,7 +136,7 @@ class TangyTimedWidget extends TangyBaseWidget {
                 <tangy-input name="hintText" inner-label="Hint Text" value="${
                   config.hintText
                 }"></tangy-input>
-                <tangy-input name="captureItemAt" valid-if="getValue('duration')>getValue('captureItemAt')" error-text="Value of 'Capture item At' must be less than the value of 'Duration'" inner-label="Capture Item at" hint-text="The number of seconds to ask data collector what item was last attempted" value="${
+                <tangy-input name="captureItemAt" valid-if="!getValue('captureItemAt') ? true : parseInt(getValue('duration'))>parseInt(getValue('captureItemAt'))" error-text="Value of 'Capture item At' must be less than the value of 'Duration'" inner-label="Capture Item at" hint-text="The number of seconds to ask data collector what item was last attempted" value="${
                   config.captureItemAt ? config.captureItemAt : ''
                 }"></tangy-input>
                 <tangy-input name="autoStop" inner-label="Auto Stop" value="${
