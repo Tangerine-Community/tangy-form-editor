@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.10.0
+- Bump tangy-form to v4.29.0
+
 ## v7.9.7
 - Fix breaking builds on Github Action by replacing dependency protocol of `git://` with `https://`.
 
