@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.11.0
+- Bump tangy-form to v4.30.0 and add support for open-in-fullscreen attribute.
+
 ## v7.10.5
 - Bump tangy-form to v4.29.4
 
