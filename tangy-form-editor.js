@@ -380,10 +380,10 @@ class TangyFormEditor extends PolymerElement {
           }>${t('Open in fullscreen mode')}</paper-checkbox><br>
           <paper-checkbox style="margin:15px;" id="fullscreen-inline-checkbox" ${
             state.form.fullscreenInline ? 'checked' : ''
-          }>${t('Open in fullscreen mode inline in the app without blocking control to the menu')}</paper-checkbox><br>
+          }>${t('Use fullscreen mode without blocking control to the menu')}</paper-checkbox><br>
           <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${
             state.form.fullscreen ? 'checked' : ''
-          }>${t('Allow switching between fullscreen mode')}</paper-checkbox><br>
+          }>${t('Allow switching in and out of fullscreen mode')}</paper-checkbox><br>
           <paper-input 
             style="margin: 15px;"
             label="${t('Number of clicks required to exit fullscreen mode')}"
