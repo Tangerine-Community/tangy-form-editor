@@ -522,7 +522,7 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelector('.form-html-edit')
         .addEventListener('click', this.onFormHtmlEditClick.bind(this))
-      if (!state.form.openInFullscreen) {
+      if (!state.form.openInFullscreen && !state.form.fullscreen) {
         this.$['form-preview'].innerHTML = `
           <h2>Form preview</h2>
           ${this.formHtml}
@@ -530,7 +530,7 @@ class TangyFormEditor extends PolymerElement {
         this.$['form-preview'].querySelector('tangy-form').setAttribute('error-logging', '')
       } else {
         this.$['form-preview'].innerHTML = `
-          <h2>Form preview is not supported when opening in fullscreen mode is enabled.</h2>
+          <h2>Form preview is not compatible with fullscreen mode.</h2>
         `
       }
     } else if (state.openItem === 'form.html') {
