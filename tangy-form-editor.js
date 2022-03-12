@@ -173,6 +173,7 @@ class TangyFormEditor extends PolymerElement {
         ${state.form.fullscreen ? ` fullscreen` : ''}
         ${state.form.openInFullscreen ? ` open-in-fullscreen` : ''}
         ${state.form.fullscreenInline ? ` fullscreen-inline` : ''}
+        fullscreen-nav-align="${state.form.fullscreenNavAlign === 'bottom' ? `bottom` : 'top'}"
         ${state.form.recordItemFirstOpenTimes ? ` record-item-first-open-times` : ''}
         on-open="
           ${state.form.onOpen}
@@ -250,6 +251,9 @@ class TangyFormEditor extends PolymerElement {
            fullscreen: template.content.querySelector('tangy-form').hasAttribute('fullscreen'),
            openInfullscreen: template.content.querySelector('tangy-form').hasAttribute('open-in-fullscreen'),
            fullscreenInline: template.content.querySelector('tangy-form').hasAttribute('fullscreen-inline'),
+           fullscreenNavAlign: !template.content.querySelector('tangy-form').hasAttribute('fullscreen-nav-align') || template.content.querySelector('tangy-form').hasAttribute('fullscreen-nav-align') === 'top'
+             ? 'top' 
+             : 'bottom',
            recordItemFirstOpenTimes: template.content.querySelector('tangy-form').hasAttribute('record-item-first-open-times'),
            exitClicks: template.content.querySelector('tangy-form').hasAttribute('exit-clicks')
             ? template.content.querySelector('tangy-form').getAttribute('exit-clicks')
@@ -384,6 +388,10 @@ class TangyFormEditor extends PolymerElement {
           <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${
             state.form.fullscreen ? 'checked' : ''
           }>${t('Allow switching in and out of fullscreen mode')}</paper-checkbox><br>
+          <select id="fullscreen-nav-align-select" name="fullscreen-nav-align-select" style="margin:15px;">
+            <option value="top" ${!state.form.fullscreenNavAlign || state.form.fullscreenNavAlign === 'top' ? 'selected' : ''}>${t('Top')}</option>
+            <option value="bottom" ${state.form.fullscreenNavAlign === 'bottom' ? 'selected' : ''}>${t('Bottom')}</option>
+          </select><label for="fullscreen-nav-align-select">${t('Navigation alignment in fullscreen mode')}</label><br>
           <paper-input 
             style="margin: 15px;"
             label="${t('Number of clicks required to exit fullscreen mode')}"
@@ -603,6 +611,7 @@ class TangyFormEditor extends PolymerElement {
       fullscreen: this.$.container.querySelector('#fullscreen-checkbox').hasAttribute('checked'),
       openInFullscreen: this.$.container.querySelector('#open-in-fullscreen-checkbox').hasAttribute('checked'),
       fullscreenInline: this.$.container.querySelector('#fullscreen-inline-checkbox').hasAttribute('checked'),
+      fullscreenNavAlign: this.$.container.querySelector('#fullscreen-nav-align-select').value,
       recordItemFirstOpenTimes: this.$.container.querySelector('#record-item-first-open-times-checkbox').hasAttribute('checked'),
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
