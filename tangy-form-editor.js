@@ -172,6 +172,7 @@ class TangyFormEditor extends PolymerElement {
     }"
         ${state.form.fullscreen ? ` fullscreen` : ''}
         ${state.form.openInFullscreen ? ` open-in-fullscreen` : ''}
+        ${state.form.fullscreenInline ? ` fullscreen-inline` : ''}
         ${state.form.recordItemFirstOpenTimes ? ` record-item-first-open-times` : ''}
         on-open="
           ${state.form.onOpen}
@@ -248,6 +249,7 @@ class TangyFormEditor extends PolymerElement {
            title: template.content.querySelector('tangy-form').getAttribute('title'),
            fullscreen: template.content.querySelector('tangy-form').hasAttribute('fullscreen'),
            openInfullscreen: template.content.querySelector('tangy-form').hasAttribute('open-in-fullscreen'),
+           fullscreenInline: template.content.querySelector('tangy-form').hasAttribute('fullscreen-inline'),
            recordItemFirstOpenTimes: template.content.querySelector('tangy-form').hasAttribute('record-item-first-open-times'),
            exitClicks: template.content.querySelector('tangy-form').hasAttribute('exit-clicks')
             ? template.content.querySelector('tangy-form').getAttribute('exit-clicks')
@@ -376,6 +378,9 @@ class TangyFormEditor extends PolymerElement {
           <paper-checkbox style="margin:15px;" id="open-in-fullscreen-checkbox" ${
             state.form.openInFullscreen ? 'checked' : ''
           }>${t('Open in fullscreen mode')}</paper-checkbox><br>
+          <paper-checkbox style="margin:15px;" id="fullscreen-inline-checkbox" ${
+            state.form.fullscreenInline ? 'checked' : ''
+          }>${t('Open in fullscreen mode inline in the app without blocking control to the menu')}</paper-checkbox><br>
           <paper-checkbox style="margin:15px;" id="fullscreen-checkbox" ${
             state.form.fullscreen ? 'checked' : ''
           }>${t('Allow switching between fullscreen mode')}</paper-checkbox><br>
@@ -591,6 +596,7 @@ class TangyFormEditor extends PolymerElement {
       cycleSequences: this.$.container.querySelector('#cycle-sequences').value,
       fullscreen: this.$.container.querySelector('#fullscreen-checkbox').hasAttribute('checked'),
       openInFullscreen: this.$.container.querySelector('#open-in-fullscreen-checkbox').hasAttribute('checked'),
+      fullscreenInline: this.$.container.querySelector('#fullscreen-inline-checkbox').hasAttribute('checked'),
       recordItemFirstOpenTimes: this.$.container.querySelector('#record-item-first-open-times-checkbox').hasAttribute('checked'),
       onOpen: this.shadowRoot.querySelector('#on-open-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
