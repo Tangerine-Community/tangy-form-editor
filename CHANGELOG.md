@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v7.12.0
+- Bump tangy-form to v4.31.0.
+- Add support for configuring fullscreen-nav-align attribute on tangy-form.
+- Add additional clarity on labels for fullscreen mode options
+- Disable form preview when allowing fullscreen mode because it causes a confusing UX when editing forms.
+- Add support for editing fullscreen-inline attribute on tangy-form. 
+
 ## v7.11.0
 - Bump tangy-form to v4.30.0 and add support for open-in-fullscreen attribute.
 
