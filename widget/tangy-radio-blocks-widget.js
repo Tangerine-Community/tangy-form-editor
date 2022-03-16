@@ -91,7 +91,7 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
   renderInfo(config) {
     const icon = (this.shadowRoot.querySelector(
       "#icon"
-    ).innerHTML = `<span class="header-text"><mwc-icon>filter_center_focus</mwc-icon><span>`);
+    ).innerHTML = `<span class="header-text"><mwc-icon>table_rows</mwc-icon><span>`);
     const name = (this.shadowRoot.querySelector(
       "#name"
     ).innerHTML = `<span class="header-text">${config.name}</span>`);
