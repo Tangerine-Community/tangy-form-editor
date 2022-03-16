@@ -58,6 +58,7 @@ class TangyFormEditorAddInput extends PolymerElement {
             <mwc-button icon="text_fields" on-click="addThis" id="tangy-text-widget">Text</mwc-button><br>
             <mwc-button icon="looks_one" on-click="addThis" id="tangy-number-widget">Number</mwc-button><br>
             <mwc-button icon="email" on-click="addThis" id="tangy-email-widget">Email</mwc-button><br>
+            <mwc-button icon="keyboard" on-click="addThis" id="tangy-keyboard-input-widget">On-screen keyboard</mwc-button><br>
           </div>
           <h4>Date/Time</h4>
           <div class="element-list">
@@ -71,6 +72,7 @@ class TangyFormEditorAddInput extends PolymerElement {
           <div class="element-list">
             <mwc-button icon="check_box_outline_blank" on-click="addThis" id="tangy-checkboxes-widget">Checkbox Group</mwc-button><br>
             <mwc-button icon="radio_button_unchecked" on-click="addThis" id="tangy-radio-buttons-widget">Radio Buttons</mwc-button><br>
+            <mwc-button icon="table_rows" on-click="addThis" id="tangy-radio-blocks-widget">Radio Blocks</mwc-button><br>
             <mwc-button icon="arrow_drop_down_circle" on-click="addThis" id="tangy-select-widget">Dropdown (select)</mwc-button><br>
           </div>
           <h4>Boolean</h4>
