@@ -71,6 +71,7 @@ class TangyFormEditorAddInput extends PolymerElement {
           <div class="element-list">
             <mwc-button icon="check_box_outline_blank" on-click="addThis" id="tangy-checkboxes-widget">Checkbox Group</mwc-button><br>
             <mwc-button icon="radio_button_unchecked" on-click="addThis" id="tangy-radio-buttons-widget">Radio Buttons</mwc-button><br>
+            <mwc-button icon="table_rows" on-click="addThis" id="tangy-radio-blocks-widget">Radio Blocks</mwc-button><br>
             <mwc-button icon="arrow_drop_down_circle" on-click="addThis" id="tangy-select-widget">Dropdown (select)</mwc-button><br>
           </div>
           <h4>Boolean</h4>
