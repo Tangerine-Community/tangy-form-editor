@@ -392,17 +392,17 @@ class TangyBaseWidget extends PolymerElement {
       <tangy-input
         name="question-number"
         inner-label="Question number"
-        value="${config.questionNumber}">
+        value="${config.questionNumber || ''}">
       </tangy-input>
       <tangy-input
         name="label"
         inner-label="Label"
-        value="${config.label}">
+        value="${config.label || ''}">
       </tangy-input>
       <tangy-input
         name="hint-text"
         inner-label="Hint text"
-        value="${config.hintText}">
+        value="${config.hintText || ''}">
       </tangy-input>
     `;
   }
