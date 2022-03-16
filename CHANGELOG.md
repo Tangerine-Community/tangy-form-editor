@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.13.0
+- Add radio blocks and keyboard input widgets.
+
 ## v7.12.0
 - Bump tangy-form to v4.31.0.
 - Add support for configuring fullscreen-nav-align attribute on tangy-form.
