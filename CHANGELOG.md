@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.13.2
+- Fix URLs in package-lock to use git+https instead of git+ssh.
+
 ## v7.13.1
 - Add 'suffix' property inout for keyboard input widget.
 - Bump tangy-form to v4.34.0.
