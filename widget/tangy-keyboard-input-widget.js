@@ -18,6 +18,7 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
       ...this.defaultConfigAdvancedAttributes(),
       ...this.defaultConfigUnimplementedAttributes(),
       prefix: '',
+      suffix: '',
       keys: '',
     };
   }
@@ -38,6 +39,7 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
     return `
       <tangy-keyboard-input 
         prefix="${config.prefix}"
+        suffix="${config.suffix}"
         keys="${config.keys}"
         ${this.downcastCoreAttributes(config)}
         ${this.downcastQuestionAttributes(config)}
@@ -57,6 +59,7 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
       <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
       <tr><td><strong>Error Message:</strong></td><td>${config.errorText}</td></tr>
       <tr><td><strong>Prefix:</strong></td><td>${config.prefix}</td></tr>
+      <tr><td><strong>Suffix:</strong></td><td>${config.suffix}</td></tr>
       <tr><td><strong>Keys:</strong></td><td>${config.keys}</td></tr>
       <tr><td><strong>Private:</strong></td><td>${config.private}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
@@ -104,6 +107,11 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
                     inner-label="Prefix"
                     value="${config.prefix}">
                   </tangy-input>
+                  <tangy-input
+                    name="suffix"
+                    inner-label="Suffix"
+                    value="${config.suffix}">
+                  </tangy-input>
                 </div>
                 <div>
                   ${this.renderEditConditionalAttributes(config)}
@@ -135,6 +143,9 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
       ).value,
       prefix: formEl.response.items[0].inputs.find(
         (input) => input.name === "prefix"
+      ).value,
+      suffix: formEl.response.items[0].inputs.find(
+        (input) => input.name === "suffix"
       ).value,
     };
   }
