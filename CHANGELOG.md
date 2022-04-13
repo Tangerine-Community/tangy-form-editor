@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.13.1
+- Add 'suffix' property inout for keyboard input widget.
+- Bump tangy-form to v4.34.0.
+
 ## v7.13.0
 - Add radio blocks and keyboard input widgets.
 
