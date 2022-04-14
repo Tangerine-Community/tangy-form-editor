@@ -249,7 +249,7 @@ class TangyFormEditor extends PolymerElement {
          {
            title: template.content.querySelector('tangy-form').getAttribute('title'),
            fullscreen: template.content.querySelector('tangy-form').hasAttribute('fullscreen'),
-           openInfullscreen: template.content.querySelector('tangy-form').hasAttribute('open-in-fullscreen'),
+           openInFullscreen: template.content.querySelector('tangy-form').hasAttribute('open-in-fullscreen'),
            fullscreenInline: template.content.querySelector('tangy-form').hasAttribute('fullscreen-inline'),
            fullscreenNavAlign: !template.content.querySelector('tangy-form').hasAttribute('fullscreen-nav-align') || template.content.querySelector('tangy-form').hasAttribute('fullscreen-nav-align') === 'top'
              ? 'top' 
