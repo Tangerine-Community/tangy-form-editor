@@ -584,7 +584,7 @@
                 >
                   <template>
                     
-            <tangy-toggle name="toggle_1" required="" question-number="1. " label="Tangy Toggle?" hint-text="hinting some more" error-text="" warn-text="" class="" style=""></tangy-toggle>
+                    <tangy-toggle name="toggle_1" required="" question-number="1. " label="Tangy Toggle?" hint-text="hinting some more" error-text="" warn-text="" class="" style=""></tangy-toggle>
           
                   </template>
                 </tangy-form-item>
@@ -604,9 +604,29 @@
                 >
                   <template>
 
-            <tangy-photo-capture name="tangy_photo_capture_1"  max-size-in-kb='512' required="" question-number="1. " label="Tangy Photo Capture"  error-text="" warn-text="" class="" style=""></tangy-photo-capture>
+                    <tangy-photo-capture name="tangy_photo_capture_1"  max-size-in-kb='512' required="" question-number="1. " label="Tangy Photo Capture"  error-text="" warn-text="" class="" style=""></tangy-photo-capture>
 
                   </template>
+                </tangy-form-item>
+
+                <tangy-form-item id="section_video-cap"
+                  title="Tangy Video Capture"
+                   incorrect-threshold="undefined"
+                  on-open="
+
+                  "
+                  on-change="
+
+                  "
+                  category="
+                    null
+                  "
+                >
+                    <template>
+
+                    <tangy-video-capture name="tangy_video_capture_1"  required="" question-number="1. " label="Tangy Video Capture"  error-text="" warn-text="" class="" style=""></tangy-video-capture>
+
+                    </template>
                 </tangy-form-item>
 
               </tangy-form>

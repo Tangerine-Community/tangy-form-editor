@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.14.0
+- Added widget for 'tangy-video-capture'. Bump tangy-form to v4.34.1.
+
 ## v7.13.2
 - Fix URLs in package-lock to use git+https instead of git+ssh.
 
