@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.14.1
+- Bump tangy-form to v4.34.2.
+
 ## v7.14.0
 - Added widget for 'tangy-video-capture'. Bump tangy-form to v4.34.1.
 
