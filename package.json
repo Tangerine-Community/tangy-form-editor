@@ -8,18 +8,18 @@
     "test": "./node_modules/.bin/polymer test -l chrome"
   },
   "dependencies": {
-    "@material/mwc-button": "^0.21.0",
-    "@material/mwc-fab": "^0.21.0",
-    "@material/mwc-icon": "^0.21.0",
+    "@material/mwc-button": "^0.26.1",
+    "@material/mwc-fab": "^0.26.1",
+    "@material/mwc-icon": "^0.26.1",
     "@polymer/iron-pages": "^3.0.1",
     "@polymer/paper-tabs": "^3.1.0",
     "@polymer/paper-toggle-button": "^3.0.1",
     "@polymer/polymer": "^3.0.0",
     "dr-niels-paper-expansion-panel": "https://github.com/DrNiels/paper-expansion-panel.git#master",
     "file-list-component": "^1.4.0",
-    "js-beautify": "^1.7.5",
+    "js-beautify": "^1.14.3",
     "juicy-ace-editor": "https://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
-    "redux": "^4.0.0",
+    "redux": "^4.2.0",
     "tangy-form": "^4.34.3",
     "tangy-translate": "^1.0.0"
   },
@@ -27,8 +27,8 @@
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "polymer-cli": "^1.9.2",
-    "webpack": "4.44.2",
-    "webpack-cli": "4.7.0"
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
   },
   "repository": {
     "type": "git",

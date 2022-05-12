@@ -18,7 +18,7 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
       ...this.defaultConfigAdvancedAttributes(),
       ...this.defaultConfigUnimplementedAttributes(),
       prefix: '',
-      suffix: '',
+      postfix: '',
       keys: '',
     };
   }
@@ -39,7 +39,7 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
     return `
       <tangy-keyboard-input 
         prefix="${config.prefix}"
-        suffix="${config.suffix}"
+        postfix="${config.postfix}"
         keys="${config.keys}"
         ${this.downcastCoreAttributes(config)}
         ${this.downcastQuestionAttributes(config)}
@@ -59,7 +59,7 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
       <tr><td><strong>Hint:</strong></td><td>${config.hintText}</td></tr>
       <tr><td><strong>Error Message:</strong></td><td>${config.errorText}</td></tr>
       <tr><td><strong>Prefix:</strong></td><td>${config.prefix}</td></tr>
-      <tr><td><strong>Suffix:</strong></td><td>${config.suffix}</td></tr>
+      <tr><td><strong>Postfix:</strong></td><td>${config.postfix}</td></tr>
       <tr><td><strong>Keys:</strong></td><td>${config.keys}</td></tr>
       <tr><td><strong>Private:</strong></td><td>${config.private}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
@@ -100,17 +100,20 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
                   <tangy-input
                     name="keys"
                     inner-label="Keys"
+                    hint-text="Keys: Space-separated. Example: 1 2 3 4 5 6 7 8 9 0"
                     value="${config.keys}">
                   </tangy-input>
                   <tangy-input
                     name="prefix"
                     inner-label="Prefix"
+                    hint-text="Prefix: Text before the values entered"
                     value="${config.prefix}">
                   </tangy-input>
                   <tangy-input
-                    name="suffix"
-                    inner-label="Suffix"
-                    value="${config.suffix}">
+                    name="postfix"
+                    inner-label="Postfix"
+                    hint-text="Postfix: Text after the values entered"
+                    value="${config.postfix}">
                   </tangy-input>
                 </div>
                 <div>
@@ -144,8 +147,8 @@ class TangyKeboardInputWidget extends TangyBaseWidget {
       prefix: formEl.response.items[0].inputs.find(
         (input) => input.name === "prefix"
       ).value,
-      suffix: formEl.response.items[0].inputs.find(
-        (input) => input.name === "suffix"
+      postfix: formEl.response.items[0].inputs.find(
+        (input) => input.name === "postfix"
       ).value,
     };
   }
