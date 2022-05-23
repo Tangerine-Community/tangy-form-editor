@@ -1,7 +1,10 @@
 # CHANGELOG
 
+## v7.14.4
+- Bump tangy-form to v4.34.5.
+
 ## v7.14.3
-- Bump tangy-form to v4.34.4
+- Bump tangy-form to v4.34.4.
 
 ## v7.14.2
 - Replaced suffix with postfix to be compatible with tangy-form for tangy-keyboard-input. 
