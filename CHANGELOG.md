@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.14.5
+- Fix package-lock issue.
+
 ## v7.14.4
 - Bump tangy-form to v4.34.5.
 
