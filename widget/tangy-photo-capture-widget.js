@@ -82,9 +82,10 @@ class TangyPhotoCaptureWidget extends TangyBaseWidget {
     return `
       <h2>${action} Photo Capture</h2>
       <h3><span style="color:red">Warning!</span> This input is a new feature and has not been tested on many different Android versions. We have tested 
-      on a small number of tablets running Android 9 and 10. It is currently preset to use the rear camera only. 
+      on a small number of tablets running Android 9 and 10. It is currently preset to use the rear camera. 
       Also be aware that using photo capture on a tablet has an impact on sync time. 
-      Image data is large and can cause a significant delay when uploading to the server.</h3>
+      Image data is large and can cause a significant delay when uploading to the server.
+      By default, this element saves to the database. If the deployment target is APK, you may use \`mediaFileStorageLocation:"file"\` in app-config.json to save images as files instead of saving to the database.</h3>
       <tangy-form id="tangy-photo-capture">
         <tangy-form-item>
           <template>

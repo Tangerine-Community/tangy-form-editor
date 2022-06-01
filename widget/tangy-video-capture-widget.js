@@ -89,7 +89,8 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
     const action = config.name ? "Edit" : "Add";
     return `
       <h2>${action} Video Capture</h2>
-      <h3><span style="color:red">Warning!</span> Using video capture on a tablet has an impact on sync time. 
+      <h3><span style="color:red">Warning!</span> This element only works on APK's and not on PWA's. 
+      Using video capture on a tablet has an impact on sync time. 
       Video data is large and can cause a significant delay when uploading to the server. 
       Video uploads are synced after normal Tangerine sync: be sure to alert users about this separate process..</h3>
       <div>

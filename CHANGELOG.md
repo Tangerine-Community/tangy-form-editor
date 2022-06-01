@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.14.6
+- Bump tangy-form to v4.36.1.
+- Added instructions to related editor widgets about using photo/video capture elements in APK's and PWA's.
+
 ## v7.14.5
 - Fix package-lock issue.
 
