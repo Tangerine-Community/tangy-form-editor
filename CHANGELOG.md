@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.14.7
+- Add checkbox to edit confirmNo for tangy-consent element.
+
 ## v7.14.6
 - Bump tangy-form to v4.36.1.
 - Added instructions to related editor widgets about using photo/video capture elements in APK's and PWA's.
