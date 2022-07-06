@@ -18,6 +18,7 @@ class TangyConsentWidget extends TangyBaseWidget {
       ...this.defaultConfigUnimplementedAttributes(),
       metaDataTemplate: "",
       prompt: "",
+      confirmNo: false
     };
   }
 
@@ -42,6 +43,7 @@ class TangyConsentWidget extends TangyBaseWidget {
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
         prompt="${config.prompt}"
+        ${config.confirmNo ? `confirm-no` : ''}
       >
         ${config.metaDataTemplate}
       </tangy-consent>
@@ -53,6 +55,7 @@ class TangyConsentWidget extends TangyBaseWidget {
     <table>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
       <tr><td><strong>Prompt:</strong></td><td>${config.prompt}</td></tr>
+      <tr><td><strong>Confirm if No?:</strong></td><td>${config.confirmNo}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
@@ -93,6 +96,9 @@ class TangyConsentWidget extends TangyBaseWidget {
                     value="${config.prompt}"
                     required>
                   </tangy-input>
+                  <tangy-checkbox name="confirm-no" ${
+        config.confirmNo ? 'value="on"' : ''
+    }>Display confirmation message if No?</tangy-checkbox>
                 </div>
                 <div>
                   ${this.renderEditConditionalAttributes(config)}
@@ -120,6 +126,8 @@ class TangyConsentWidget extends TangyBaseWidget {
       prompt: formEl.response.items[0].inputs.find(
         (input) => input.name === "prompt"
       ).value,
+      confirmNo: formEl.values['confirm-no'] === 'on' ? true : false,
+
     };
   }
 }
