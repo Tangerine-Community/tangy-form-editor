@@ -90,6 +90,7 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
     return `
       <h2>${action} Video Capture</h2>
       <h3><span style="color:red">Warning!</span> This element only works on APK's and not on PWA's. 
+      If you want to use video capture for your group, please request activation, otherwise videos will not be saved and will not be uploaded to the server upon sync.
       Using video capture on a tablet has an impact on sync time. 
       Video data is large and can cause a significant delay when uploading to the server. 
       Video uploads are synced after normal Tangerine sync: be sure to alert users about this separate process..</h3>

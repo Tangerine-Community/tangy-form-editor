@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.14.8
+- Add Video Capture input warning text [#3376](https://github.com/Tangerine-Community/Tangerine/issues/3376)
+
 ## v7.14.7
 - Add checkbox to edit confirmNo for tangy-consent element.
 
