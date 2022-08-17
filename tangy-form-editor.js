@@ -200,6 +200,7 @@ class TangyFormEditor extends PolymerElement {
             ${item.hideNextButton ? ` hide-next-button` : ``}
             ${item.hideNavLabels ? ` hide-nav-labels` : ``}
             ${item.hideNavIcons ? ` hide-nav-icons` : ``}
+            ${item.scoringSection ? ` scoring-section` : ``}
             ${item.summary ? ` summary` : ``}
             ${item.rightToLeft ? ` right-to-left` : ''}
             ${item.incorrectThreshold ? ` incorrect-threshold="${item.incorrectThreshold}"` : ''}
@@ -239,6 +240,7 @@ class TangyFormEditor extends PolymerElement {
         incorrectThreshold: el.hasAttribute('incorrect-threshold') ? el.getAttribute('incorrect-threshold') : '',
         hideNavIcons: el.hasAttribute('hide-nav-icons'),
         hideNavLabels: el.hasAttribute('hide-nav-labels'),
+        scoringSection: el.hasAttribute('scoring-section'),
         hideBackButton: el.hasAttribute('hide-back-button'),
         hideNextButton: el.hasAttribute('hide-next-button')
       }
