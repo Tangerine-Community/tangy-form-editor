@@ -158,6 +158,11 @@ class TangyFormEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true
       },
+      scoringFields: {
+        type: Array,
+        value: [],
+        reflectToAttribute: true
+      },
       filesEndpoint: {
         type: String,
         value: ''
@@ -241,6 +246,7 @@ class TangyFormEditor extends PolymerElement {
         hideNavIcons: el.hasAttribute('hide-nav-icons'),
         hideNavLabels: el.hasAttribute('hide-nav-labels'),
         scoringSection: el.hasAttribute('scoring-section'),
+        scoringFields: el.hasAttribute('scoring-fields'),
         hideBackButton: el.hasAttribute('hide-back-button'),
         hideNextButton: el.hasAttribute('hide-next-button')
       }
@@ -278,7 +284,10 @@ class TangyFormEditor extends PolymerElement {
              : '',
            category: template.content.querySelector('tangy-form').hasAttribute('category')
             ? template.content.querySelector('tangy-form').getAttribute('category')
-            : ''
+            : '',
+           scoringFields: template.content.querySelector('tangy-form').hasAttribute('scoring-fields')
+            ? template.content.querySelector('tangy-form').getAttribute('scoring-fields')
+            : '[]'
          }
       ),
       items
