@@ -89,6 +89,11 @@ class TangyFormItemEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true,
       },
+      scoringFields: {
+        type: Array,
+        value: [],
+        reflectToAttribute: true,
+      },
       hideSkipIf: {
         type: Boolean,
         value: false,
@@ -167,6 +172,9 @@ class TangyFormItemEditor extends PolymerElement {
                 ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>'
                 : ""
             }
+            <paper-input type="hidden" id="scoring-fields" value="${
+              this.item.scoringFields
+            }" ></paper-input>
             <p><paper-input type="number" id="incorrectThreshold" value="${
               this.item.incorrectThreshold
             }" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
@@ -197,6 +205,9 @@ class TangyFormItemEditor extends PolymerElement {
             <p><paper-checkbox disabled id="scoring-section-checkbox" ${
               this.item.scoringSection ? "checked" : ""
             }>${t("This section includes scoring in section header")}</paper-checkbox></p>
+            <paper-input type="hidden" id="scoring-fields" value="${
+              this.item.scoringFields
+            }" ></paper-input>
             <p><paper-input disabled type="number" id="incorrectThreshold" value="${
               this.item.incorrectThreshold
             }" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
@@ -366,23 +377,44 @@ class TangyFormItemEditor extends PolymerElement {
     if (categoryEl !== null) {
       categoryValue = categoryEl.value;
     }
-    const scoringFields = []
     let scoreEditorEl = this.shadowRoot.querySelector("#scoring-editor")
-    if (scoreEditorEl.innerHTML !== '') {
-      const selections = scoreEditorEl.querySelectorAll('paper-toggle-button')
-      selections.forEach(selection => {
-        console.log("id: " + selection.id + " value: " + selection.checked)
-        if (selection.checked) {
-          scoringFields.push(selection.id)
-        }
-      })
-      // const scoringInput = document.createElement("tangy-input");
-      // scoringInput.name = this.item.id + '-scoring-fields'
-      // scoringInput.type = "hidden"
-      // scoringInput.value = JSON.stringify(scoringFields)
-      // console.log("scoring fields: " + scoringInput.value)
-    }
+    const selections = scoreEditorEl.innerHTML !== ''&& [...scoreEditorEl.querySelectorAll('paper-toggle-button')].map(e=>e.checked&&e.id).filter(e=>e)
+    this.shadowRoot.querySelector("#scoring-fields").value = selections
+    this.item.scoringFields = selections
+    if (selections.length > 0) {
+      let score = 0;
 
+      function findObjectByKey(array, key, value) {
+        for (let i = 0; i < array.length; i++) {
+          if (array[i] == key) {
+            return array[i];
+          }
+        }
+        return null;
+      }
+      function sumScore(input) {
+        let s = 0;
+        for (let i = 0; i < input.length; i++) {
+          if (typeof input !== "string")
+            if (isNaN(input)) s += 1;
+            else s += parseInt(input[i]);
+          else if (isNaN(input)) s = 1;
+          else s = parseInt(input);
+        }
+        return s;
+      }
+      for (let input in this.item.template) {
+        let a = findObjectByKey(selections, input);
+        if (a != null) {
+          score += sumScore(getValue(input));
+        }
+      }
+      score = score;
+      const scoringInput = document.createElement("tangy-input");
+      scoringInput.name = this.item.id + "_score";
+      scoringInput.type = "hidden";
+      scoringInput.value = JSON.stringify(score);
+    }
     this.dispatchEvent(
       new CustomEvent("save", {
         detail: Object.assign({}, this.item, {
@@ -417,7 +449,7 @@ class TangyFormItemEditor extends PolymerElement {
           rightToLeft: this.$.container.querySelector("#right-to-left-checkbox")
             .checked,
           template: templateEl.innerHTML,
-          scoringFields: scoringFields
+          scoringFields:this.$.container.querySelector("#scoring-fields").value
         }),
       })
     );
