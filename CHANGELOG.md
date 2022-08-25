@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.14.9
+- Adds a checkbox labelled "This section includes scoring in section header" which opens a list of toggles of the fields in the form that will be scored if selected. PR: [#336](https://github.com/Tangerine-Community/tangy-form-editor/pull/336) Issue: [#1021](https://github.com/Tangerine-Community/Tangerine/issues/1021)
+
 ## v7.14.8
 - Add Video Capture input warning text [#3376](https://github.com/Tangerine-Community/Tangerine/issues/3376)
 
