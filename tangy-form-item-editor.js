@@ -381,43 +381,9 @@ class TangyFormItemEditor extends PolymerElement {
     let selections = scoreEditorEl.innerHTML !== ''&& [...scoreEditorEl.querySelectorAll('paper-toggle-button')].map(e=>e.checked&&e.id).filter(e=>e)
     // If selections already made, subsequent reads should be from the stored value
     if(!Array.isArray(selections)){
-      selections = this.$.container.querySelector("#scoring-fields").value.split(',')
+      selections = this.$.container.querySelector("#scoring-fields").value.split(',').map(e=>e.trim())
     }
     this.$.container.querySelector("#scoring-fields").value = selections
-    if (selections.length > 0) {
-      let score = 0;
-
-      function findObjectByKey(array, key, value) {
-        for (let i = 0; i < array.length; i++) {
-          if (array[i] == key) {
-            return array[i];
-          }
-        }
-        return null;
-      }
-      function sumScore(input) {
-        let s = 0;
-        for (let i = 0; i < input.length; i++) {
-          if (typeof input !== "string")
-            if (isNaN(input)) s += 1;
-            else s += parseInt(input[i]);
-          else if (isNaN(input)) s = 1;
-          else s = parseInt(input);
-        }
-        return s;
-      }
-      for (let input in this.item.template) {
-        let a = findObjectByKey(selections, input);
-        if (a != null) {
-          score += sumScore(getValue(input));
-        }
-      }
-      score = score;
-      const scoringInput = document.createElement("tangy-input");
-      scoringInput.name = this.item.id + "_score";
-      scoringInput.type = "hidden";
-      scoringInput.value = JSON.stringify(score);
-    }
     this.dispatchEvent(
       new CustomEvent("save", {
         detail: Object.assign({}, this.item, {
