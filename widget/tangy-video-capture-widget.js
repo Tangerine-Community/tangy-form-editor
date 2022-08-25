@@ -47,6 +47,7 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
         ${config.frontCamera ? 'front-camera' : ""}
+        ${config.recordAudio ? 'record-audio' : ""}
         ${config.noVideoConstraints ? 'no-video-constraints' : ""}
         ${config.codec ? `codec="${config.codec}"` : ""}
         ${config.videoWidth ? `video-width="${config.videoWidth}"` : ""}
@@ -64,6 +65,7 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
       <tr><td><strong>Front Camera:</strong></td><td>${config.frontCamera}</td></tr>
+      <tr><td><strong>RecordAudio:</strong></td><td>${config.recordAudio}</td></tr>
       <tr><td><strong>No Video Constraints:</strong></td><td>${config.noVideoConstraints}</td></tr>
       <tr><td><strong>Codec:</strong></td><td>${config.codec}</td></tr>
       <tr><td><strong>Video Width:</strong></td><td>${config.videoWidth}</td></tr>
@@ -124,6 +126,9 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
                   <tangy-toggle name="front-camera" help-text="Use the front camera? (default: true)" ${
         config.frontCamera ? 'value="on"' : ''
     }>Use front camera</tangy-toggle>
+                  <tangy-toggle name="record-audio" help-text="Record Audio? (default: false)" ${
+        config.recordAudio ? 'value="off"' : ''
+    }>Use front camera</tangy-toggle>
                   <tangy-input name="codec" type="string" inner-label="Video codec." value="${
         config.codec
     }"></tangy-input>
@@ -160,6 +165,7 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
       ...this.onSubmitUnimplementedAttributes(config, formEl),
       noVideoConstraints: formEl.values.noVideoConstraints === 'on' ? true : false,
       frontCamera: formEl.values.frontCamera === 'on' ? true : false,
+      recordAudio: formEl.values.recordAudio === 'on' ? true : false,
       codec: formEl.values["codec"],
       videoWidth: formEl.values["video-width"],
       videoHeight: formEl.values["video-height"]
