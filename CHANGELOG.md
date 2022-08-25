@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.14.10
+- Add option to record audio when using `tangy-video-capture PR:[#333](https://github.com/Tangerine-Community/tangy-form-editor/pull/333)
+- Updates to libs: mwc-fab, mwc-button, js-beautify, mwc-icon, terser, moment, tangy-form.
+
 ## v7.14.9
 - Adds a checkbox labelled "This section includes scoring in section header" which opens a list of toggles of the fields in the form that will be scored if selected. PR: [#336](https://github.com/Tangerine-Community/tangy-form-editor/pull/336) Issue: [#1021](https://github.com/Tangerine-Community/Tangerine/issues/1021)
 
