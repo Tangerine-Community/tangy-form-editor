@@ -200,6 +200,8 @@ class TangyFormEditor extends PolymerElement {
             ${item.hideNextButton ? ` hide-next-button` : ``}
             ${item.hideNavLabels ? ` hide-nav-labels` : ``}
             ${item.hideNavIcons ? ` hide-nav-icons` : ``}
+            ${item.scoringSection ? ` scoring-section` : ``}
+            ${item.scoringFields ? ` scoring-fields` : ``}
             ${item.summary ? ` summary` : ``}
             ${item.rightToLeft ? ` right-to-left` : ''}
             ${item.incorrectThreshold ? ` incorrect-threshold="${item.incorrectThreshold}"` : ''}
@@ -239,6 +241,8 @@ class TangyFormEditor extends PolymerElement {
         incorrectThreshold: el.hasAttribute('incorrect-threshold') ? el.getAttribute('incorrect-threshold') : '',
         hideNavIcons: el.hasAttribute('hide-nav-icons'),
         hideNavLabels: el.hasAttribute('hide-nav-labels'),
+        scoringSection: el.hasAttribute('scoring-section'),
+        scoringFields: el.hasAttribute('scoring-fields'),
         hideBackButton: el.hasAttribute('hide-back-button'),
         hideNextButton: el.hasAttribute('hide-next-button')
       }
@@ -276,6 +280,9 @@ class TangyFormEditor extends PolymerElement {
              : '',
            category: template.content.querySelector('tangy-form').hasAttribute('category')
             ? template.content.querySelector('tangy-form').getAttribute('category')
+            : '',
+           scoringFields: template.content.querySelector('tangy-form').hasAttribute('scoring-fields')
+            ? template.content.querySelector('tangy-form').getAttribute('scoring-fields')
             : ''
          }
       ),
@@ -618,7 +625,8 @@ class TangyFormEditor extends PolymerElement {
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onSubmit: this.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onResubmit: this.shadowRoot.querySelector('#on-resubmit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
-      category: categoryValue
+      category: categoryValue,
+      scoringFields: his.$.container.querySelector('#scoring-fields').value
     }})
     const duplicateVariableNames = this.findDuplicateVariableNames()
     if (duplicateVariableNames.length > 0) {

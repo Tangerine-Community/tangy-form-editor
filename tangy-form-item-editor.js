@@ -1,6 +1,7 @@
 import { html, PolymerElement } from "@polymer/polymer/polymer-element.js";
 import "./tangy-widgets.js";
 import "./tangy-form-condensed-editor.js";
+import '@polymer/paper-toggle-button/paper-toggle-button.js'
 
 class TangyFormItemEditor extends PolymerElement {
   static get template() {
@@ -88,6 +89,11 @@ class TangyFormItemEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true,
       },
+      scoringFields: {
+        type: Array,
+        value: [],
+        reflectToAttribute: true,
+      },
       hideSkipIf: {
         type: Boolean,
         value: false,
@@ -154,6 +160,11 @@ class TangyFormItemEditor extends PolymerElement {
             <p><paper-checkbox id="hide-nav-icons-checkbox" ${
               this.item.hideNavIcons ? "checked" : ""
             }>${t("Hide navigation icons")}</paper-checkbox></p>
+            <p><paper-checkbox id="scoring-section-checkbox" ${
+              this.item.scoringSection ? "checked" : ""
+            }>${t("This section includes scoring in section header")}</paper-checkbox></p>
+<!--            <paper-expansion-panel header="scoring logic" id="scoring-editor" opened></paper-expansion-panel>-->
+            <div id="scoring-editor"></div>
             <paper-expansion-panel header="on-open logic" id="on-open-editor"></paper-expansion-panel>
             <paper-expansion-panel header="on-change logic" id="on-change-editor"></paper-expansion-panel>
             ${
@@ -161,6 +172,9 @@ class TangyFormItemEditor extends PolymerElement {
                 ? '<paper-expansion-panel header="categories" id="categories-editor"></paper-expansion-panel>'
                 : ""
             }
+            <paper-input type="hidden" id="scoring-fields" value="${
+              this.item.scoringFields
+            }" ></paper-input>
             <p><paper-input type="number" id="incorrectThreshold" value="${
               this.item.incorrectThreshold
             }" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
@@ -188,6 +202,12 @@ class TangyFormItemEditor extends PolymerElement {
             <p><paper-checkbox disabled id="hide-nav-icons-checkbox" ${
               this.item.hideNavIcons ? "checked" : ""
             }>${t("Hide navigation icons")}</paper-checkbox></p>
+            <p><paper-checkbox disabled id="scoring-section-checkbox" ${
+              this.item.scoringSection ? "checked" : ""
+            }>${t("This section includes scoring in section header")}</paper-checkbox></p>
+            <paper-input type="hidden" id="scoring-fields" value="${
+              this.item.scoringFields
+            }" ></paper-input>
             <p><paper-input disabled type="number" id="incorrectThreshold" value="${
               this.item.incorrectThreshold
             }" label="Threshold: Number of incorrect answers before disabling remaining questions" always-float-label></paper-input>
@@ -227,6 +247,9 @@ class TangyFormItemEditor extends PolymerElement {
     this.$.container
       .querySelector("#edit-button")
       .addEventListener("click", this._onEditClick.bind(this));
+    this.$.container
+        .querySelector("#scoring-section-checkbox")
+        .addEventListener("click", this.onRevealScoringSection.bind(this));
 
     // on-open-editor
     let onOpenEditorEl = document.createElement("juicy-ace-editor");
@@ -303,6 +326,43 @@ class TangyFormItemEditor extends PolymerElement {
     this.dispatchEvent(new CustomEvent("cancel"));
   }
 
+  onRevealScoringSection(event) {
+    if (this.shadowRoot.querySelector("#scoring-editor").innerHTML == '') {
+      console.log("Reveal scoring section.")
+      let templateEl = document.createElement("template");
+      templateEl.innerHTML = this.shadowRoot.querySelector(
+          "tangy-form-condensed-editor"
+      ).markup;
+      const items = [...templateEl.content.querySelectorAll('[name]')]
+          .map(el => {
+            const propsData = el.getProps()
+            const optionsData = [...el.querySelectorAll('option')].map(optionEl => {
+              return {
+                label: optionEl.innerHTML,
+                value: optionEl.hasAttribute('name') ? optionEl.getAttribute('name') : optionEl.getAttribute('value')
+              }
+            })
+            return {
+              ...propsData,
+              value: optionsData.length > 0 ? optionsData : propsData.value
+            }
+          })
+      let scoringSectionEl = document.createElement("div");
+      let scoringSectionItems = `${t("<p>Toggle the items that should be scored.</p>\n")}`
+      items.forEach(item => {
+        // const toggleEl = document.createElement("paper-toggle-button")
+        const toggleEl = `<paper-toggle-button id="${item.name}">${item.label}</paper-toggle-button>\n`
+        scoringSectionItems = scoringSectionItems + toggleEl
+      })
+      scoringSectionEl.innerHTML = scoringSectionItems
+      this.shadowRoot
+          .querySelector("#scoring-editor")
+          .appendChild(scoringSectionEl);
+    } else {
+      this.shadowRoot.querySelector("#scoring-editor").innerHTML = ''
+    }
+  }
+
   save() {
     let templateEl = document.createElement("template");
     templateEl.innerHTML = this.shadowRoot.querySelector(
@@ -316,6 +376,44 @@ class TangyFormItemEditor extends PolymerElement {
     let categoryValue = null;
     if (categoryEl !== null) {
       categoryValue = categoryEl.value;
+    }
+    let scoreEditorEl = this.shadowRoot.querySelector("#scoring-editor")
+    const selections = scoreEditorEl.innerHTML !== ''&& [...scoreEditorEl.querySelectorAll('paper-toggle-button')].map(e=>e.checked&&e.id).filter(e=>e)
+    this.shadowRoot.querySelector("#scoring-fields").value = selections
+    this.item.scoringFields = selections
+    if (selections.length > 0) {
+      let score = 0;
+
+      function findObjectByKey(array, key, value) {
+        for (let i = 0; i < array.length; i++) {
+          if (array[i] == key) {
+            return array[i];
+          }
+        }
+        return null;
+      }
+      function sumScore(input) {
+        let s = 0;
+        for (let i = 0; i < input.length; i++) {
+          if (typeof input !== "string")
+            if (isNaN(input)) s += 1;
+            else s += parseInt(input[i]);
+          else if (isNaN(input)) s = 1;
+          else s = parseInt(input);
+        }
+        return s;
+      }
+      for (let input in this.item.template) {
+        let a = findObjectByKey(selections, input);
+        if (a != null) {
+          score += sumScore(getValue(input));
+        }
+      }
+      score = score;
+      const scoringInput = document.createElement("tangy-input");
+      scoringInput.name = this.item.id + "_score";
+      scoringInput.type = "hidden";
+      scoringInput.value = JSON.stringify(score);
     }
     this.dispatchEvent(
       new CustomEvent("save", {
@@ -345,9 +443,13 @@ class TangyFormItemEditor extends PolymerElement {
           hideNavIcons: this.$.container.querySelector(
             "#hide-nav-icons-checkbox"
           ).checked,
+          scoringSection: this.$.container.querySelector(
+            "#scoring-section-checkbox"
+          ).checked,
           rightToLeft: this.$.container.querySelector("#right-to-left-checkbox")
             .checked,
           template: templateEl.innerHTML,
+          scoringFields:this.$.container.querySelector("#scoring-fields").value
         }),
       })
     );
