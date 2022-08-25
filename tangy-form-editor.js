@@ -201,10 +201,10 @@ class TangyFormEditor extends PolymerElement {
             ${item.hideNavLabels ? ` hide-nav-labels` : ``}
             ${item.hideNavIcons ? ` hide-nav-icons` : ``}
             ${item.scoringSection ? ` scoring-section` : ``}
-            ${item.scoringFields ? ` scoring-fields` : ``}
             ${item.summary ? ` summary` : ``}
             ${item.rightToLeft ? ` right-to-left` : ''}
             ${item.incorrectThreshold ? ` incorrect-threshold="${item.incorrectThreshold}"` : ''}
+            scoring-fields="${item.scoringFields}"
             on-open="
               ${item.onOpen}
             "
@@ -242,7 +242,7 @@ class TangyFormEditor extends PolymerElement {
         hideNavIcons: el.hasAttribute('hide-nav-icons'),
         hideNavLabels: el.hasAttribute('hide-nav-labels'),
         scoringSection: el.hasAttribute('scoring-section'),
-        scoringFields: el.hasAttribute('scoring-fields'),
+        scoringFields: el.hasAttribute('scoring-fields') ? el.getAttribute('scoring-fields') : '',
         hideBackButton: el.hasAttribute('hide-back-button'),
         hideNextButton: el.hasAttribute('hide-next-button')
       }
@@ -281,9 +281,6 @@ class TangyFormEditor extends PolymerElement {
            category: template.content.querySelector('tangy-form').hasAttribute('category')
             ? template.content.querySelector('tangy-form').getAttribute('category')
             : '',
-           scoringFields: template.content.querySelector('tangy-form').hasAttribute('scoring-fields')
-            ? template.content.querySelector('tangy-form').getAttribute('scoring-fields')
-            : ''
          }
       ),
       items
@@ -625,8 +622,7 @@ class TangyFormEditor extends PolymerElement {
       onChange: this.shadowRoot.querySelector('#on-change-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onSubmit: this.shadowRoot.querySelector('#on-submit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
       onResubmit: this.shadowRoot.querySelector('#on-resubmit-editor juicy-ace-editor').value.replace(/"/g, '&#34;'),
-      category: categoryValue,
-      scoringFields: his.$.container.querySelector('#scoring-fields').value
+      category: categoryValue
     }})
     const duplicateVariableNames = this.findDuplicateVariableNames()
     if (duplicateVariableNames.length > 0) {

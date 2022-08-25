@@ -378,9 +378,12 @@ class TangyFormItemEditor extends PolymerElement {
       categoryValue = categoryEl.value;
     }
     let scoreEditorEl = this.shadowRoot.querySelector("#scoring-editor")
-    const selections = scoreEditorEl.innerHTML !== ''&& [...scoreEditorEl.querySelectorAll('paper-toggle-button')].map(e=>e.checked&&e.id).filter(e=>e)
-    this.shadowRoot.querySelector("#scoring-fields").value = selections
-    this.item.scoringFields = selections
+    let selections = scoreEditorEl.innerHTML !== ''&& [...scoreEditorEl.querySelectorAll('paper-toggle-button')].map(e=>e.checked&&e.id).filter(e=>e)
+    // If selections already made, subsequent reads should be from the stored value
+    if(!Array.isArray(selections)){
+      selections = this.$.container.querySelector("#scoring-fields").value.split(',')
+    }
+    this.$.container.querySelector("#scoring-fields").value = selections
     if (selections.length > 0) {
       let score = 0;
 
@@ -449,7 +452,7 @@ class TangyFormItemEditor extends PolymerElement {
           rightToLeft: this.$.container.querySelector("#right-to-left-checkbox")
             .checked,
           template: templateEl.innerHTML,
-          scoringFields:this.$.container.querySelector("#scoring-fields").value
+          scoringFields:selections
         }),
       })
     );
