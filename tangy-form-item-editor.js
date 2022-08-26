@@ -251,6 +251,12 @@ class TangyFormItemEditor extends PolymerElement {
         .querySelector("#scoring-section-checkbox")
         .addEventListener("click", this.onRevealScoringSection.bind(this));
 
+    if(this.item.scoringSection){
+      const checkbox = this.$.container.querySelector("#scoring-section-checkbox")
+      checkbox.click()
+      checkbox.checked = true
+    }
+
     // on-open-editor
     let onOpenEditorEl = document.createElement("juicy-ace-editor");
     onOpenEditorEl.setAttribute("mode", "ace/mode/javascript");
@@ -350,8 +356,11 @@ class TangyFormItemEditor extends PolymerElement {
       let scoringSectionEl = document.createElement("div");
       let scoringSectionItems = `${t("<p>Toggle the items that should be scored.</p>\n")}`
       items.forEach(item => {
-        // const toggleEl = document.createElement("paper-toggle-button")
-        const toggleEl = `<paper-toggle-button id="${item.name}">${item.label}</paper-toggle-button>\n`
+        let isItemChecked = false;
+        if(this.item.scoringSection){
+          isItemChecked = [...this.item.scoringFields].find(e=>e===item.name)
+        }
+        const toggleEl = `<paper-toggle-button id="${item.name}" ${isItemChecked?'checked':''}>${item.label}</paper-toggle-button>\n`
         scoringSectionItems = scoringSectionItems + toggleEl
       })
       scoringSectionEl.innerHTML = scoringSectionItems
@@ -418,7 +427,7 @@ class TangyFormItemEditor extends PolymerElement {
           rightToLeft: this.$.container.querySelector("#right-to-left-checkbox")
             .checked,
           template: templateEl.innerHTML,
-          scoringFields:selections
+          scoringFields:this.$.container.querySelector("#scoring-section-checkbox" ).checked? selections:[]
         }),
       })
     );
