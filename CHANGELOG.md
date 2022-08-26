@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.14.11
+- Persist list of fields for scoring in editor. Issue: [#340](https://github.com/Tangerine-Community/tangy-form-editor/pull/340)
+
 ## v7.14.10
 - Add option to record audio when using `tangy-video-capture PR:[#333](https://github.com/Tangerine-Community/tangy-form-editor/pull/333)
 - Updates to libs: mwc-fab, mwc-button, js-beautify, mwc-icon, terser, moment, tangy-form.
