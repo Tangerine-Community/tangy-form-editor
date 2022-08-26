@@ -251,6 +251,12 @@ class TangyFormItemEditor extends PolymerElement {
         .querySelector("#scoring-section-checkbox")
         .addEventListener("click", this.onRevealScoringSection.bind(this));
 
+    if(this.item.scoringSection){
+      const checkbox = this.$.container.querySelector("#scoring-section-checkbox")
+      checkbox.click()
+      checkbox.checked = true
+    }
+
     // on-open-editor
     let onOpenEditorEl = document.createElement("juicy-ace-editor");
     onOpenEditorEl.setAttribute("mode", "ace/mode/javascript");
@@ -350,8 +356,11 @@ class TangyFormItemEditor extends PolymerElement {
       let scoringSectionEl = document.createElement("div");
       let scoringSectionItems = `${t("<p>Toggle the items that should be scored.</p>\n")}`
       items.forEach(item => {
-        // const toggleEl = document.createElement("paper-toggle-button")
-        const toggleEl = `<paper-toggle-button id="${item.name}">${item.label}</paper-toggle-button>\n`
+        let isItemChecked = false;
+        if(this.item.scoringSection){
+          isItemChecked = [...this.item.scoringFields].find(e=>e===item.name)
+        }
+        const toggleEl = `<paper-toggle-button id="${item.name}" ${isItemChecked?'checked':''}>${item.label}</paper-toggle-button>\n`
         scoringSectionItems = scoringSectionItems + toggleEl
       })
       scoringSectionEl.innerHTML = scoringSectionItems
@@ -378,43 +387,12 @@ class TangyFormItemEditor extends PolymerElement {
       categoryValue = categoryEl.value;
     }
     let scoreEditorEl = this.shadowRoot.querySelector("#scoring-editor")
-    const selections = scoreEditorEl.innerHTML !== ''&& [...scoreEditorEl.querySelectorAll('paper-toggle-button')].map(e=>e.checked&&e.id).filter(e=>e)
-    this.shadowRoot.querySelector("#scoring-fields").value = selections
-    this.item.scoringFields = selections
-    if (selections.length > 0) {
-      let score = 0;
-
-      function findObjectByKey(array, key, value) {
-        for (let i = 0; i < array.length; i++) {
-          if (array[i] == key) {
-            return array[i];
-          }
-        }
-        return null;
-      }
-      function sumScore(input) {
-        let s = 0;
-        for (let i = 0; i < input.length; i++) {
-          if (typeof input !== "string")
-            if (isNaN(input)) s += 1;
-            else s += parseInt(input[i]);
-          else if (isNaN(input)) s = 1;
-          else s = parseInt(input);
-        }
-        return s;
-      }
-      for (let input in this.item.template) {
-        let a = findObjectByKey(selections, input);
-        if (a != null) {
-          score += sumScore(getValue(input));
-        }
-      }
-      score = score;
-      const scoringInput = document.createElement("tangy-input");
-      scoringInput.name = this.item.id + "_score";
-      scoringInput.type = "hidden";
-      scoringInput.value = JSON.stringify(score);
+    let selections = scoreEditorEl.innerHTML !== ''&& [...scoreEditorEl.querySelectorAll('paper-toggle-button')].map(e=>e.checked&&e.id).filter(e=>e)
+    // If selections already made, subsequent reads should be from the stored value
+    if(!Array.isArray(selections)){
+      selections = this.$.container.querySelector("#scoring-fields").value.split(',').map(e=>e.trim())
     }
+    this.$.container.querySelector("#scoring-fields").value = selections
     this.dispatchEvent(
       new CustomEvent("save", {
         detail: Object.assign({}, this.item, {
@@ -449,7 +427,7 @@ class TangyFormItemEditor extends PolymerElement {
           rightToLeft: this.$.container.querySelector("#right-to-left-checkbox")
             .checked,
           template: templateEl.innerHTML,
-          scoringFields:this.$.container.querySelector("#scoring-fields").value
+          scoringFields:this.$.container.querySelector("#scoring-section-checkbox" ).checked? selections:[]
         }),
       })
     );
