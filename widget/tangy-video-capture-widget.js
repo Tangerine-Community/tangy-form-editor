@@ -128,7 +128,7 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
     }>Use front camera</tangy-toggle>
                   <tangy-toggle name="record-audio" help-text="Record Audio? (default: false)" ${
         config.recordAudio ? 'value="off"' : ''
-    }>Use front camera</tangy-toggle>
+    }>Record Audio</tangy-toggle>
                   <tangy-input name="codec" type="string" inner-label="Video codec." value="${
         config.codec
     }"></tangy-input>
