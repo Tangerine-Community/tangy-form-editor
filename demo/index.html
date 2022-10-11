@@ -374,6 +374,26 @@
                   </template>
                 </tangy-form-item>
 
+               <tangy-form-item id="ethio_date_template" title="Ethiopian Date">
+
+                  <tangy-ethio-date disallow-future-date="" name="intdt_ethio" required="" question-number="" label="
+                  <t-lang en>Date of Interview</t-lang>
+                  <t-lang am>መጠይቅ የተደረገበት ቀን</t-lang>" hint-text="" 
+                  error-text="
+                  <t-lang en>Date of Interview is required.</t-lang>
+                  <t-lang am>መጠይቅ የተደረገበት ቀን አስፈላጊ ነው</t-lang>
+                  " warn-text="" class="" 
+                  future-date-error-text="
+                        <t-lang en>The date cannot be in the future. Please enter a date that is on or before today.</t-lang>
+                        <t-lang am>የሚመርጡት ቀን የወደፊት ሊሆን አይችልም፣ እባክወን ዛሬን እና ከዛሬ በፊት ያሉ ቀናትን ይምረጡ</t-lang>" missing-date-error-text="<t-lang en>The date is missing. Please enter a valid date.</t-lang>
+                        <t-lang am>ቀኑን ማግኘት አልተቻለም፣ እባክወን አግባብ ያለው ቀን ያስገቡ</t-lang>
+                      " invalid-date-error-text="
+                        <t-lang en>The date is not valid. Please enter a valid date.</t-lang>
+                        <t-lang am>ቀኑ አግባብ ያለው አይደለም ፣ እባክወን አግባብ ያለው ቀን ያስገቡ</t-lang>
+                      " min-year="2010" max-year="2022" show-today-button="">
+                </tangy-ethio-date>
+               </tangy-form-item>
+
                 <tangy-form-item id="html_template" title="HTML Template">
                   <template>
                     <tangy-template name="template1">
