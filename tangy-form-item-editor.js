@@ -256,7 +256,6 @@ class TangyFormItemEditor extends PolymerElement {
       checkbox.click()
       checkbox.checked = true
     }
-
     // on-open-editor
     let onOpenEditorEl = document.createElement("juicy-ace-editor");
     onOpenEditorEl.setAttribute("mode", "ace/mode/javascript");
@@ -331,7 +330,33 @@ class TangyFormItemEditor extends PolymerElement {
     this.save();
     this.dispatchEvent(new CustomEvent("cancel"));
   }
-
+  revealCustomScoringEditor(){
+    const expansionPanel = document.createElement('div')
+    expansionPanel.innerHTML = `<paper-expansion-panel header="Enter custom scoring logic" id="custom-scoring-logic-editor"></paper-expansion-panel>`
+    this.shadowRoot
+          .querySelector("#scoring-editor")
+          .appendChild(expansionPanel);
+    // custom-logic-editor
+    let customScoringLogicEditorEl = document.createElement("juicy-ace-editor");
+    customScoringLogicEditorEl.setAttribute("mode", "ace/mode/javascript");
+    // Convert HTML double quote character to standard double quote character.
+    customScoringLogicEditorEl.value = this.item.customScoringLogic
+      ? this.item.customScoringLogic.replace(/&#34;/g, '"')
+      : "";
+    customScoringLogicEditorEl.style.height = `${window.innerHeight * 0.6}px`;
+    customScoringLogicEditorEl.addEventListener("change", (_) => _.stopPropagation());
+    const clearCustomScoringLogicButton = document.createElement('div')
+    clearCustomScoringLogicButton.innerHTML = `<paper-button id="clear-custom-scoring-logic" class="tangy-action-buttons"> <iron-icon icon="delete"></iron-icon>${t("Clear Custom Scoring Logic")}</paper-button>`
+    this.shadowRoot
+      .querySelector("#custom-scoring-logic-editor")
+      .appendChild(clearCustomScoringLogicButton);
+    this.shadowRoot
+      .querySelector("#custom-scoring-logic-editor")
+      .appendChild(customScoringLogicEditorEl);
+      this.$.container
+      .querySelector("#clear-custom-scoring-logic")
+      .addEventListener("click", this.clearCustomScoringLogic.bind(this));
+  }
   onRevealScoringSection(event) {
     if (this.shadowRoot.querySelector("#scoring-editor").innerHTML == '') {
       console.log("Reveal scoring section.")
@@ -354,7 +379,7 @@ class TangyFormItemEditor extends PolymerElement {
             }
           })
       let scoringSectionEl = document.createElement("div");
-      let scoringSectionItems = `${t("<p>Toggle the items that should be scored.</p>\n")}`
+      let scoringSectionItems = `${t("<p>Toggle the items that should be automatically scored.</p>\n")}`
       items.forEach(item => {
         let isItemChecked = false;
         if(this.item.scoringSection){
@@ -363,6 +388,7 @@ class TangyFormItemEditor extends PolymerElement {
         const toggleEl = `<paper-toggle-button id="${item.name}" ${isItemChecked?'checked':''}>${item.label}</paper-toggle-button>\n`
         scoringSectionItems = scoringSectionItems + toggleEl
       })
+      this.revealCustomScoringEditor()
       scoringSectionEl.innerHTML = scoringSectionItems
       this.shadowRoot
           .querySelector("#scoring-editor")
@@ -403,6 +429,10 @@ class TangyFormItemEditor extends PolymerElement {
           onChange: this.shadowRoot
             .querySelector("#on-change-editor juicy-ace-editor")
             .value.replace(/"/g, "&#34;"),
+          customScoringLogic: this.shadowRoot
+          .querySelector("#custom-scoring-logic-editor juicy-ace-editor")
+          .value.replace(/"/g, "&#34;"),
+          customScore:!selections.length? this.evaluateCustomScoringLogic(): '',
           category: categoryValue,
           title: this.$.container.querySelector("#itemTitle").value,
           incorrectThreshold: this.$.container.querySelector(
@@ -433,6 +463,12 @@ class TangyFormItemEditor extends PolymerElement {
     );
   }
 
+  evaluateCustomScoringLogic(){
+    const str = this.shadowRoot
+    .querySelector("#custom-scoring-logic-editor juicy-ace-editor")
+    .value.replace(/"/g, "&#34;")
+    return Function(`"use strict";return (${str})`)();
+  }
   _onEditClick() {
     // this.dispatchEvent(new CustomEvent('edit-input', {bubbles: true}))
     this.edit = true;
@@ -452,6 +488,10 @@ class TangyFormItemEditor extends PolymerElement {
         )
       : this.$.container.querySelector(".card-content").removeChild(addInputEl);
   }
+
+  clearCustomScoringLogic(){
+    this.$.container.querySelector("#custom-scoring-logic-editor juicy-ace-editor").value = "  "
+   }
 }
 
 window.customElements.define("tangy-form-item-editor", TangyFormItemEditor);
