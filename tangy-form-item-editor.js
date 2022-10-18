@@ -429,9 +429,11 @@ class TangyFormItemEditor extends PolymerElement {
           onChange: this.shadowRoot
             .querySelector("#on-change-editor juicy-ace-editor")
             .value.replace(/"/g, "&#34;"),
-          customScoringLogic: this.shadowRoot
+          customScoringLogic:this.shadowRoot
           .querySelector("#custom-scoring-logic-editor juicy-ace-editor")
-          .value.replace(/"/g, "&#34;"),
+          ? this.shadowRoot
+          .querySelector("#custom-scoring-logic-editor juicy-ace-editor")
+          .value.replace(/"/g, "&#34;"):"",
           customScore:!selections.length? this.evaluateCustomScoringLogic(): '',
           category: categoryValue,
           title: this.$.container.querySelector("#itemTitle").value,
