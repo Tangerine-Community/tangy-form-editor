@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v7.15.0
+- fix(copying-sections): Copy sections including the contents. PR: [#345](https://github.com/Tangerine-Community/tangy-form-editor/pull/345)
+- feat(scoring-section): Allow users to enter custom JavaScript code for calculating scores PR: [#344](https://github.com/Tangerine-Community/tangy-form-editor/pull/344)
+- fix(tangy-form-editor): Persist changes when on-open and on-change are cleared. [#343](https://github.com/Tangerine-Community/tangy-form-editor/pull/343)
+- Bump tangy-form from 4.37.0 to 4.37.1 [#342](https://github.com/Tangerine-Community/tangy-form-editor/pull/342)
+- fix(text-update): Change link text from 'Use front camera' to 'Record Audio' [#341](https://github.com/Tangerine-Community/tangy-form-editor/pull/341)
+
 ## v7.14.11
 - Persist list of fields for scoring in editor. Issue: [#340](https://github.com/Tangerine-Community/tangy-form-editor/pull/340)
 
