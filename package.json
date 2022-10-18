@@ -14,7 +14,7 @@
     "@polymer/iron-pages": "^3.0.1",
     "@polymer/paper-tabs": "^3.1.0",
     "@polymer/paper-toggle-button": "^3.0.1",
-    "@polymer/polymer": "^3.0.0",
+    "@polymer/polymer": "^3.5.1",
     "dr-niels-paper-expansion-panel": "https://github.com/DrNiels/paper-expansion-panel.git#master",
     "file-list-component": "^1.4.0",
     "js-beautify": "^1.14.6",
