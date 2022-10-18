@@ -265,6 +265,12 @@ class TangyFormItemEditor extends PolymerElement {
       : "";
     onOpenEditorEl.style.height = `${window.innerHeight * 0.6}px`;
     onOpenEditorEl.addEventListener("change", (_) => _.stopPropagation());
+    const clearOnOpenLogicButton = document.createElement('div')
+    clearOnOpenLogicButton.innerHTML = `<paper-button id="clear-on-open-logic" class="tangy-action-buttons"> <iron-icon icon="delete"></iron-icon>${t("Clear On Open Logic")}</paper-button>`
+    this.shadowRoot
+      .querySelector("#on-open-editor")
+      .appendChild(clearOnOpenLogicButton);
+   
     this.shadowRoot
       .querySelector("#on-open-editor")
       .appendChild(onOpenEditorEl);
@@ -277,10 +283,21 @@ class TangyFormItemEditor extends PolymerElement {
       : "";
     onChangeEditorEl.style.height = `${window.innerHeight * 0.6}px`;
     onChangeEditorEl.addEventListener("change", (_) => _.stopPropagation());
+    const clearOnChangeLogicButton = document.createElement('div')
+    clearOnChangeLogicButton.innerHTML = `<paper-button id="clear-on-change-logic" class="tangy-action-buttons"> <iron-icon icon="delete"></iron-icon>${t("Clear On Change Logic")}</paper-button>`
+    
+    this.shadowRoot
+      .querySelector("#on-change-editor")
+      .appendChild(clearOnChangeLogicButton);
     this.shadowRoot
       .querySelector("#on-change-editor")
       .appendChild(onChangeEditorEl);
-
+    this.$.container
+    .querySelector("#clear-on-open-logic")
+    .addEventListener("click", this.clearOnOpenLogic.bind(this));
+    this.$.container
+    .querySelector("#clear-on-change-logic")
+    .addEventListener("click", this.clearOnChangeLogic.bind(this));
     // categories
     if (this.categories !== null && this.categories.length > 0) {
       let select_str =
@@ -397,7 +414,6 @@ class TangyFormItemEditor extends PolymerElement {
       this.shadowRoot.querySelector("#scoring-editor").innerHTML = ''
     }
   }
-
   save() {
     let templateEl = document.createElement("template");
     templateEl.innerHTML = this.shadowRoot.querySelector(
@@ -494,6 +510,14 @@ class TangyFormItemEditor extends PolymerElement {
   clearCustomScoringLogic(){
     this.$.container.querySelector("#custom-scoring-logic-editor juicy-ace-editor").value = "  "
    }
+
+  clearOnOpenLogic(){
+   this.$.container.querySelector("#on-open-editor juicy-ace-editor").value = "  "
+  }
+
+  clearOnChangeLogic(){
+    this.$.container.querySelector("#on-change-editor juicy-ace-editor").value = "  "
+  }
 }
 
 window.customElements.define("tangy-form-item-editor", TangyFormItemEditor);
