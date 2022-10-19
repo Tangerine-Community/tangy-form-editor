@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v7.15.1
+- fix(cycle-sequences): User defined Cycle Sequences index should begin at 1 PR: [#231](https://github.com/Tangerine-Community/tangy-form-editor/pull/231)
+- Bump tangy-form to v4.38.0
+- Bump prismjs from 1.25.0 to 1.27.0
+- Bump @polymer/polymer from 3.4.1 to 3.5.1
+
 ## v7.15.0
 - fix(copying-sections): Copy sections including the contents. PR: [#345](https://github.com/Tangerine-Community/tangy-form-editor/pull/345)
 - feat(scoring-section): Allow users to enter custom JavaScript code for calculating scores PR: [#344](https://github.com/Tangerine-Community/tangy-form-editor/pull/344)
