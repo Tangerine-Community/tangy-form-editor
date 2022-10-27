@@ -19,10 +19,7 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
       ...this.defaultConfigUnimplementedAttributes(),
       codec: 'video/webm;codecs=vp9,opus',
       videoWidth: 1280,
-      videoHeight: 720,
-      recordAudio: false,
-      frontCamera: true,
-      noVideoConstraints: true
+      videoHeight: 720
       
     };
   }
@@ -104,7 +101,7 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
       <h4>Defaults:</h4>
         <ul>
           <li>noVideoConstraints: Default width (1280) and height (720), uses whatever camera device chooses. Overrides frontCamera property.</li>
-          <li>frontCamera: true</li>
+          <li>frontCamera: false</li>
           <li>codec: 'video/webm;codecs=vp9,opus'</li>
           <li>videoWidth: 1280</li>
           <li>videoHeight: 720</li>
@@ -124,11 +121,11 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
                   
-                  <tangy-toggle name="no-video-constraints" help-text="Use the default settings. (default: true)"
+                  <tangy-toggle name="no-video-constraints" help-text="Use the default settings. (default: false)"
                       ${config.noVideoConstraints ? 'value="on"' : ''}>No Video Constraints
                   </tangy-toggle>
                   
-                  <tangy-toggle name="front-camera" help-text="Use the front camera? (default: true)"
+                  <tangy-toggle name="front-camera" help-text="Use the front camera? (default: false)"
                       ${config.frontCamera ? 'value="on"' : ''}>Use front camera
                   </tangy-toggle>
 
