@@ -20,6 +20,10 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
       codec: 'video/webm;codecs=vp9,opus',
       videoWidth: 1280,
       videoHeight: 720,
+      recordAudio: false,
+      frontCamera: true,
+      noVideoConstraints: true
+      
     };
   }
 
@@ -120,15 +124,18 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
                   
-                  <tangy-toggle name="no-video-constraints" help-text="Use the default settings. (default: true)" ${
-        config.noVideoConstraints ? 'value="on"' : ''
-    }>No Video Constraints</tangy-toggle>
-                  <tangy-toggle name="front-camera" help-text="Use the front camera? (default: true)" ${
-        config.frontCamera ? 'value="on"' : ''
-    }>Use front camera</tangy-toggle>
-                  <tangy-toggle name="record-audio" help-text="Record Audio? (default: false)" ${
-        config.recordAudio ? 'value="off"' : ''
-    }>Record Audio</tangy-toggle>
+                  <tangy-toggle name="no-video-constraints" help-text="Use the default settings. (default: true)"
+                      ${config.noVideoConstraints ? 'value="on"' : ''}>No Video Constraints
+                  </tangy-toggle>
+                  
+                  <tangy-toggle name="front-camera" help-text="Use the front camera? (default: true)"
+                      ${config.frontCamera ? 'value="on"' : ''}>Use front camera
+                  </tangy-toggle>
+
+                  <tangy-toggle name="record-audio" help-text="Record Audio? (default: false)"
+                      ${config.recordAudio ? 'value="on"' : ''}>Record Audio
+                  </tangy-toggle>
+                  
                   <tangy-input name="codec" type="string" inner-label="Video codec." value="${
         config.codec
     }"></tangy-input>
@@ -163,9 +170,9 @@ class TangyVideoCaptureWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
-      noVideoConstraints: formEl.values.noVideoConstraints === 'on' ? true : false,
-      frontCamera: formEl.values.frontCamera === 'on' ? true : false,
-      recordAudio: formEl.values.recordAudio === 'on' ? true : false,
+      noVideoConstraints: !!formEl.inputs.find(e=>e.name==='no-video-constraints').value,
+      frontCamera: !!formEl.inputs.find(e=>e.name==='front-camera').value,
+      recordAudio: !!formEl.inputs.find(e=>e.name==='record-audio').value,
       codec: formEl.values["codec"],
       videoWidth: formEl.values["video-width"],
       videoHeight: formEl.values["video-height"]
