@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v7.15.3
+- fix(section-copy): Copy sections including the contents [#350](https://github.com/Tangerine-Community/tangy-form-editor/pull/350)
+- fix(scoring-section): Inputs previously selected are lost [#349](https://github.com/Tangerine-Community/tangy-form-editor/pull/349)
+- fix(custom-scoring): reflect properties to attribute and offload custom script evaluation to client [#348](https://github.com/Tangerine-Community/tangy-form-editor/pull/348)
+- Bump js-beautify from 1.14.6 to 1.14.7 [#347](https://github.com/Tangerine-Community/tangy-form-editor/pull/347)
+
 ## v7.15.2
 - fix(video-capture): Allow users to toggle record-audio and persist the changes [#351](https://github.com/Tangerine-Community/tangy-form-editor/pull/351)
 - Bump tangy-form to v4.38.1
