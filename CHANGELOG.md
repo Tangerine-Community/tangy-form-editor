@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.15.2
+- fix(video-capture): Allow users to toggle record-audio and persist the changes [#351](https://github.com/Tangerine-Community/tangy-form-editor/pull/351)
+- Bump tangy-form to v4.38.1
+
 ## v7.15.1
 - fix(cycle-sequences): User defined Cycle Sequences index should begin at 1 PR: [#231](https://github.com/Tangerine-Community/tangy-form-editor/pull/231)
 - Bump tangy-form to v4.38.0
