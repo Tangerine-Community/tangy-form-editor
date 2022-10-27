@@ -400,7 +400,7 @@ class TangyFormItemEditor extends PolymerElement {
       items.forEach(item => {
         let isItemChecked = false;
         if(this.item.scoringSection){
-          isItemChecked = [...this.item.scoringFields].find(e=>e===item.name)
+          isItemChecked = String(this.item.scoringFields).split(',').includes(item.name)
         }
         const toggleEl = `<paper-toggle-button id="${item.name}" ${isItemChecked?'checked':''}>${item.label}</paper-toggle-button>\n`
         scoringSectionItems = scoringSectionItems + toggleEl
