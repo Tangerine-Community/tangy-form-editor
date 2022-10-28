@@ -205,6 +205,7 @@ class TangyFormEditor extends PolymerElement {
             ${item.rightToLeft ? ` right-to-left` : ''}
             ${item.incorrectThreshold ? ` incorrect-threshold="${item.incorrectThreshold}"` : ''}
             scoring-fields="${item.scoringFields}"
+            custom-scoring-logic="${item.customScoringLogic}"
             on-open="
               ${item.onOpen}
             "
@@ -243,6 +244,7 @@ class TangyFormEditor extends PolymerElement {
         hideNavLabels: el.hasAttribute('hide-nav-labels'),
         scoringSection: el.hasAttribute('scoring-section'),
         scoringFields: el.hasAttribute('scoring-fields') ? el.getAttribute('scoring-fields') : '',
+        customScoringLogic: el.hasAttribute('custom-scoring-logic') ? el.getAttribute('custom-scoring-logic') : '',
         hideBackButton: el.hasAttribute('hide-back-button'),
         hideNextButton: el.hasAttribute('hide-next-button')
       }
