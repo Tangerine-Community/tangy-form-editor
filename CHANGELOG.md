@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v7.15.4
+- fix(custom-scoring): Add editing on reopen [#353](https://github.com/Tangerine-Community/tangy-form-editor/pull/353)
+- fix(tangy-editor): Full Screen Nav Buttons alignment [#352](https://github.com/Tangerine-Community/tangy-form-editor/pull/352)
+- Bump tangy-form to 4.38.2
+
 ## v7.15.3
 - fix(section-copy): Copy sections including the contents [#350](https://github.com/Tangerine-Community/tangy-form-editor/pull/350)
 - fix(scoring-section): Inputs previously selected are lost [#349](https://github.com/Tangerine-Community/tangy-form-editor/pull/349)
