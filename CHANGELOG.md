@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.16.0
+- Bumped versions for important libs including tangy-form, polymer-cli, and webpack.
+
 ## v7.15.4
 - fix(custom-scoring): Add editing on reopen [#353](https://github.com/Tangerine-Community/tangy-form-editor/pull/353)
 - fix(tangy-editor): Full Screen Nav Buttons alignment [#352](https://github.com/Tangerine-Community/tangy-form-editor/pull/352)
