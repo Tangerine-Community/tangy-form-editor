@@ -9,6 +9,10 @@ npm start
 ```
 
 ## Running Tests
+
+If running on a Mac with the M1 processor, you must run `node node_modules/polymer-cli/node_modules/wd/scripts/build-browser-scripts.js`
+in order to avoid the error `cli runtime exception: Error: Cannot find module '../build/safe-execute'`
+
 ```
 $ npm run test
 ```
@@ -33,3 +37,4 @@ You will also need to declare the Widget as available using the `window.tangyFor
 
 Lastly, making your widget available to add as form content is currently a hardcoded task. Open the `tangy-form-editor-add-input.js` file and add your widget to the list of available widgets in the category that makes sense. 
 
+Unable to infer path to ace from script src, use ace.config.set('basePath', 'path') to enable dynamic loading of modes and themes or with webpack use ace/webpack-resolver
