@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.16.1
+- Updated url for file-list-component.
+
 ## v7.16.0
 - Bumped versions for important libs including tangy-form, polymer-cli, and webpack.
 
