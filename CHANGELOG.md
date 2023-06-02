@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v7.16.2
+- Bumped tangy-form to 4.41.1.
+
 ## v7.16.1
 - Updated url for file-list-component.
 
