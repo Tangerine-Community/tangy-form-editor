@@ -32,10 +32,18 @@
                 console.log("populating window.translation.")
                 window.translation = json
               })
+
+      fetch('assets/location-list-metadata.json')
+              .then(response => response.json())
+              .then(json => {
+                console.log("populating window.locationListMetadata.")
+                window.locationListMetadata = json
+              })
       window.example = 1
     </script>
 
     <script type="module" src="../tangy-form-editor.js"></script>
+
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -43,7 +51,10 @@
     </custom-style>
   </head>
   <body>
-          <tangy-form-editor files-endpoint="./files.json">
+          <tangy-form-editor 
+            files-endpoint="./files.json" 
+            location-list-metadata="foo">
+            
             <template>
 
               <tangy-form 

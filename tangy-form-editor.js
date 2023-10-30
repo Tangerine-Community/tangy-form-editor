@@ -161,6 +161,10 @@ class TangyFormEditor extends PolymerElement {
       filesEndpoint: {
         type: String,
         value: ''
+      },
+      locationListMetadata: {
+        type: Object,
+        value: ''
       }
     };
   }
@@ -562,7 +566,8 @@ class TangyFormEditor extends PolymerElement {
       this.$.container.innerHTML = ''
       this.innerHTML = `
         <tangy-form-item-editor
-          files-endpoint="${this.filesEndpoint}" 
+          files-endpoint="${this.filesEndpoint}"
+          location-list-metadata="${this.locationListMetadata}" 
           ${this.hideSkipIf ? `hide-skip-if` : ''}
           ${this.hideShowIf ? `hide-show-if` : ''}
         >

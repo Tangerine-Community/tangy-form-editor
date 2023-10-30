@@ -5,6 +5,7 @@ import "tangy-form/input/tangy-checkbox.js";
 import { TangyBaseWidget } from "../tangy-base-widget.js";
 
 class TangyLocationWidget extends TangyBaseWidget {
+
   get claimElement() {
     return "tangy-location";
   }
@@ -21,6 +22,9 @@ class TangyLocationWidget extends TangyBaseWidget {
       metaDataTemplate: "",
       filterByGlobal: false,
       showLevels: "",
+      selectLocationSource: false,
+      locationSrc: "",
+      locationListMetadata: ""
     };
   }
 
@@ -35,6 +39,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
       metaDataTemplate: element.innerHTML,
+      locationListMetadata: element.locationListMetadata
     };
   }
 
@@ -50,6 +55,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         show-levels="${config.showLevels}"
         ${config.filterByGlobal ? "filter-by-global" : ""}
         ${config.showMetaData ? "show-meta-data" : ""}
+        ${config.selectLocationSource ? `"location-src"=${config.locationSrc}` : ""}
       >
         ${config.metaDataTemplate}
       </tangy-location>
@@ -98,6 +104,12 @@ class TangyLocationWidget extends TangyBaseWidget {
                 <div>
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
+                  <tangy-checkbox name="select-location-src" ${
+                    config.selectLocationSource ? 'value="on"' : ""
+                  }>Which Location List will appear?</tangy-checkbox>
+                  <tangy-select name="location-src" value="">
+                    ${this.renderLocationListMetadataSelect()}
+                  </tangy-select>
                   <tangy-checkbox name="filterByGlobal" ${
                     config.filterByGlobal ? 'value="on"' : ""
                   }>Filter by locations in the user profile?</tangy-checkbox>
@@ -127,6 +139,15 @@ class TangyLocationWidget extends TangyBaseWidget {
     `;
   }
 
+  renderLocationListMetadataSelect() {
+    let options = ''
+    for (let location of window.locationListMetadata) {
+      options = `${options}
+       <option value="${location.path}">${location.name}</option>`
+    }
+    return options;
+  }
+
   onSubmit(config, formEl) {
     return {
       ...config,
@@ -136,6 +157,16 @@ class TangyLocationWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
+      selectLocationSource: 
+        formEl.response.items[0].inputs.find(
+          (input) => input.name === "select-location-src"
+        ).value === "on"
+          ? true
+          : false,
+      locationSrc: 
+        formEl.response.items[0].inputs.find(
+          (input) => input.name === "location-src"
+        ).value,
       filterByGlobal:
         formEl.response.items[0].inputs.find(
           (input) => input.name === "filterByGlobal"
