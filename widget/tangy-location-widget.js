@@ -173,7 +173,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
     if (locationListMetadata) {
       const locationList = Object.values(locationListMetadata).find(l => l.path == this._config.locationSrc)
-      for (let level of locationList.levels) {
+      for (let level of locationList.locationsLevels) {
           options = `${options}
           <option value="${level}">${level}</option>`
       }
