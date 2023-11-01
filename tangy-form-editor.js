@@ -567,7 +567,7 @@ class TangyFormEditor extends PolymerElement {
       this.innerHTML = `
         <tangy-form-item-editor
           files-endpoint="${this.filesEndpoint}"
-          location-list-metadata="${this.locationListMetadata}" 
+          location-list-metadata='${JSON.stringify(this.locationListMetadata)}'
           ${this.hideSkipIf ? `hide-skip-if` : ''}
           ${this.hideShowIf ? `hide-show-if` : ''}
         >
