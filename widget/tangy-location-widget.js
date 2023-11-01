@@ -104,6 +104,7 @@ class TangyLocationWidget extends TangyBaseWidget {
                   ${this.renderEditQuestionAttributes(config)}
                   <div class="container">
                     <h3>Select the location list to use for this input</h3>
+                    <div>The Default Location List will be used if none is selected</div>
                     <div>Changing the list will clear the entry for Filter by Location</div>
                     <tangy-select class="location-src-select" name="location-src" value="${config.locationSrc}">
                       ${this.renderLocationListMetadataSelect()}
@@ -116,15 +117,18 @@ class TangyLocationWidget extends TangyBaseWidget {
                       ${this.renderShowLevelsCheckboxes()}
                     </tangy-checkboxes>
                   </div>
-                  <tangy-checkbox name="show-meta-data" ${
-                    config.showMetaData ? 'value="on"' : ""
-                  }>show meta-data</tangy-checkbox>
-                  <tangy-input name="meta-data-template" label="Meta-data template" inner-label="enter metadata that will appear" value="${
-                    config.metaDataTemplate
-                  }"></tangy-input>
-                  <tangy-checkbox name="filterByGlobal" ${
-                    config.filterByGlobal ? 'value="on"' : ""
-                  }>Filter by locations in the user profile?</tangy-checkbox>
+                  <div class="container">
+                    <h3>Choose which metadata labels will appear in the list</h3>
+                    <div>The metadata labels are useful to provide context to the user</div>
+                    <tangy-checkbox name="show-meta-data" ${
+                      config.showMetaData ? 'value="on"' : ""
+                    }>show meta-data</tangy-checkbox>
+                    <tangy-input name="meta-data-template" label="Metadata Labels" inner-label="e.g. school,room" value="${config.metaDataTemplate}"></tangy-input>
+                  </div>
+                  <div class="container">
+                    <h3>Check the box to filter the list by the user profile</h3>
+                    <tangy-checkbox name="filterByGlobal" ${config.filterByGlobal ? 'value="on"' : ""}>Filter by locations in the user profile?</tangy-checkbox>
+                  </div>
                 </div>
                 <div>
                   ${this.renderEditConditionalAttributes(config)}
