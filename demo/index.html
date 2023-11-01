@@ -37,13 +37,17 @@
 
     <script type="module" src="../tangy-form-editor.js"></script>
 
+
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
       </style>
     </custom-style>
   </head>
   <body>
-          <tangy-form-editor files-endpoint="./files.json">
+          <tangy-form-editor 
+            files-endpoint="./files.json" 
+            location-list-metadata='[{"id":"default-location-list","name":"Default Location List","path":"./assets/location-list.json", "levels": ["county","school"]},{"id":"hospitals","name":"Hospitals","path":"./assets/locations/hospitals.json", "locationsLevels": ["clinic","ward"]}]'>
+            
             <template>
 
               <tangy-form 
@@ -653,7 +657,7 @@
             </template>
           </tangy-form-editor>
           <script>
-            document.querySelector('tangy-form-editor').addEventListener('tangy-form-editor-change', event => {console.info(event.detail)})
+            document.querySelector('tangy-form-editor').addEventListener('tangy-form-editor-change', event => {console.info('tangy-form-editor-change event')})
           </script>
   </body>
 </html>

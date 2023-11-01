@@ -118,6 +118,10 @@ class TangyFormItemEditor extends PolymerElement {
         type: String,
         value: "",
       },
+      locationListMetadata: {
+        type: Object,
+        value: ''
+      }
     };
   }
 
@@ -230,10 +234,12 @@ class TangyFormItemEditor extends PolymerElement {
         </div>
       </paper-card>
         
-     <tangy-form-condensed-editor files-endpoint="${this.filesEndpoint}"
-      ${this.hideSkipIf ? `hide-skip-if` : ""}
-      ${this.hideShowIf ? `hide-show-if` : ""}
-     >
+      <tangy-form-condensed-editor 
+        files-endpoint="${this.filesEndpoint}" 
+        location-list-metadata='${JSON.stringify(this.locationListMetadata)}'
+        ${this.hideSkipIf ? `hide-skip-if` : ""}
+        ${this.hideShowIf ? `hide-show-if` : ""}
+      >
         <template>
           ${this.item.template}
         </template>
