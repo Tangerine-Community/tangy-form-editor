@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## v7.16.2
+- Bumped tangy-form to 4.41.1.
+
+## v7.16.1
+- Updated url for file-list-component.
+
+## v7.16.0
+- Bumped versions for important libs including tangy-form, polymer-cli, and webpack.
+
+## v7.15.4
+- fix(custom-scoring): Add editing on reopen [#353](https://github.com/Tangerine-Community/tangy-form-editor/pull/353)
+- fix(tangy-editor): Full Screen Nav Buttons alignment [#352](https://github.com/Tangerine-Community/tangy-form-editor/pull/352)
+- Bump tangy-form to 4.38.2
+
+## v7.15.3
+- fix(section-copy): Copy sections including the contents [#350](https://github.com/Tangerine-Community/tangy-form-editor/pull/350)
+- fix(scoring-section): Inputs previously selected are lost [#349](https://github.com/Tangerine-Community/tangy-form-editor/pull/349)
+- fix(custom-scoring): reflect properties to attribute and offload custom script evaluation to client [#348](https://github.com/Tangerine-Community/tangy-form-editor/pull/348)
+- Bump js-beautify from 1.14.6 to 1.14.7 [#347](https://github.com/Tangerine-Community/tangy-form-editor/pull/347)
+
+## v7.15.2
+- fix(video-capture): Allow users to toggle record-audio and persist the changes [#351](https://github.com/Tangerine-Community/tangy-form-editor/pull/351)
+- Bump tangy-form to v4.38.1
+
 ## v7.15.1
 - fix(cycle-sequences): User defined Cycle Sequences index should begin at 1 PR: [#231](https://github.com/Tangerine-Community/tangy-form-editor/pull/231)
 - Bump tangy-form to v4.38.0

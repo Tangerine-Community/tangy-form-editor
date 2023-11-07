@@ -94,6 +94,16 @@ class TangyFormItemEditor extends PolymerElement {
         value: [],
         reflectToAttribute: true,
       },
+      customScoringLogic: {
+        type: String,
+        value: "",
+        reflectToAttribute: true,
+      },
+      scoringSection: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true,
+      },
       hideSkipIf: {
         type: Boolean,
         value: false,
@@ -406,7 +416,7 @@ class TangyFormItemEditor extends PolymerElement {
       items.forEach(item => {
         let isItemChecked = false;
         if(this.item.scoringSection){
-          isItemChecked = [...this.item.scoringFields].find(e=>e===item.name)
+          isItemChecked = String(this.item.scoringFields).split(',').includes(item.name)
         }
         const toggleEl = `<paper-toggle-button id="${item.name}" ${isItemChecked?'checked':''}>${item.label}</paper-toggle-button>\n`
         scoringSectionItems = scoringSectionItems + toggleEl
@@ -456,7 +466,6 @@ class TangyFormItemEditor extends PolymerElement {
           ? this.shadowRoot
           .querySelector("#custom-scoring-logic-editor juicy-ace-editor")
           .value.replace(/"/g, "&#34;"):"",
-          customScore:!selections.length? this.evaluateCustomScoringLogic(): '',
           category: categoryValue,
           title: this.$.container.querySelector("#itemTitle").value,
           incorrectThreshold: this.$.container.querySelector(
