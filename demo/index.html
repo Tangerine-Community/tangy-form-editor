@@ -32,13 +32,6 @@
                 console.log("populating window.translation.")
                 window.translation = json
               })
-
-      fetch('assets/location-list-metadata.json')
-              .then(response => response.json())
-              .then(json => {
-                console.log("populating window.locationListMetadata.")
-                window.locationListMetadata = json
-              })
       window.example = 1
     </script>
 
@@ -53,7 +46,7 @@
   <body>
           <tangy-form-editor 
             files-endpoint="./files.json" 
-            location-list-metadata="foo">
+            location-list-metadata='[{"id":"default-location-list","name":"Default Location List","path":"./assets/location-list.json", "levels": ["county","school"]},{"id":"hospitals","name":"Hospitals","path":"./assets/locations/hospitals.json", "locationsLevels": ["clinic","ward"]}]'>
             
             <template>
 
@@ -664,7 +657,7 @@
             </template>
           </tangy-form-editor>
           <script>
-            document.querySelector('tangy-form-editor').addEventListener('tangy-form-editor-change', event => {console.info(event.detail)})
+            document.querySelector('tangy-form-editor').addEventListener('tangy-form-editor-change', event => {console.info('tangy-form-editor-change event')})
           </script>
   </body>
 </html>

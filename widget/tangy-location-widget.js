@@ -22,9 +22,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       metaDataTemplate: "",
       filterByGlobal: false,
       showLevels: "",
-      selectLocationSource: false,
-      locationSrc: "",
-      locationListMetadata: ""
+      locationSrc: ""
     };
   }
 
@@ -55,7 +53,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         show-levels="${config.showLevels}"
         ${config.filterByGlobal ? "filter-by-global" : ""}
         ${config.showMetaData ? "show-meta-data" : ""}
-        ${config.selectLocationSource ? `"location-src"=${config.locationSrc}` : ""}
+        location-src=${config.locationSrc}
       >
         ${config.metaDataTemplate}
       </tangy-location>
@@ -104,24 +102,33 @@ class TangyLocationWidget extends TangyBaseWidget {
                 <div>
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
-                  <tangy-checkbox name="select-location-src" ${
-                    config.selectLocationSource ? 'value="on"' : ""
-                  }>Which Location List will appear?</tangy-checkbox>
-                  <tangy-select name="location-src" value="">
-                    ${this.renderLocationListMetadataSelect()}
-                  </tangy-select>
-                  <tangy-checkbox name="filterByGlobal" ${
-                    config.filterByGlobal ? 'value="on"' : ""
-                  }>Filter by locations in the user profile?</tangy-checkbox>
-                  <tangy-input name="showLevels" inner-label="Show levels" hint-text="e.g. county,subcounty" value="${
-                    config.showLevels
-                  }"></tangy-input>
-                  <tangy-checkbox name="show-meta-data" ${
-                    config.showMetaData ? 'value="on"' : ""
-                  }>show meta-data</tangy-checkbox>
-                  <tangy-input name="meta-data-template" label="Meta-data template" value="${
-                    config.metaDataTemplate
-                  }"></tangy-input>
+                  <div class="container">
+                    <h3>Select the location list to use for this input</h3>
+                    <div>The Default Location List will be used if none is selected</div>
+                    <div>Changing the list will clear the entry for Filter by Location</div>
+                    <tangy-select class="location-src-select" name="location-src" value="${config.locationSrc}">
+                      ${this.renderLocationListMetadataSelect()}
+                    </tangy-select>
+                  </div>
+                  <div class="container">
+                    <h3>Select the checkboxes below to limit the levels that will appear in the list</h3>
+                    <div>If none are selected, all levels will appear in the list</div>
+                    <tangy-checkboxes name="showLevels" value='${this.getShowLevelTangyCheckboxesValue()}'>
+                      ${this.renderShowLevelsCheckboxes()}
+                    </tangy-checkboxes>
+                  </div>
+                  <div class="container">
+                    <h3>Choose which metadata labels will appear in the list</h3>
+                    <div>The metadata labels are useful to provide context to the user</div>
+                    <tangy-checkbox name="show-meta-data" ${
+                      config.showMetaData ? 'value="on"' : ""
+                    }>show meta-data</tangy-checkbox>
+                    <tangy-input name="meta-data-template" label="Metadata Labels" inner-label="e.g. school,room" value="${config.metaDataTemplate}"></tangy-input>
+                  </div>
+                  <div class="container">
+                    <h3>Check the box to filter the list by the user profile</h3>
+                    <tangy-checkbox name="filterByGlobal" ${config.filterByGlobal ? 'value="on"' : ""}>Filter by locations in the user profile?</tangy-checkbox>
+                  </div>
                 </div>
                 <div>
                   ${this.renderEditConditionalAttributes(config)}
@@ -139,13 +146,89 @@ class TangyLocationWidget extends TangyBaseWidget {
     `;
   }
 
+  afterRenderEdit() {
+    this.shadowRoot
+      .querySelector("#container")
+      .querySelector("tangy-form")
+      .querySelector("tangy-form-item")
+      .querySelector("iron-pages")
+      .querySelector("tangy-select.location-src-select")
+      .addEventListener('change', this.onLocationSrcChange.bind(this));
+  }
+
   renderLocationListMetadataSelect() {
     let options = ''
-    for (let location of window.locationListMetadata) {
-      options = `${options}
-       <option value="${location.path}">${location.name}</option>`
+    let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
+    if (locationListMetadata) {
+      for (let location of locationListMetadata) {
+        options = `${options}
+        <option value="${location.path}">${location.name}</option>`
+      }
     }
     return options;
+  }
+
+  renderShowLevelsCheckboxes() {
+    let options = ''
+    let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
+    if (locationListMetadata) {
+      const locationList = Object.values(locationListMetadata).find(l => l.path == this._config.locationSrc)
+      for (let level of locationList.locationsLevels) {
+          options = `${options}
+          <option value="${level}">${level}</option>`
+      }
+    }
+    return options;
+  }
+
+  onLocationSrcChange(event) {
+    // If showLevels is set, we need to clear it when the locationSrc changes 
+    // since the levels are probably not in the new locationSrc
+    if (event.target.value != this._config.locationSrc) {
+      this._config.locationSrc = event.target.value
+      this._config.showLevels = ''
+
+      // Should this be done another way?
+      this._render();
+    }
+  }
+
+  // converts a comma separated string of values into a tangy-checkboxes value
+  getShowLevelTangyCheckboxesValue() {
+    let values = []
+
+    if (this._config.showLevels) {
+      let selectedLevels = this._config.showLevels.split(',')
+      let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
+      if (locationListMetadata) {
+        const locationList = Object.values(locationListMetadata).find(l => l.path == this._config.locationSrc)
+        for (let level of locationList.levels) {
+          values.push(
+            {
+              "name": level,
+              "value": selectedLevels.includes(level) ? "on" : ""
+            }
+          )
+        }
+      }
+    }
+
+    return JSON.stringify(values)
+  }
+
+  // converts a tangy-checkboxes value into a comma separated string of values
+  getShowLevelValueString(formEl) {
+    let values = []
+    let input = formEl.response.items[0].inputs.find(
+      (input) => input.name === "showLevels")
+    if (input) {
+      for (let v of input.value) {
+        if (v.value == 'on') {
+          values.push(v.name)
+        }
+      }
+    }
+    return values.join(',')
   }
 
   onSubmit(config, formEl) {
@@ -157,12 +240,6 @@ class TangyLocationWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
-      selectLocationSource: 
-        formEl.response.items[0].inputs.find(
-          (input) => input.name === "select-location-src"
-        ).value === "on"
-          ? true
-          : false,
       locationSrc: 
         formEl.response.items[0].inputs.find(
           (input) => input.name === "location-src"
@@ -173,9 +250,7 @@ class TangyLocationWidget extends TangyBaseWidget {
         ).value === "on"
           ? true
           : false,
-      showLevels: formEl.response.items[0].inputs.find(
-        (input) => input.name === "showLevels"
-      ).value,
+      showLevels: this.getShowLevelValueString(formEl),
       showMetaData:
         formEl.response.items[0].inputs.find(
           (input) => input.name === "show-meta-data"

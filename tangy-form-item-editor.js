@@ -236,7 +236,7 @@ class TangyFormItemEditor extends PolymerElement {
         
       <tangy-form-condensed-editor 
         files-endpoint="${this.filesEndpoint}" 
-        location-list-metadata=${this.locationListMetadata}"
+        location-list-metadata='${JSON.stringify(this.locationListMetadata)}'
         ${this.hideSkipIf ? `hide-skip-if` : ""}
         ${this.hideShowIf ? `hide-show-if` : ""}
       >

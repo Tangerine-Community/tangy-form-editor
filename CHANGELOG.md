@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v7.17.0
+
+- Add multiple location list selection to tangy-location-widget
+- Bump tangy-form to 4.42.0
+
 ## v7.16.2
 - Bumped tangy-form to 4.41.1.
 
