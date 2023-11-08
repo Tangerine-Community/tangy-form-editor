@@ -162,7 +162,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     if (locationListMetadata) {
       for (let location of locationListMetadata) {
         options = `${options}
-        <option value="${location.path}">${location.name}</option>`
+        <option value="${this.getLocationAssetsPath(location)}">${location.name}</option>`
       }
     }
     return options;
@@ -173,7 +173,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
     if (locationListMetadata) {
       // Using endsWith in the compare is not the best solution
-      const locationList = Object.values(locationListMetadata).find(l => this._config.locationSrc.endsWith(l.path))
+      const locationList = Object.values(locationListMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
       if (locationList) {
         for (let level of locationList.locationsLevels) {
             options = `${options}
@@ -203,7 +203,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       let selectedLevels = this._config.showLevels.split(',')
       let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
       if (locationListMetadata) {
-        const locationList = Object.values(locationListMetadata).find(l => l.path == this._config.locationSrc)
+        const locationList = Object.values(locationListMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
         for (let level of locationList.locationsLevels) {
           values.push(
             {
@@ -216,6 +216,11 @@ class TangyLocationWidget extends TangyBaseWidget {
     }
 
     return JSON.stringify(values)
+  }
+
+  // location lists paths need to have './assets' prepended
+  getLocationAssetsPath(location) {
+    return `./assets/${location.path}`
   }
 
   // converts a tangy-checkboxes value into a comma separated string of values
