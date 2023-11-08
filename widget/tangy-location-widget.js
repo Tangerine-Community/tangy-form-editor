@@ -172,10 +172,13 @@ class TangyLocationWidget extends TangyBaseWidget {
     let options = ''
     let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
     if (locationListMetadata) {
-      const locationList = Object.values(locationListMetadata).find(l => l.path == this._config.locationSrc)
-      for (let level of locationList.locationsLevels) {
-          options = `${options}
-          <option value="${level}">${level}</option>`
+      // Using endsWith in the compare is not the best solution
+      const locationList = Object.values(locationListMetadata).find(l => this._config.locationSrc.endsWith(l.path))
+      if (locationList) {
+        for (let level of locationList.locationsLevels) {
+            options = `${options}
+            <option value="${level}">${level}</option>`
+        }
       }
     }
     return options;
@@ -188,7 +191,6 @@ class TangyLocationWidget extends TangyBaseWidget {
       this._config.locationSrc = event.target.value
       this._config.showLevels = ''
 
-      // Should this be done another way?
       this._render();
     }
   }
@@ -202,7 +204,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
       if (locationListMetadata) {
         const locationList = Object.values(locationListMetadata).find(l => l.path == this._config.locationSrc)
-        for (let level of locationList.levels) {
+        for (let level of locationList.locationsLevels) {
           values.push(
             {
               "name": level,

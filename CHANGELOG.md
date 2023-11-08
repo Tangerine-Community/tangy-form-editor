@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.17.1
+
+- Fix multiple location list selection to tangy-location-widget
+
 ## v7.17.0
 
 - Add multiple location list selection to tangy-location-widget

@@ -46,7 +46,7 @@
   <body>
           <tangy-form-editor 
             files-endpoint="./files.json" 
-            location-list-metadata='[{"id":"default-location-list","name":"Default Location List","path":"./assets/location-list.json", "levels": ["county","school"]},{"id":"hospitals","name":"Hospitals","path":"./assets/locations/hospitals.json", "locationsLevels": ["clinic","ward"]}]'>
+            location-list-metadata='[{"id":"default-location-list","name":"Default Location List","path":"./assets/location-list.json", "locationsLevels": ["county","school"]},{"id":"hospitals","name":"Hospitals","path":"./assets/locations/hospitals.json", "locationsLevels": ["clinic","ward"]}]'>
             
             <template>
 
@@ -206,7 +206,7 @@
                   <template>
                     Your GPS Coordinates:
                     <tangy-gps name="gps_coords"></tangy-gps>
-                    <tangy-location  label="Select your school" name="location" show-levels="county,school"></tangy-location>
+                    <tangy-location  label="Select your location" name="location" show-levels="county,school"></tangy-location>
                   </template>
                 </tangy-form-item>
                 <tangy-form-item id="text_inputs_2" title="Text Inputs 2">
