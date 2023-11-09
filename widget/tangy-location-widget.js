@@ -22,7 +22,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       metaDataTemplate: "",
       filterByGlobal: false,
       showLevels: "",
-      locationSrc: ""
+      locationSrc: "./assets/location-list.json"
     };
   }
 
@@ -107,14 +107,14 @@ class TangyLocationWidget extends TangyBaseWidget {
                     <div>The Default Location List will be used if none is selected</div>
                     <div>Changing the list will clear the entry for Filter by Location</div>
                     <tangy-select class="location-src-select" name="location-src" value="${config.locationSrc}">
-                      ${this.renderLocationListMetadataSelect()}
+                      ${this.renderLocationSourceOptions()}
                     </tangy-select>
                   </div>
                   <div class="container">
                     <h3>Select the checkboxes below to limit the levels that will appear in the list</h3>
                     <div>If none are selected, all levels will appear in the list</div>
-                    <tangy-checkboxes name="showLevels" value='${this.getShowLevelTangyCheckboxesValue()}'>
-                      ${this.renderShowLevelsCheckboxes()}
+                    <tangy-checkboxes class="show-levels-checkboxes" name="showLevels" value='${this.getShowLevelTangyCheckboxesValue()}'>
+                      ${this.renderShowLevelsOptions()}
                     </tangy-checkboxes>
                   </div>
                   <div class="container">
@@ -156,7 +156,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       .addEventListener('change', this.onLocationSrcChange.bind(this));
   }
 
-  renderLocationListMetadataSelect() {
+  renderLocationSourceOptions() {
     let options = ''
     let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
     if (locationListMetadata) {
@@ -168,7 +168,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     return options;
   }
 
-  renderShowLevelsCheckboxes() {
+  renderShowLevelsOptions() {
     let options = ''
     let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
     if (locationListMetadata) {
@@ -191,19 +191,42 @@ class TangyLocationWidget extends TangyBaseWidget {
       this._config.locationSrc = event.target.value
       this._config.showLevels = ''
 
-      this._render();
+      this.updateShowLevelTangyCheckboxes()
     }
+  }
+
+  // Updating the tangy checkbox to show the elements associated with the currently selected location
+  updateShowLevelTangyCheckboxes() {
+    const formEl = this.shadowRoot.querySelector("tangy-form")
+    let tangyCheckboxesEl = formEl
+      .querySelector("tangy-form-item")
+      .querySelector("iron-pages")
+      .querySelector("tangy-checkboxes.show-levels-checkboxes")
+    
+    const values = this.getShowLevelTangyCheckboxesValue()
+    // setting the tangy-checkboxes element value triggers a reflect in the input
+    // which changes it's internal tangy-checkbox elements
+    tangyCheckboxesEl.setAttribute('value', values)
+
+    // The options need to be removed and added here (tangy-checkboxes doesn't do it for us)
+    tangyCheckboxesEl.querySelectorAll('option').forEach( option => {
+      option.parentElement.removeChild(option)
+    })
+    tangyCheckboxesEl.innerHTML = this.renderShowLevelsOptions()
+
+    tangyCheckboxesEl.render()
+
   }
 
   // converts a comma separated string of values into a tangy-checkboxes value
   getShowLevelTangyCheckboxesValue() {
     let values = []
 
-    if (this._config.showLevels) {
-      let selectedLevels = this._config.showLevels.split(',')
-      let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
-      if (locationListMetadata) {
-        const locationList = Object.values(locationListMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
+    let selectedLevels = this._config.showLevels.split(',')
+    let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
+    if (locationListMetadata) {
+      const locationList = Object.values(locationListMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
+      if (locationList) {
         for (let level of locationList.locationsLevels) {
           values.push(
             {
