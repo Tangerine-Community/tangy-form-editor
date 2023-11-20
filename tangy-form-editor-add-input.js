@@ -129,9 +129,9 @@ class TangyFormEditorAddInput extends PolymerElement {
     wrapperEl.setAttribute('files-endpoint', this.getAttribute('files-endpoint'))
 
     if (event.target.id == 'tangy-location-widget') {
-      const locationListMetadata = this.getAttribute('location-lists-metadata')
-      if (locationListMetadata) {
-        wrapperEl.setAttribute("location-lists-metadata", locationListMetadata);
+      const locationListsMetadata = this.getAttribute('location-lists-metadata')
+      if (locationListsMetadata) {
+        wrapperEl.setAttribute("location-lists-metadata", locationListsMetadata);
       }
     }
     

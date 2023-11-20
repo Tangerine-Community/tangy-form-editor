@@ -75,7 +75,7 @@ class TangyFormCondensedEditor extends PolymerElement {
         type: String,
         value: "",
       },
-      locationListMetadata: {
+      locationListsMetadata: {
         type: Object,
         value: ''
       }
@@ -117,7 +117,7 @@ class TangyFormCondensedEditor extends PolymerElement {
           );
           widgetEl.setAttribute("files-endpoint", this.filesEndpoint);
           if (foundWidget.widgetName == 'tangy-location-widget') {
-            widgetEl.setAttribute("location-lists-metadata", `${JSON.stringify(this.locationListMetadata)}`);
+            widgetEl.setAttribute("location-lists-metadata", `${JSON.stringify(this.locationListsMetadata)}`);
           }
           if (this.hideSkipIf) widgetEl.setAttribute("hide-skip-if", "");
           if (this.hideShowIf) widgetEl.setAttribute("hide-show-if", "");
@@ -271,7 +271,7 @@ class TangyFormCondensedEditor extends PolymerElement {
     }
     const addInputEl = document.createElement("tangy-form-editor-add-input");
     addInputEl.setAttribute("files-endpoint", this.filesEndpoint);
-    addInputEl.setAttribute("location-lists-metadata", `${JSON.stringify(this.locationListMetadata)}`);
+    addInputEl.setAttribute("location-lists-metadata", `${JSON.stringify(this.locationListsMetadata)}`);
     if (this.hasAttribute('hide-skip-if')) addInputEl.setAttribute('hide-skip-if', '')
     if (this.hasAttribute('hide-show-if')) addInputEl.setAttribute('hide-show-if', '')
     if (insertAfterEl) {

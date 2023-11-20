@@ -162,7 +162,7 @@ class TangyFormEditor extends PolymerElement {
         type: String,
         value: ''
       },
-      locationListMetadata: {
+      locationListsMetadata: {
         type: Object,
         value: ''
       }
@@ -569,7 +569,7 @@ class TangyFormEditor extends PolymerElement {
       this.innerHTML = `
         <tangy-form-item-editor
           files-endpoint="${this.filesEndpoint}"
-          location-lists-metadata='${JSON.stringify(this.locationListMetadata)}'
+          location-lists-metadata='${JSON.stringify(this.locationListsMetadata)}'
           ${this.hideSkipIf ? `hide-skip-if` : ''}
           ${this.hideShowIf ? `hide-show-if` : ''}
         >

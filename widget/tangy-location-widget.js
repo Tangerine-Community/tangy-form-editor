@@ -37,7 +37,7 @@ class TangyLocationWidget extends TangyBaseWidget {
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
       metaDataTemplate: element.innerHTML,
-      locationListMetadata: element.locationListMetadata
+      locationListsMetadata: element.locationListsMetadata
     };
   }
 
@@ -158,9 +158,9 @@ class TangyLocationWidget extends TangyBaseWidget {
 
   renderLocationSourceOptions() {
     let options = ''
-    let locationListMetadata = JSON.parse(this.getAttribute('location-lists-metadata'))
-    if (locationListMetadata) {
-      for (let location of locationListMetadata) {
+    let locationListsMetadata = JSON.parse(this.getAttribute('location-lists-metadata'))
+    if (locationListsMetadata) {
+      for (let location of locationListsMetadata) {
         options = `${options}
         <option value="${this.getLocationAssetsPath(location)}">${location.name}</option>`
       }
@@ -223,9 +223,9 @@ class TangyLocationWidget extends TangyBaseWidget {
     let values = []
 
     let selectedLevels = this._config.showLevels.split(',')
-    let locationListMetadata = JSON.parse(this.getAttribute('location-lists-metadata'))
-    if (locationListMetadata) {
-      const locationList = Object.values(locationListMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
+    let locationListsMetadata = JSON.parse(this.getAttribute('location-lists-metadata'))
+    if (locationListsMetadata) {
+      const locationList = Object.values(locationListsMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
       if (locationList) {
         for (let level of locationList.locationsLevels) {
           values.push(
