@@ -158,7 +158,7 @@ class TangyLocationWidget extends TangyBaseWidget {
 
   renderLocationSourceOptions() {
     let options = ''
-    let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
+    let locationListMetadata = JSON.parse(this.getAttribute('location-lists-metadata'))
     if (locationListMetadata) {
       for (let location of locationListMetadata) {
         options = `${options}
@@ -170,10 +170,10 @@ class TangyLocationWidget extends TangyBaseWidget {
 
   renderShowLevelsOptions() {
     let options = ''
-    let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
-    if (locationListMetadata) {
+    let locationListsMetadata = JSON.parse(this.getAttribute('location-lists-metadata'))
+    if (locationListsMetadata) {
       // Using endsWith in the compare is not the best solution
-      const locationList = Object.values(locationListMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
+      const locationList = Object.values(locationListsMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
       if (locationList) {
         for (let level of locationList.locationsLevels) {
             options = `${options}
@@ -223,7 +223,7 @@ class TangyLocationWidget extends TangyBaseWidget {
     let values = []
 
     let selectedLevels = this._config.showLevels.split(',')
-    let locationListMetadata = JSON.parse(this.getAttribute('location-list-metadata'))
+    let locationListMetadata = JSON.parse(this.getAttribute('location-lists-metadata'))
     if (locationListMetadata) {
       const locationList = Object.values(locationListMetadata).find(l => this.getLocationAssetsPath(l) == this._config.locationSrc)
       if (locationList) {
