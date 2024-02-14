@@ -1,14 +1,14 @@
 import "@polymer/paper-card/paper-card.js";
 import "@polymer/paper-button/paper-button.js";
 import "tangy-form/tangy-form.js";
-import "tangy-form/input/tangy-radio-blocks.js";
+import "tangy-form/input/tangy-prompt-box.js";
 import "tangy-form/input/tangy-input.js";
 import "tangy-form/input/tangy-checkbox.js";
 import { TangyBaseWidget } from "../tangy-base-widget.js";
 
-class TangyRadioBlocksWidget extends TangyBaseWidget {
+class TangyPromptBoxWidget extends TangyBaseWidget {
   get claimElement() {
-    return "tangy-radio-blocks";
+    return "tangy-prompt-box";
   }
 
   get defaultConfig() {
@@ -19,8 +19,15 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
       ...this.defaultConfigValidationAttributes(),
       ...this.defaultConfigAdvancedAttributes(),
       ...this.defaultConfigUnimplementedAttributes(),
-      options: [],
+      justifyContent: "flex-start",
+      options: []
     };
+  }
+
+  get tangyRadioBlockSiblingNames() {
+    const tangyRadioBlockSiblings = this.parentElement ? this.parentElement.querySelectorAll("tangy-radio-blocks") : null;
+    const tangyRadioBlockSiblingNames = tangyRadioBlockSiblings ? Array.from(tangyRadioBlockSiblings).map((sibling) => sibling.getAttribute("name")) : [];
+    return tangyRadioBlockSiblingNames;
   }
 
   upcast(config, element) {
@@ -31,14 +38,15 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
       ...this.upcastValidationAttributes(config, element),
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
-      orientation: element.getAttribute('orientation') || "columns",
+      justifyContent: element.getAttribute('justifyContent') || "flex-start",
       options: [...element.querySelectorAll("option")].map((option) => {
         return {
           value: option.getAttribute("value"),
           label: option.innerHTML,
-          correct: option.hasAttribute("correct"),
           image: option.getAttribute("image"),
-          sound: option.getAttribute("sound")
+          sound: option.getAttribute("sound"),
+          playOnOpen: option.getAttribute("play-on-open"),
+          promptFor: option.getAttribute("prompt-for")
         };
       }),
     };
@@ -46,34 +54,36 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
 
   downcast(config) {
     return `
-      <tangy-radio-blocks
+      <tangy-prompt-box
         ${this.downcastCoreAttributes(config)}
         ${this.downcastQuestionAttributes(config)}
         ${this.downcastConditionalAttributes(config)}
         ${this.downcastValidationAttributes(config)}
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
-        ${config.orientation ? `orientation="${config.orientation}"` : ""}
+        ${config.justifyContent}
       >
         ${config.options
           .map(
             (option) => `
-          <option value="${option.value}" ${option.correct ? "correct" : ""} image="${option.image}" sound="${option.sound}">${
-              option.label
-            }</option>
+          <option id="${option.value}" value="${option.value}" 
+            image="${option.image}" 
+            sound="${option.sound}" 
+            ${option.promptFor ? `prompt-for="${option.promptFor}"` : ''}
+            ${option.playOnOpen ? 'play-on-open="on"' : ''}>
+            ${option.label}
+          </option>
         `
           )
           .join("")}
-      </tangy-radio-blocks>
+      </tangy-prompt-box>
     `;
   }
 
   renderPrint(config) {
     let keyValuePairs = "";
     config.options.map((option) => {
-      keyValuePairs += `<li>${option.value}: ${option.label} ${
-        option.correct ? "correct" : ""
-      }</li>`;
+      keyValuePairs += `<li>${option.value}: ${option.label}</li>`;
     });
     return `
    
@@ -105,8 +115,8 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
   renderEdit(config) {
     const action = config.name ? "Edit" : "Add";
     return `
-      <h3>${action} Radio Buttons</h3>
-      <tangy-form id="tangy-radio-blocks">
+      <h3>${action} Prompt Box</h3>
+      <tangy-form id="tangy-prompt-box">
         <tangy-form-item>
           <template>
             <paper-tabs selected="0">
@@ -119,20 +129,24 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
               <div>
                 ${this.renderEditCoreAttributes(config)}
                 ${this.renderEditQuestionAttributes(config)}
-                <label for="orientation" style="font-weight: bold; font-size: 1.2em;">Orientation:</label>
-                <tangy-select name="orientation">
-                  <option value="columns" ${config.orientation === "columns" ? "selected" : ""}>Columns</option>
-                  <option value="rows" ${config.orientation === "rows" ? "selected" : ""}>Rows</option>
+                <label for="justifyContent" style="font-weight: bold; font-size: 1.2em;">Display Justification:</label>
+                <tangy-select hint-text="Which side should the prompt box appear on?" name="justifyContent" value="${config.justifyContent}">
+                  <option value="flex-start">Left</option>
+                  <option value="flex-end">Right</option>
                 </tangy-select>
                 <h2>Options</h2>
-                <p>Click the "Correct" property for options that are the correct answer. This property is used with the Section Detail's Threshold property.</p>
                 <tangy-list name="options">
                   <template type="tangy-list/new-item">
                     <tangy-input name="value" allowed-pattern="[a-zA-Z0-9\-_]" hint-text="Enter the variable value of the radio button" inner-label="Value" type="text"></tangy-input>
                     <tangy-input name="label" hint-text="Enter the display label of the radio button" inner-label="Label" type="text"></tangy-input>
-                    <tangy-checkbox name="correct" hint-text="Select if this is the correct answer."  label="Correct" ></tangy-checkbox>
+                    <tangy-checkbox name="playOnOpen" hint-text="Play sound on open" inner-label="Play on Open"></tangy-checkbox>
                     <tangy-input name="image" hint-text="Enter the image URL" inner-label="Image" type="text"></tangy-input>
                     <tangy-input name="sound" hint-text="Enter the sound URL" inner-label="Sound" type="text"></tangy-input>
+                    <tangy-select name="promptFor" hint-text="Enter the name of a tangy-radio-blocks variable to prompt" inner-label="Prompt For" type="text">
+                      ${this.tangyRadioBlockSiblingNames.map((name) => {
+                        return `<option value="${name}">${name}</option>`;
+                      })}
+                    </tangy-select>
                   </template>
                   ${
                     config.options.length > 0
@@ -153,11 +167,14 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
                             .replace(/"/g, "&quot;")
                             .replace(/'/g, "&#039;")
                           }"></tangy-input>
-                          <tangy-checkbox name="correct" hint-text="Select if this is the correct answer."  label="Correct"  value="${
-                            option.correct ? "on" : ""
-                          }"></tangy-checkbox>
                           <tangy-input name="image" hint-text="Enter the image URL" inner-label="Image" type="text" value="${option.image ? option.image : ""}"></tangy-input>
                           <tangy-input name="sound" hint-text="Enter the sound URL" inner-label="Sound" type="text" value="${option.sound ? option.sound : ""}"></tangy-input>
+                          <tangy-checkbox name="playOnOpen" hint-text="Play sound on open" value="${option.playOnOpen == "on" ? "on" : ""}"></tangy-checkbox>
+                          <tangy-select name="promptFor" warn-if="6 != 7" hint-text="Enter the name of a tangy-radio-blocks variable to prompt" value="${option.promptFor}">
+                          ${this.tangyRadioBlockSiblingNames.map((name) => {
+                            return `<option value="${name}">${name}</option>`;
+                          })}
+                        </tangy-select>
                         </tangy-list-item>
                       `
                         )
@@ -192,7 +209,7 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
-      orientation: formEl.querySelector("tangy-select[name=orientation]").value,
+      justifyContent: formEl.querySelector("tangy-select[name=justifyContent]").value,
       options: formEl.values.options.map((item) =>
         item.reduce((acc, input) => {
           return { ...acc, [input.name]: input.value };
@@ -203,11 +220,11 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
 }
 
 window.customElements.define(
-  "tangy-radio-blocks-widget",
-  TangyRadioBlocksWidget
+  "tangy-prompt-box-widget",
+  TangyPromptBoxWidget
 );
 window.tangyFormEditorWidgets.define(
-  "tangy-radio-blocks-widget",
-  "tangy-radio-blocks",
-  TangyRadioBlocksWidget
+  "tangy-prompt-box-widget",
+  "tangy-prompt-box",
+  TangyPromptBoxWidget
 );
