@@ -20,7 +20,7 @@
     "js-beautify": "^1.14.7",
     "juicy-ace-editor": "https://github.com/Juicy/juicy-ace-editor.git#ES6-modules",
     "redux": "^4.2.0",
-    "tangy-form": "^4.43.1-rc.1",
+    "tangy-form": "^4.43.1",
     "tangy-translate": "^1.0.0"
   },
   "devDependencies": {
