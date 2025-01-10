@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.18.1
+
+- Bump tangy-form to 4.46.0
+
 ## v7.18.0
 
 - Add editor widgets for Tangy Prompt Box and updates to Tangy Radio Blocks
