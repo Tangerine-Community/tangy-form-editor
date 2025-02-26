@@ -92,11 +92,8 @@ class TangyAudioPlaybackWidget extends TangyBaseWidget {
               <div>
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
-                  <tangy-input name="src" type="string" inner-label="Audio Source." value="${
-                    config.src
-                  }"></tangy-input>
-                  <tangy-toggle name="controls" help-text="Show Audio Playback Controls? (default: true)"
-                      ${config.controls ? 'value="on"' : ''}>Show Audio Playback Controls?
+                  <tangy-input name="src" type="string" inner-label="Audio source" value="${config.src}"></tangy-input>
+                  <tangy-toggle name="controls" help-text="Show Audio Playback Controls? (default: true)"${config.controls ? 'value="on"' : ''}>Show Audio Playback Controls?
                   </tangy-toggle>
               </div>
               <div>
