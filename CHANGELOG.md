@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v7.19.0
+
+- Create Tangy Audio Recording and Tangy Audio Playback widgets
+- Bump tangy-form to 4.47.0
+
 ## v7.18.2
 
 - Bump tangy-form to 4.46.1
