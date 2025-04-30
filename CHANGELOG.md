@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v7.20.2
+
+- Bump tangy-form to 4.48.2 with fixes to Tangy Audio Recording and Playback widgets
+
+## v7.20.1
+
+- Bump tangy-form to 4.48.1 with fixes to Tangy Audio Recording and Playback widgets
+
 ## v7.20.0
 
 - Bump tangy-form to 4.48.0
