@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.20.3
+
+- Bump tangy-form to 4.49.1 with Tangy Audio Recording with Visualization
+
 ## v7.20.2
 
 - Bump tangy-form to 4.48.2 with fixes to Tangy Audio Recording and Playback widgets
