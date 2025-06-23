@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v7.21.0
+## v7.21.0, v7.21.1
 
 - Bump tangy-form to 4.49.1 with Tangy Audio Recording with Visualization
 - Introduce autoStopMode config and UI for both TangyTimedWidget and TangyUntimedGridWidget, allowing selection between "first" and "consecutive" modes for auto-stop behavior.
