@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v7.21.3
+
+- Bump tangy-form to 4.49.4 to enabel custom style of tangy-radio-block background color
+
 ## v7.21.0, v7.21.1, v7.21.2
 
 - Bump tangy-form to 4.49.1, 4.49.2, 4.49.3 with Tangy Audio Recording with Visualization
