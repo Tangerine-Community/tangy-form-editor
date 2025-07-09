@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## v7.21.3, v7.21.4
+## v7.21.3, v7.21.4, v7.21.5
 
 - Bump tangy-form to 4.49.4 to enabel custom style of tangy-radio-block background color
 - Bump tangy-form to 4.49.5 to use tangy-form-item background color for tangy-radio-block label
+- Bump tangy-form to 4.49.6 to convert webm to wav for tangy-audio-recording
 
 ## v7.21.0, v7.21.1, v7.21.2
 
