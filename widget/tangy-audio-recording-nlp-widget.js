@@ -28,15 +28,7 @@ class TangyAudioRecordingNlpWidget extends TangyBaseWidget {
     return tangyAudioRecordingSiblingNames;
   }
 
-  afterRenderEdit(tangyForm=undefined) {
-    this.shadowRoot
-      .querySelector("#container")
-      .querySelector("tangy-form")
-      .querySelector("tangy-form-item")
-      .querySelector("iron-pages")
-      .querySelector("tangy-select.location-src-select")
-      .addEventListener('change', this.onLocationSrcChange.bind(this));
-  }
+  afterRenderEdit() {}
 
   upcast(config, element) {
     return {
@@ -120,7 +112,7 @@ class TangyAudioRecordingNlpWidget extends TangyBaseWidget {
                    <option value='en' ${config.language === 'en' ? 'active' : ''}>English</option>
                    <option value='sw' ${config.language === 'sw' ? 'active' : ''}>Swahili</option>
                   </tangy-radio-buttons>
-                  <tangy-select name="audioRecording" hint-text="Select a tangy-audio-recording input to use." label="Connected Audio Recording" value="${config.audioRecording || ''}" required>
+                  <tangy-select class="audio-recording-select" name="audioRecording" hint-text="Select a tangy-audio-recording input to use." label="Connected Audio Recording" value="${config.audioRecording || ''}" required>
                       ${tangyAudioRecordingSiblingNames ? tangyAudioRecordingSiblingNames.map((name) => {
                         return `<option value="${name}">${name}</option>`;
                       }) : ''}
