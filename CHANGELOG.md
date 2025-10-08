@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v7.22.0, v7.22.1
+## v7.22.0, v7.22.1, v7.22.2
 
 - Add tangy-audio-recording-nlp-widget
 - Bump tangy-form to 4.50.2
