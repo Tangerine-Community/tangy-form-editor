@@ -77,7 +77,6 @@ class TangyAudioRecordingNlpWidget extends TangyBaseWidget {
   }
 
   renderInfo(config) {
-    console.log(config)
     const icon = (this.shadowRoot.querySelector(
       "#icon"
     ).innerHTML = `<span class="header-text"><mwc-icon>settings_voice</mwc-icon><span>`);
