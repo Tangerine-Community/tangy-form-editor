@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v7.22.6
+
+- Bump tangy-form to 4.50.8 - add min-duration to tangy-audio-recording
+- Fix tangy-radio-blocks saving Column layout and not preserving Rows if already set
+
 ## v7.22.0, v7.22.1, v7.22.2, v7.22.3, v7.22.4, v7.22.5
 
 - Add tangy-audio-recording-nlp-widget
