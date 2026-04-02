@@ -17,7 +17,7 @@ class TangyAudioRecordingWidget extends TangyBaseWidget {
       ...this.defaultConfigValidationAttributes(),
       ...this.defaultConfigAdvancedAttributes(),
       ...this.defaultConfigUnimplementedAttributes(),
-      
+      minDuration: 5 // Default value for new questions
     };
   }
 
@@ -29,11 +29,15 @@ class TangyAudioRecordingWidget extends TangyBaseWidget {
       ...this.upcastValidationAttributes(config, element),
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
-      ...element.getProps()
+      ...element.getProps(),
+      // Use the attribute if it exists, otherwise fall back to the default from config
+      minDuration: element.hasAttribute("min-duration") ? element.getAttribute("min-duration") : ''
     };
   }
 
   downcast(config) {
+    const minDurationAttr = (config.minDuration !== '' && config.minDuration !== undefined) ? `min-duration="${config.minDuration}"` : '';
+
     return `
       <tangy-audio-recording 
         ${this.downcastCoreAttributes(config)}
@@ -42,6 +46,7 @@ class TangyAudioRecordingWidget extends TangyBaseWidget {
         ${this.downcastValidationAttributes(config)}
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
+        ${minDurationAttr}
       >
       </tangy-audio-recording>
     `;
@@ -52,6 +57,7 @@ class TangyAudioRecordingWidget extends TangyBaseWidget {
     <table>
       <tr><td><strong>Variable Name:</strong></td><td>${config.name}</td></tr>
       <tr><td><strong>Required:</strong></td><td>${config.required}</td></tr>
+      <tr><td><strong>Min Duration:</strong></td><td>${config.minDuration}s</td></tr>
       <tr><td><strong>Disabled:</strong></td><td>${config.disabled}</td></tr>
       <tr><td><strong>Hidden:</strong></td><td>${config.hidden}</td></tr>
     </table>
@@ -83,10 +89,16 @@ class TangyAudioRecordingWidget extends TangyBaseWidget {
                 <paper-tab>Validation</paper-tab>
                 <paper-tab>Advanced</paper-tab>
             </paper-tabs>
-            <iron-pages selected="">
+            <iron-pages selected="0">
                 <div>
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
+                  <tangy-input 
+                    name="minDuration" 
+                    label="Minimum Duration (seconds)" 
+                    value="${config.minDuration}" 
+                    type="number">
+                  </tangy-input>
                 </div>
                 <div>
                   ${this.renderEditConditionalAttributes(config)}
@@ -105,6 +117,8 @@ class TangyAudioRecordingWidget extends TangyBaseWidget {
   }
 
   onSubmit(config, formEl) {
+    const minDurInput = formEl.querySelector('tangy-input[name="minDuration"]').value;
+
     return {
       ...this.onSubmitCoreAttributes(config, formEl),
       ...this.onSubmitQuestionAttributes(config, formEl),
@@ -112,6 +126,7 @@ class TangyAudioRecordingWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
+      minDuration: (minDurInput !== '' && !isNaN(minDurInput)) ? parseInt(minDurInput) : ''
     };
   }
 }

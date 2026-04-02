@@ -19,6 +19,7 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
       ...this.defaultConfigValidationAttributes(),
       ...this.defaultConfigAdvancedAttributes(),
       ...this.defaultConfigUnimplementedAttributes(),
+      orientation: "columns",
       options: [],
     };
   }
@@ -120,10 +121,10 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
                 ${this.renderEditCoreAttributes(config)}
                 ${this.renderEditQuestionAttributes(config)}
                 <label for="orientation" style="font-weight: bold; font-size: 1.2em;">Orientation:</label>
-                <tangy-select name="orientation">
-                  <option value="columns" ${config.orientation === "columns" ? "selected" : ""}>Columns</option>
-                  <option value="rows" ${config.orientation === "rows" ? "selected" : ""}>Rows</option>
-                </tangy-select>
+                <tangy-select name="orientation" value="${config.orientation || 'columns'}">
+                  <option value="columns">Columns</option>
+                  <option value="rows">Rows</option>
+		</tangy-select>
                 <h2>Options</h2>
                 <p>Click the "Correct" property for options that are the correct answer. This property is used with the Section Detail's Threshold property.</p>
                 <tangy-list name="options">
