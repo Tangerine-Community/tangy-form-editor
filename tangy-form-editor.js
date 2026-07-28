@@ -141,6 +141,11 @@ class TangyFormEditor extends PolymerElement {
         value: false,
         reflectToAttribute: true
       },
+      unlisted: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
       hideShowIf: {
         type: Boolean,
         value: false,
@@ -390,6 +395,12 @@ class TangyFormEditor extends PolymerElement {
           </span>
         </div>
         <paper-expansion-panel header="advanced settings" id="main-expansion-panel">
+          <!-- Unlike every other option in here this one is not a tangy-form attribute: it
+               lives in the group's forms.json. So it is not part of the store, and formHtml
+               does not write it — the host is told about the change and owns the save. -->
+          <paper-checkbox style="margin:15px;" id="form-unlisted-checkbox" ${
+            this.unlisted ? 'checked' : ''
+          }>${t('Unlisted — hide this form from the listing on the tablet. Use this for special forms that are filled in automatically or shown elsewhere in the app.')}</paper-checkbox><br>
           <paper-checkbox style="margin:15px;" id="record-item-first-open-times-checkbox" ${
             state.form.recordItemFirstOpenTimes ? 'checked' : ''
           }>${t('Enable recording "first opened time" on all sections')}</paper-checkbox><br>
@@ -517,6 +528,9 @@ class TangyFormEditor extends PolymerElement {
       this.$.container
         .querySelector('.advanced')
         .addEventListener('click', this.onClickAdvancedSettings.bind(this))
+      this.$.container
+        .querySelector('#form-unlisted-checkbox')
+        .addEventListener('change', this.onUnlistedChange.bind(this))
       this.$.container
         .querySelector('sortable-list')
         .addEventListener('sort-finish', this.onSortFinish.bind(this))
@@ -703,6 +717,15 @@ class TangyFormEditor extends PolymerElement {
       type: 'ITEM_DELETE',
       payload: event.target.dataset.itemId
     })
+  }
+
+  // Announce the change and let the host persist it, since forms.json is not ours to write.
+  // Nothing here re-renders, so the box keeps what the user clicked even if the host save
+  // fails — reporting that is the host's job.
+  onUnlistedChange(event) {
+    const checked = !!event.target.checked
+    this.unlisted = checked
+    this.dispatchEvent(new CustomEvent('unlisted-change', {detail: {unlisted: checked}, bubbles: true, composed: true}))
   }
 
   onClickAdvancedSettings(){
