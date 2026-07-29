@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v7.22.7
+
+- Bump tangy-form to 4.51.0 — `tangy-untimed-grid` gains the MARK and LAST ATTEMPTED bar controls,
+  honours `required`, and is scored natively when named in `scoring-fields`
+- `tangy-untimed-grid`: add the missing Show Labels toggle, which decides whether the MARK and LAST
+  ATTEMPTED buttons carry their text beside the icon. `tangy-timed` has always offered it; on the
+  untimed grid the only trace of it was the Print row, reading a value nothing ever set, so printed
+  backups reported `undefined` and an author could get labels only by hand-editing `form.html`
+- Add an Unlisted option, first in the form's Advanced panel
+
 ## v7.22.6
 
 - Bump tangy-form to 4.50.8 - add min-duration to tangy-audio-recording
