@@ -21,6 +21,11 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
       hintText: '',
       columns: 4,
       options: [],
+      // Whether the bar buttons (MARK, LAST ATTEMPTED) carry their text beside the icon.
+      // Defaults on, as it does for tangy-timed: an unlabelled icon is a guess for a
+      // teacher meeting the grid for the first time. `upcast` reads the real value off the
+      // element via getProps(), so an existing grid keeps whatever it was authored with.
+      showLabels: true,
       rowMarkers: false,
       optionFontSize: '',
       autoStop: '',
@@ -56,6 +61,7 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
         ${this.downcastUnimplementedAttributes(config)}
         hint-text="${config.hintText}"
         columns="${config.columns}"
+        ${config.showLabels ? 'show-labels' : ''}
         ${config.rowMarkers ? 'row-markers' : ''}
         ${config.optionFontSize ? `option-font-size="${config.optionFontSize}"` : ``}
         ${config.autoStop ? `auto-stop="${config.autoStop}"` : ``}
@@ -136,6 +142,9 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
                   <option value="first">First X items</option>
                   <option value="consecutive">Apply to any consecutive items</option>
                 </tangy-select>
+                <tangy-toggle name="showLabels" ${
+                  config.showLabels ? 'value="on"' : ''
+                }>Show text on the MARK and LAST ATTEMPTED buttons</tangy-toggle>
                 <tangy-checkbox name="rowMarkers" ${
                   config.rowMarkers ? 'value="on"' : ''
                 }>Mark entire rows</tangy-checkbox>
@@ -172,6 +181,7 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
       autoStopMode: formEl.values.autoStopMode,
       hintText: formEl.values.hintText,
       columns: formEl.values.columns,
+      showLabels: formEl.values.showLabels === 'on' ? true : false,
       rowMarkers: formEl.values.rowMarkers === 'on' ? true : false,
       ...this.onSubmitConditionalAttributes(config, formEl),
       ...this.onSubmitValidationAttributes(config, formEl),
