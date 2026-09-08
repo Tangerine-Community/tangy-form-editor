@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v7.22.9
+
+- Regenerate `package-lock.json` against tangy-form 4.51.1. The v7.22.8 tag carried a lockfile
+  still resolving 4.51.0, so `npm ci` refused the out-of-sync manifest and the publish workflow
+  never ran. 7.22.8 was never published; this is that release.
+
 ## v7.22.8
 
 - Bump tangy-form to 4.51.1 — the grid status message sizes off `--tangy-grid-message-size` and
