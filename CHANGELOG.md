@@ -1,10 +1,14 @@
 # CHANGELOG
 
-## v7.22.9
+## v7.22.10
 
-- Regenerate `package-lock.json` against tangy-form 4.51.1. The v7.22.8 tag carried a lockfile
-  still resolving 4.51.0, so `npm ci` refused the out-of-sync manifest and the publish workflow
-  never ran. 7.22.8 was never published; this is that release.
+- Point `package-lock.json` at tangy-form 4.51.1 by editing only its three tangy-form lines. The
+  v7.22.8 tag carried a lock still resolving 4.51.0, so `npm ci` refused the out-of-sync manifest;
+  v7.22.9 then tried a full regeneration, which modern npm cannot produce for this lockfileVersion 1
+  file — it rewrites the four `ssh://` git dependencies into entries npm itself will not match, and
+  the v3 upgrade additionally pulled an unresolvable `chai` peer through polymer-cli's sinon-chai.
+  Verified with `npm ci` and `npm run build` on node:16 (the version the workflow uses): exit 0,
+  tangy-form 4.51.1 installed. Neither 7.22.8 nor 7.22.9 was ever published; this is that release.
 
 ## v7.22.8
 
