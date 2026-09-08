@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v7.22.8
+
+- Bump tangy-form to 4.51.1 — the grid status message sizes off `--tangy-grid-message-size` and
+  `--tangy-grid-message-height`, and `tangy-timed` and `tangy-untimed-grid` now place their action
+  bar identically
+- `tangy-timed` and `tangy-untimed-grid`: Show Labels now defaults to OFF for a newly inserted grid.
+  It defaulted on, which changed the bar every existing client already knew. An existing grid is
+  unaffected — `upcast` reads the authored value off the element
+
 ## v7.22.7
 
 - Bump tangy-form to 4.51.0 — `tangy-untimed-grid` gains the MARK and LAST ATTEMPTED bar controls,

@@ -22,10 +22,10 @@ class TangyUntimedGridWidget extends TangyBaseWidget {
       columns: 4,
       options: [],
       // Whether the bar buttons (MARK, LAST ATTEMPTED) carry their text beside the icon.
-      // Defaults on, as it does for tangy-timed: an unlabelled icon is a guess for a
-      // teacher meeting the grid for the first time. `upcast` reads the real value off the
+      // Defaults OFF: every client already knows the unlabelled icons, and defaulting a new
+      // grid to labels changed the bar they are used to. `upcast` reads the real value off the
       // element via getProps(), so an existing grid keeps whatever it was authored with.
-      showLabels: true,
+      showLabels: false,
       rowMarkers: false,
       optionFontSize: '',
       autoStop: '',

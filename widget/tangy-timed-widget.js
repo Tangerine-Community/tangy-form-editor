@@ -23,7 +23,7 @@ class TangyTimedWidget extends TangyBaseWidget {
       autoStopMode: 'first',
       columns: 4,
       options: [],
-      showLabels: true,
+      showLabels: false,
       rowMarkers: false,
       captureItemAt: '',
       tangyIf: '',
