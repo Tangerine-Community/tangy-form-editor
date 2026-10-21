@@ -106,7 +106,7 @@ class TangyFormEditorAddInput extends PolymerElement {
         </div>
         <div>
           <h4>Specialty</h4>
-          <div class="element-list">
+          <div class="element-list" id="specialty-list">
             <mwc-button icon="brush" on-click="addThis" id="tangy-signature-widget">Signature</mwc-button><br>
             <mwc-button icon="thumbs_up_down"on-click="addThis" id="tangy-consent-widget" >Consent</mwc-button><br>
             <mwc-button icon="filter_center_focus" on-click="addThis" id="tangy-qr-widget">QR Code Scanner</mwc-button><br>
@@ -126,6 +126,39 @@ class TangyFormEditorAddInput extends PolymerElement {
 
   connectedCallback() {
     super.connectedCallback()
+    this.addRegisteredWidgetButtons()
+  }
+
+  /**
+   * Add a button for every registered widget that offered a label, so an input type can come from
+   * outside this package.
+   *
+   * The markup above lists the core types and keeps doing so — a widget only appears here if its
+   * `define()` call passed `{label}`, which the 31 core registrations do not. That is what lets a
+   * group's `alternative-scripts.js`, loaded after the editor's own bundle, contribute an input
+   * type: the registry is already populated by then, and this element is built fresh on each "+"
+   * click rather than once at startup.
+   *
+   * Anything added lands under Specialty. A widget already named in the markup is skipped, so a
+   * core type that later starts passing a label is not listed twice.
+   */
+  addRegisteredWidgetButtons() {
+    const list = this.shadowRoot.getElementById('specialty-list')
+    const registry = window.tangyFormEditorWidgets
+    if (!list || !registry) return
+    for (const widget of registry.widgets) {
+      if (!widget.label) continue
+      if (this.shadowRoot.getElementById(widget.widgetName)) continue
+      const button = document.createElement('mwc-button')
+      // `addThis` reads `event.target.id`; a click inside mwc-button's shadow root retargets to the
+      // button itself, which is what the annotated `on-click` handlers above already rely on.
+      button.id = widget.widgetName
+      button.setAttribute('icon', widget.icon || 'extension')
+      button.textContent = widget.label
+      button.addEventListener('click', (event) => this.addThis(event))
+      list.appendChild(button)
+      list.appendChild(document.createElement('br'))
+    }
   }
 
   addThis(event) {

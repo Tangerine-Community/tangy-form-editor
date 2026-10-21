@@ -974,3 +974,10 @@ class TangyBaseWidget extends PolymerElement {
 }
 
 export { TangyBaseWidget };
+
+// The plugin seam. A widget shipped outside this package — one a group's own
+// `alternative-scripts.js` registers, which the editor page loads as a bare
+// `<script type="module">` — cannot import this file: nothing builds that path and a bare specifier
+// does not resolve in a browser. Exposing the base class is what lets such a script subclass it,
+// the same way it already relies on `window.tangyFormEditorWidgets` being there to register with.
+window.TangyBaseWidget = TangyBaseWidget;
