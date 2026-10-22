@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## v7.23.0
+
+- An input type can now be registered from OUTSIDE this package. A Tangerine module that ships its
+  own custom element had nowhere to put the widget that authors it, so `tangy-form-condensed-editor`
+  wrapped the element in a `tangy-box` and the palette offered no way to add one.
+  - `window.TangyBaseWidget` is assigned beside the existing export. A widget shipped outside this
+    package is loaded by the editor page as a bare `<script type="module">`; nothing builds that
+    path, so a bare specifier would not resolve and the class could not be imported. The registry is
+    already reached the same way, through `window.tangyFormEditorWidgets`.
+  - `define()` takes a fourth argument, `{label, icon}`, and a widget gets a palette button only when
+    it passes one. The 31 core widgets pass none and stay listed by the palette's own markup, so
+    nothing is duplicated or reordered.
+  - `addRegisteredWidgetButtons()` appends those buttons to Specialty when the "+" panel is built.
+    The panel is built fresh on each click, which is after a group's `alternative-scripts.js` has
+    run, so a module's widget is there by then. A widget already named in the markup is skipped.
+- `define()` now throws when `widgetName` equals `claimElement`. `wrap()` finds a widget by matching
+  the node against `claimElement` and then creates `widgetName`, so equal names make the wrapper
+  match its own claim and nest the element inside a copy of itself on every pass. Failing at
+  registration puts the error where the mistake is.
+- Unit tests run under `node --test` as `npm run test:unit`. The WCT harness this package still
+  declares cannot start on Node 24, and these are plain unit tests over the registry with no browser.
+- No dependency changed, so `package-lock.json` is untouched and stays at lockfileVersion 1 — see
+  the v7.22.11 note below for why that matters.
+
+
 ## v7.22.11
 
 - Point `package-lock.json` at tangy-form 4.51.1 by editing only its three tangy-form lines. The
