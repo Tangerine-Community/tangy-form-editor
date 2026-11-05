@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Fix: saving a form no longer writes a missing question number, label, hint, error text or warning text as `="undefined"` / `="null"`, and a radio-blocks option no longer gets `image="undefined"` / `sound="undefined"` (which showed a broken-image icon). Empty text is now left out of the markup instead of written as `=""`, and a form that already holds the junk is cleaned the next time it is saved. Other widgets (eftouch, acasi, number, timed, date widgets and more) still write raw values; not fixed yet.
+
 ## v7.23.0
 
 - An input type can now be registered from OUTSIDE this package. A Tangerine module that ships its

@@ -1,6 +1,7 @@
 import { html, PolymerElement } from "@polymer/polymer/polymer-element.js";
 import "@polymer/paper-card/paper-card.js";
 import "@polymer/paper-button/paper-button.js";
+import { cleanText, textAttribute } from "./attribute-text.js";
 
 const MODE_INFO = "MODE_INFO";
 const MODE_EDIT = "MODE_EDIT";
@@ -267,9 +268,9 @@ class TangyBaseWidget extends PolymerElement {
 
   downcastQuestionAttributes(config) {
     return `
-      question-number="${config.questionNumber}"
-      label="${config.label}"
-      hint-text="${config.hintText}"
+      ${textAttribute('question-number', config.questionNumber)}
+      ${textAttribute('label', config.label)}
+      ${textAttribute('hint-text', config.hintText)}
     `;
   }
 
@@ -283,9 +284,9 @@ class TangyBaseWidget extends PolymerElement {
   downcastValidationAttributes(config) {
     return `
       ${ config.validIf === "" ? "" : `valid-if="${config.validIf.replace(/"/g, "&quot;")}"` }
-      error-text="${config.errorText}"
+      ${textAttribute('error-text', config.errorText)}
       ${ config.warnIf === "" ? "" : `warn-if="${config.warnIf.replace(/"/g, "&quot;")}"` }
-      warn-text="${config.warnText}"
+      ${textAttribute('warn-text', config.warnText)}
     `;
   }
 
@@ -392,17 +393,17 @@ class TangyBaseWidget extends PolymerElement {
       <tangy-input
         name="question-number"
         inner-label="Question number"
-        value="${config.questionNumber || ''}">
+        value="${cleanText(config.questionNumber)}">
       </tangy-input>
       <tangy-input
         name="label"
         inner-label="Label"
-        value="${config.label || ''}">
+        value="${cleanText(config.label)}">
       </tangy-input>
       <tangy-input
         name="hint-text"
         inner-label="Hint text"
-        value="${config.hintText || ''}">
+        value="${cleanText(config.hintText)}">
       </tangy-input>
     `;
   }
@@ -450,7 +451,7 @@ class TangyBaseWidget extends PolymerElement {
       <tangy-input
         name="warn-text"
         inner-label="Warning text"
-        value="${config.warnText}">
+        value="${cleanText(config.warnText)}">
       </tangy-input>
 
       <h3>Error Validation</h3>
@@ -464,7 +465,7 @@ class TangyBaseWidget extends PolymerElement {
       <tangy-input
         name="error-text"
         inner-label="Error text"
-        value="${config.errorText}">
+        value="${cleanText(config.errorText)}">
       </tangy-input>
     `;
   }

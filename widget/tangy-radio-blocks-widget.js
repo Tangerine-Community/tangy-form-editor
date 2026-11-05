@@ -5,6 +5,7 @@ import "tangy-form/input/tangy-radio-blocks.js";
 import "tangy-form/input/tangy-input.js";
 import "tangy-form/input/tangy-checkbox.js";
 import { TangyBaseWidget } from "../tangy-base-widget.js";
+import { cleanText, textAttribute } from "../attribute-text.js";
 
 class TangyRadioBlocksWidget extends TangyBaseWidget {
   get claimElement() {
@@ -59,7 +60,7 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
         ${config.options
           .map(
             (option) => `
-          <option value="${option.value}" ${option.correct ? "correct" : ""} image="${option.image}" sound="${option.sound}">${
+          <option value="${option.value}" ${option.correct ? "correct" : ""} ${textAttribute('image', option.image)} ${textAttribute('sound', option.sound)}>${
               option.label
             }</option>
         `
@@ -157,8 +158,8 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
                           <tangy-checkbox name="correct" hint-text="Select if this is the correct answer."  label="Correct"  value="${
                             option.correct ? "on" : ""
                           }"></tangy-checkbox>
-                          <tangy-input name="image" hint-text="Enter the image URL" inner-label="Image" type="text" value="${option.image ? option.image : ""}"></tangy-input>
-                          <tangy-input name="sound" hint-text="Enter the sound URL" inner-label="Sound" type="text" value="${option.sound ? option.sound : ""}"></tangy-input>
+                          <tangy-input name="image" hint-text="Enter the image URL" inner-label="Image" type="text" value="${cleanText(option.image)}"></tangy-input>
+                          <tangy-input name="sound" hint-text="Enter the sound URL" inner-label="Sound" type="text" value="${cleanText(option.sound)}"></tangy-input>
                         </tangy-list-item>
                       `
                         )
