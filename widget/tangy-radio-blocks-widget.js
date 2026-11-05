@@ -5,6 +5,7 @@ import "tangy-form/input/tangy-radio-blocks.js";
 import "tangy-form/input/tangy-input.js";
 import "tangy-form/input/tangy-checkbox.js";
 import { TangyBaseWidget } from "../tangy-base-widget.js";
+import { upcastOptionLayout, downcastOptionLayout, renderEditOptionLayout, onSubmitOptionLayout } from "../option-layout-fields.js";
 import { cleanText, textAttribute } from "../attribute-text.js";
 
 class TangyRadioBlocksWidget extends TangyBaseWidget {
@@ -33,6 +34,7 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
       ...this.upcastValidationAttributes(config, element),
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
+      ...upcastOptionLayout(element),
       orientation: element.getAttribute('orientation') || "columns",
       options: [...element.querySelectorAll("option")].map((option) => {
         return {
@@ -55,6 +57,7 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
         ${this.downcastValidationAttributes(config)}
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
+        ${downcastOptionLayout(config)}
         ${config.orientation ? `orientation="${config.orientation}"` : ""}
       >
         ${config.options
@@ -121,6 +124,7 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
               <div>
                 ${this.renderEditCoreAttributes(config)}
                 ${this.renderEditQuestionAttributes(config)}
+                ${renderEditOptionLayout(config, { imageDisplay: true })}
                 <label for="orientation" style="font-weight: bold; font-size: 1.2em;">Orientation:</label>
                 <tangy-select name="orientation" value="${config.orientation || 'columns'}">
                   <option value="columns">Columns</option>
@@ -194,6 +198,7 @@ class TangyRadioBlocksWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
+      ...onSubmitOptionLayout(formEl, { imageDisplay: true }),
       orientation: formEl.querySelector("tangy-select[name=orientation]").value,
       options: formEl.values.options.map((item) =>
         item.reduce((acc, input) => {

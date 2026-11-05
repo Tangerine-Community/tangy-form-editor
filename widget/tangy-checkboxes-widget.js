@@ -4,6 +4,8 @@ import "tangy-form/tangy-form.js";
 import "tangy-form/input/tangy-checkboxes.js";
 import "tangy-form/input/tangy-input.js";
 import { TangyBaseWidget } from "../tangy-base-widget.js";
+import { cleanText, textAttribute } from "../attribute-text.js";
+import { upcastOptionLayout, downcastOptionLayout, renderEditOptionLayout, onSubmitOptionLayout } from "../option-layout-fields.js";
 
 class TangyCheckboxesWidget extends TangyBaseWidget {
   get claimElement() {
@@ -30,11 +32,13 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       ...this.upcastValidationAttributes(config, element),
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
+      ...upcastOptionLayout(element),
       options: [...element.querySelectorAll("option")].map((option) => {
         return {
           value: option.getAttribute("value"),
           label: option.innerHTML,
           mutuallyExclusive: option.hasAttribute("mutually-exclusive"),
+          image: option.getAttribute("image"),
         };
       }),
     };
@@ -49,13 +53,14 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
         ${this.downcastValidationAttributes(config)}
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
+        ${downcastOptionLayout(config)}
       >
         ${config.options
           .map(
             (option) => `
           <option value="${option.value}" ${
               option.mutuallyExclusive ? "mutually-exclusive" : ""
-            }>${option.label}</option>
+            } ${textAttribute('image', option.image)}>${option.label}</option>
         `
           )
           .join("")}
@@ -111,11 +116,13 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
               <div>
                   ${this.renderEditCoreAttributes(config)}
                   ${this.renderEditQuestionAttributes(config)}
+                ${renderEditOptionLayout(config, { imageDisplay: true })}
                   <tangy-list name="options">
                     <template type="tangy-list/new-item">
                       <tangy-input name="value" allowed-pattern="[a-zA-Z0-9\-_]" inner-label="Value" hint-text="Enter the variable value if checkbox is chosen" type="text"></tangy-input>
                       <tangy-input name="label" inner-label="Label" hint-text="Enter the display label of the checkbox" type="text"></tangy-input>
                       <tangy-checkbox name="mutuallyExclusive" hint-text="This option is mutually exclusive from the other options. If enabled, when this option is selected all other selections will be undone.">Mutually exlusive</tangy-checkbox>
+                      <tangy-input name="image" hint-text="Enter the image URL" inner-label="Image" type="text"></tangy-input>
                     </template>
                     ${
                       config.options.length > 0
@@ -139,6 +146,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
                             <tangy-checkbox name="mutuallyExclusive" value="${
                               option.mutuallyExclusive ? "on" : ""
                             }" hint-text="This option is mutually exclusive from the other options. If enabled, when this option is selected all other selections will be undone.">Mutually exlusive</tangy-checkbox>
+                            <tangy-input name="image" hint-text="Enter the image URL" inner-label="Image" type="text" value="${cleanText(option.image)}"></tangy-input>
                           </tangy-list-item>  
                         `
                           )
@@ -173,6 +181,7 @@ class TangyCheckboxesWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
+      ...onSubmitOptionLayout(formEl, { imageDisplay: true }),
       options: formEl.values.options.map((item) =>
         item.reduce((acc, input) => {
           return { ...acc, [input.name]: input.value };

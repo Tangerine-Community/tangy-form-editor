@@ -5,6 +5,7 @@ import "tangy-form/input/tangy-radio-buttons.js";
 import "tangy-form/input/tangy-input.js";
 import "tangy-form/input/tangy-checkbox.js";
 import { TangyBaseWidget } from "../tangy-base-widget.js";
+import { upcastOptionLayout, downcastOptionLayout, renderEditOptionLayout, onSubmitOptionLayout } from "../option-layout-fields.js";
 
 class TangyRadioButtonsWidget extends TangyBaseWidget {
   get claimElement() {
@@ -31,6 +32,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
       ...this.upcastValidationAttributes(config, element),
       ...this.upcastAdvancedAttributes(config, element),
       ...this.upcastUnimplementedAttributes(config, element),
+      ...upcastOptionLayout(element),
       options: [...element.querySelectorAll("option")].map((option) => {
         return {
           value: option.getAttribute("value"),
@@ -50,6 +52,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
         ${this.downcastValidationAttributes(config)}
         ${this.downcastAdvancedAttributes(config)}
         ${this.downcastUnimplementedAttributes(config)}
+        ${downcastOptionLayout(config)}
       >
         ${config.options
           .map(
@@ -115,6 +118,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
               <div>
                 ${this.renderEditCoreAttributes(config)}
                 ${this.renderEditQuestionAttributes(config)}
+                ${renderEditOptionLayout(config)}
                   
                 <h2>Options</h2>
                 <p>Click the "Correct" property for options that are the correct answer. This property is used with the Section Detail's Threshold property.</p>
@@ -180,6 +184,7 @@ class TangyRadioButtonsWidget extends TangyBaseWidget {
       ...this.onSubmitValidationAttributes(config, formEl),
       ...this.onSubmitAdvancedAttributes(config, formEl),
       ...this.onSubmitUnimplementedAttributes(config, formEl),
+      ...onSubmitOptionLayout(formEl),
       options: formEl.values.options.map((item) =>
         item.reduce((acc, input) => {
           return { ...acc, [input.name]: input.value };
