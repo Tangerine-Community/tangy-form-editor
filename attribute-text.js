@@ -7,8 +7,9 @@ export function cleanText(value) {
   return word === 'undefined' || word === 'null' ? '' : text
 }
 
-// `name="text"`, or nothing at all when there is no text to write.
+// `name="text"`, or nothing at all when there is no text to write. `&` then `"` are escaped so
+// the text can never end the attribute early (an image path like images/a"b.png garbled the form).
 export function textAttribute(name, value) {
   const text = cleanText(value)
-  return text === '' ? '' : `${name}="${text}"`
+  return text === '' ? '' : `${name}="${text.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}"`
 }

@@ -15,17 +15,24 @@ const IMAGE_DISPLAYS = [
   ["fill", "Picture fills the tile"],
 ];
 
+// Only values tangy-form knows; anything else (hand-edited, a stray quote) becomes the default.
+const allowed = (value, choices) =>
+  choices.some(([choice]) => choice === value) ? value : choices[0][0];
+
 export function upcastOptionLayout(element) {
   return {
-    layout: cleanText(element.getAttribute("layout")) || "list",
-    imageDisplay: cleanText(element.getAttribute("image-display")) || "beside",
+    layout: allowed(cleanText(element.getAttribute("layout")), LAYOUTS),
+    imageDisplay: allowed(cleanText(element.getAttribute("image-display")), IMAGE_DISPLAYS),
   };
 }
 
 export function downcastOptionLayout(config) {
-  const layout = config.layout === "list" ? "" : config.layout;
-  const imageDisplay = config.imageDisplay === "beside" ? "" : config.imageDisplay;
-  return [textAttribute("layout", layout), textAttribute("image-display", imageDisplay)]
+  const layout = allowed(config.layout, LAYOUTS);
+  const imageDisplay = allowed(config.imageDisplay, IMAGE_DISPLAYS);
+  return [
+    textAttribute("layout", layout === "list" ? "" : layout),
+    textAttribute("image-display", imageDisplay === "beside" ? "" : imageDisplay),
+  ]
     .filter(Boolean)
     .join(" ");
 }
@@ -38,9 +45,9 @@ const select = (name, label, value, choices) => `
 
 export function renderEditOptionLayout(config, { imageDisplay = false } = {}) {
   return (
-    select("layout", "Layout", cleanText(config.layout) || "list", LAYOUTS) +
+    select("layout", "Layout", allowed(config.layout, LAYOUTS), LAYOUTS) +
     (imageDisplay
-      ? select("imageDisplay", "Option pictures", cleanText(config.imageDisplay) || "beside", IMAGE_DISPLAYS)
+      ? select("imageDisplay", "Option pictures", allowed(config.imageDisplay, IMAGE_DISPLAYS), IMAGE_DISPLAYS)
       : "")
   );
 }

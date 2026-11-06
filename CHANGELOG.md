@@ -4,6 +4,7 @@
 
 - Feature: radio buttons, radio blocks and checkboxes get a **Layout** field (list, wrap, squares, fit), and radio blocks and checkboxes an **Option pictures** field (beside, top, fill) for tangy-form's `layout` and `image-display` attributes. Checkbox options get an **Image** field. Before, these could only be typed into the form HTML, and the editor's save dropped them. The defaults are not written into the form. Needs the tangy-form release that ships `layout` / `image-display`.
 - Fix: saving a form no longer writes a missing question number, label, hint, error text or warning text as `="undefined"` / `="null"`, and a radio-blocks option no longer gets `image="undefined"` / `sound="undefined"` (which showed a broken-image icon). Empty text is now left out of the markup instead of written as `=""`, and a form that already holds the junk is cleaned the next time it is saved. Other widgets (eftouch, acasi, number, timed, date widgets and more) still write raw values; not fixed yet.
+- Fix (security): a double quote in an image path or text field no longer ends the attribute early and garbles the saved form (`&` and `"` are escaped), and the Layout / Option pictures fields write only values tangy-form knows.
 
 ## v7.23.0
 

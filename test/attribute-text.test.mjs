@@ -47,3 +47,14 @@ test('the radio blocks widget writes an option image and sound only when there i
   const raw = source('widget/tangy-radio-blocks-widget.js').match(/(image|sound)="\$\{option\.(image|sound)\}"/g)
   assert.equal(raw, null, `raw option writes left: ${raw}`)
 })
+
+// A `"` in author text (e.g. an image path images/a"b.png) ended the attribute early and garbled
+// the saved form. `&` is escaped first so text that already looks like an entity survives as typed.
+test('textAttribute escapes a double quote so it cannot end the attribute', () => {
+  assert.equal(textAttribute('image', 'images/a"b.png'), 'image="images/a&quot;b.png"')
+})
+
+test('textAttribute escapes an ampersand, before quotes, so typed entities stay as typed', () => {
+  assert.equal(textAttribute('label', 'Tom & Jerry'), 'label="Tom &amp; Jerry"')
+  assert.equal(textAttribute('label', 'say &quot;hi"'), 'label="say &amp;quot;hi&quot;"')
+})

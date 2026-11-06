@@ -81,3 +81,20 @@ test('the checkboxes widget keeps an option picture through the editor', () => {
   assert.ok(src.includes("textAttribute('image', option.image)"), 'downcast')
   assert.ok(src.includes('name="image"') && src.includes('value="${cleanText(option.image)}"'), 'edit field')
 })
+
+// Only the values tangy-form knows are ever read, offered or written, so a hand-edited or hostile
+// value (a quote, an unknown word) falls back to the default instead of landing in the form or edit card.
+test('upcast ignores a layout or image display tangy-form does not know', () => {
+  assert.deepEqual(upcastOptionLayout(element({ layout: 'bogus', 'image-display': 'x" onclick="y' })), { layout: 'list', imageDisplay: 'beside' })
+})
+
+test('downcast writes nothing for a value outside the allowed lists', () => {
+  assert.equal(downcastOptionLayout({ layout: 'squares" onclick="y', imageDisplay: 'sideways' }), '')
+})
+
+test('the edit form preselects the default when the current value is not allowed', () => {
+  const html = renderEditOptionLayout({ layout: 'a"b', imageDisplay: 'c"d' }, { imageDisplay: true })
+  assert.match(html, /<tangy-select name="layout" value="list"/)
+  assert.match(html, /<tangy-select name="imageDisplay" value="beside"/)
+  assert.ok(!html.includes('a"b') && !html.includes('c"d'))
+})
