@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v7.24.1
 
 - Consent widget: the edit dialog notes that the consent input belongs alone on its own section, because tapping No ends and submits the form.
 
