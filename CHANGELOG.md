@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Consent widget: the edit dialog notes that the consent input belongs alone on its own section, because tapping No ends and submits the form.
+
 ## v7.24.0
 
 - Feature: radio buttons, radio blocks and checkboxes get a **Layout** field (list, wrap, squares, fit), and radio blocks and checkboxes an **Option pictures** field (beside, top, fill) for tangy-form's `layout` and `image-display` attributes. Checkbox options get an **Image** field. Before, these could only be typed into the form HTML, and the editor's save dropped them. The defaults are not written into the form. Needs the tangy-form release that ships `layout` / `image-display`.

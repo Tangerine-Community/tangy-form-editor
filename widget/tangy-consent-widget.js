@@ -89,6 +89,7 @@ class TangyConsentWidget extends TangyBaseWidget {
             </paper-tabs>
             <iron-pages selected="">
                 <div>
+                  <p><strong>Note:</strong> Put this consent input alone on its own section. Tapping No ends and submits the form.</p>
                   ${this.renderEditCoreAttributes(config)}
                   <tangy-input
                     name="prompt"
